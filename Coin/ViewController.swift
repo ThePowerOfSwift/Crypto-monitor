@@ -122,12 +122,18 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
                 }
             }
         }
-        if segue.identifier == "cryptocurrencyEditSegue" {
-            if let CryptocurrencyInfoVC = segue.destination as? EditViewController {
-
-                    CryptocurrencyInfoVC.ticker = getTicker
+        
+        if segue.identifier == "editSegue" {
+            
+            let navVC = segue.destination as? UINavigationController
+       
+                if let vc = navVC?.viewControllers.first as? EditViewController {
+                    vc.ticker = getTicker
+                
             }
         }
+        
+
     }
     
 }

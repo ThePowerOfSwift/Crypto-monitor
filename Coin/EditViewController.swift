@@ -17,21 +17,14 @@ class EditViewController: UIViewController, UITableViewDelegate, UITableViewData
     var ticker = [Ticker]()
     var cryptocurrency = [Ticker]()
     
-    required init?(coder aDecoder: NSCoder) {
-        print("init PlayerDetailsViewController")
-        super.init(coder: aDecoder)
-    }
-    
-    deinit {
-        print("deinit PlayerDetailsViewController")
-    }
-    
-    
+   
     override func viewDidLoad() {
         super.viewDidLoad()
         
-
         
+
+        print("open")
+        print(ticker.count)
         for id in id {
             if let tick = ticker.first(where: {$0.id == id}) {
                 cryptocurrency.append(tick)
@@ -39,15 +32,12 @@ class EditViewController: UIViewController, UITableViewDelegate, UITableViewData
             }
         }
         
-        
         tableView.delegate = self
         tableView.dataSource = self
         
         self.tableView.isEditing = true
-        
-        
-        
     }
+
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return cryptocurrency.count
@@ -63,13 +53,21 @@ class EditViewController: UIViewController, UITableViewDelegate, UITableViewData
         return cell
     }
     
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "SavePlayerDetail" {
-
-        }
-    }
     @IBAction func Done(_ sender: Any) {
          self.dismiss(animated: true, completion: nil)
     }
+    
+    // MARK: - Navigation
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "addSegue" {
+            
+            if let navVC = segue.destination as? UINavigationController {
+                if let vc = navVC.viewControllers.first as? AddTableViewController {
+                    vc.ticker = ticker
+                }
+            }
+        }
+    }
+
     
 }
