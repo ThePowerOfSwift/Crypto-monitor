@@ -124,6 +124,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         }
         if segue.identifier == "cryptocurrencyEditSegue" {
             if let CryptocurrencyInfoVC = segue.destination as? EditViewController {
+
                     CryptocurrencyInfoVC.ticker = getTicker
             }
         }

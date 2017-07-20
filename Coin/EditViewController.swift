@@ -14,8 +14,18 @@ class EditViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     let id = ["bitcoin", "ethereum", "ethereum-classic", "karbowanec",]
    
-    var  ticker = [Ticker]()
+    var ticker = [Ticker]()
     var cryptocurrency = [Ticker]()
+    
+    required init?(coder aDecoder: NSCoder) {
+        print("init PlayerDetailsViewController")
+        super.init(coder: aDecoder)
+    }
+    
+    deinit {
+        print("deinit PlayerDetailsViewController")
+    }
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -53,5 +63,13 @@ class EditViewController: UIViewController, UITableViewDelegate, UITableViewData
         return cell
     }
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "SavePlayerDetail" {
+
+        }
+    }
+    @IBAction func Done(_ sender: Any) {
+         self.dismiss(animated: true, completion: nil)
+    }
     
 }
