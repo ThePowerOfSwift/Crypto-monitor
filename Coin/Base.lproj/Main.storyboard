@@ -113,7 +113,13 @@
                             <constraint firstItem="rxk-Y1-I0R" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="rUY-DQ-8g3"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="Coins" id="PoJ-hP-4Z7"/>
+                    <navigationItem key="navigationItem" title="Coins" id="PoJ-hP-4Z7">
+                        <barButtonItem key="rightBarButtonItem" systemItem="edit" id="GGk-tY-aTY">
+                            <connections>
+                                <segue destination="s1A-aI-Skt" kind="show" identifier="cryptocurrencyEditSegue" id="bCW-BZ-ufx"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="tableView" destination="rxk-Y1-I0R" id="fKL-V9-aLD"/>
                     </connections>
@@ -121,6 +127,64 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1996" y="122.78860569715144"/>
+        </scene>
+        <!--Cryptocurrency-->
+        <scene sceneID="vL4-Mh-18O">
+            <objects>
+                <viewController id="s1A-aI-Skt" customClass="EditViewController" customModule="Coin" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="O0b-bc-Xn8"/>
+                        <viewControllerLayoutGuide type="bottom" id="8AQ-Jo-dwg"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="6Rc-ar-1rn">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="SYi-4h-oaE">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="623"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Coin" id="1Fl-j9-0Ai">
+                                        <rect key="frame" x="0.0" y="28" width="375" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="1Fl-j9-0Ai" id="MHC-0W-NkG">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </prototypes>
+                            </tableView>
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="SEr-dU-pRp">
+                                <rect key="frame" x="16" y="631" width="343" height="29"/>
+                                <segments>
+                                    <segment title="First"/>
+                                    <segment title="Second"/>
+                                    <segment title=""/>
+                                </segments>
+                            </segmentedControl>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="SYi-4h-oaE" firstAttribute="leading" secondItem="6Rc-ar-1rn" secondAttribute="leading" id="2Rr-Rl-OQk"/>
+                            <constraint firstAttribute="trailing" secondItem="SYi-4h-oaE" secondAttribute="trailing" id="LLh-y9-uiZ"/>
+                            <constraint firstItem="8AQ-Jo-dwg" firstAttribute="top" secondItem="SEr-dU-pRp" secondAttribute="bottom" constant="8" id="T4U-BM-nrH"/>
+                            <constraint firstItem="SYi-4h-oaE" firstAttribute="top" secondItem="6Rc-ar-1rn" secondAttribute="top" id="gYE-Wj-7G8"/>
+                            <constraint firstItem="SEr-dU-pRp" firstAttribute="leading" secondItem="6Rc-ar-1rn" secondAttribute="leadingMargin" id="qJO-h4-UIe"/>
+                            <constraint firstItem="SEr-dU-pRp" firstAttribute="trailing" secondItem="6Rc-ar-1rn" secondAttribute="trailingMargin" id="tXR-Qg-i50"/>
+                            <constraint firstItem="SEr-dU-pRp" firstAttribute="top" secondItem="SYi-4h-oaE" secondAttribute="bottom" constant="8" id="zFH-bR-xiz"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" title="Cryptocurrency" id="zNv-nx-6D7">
+                        <barButtonItem key="leftBarButtonItem" systemItem="add" id="zuL-0e-jqP"/>
+                        <barButtonItem key="rightBarButtonItem" systemItem="done" id="K67-TG-5zl"/>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="tableView" destination="SYi-4h-oaE" id="6zv-Ue-0ig"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ROR-pn-Sce" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2933.5999999999999" y="122.78860569715144"/>
         </scene>
         <!--Cryptocurrency Info View Controller-->
         <scene sceneID="Apo-J2-FXb">
@@ -189,7 +253,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9t3-5m-gXD" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2829.5999999999999" y="122.78860569715144"/>
+            <point key="canvasLocation" x="2934" y="859"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="Xmh-fE-fjj">

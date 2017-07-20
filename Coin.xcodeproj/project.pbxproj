@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		1853CEF6208C355CD69D15AE /* Pods_Coin.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FCD523238B38757764B37DC3 /* Pods_Coin.framework */; };
 		FB670CE61F16D900005761CF /* CryptocurrencyInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB670CE51F16D900005761CF /* CryptocurrencyInfoViewController.swift */; };
+		FB9592571F2116EE00F9F74B /* EditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB9592561F2116EE00F9F74B /* EditViewController.swift */; };
 		FBB2CC9C1F155CF800D800FD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBB2CC9B1F155CF800D800FD /* AppDelegate.swift */; };
 		FBB2CC9E1F155CF800D800FD /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBB2CC9D1F155CF800D800FD /* ViewController.swift */; };
 		FBB2CCA11F155CF800D800FD /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FBB2CC9F1F155CF800D800FD /* Main.storyboard */; };
@@ -23,6 +24,7 @@
 		D2644E3DDE8034D62D53ACCA /* Pods-Coin.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Coin.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Coin/Pods-Coin.debug.xcconfig"; sourceTree = "<group>"; };
 		FB670CE51F16D900005761CF /* CryptocurrencyInfoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CryptocurrencyInfoViewController.swift; sourceTree = "<group>"; };
 		FB9592531F20B8AB00F9F74B /* Coin.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Coin.entitlements; sourceTree = "<group>"; };
+		FB9592561F2116EE00F9F74B /* EditViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditViewController.swift; sourceTree = "<group>"; };
 		FBB2CC981F155CF800D800FD /* Coin.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Coin.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FBB2CC9B1F155CF800D800FD /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		FBB2CC9D1F155CF800D800FD /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -88,6 +90,7 @@
 				FB9592531F20B8AB00F9F74B /* Coin.entitlements */,
 				FBB2CC9B1F155CF800D800FD /* AppDelegate.swift */,
 				FBB2CC9D1F155CF800D800FD /* ViewController.swift */,
+				FB9592561F2116EE00F9F74B /* EditViewController.swift */,
 				FB670CE51F16D900005761CF /* CryptocurrencyInfoViewController.swift */,
 				FBB2CC9F1F155CF800D800FD /* Main.storyboard */,
 				FBB2CCAD1F1564F200D800FD /* CoinTableViewCell.swift */,
@@ -233,6 +236,7 @@
 			files = (
 				FBB2CCAE1F1564F200D800FD /* CoinTableViewCell.swift in Sources */,
 				FB670CE61F16D900005761CF /* CryptocurrencyInfoViewController.swift in Sources */,
+				FB9592571F2116EE00F9F74B /* EditViewController.swift in Sources */,
 				FBB2CC9E1F155CF800D800FD /* ViewController.swift in Sources */,
 				FBB2CCB01F156E4000D800FD /* AlamofireRequest.swift in Sources */,
 				FBB2CC9C1F155CF800D800FD /* AppDelegate.swift in Sources */,

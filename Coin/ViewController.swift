@@ -10,7 +10,7 @@ import UIKit
 
 class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
-    var getTicker = [Ticker]()
+    public var getTicker = [Ticker]()
     var refreshControl: UIRefreshControl!
     weak var selectTicker : Ticker?
     var currentIndexPath: NSIndexPath?
@@ -42,9 +42,6 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     }   
     
     // MARK:  UITextFieldDelegate Methods
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return 1
-    }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return getTicker.count
@@ -123,6 +120,11 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
                 if let index = tableView.indexPathForSelectedRow?.row {
                     CryptocurrencyInfoVC.ticker = getTicker[index]
                 }
+            }
+        }
+        if segue.identifier == "cryptocurrencyEditSegue" {
+            if let CryptocurrencyInfoVC = segue.destination as? EditViewController {
+                    CryptocurrencyInfoVC.ticker = getTicker
             }
         }
     }
