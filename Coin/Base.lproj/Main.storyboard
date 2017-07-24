@@ -11,7 +11,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Coins-->
+        <!--View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
                 <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="Coin" customModuleProvider="target" sceneMemberID="viewController">
@@ -23,7 +23,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="rxk-Y1-I0R">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="rxk-Y1-I0R">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
@@ -47,7 +47,7 @@
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="-21.5%" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsLetterSpacingToFitWidth="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ao7-NJ-3or">
                                                             <rect key="frame" x="4" y="10" width="52" height="16"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                                                            <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                            <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                     </subviews>
@@ -113,7 +113,7 @@
                             <constraint firstItem="rxk-Y1-I0R" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="rUY-DQ-8g3"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="Coins" id="PoJ-hP-4Z7">
+                    <navigationItem key="navigationItem" id="PoJ-hP-4Z7">
                         <barButtonItem key="rightBarButtonItem" systemItem="edit" id="GGk-tY-aTY">
                             <connections>
                                 <segue destination="o5k-VV-imJ" kind="presentation" identifier="editSegue" id="3eg-RI-Azo"/>
@@ -128,7 +128,7 @@
             </objects>
             <point key="canvasLocation" x="3010" y="123"/>
         </scene>
-        <!--Cryptocurrency-->
+        <!--Edit-->
         <scene sceneID="vL4-Mh-18O">
             <objects>
                 <viewController id="s1A-aI-Skt" customClass="EditViewController" customModule="Coin" customModuleProvider="target" sceneMemberID="viewController">
@@ -140,7 +140,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="36" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="SYi-4h-oaE">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="SYi-4h-oaE">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="623"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </tableView>
@@ -164,7 +164,7 @@
                             <constraint firstItem="SEr-dU-pRp" firstAttribute="top" secondItem="SYi-4h-oaE" secondAttribute="bottom" constant="8" id="zFH-bR-xiz"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="Cryptocurrency" id="zNv-nx-6D7">
+                    <navigationItem key="navigationItem" title="Edit" id="zNv-nx-6D7">
                         <barButtonItem key="leftBarButtonItem" systemItem="add" id="zuL-0e-jqP">
                             <connections>
                                 <segue destination="kUp-GD-yrC" kind="presentation" identifier="addSegue" id="623-DX-vKc"/>
@@ -251,7 +251,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9t3-5m-gXD" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2662" y="1125"/>
+            <point key="canvasLocation" x="3009" y="835"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="Xmh-fE-fjj">
@@ -279,35 +279,10 @@
         <scene sceneID="sfg-x9-UdE">
             <objects>
                 <tableViewController id="C1j-e5-RAf" customClass="AddTableViewController" customModule="Coin" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="hbR-aN-vPM">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="hbR-aN-vPM">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="addCell" id="Lul-D3-CYc">
-                                <rect key="frame" x="0.0" y="28" width="375" height="44"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Lul-D3-CYc" id="TkA-8y-bXK">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                    <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RLZ-V3-ePv">
-                                            <rect key="frame" x="8" y="12" width="246" height="21"/>
-                                            <constraints>
-                                                <constraint firstAttribute="width" constant="246" id="Qot-rI-4KL"/>
-                                            </constraints>
-                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                            <nil key="textColor"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
-                                    </subviews>
-                                    <constraints>
-                                        <constraint firstItem="RLZ-V3-ePv" firstAttribute="centerY" secondItem="TkA-8y-bXK" secondAttribute="centerY" id="58W-GX-1MV"/>
-                                        <constraint firstItem="RLZ-V3-ePv" firstAttribute="leading" secondItem="TkA-8y-bXK" secondAttribute="leadingMargin" id="lnt-cM-gzm"/>
-                                    </constraints>
-                                </tableViewCellContentView>
-                            </tableViewCell>
-                        </prototypes>
                         <connections>
                             <outlet property="dataSource" destination="C1j-e5-RAf" id="VGJ-7V-4FJ"/>
                             <outlet property="delegate" destination="C1j-e5-RAf" id="i7q-SX-qgl"/>

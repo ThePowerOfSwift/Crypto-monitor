@@ -12,34 +12,44 @@ class EditViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     @IBOutlet weak var tableView: UITableView!
     
-    let id = ["bitcoin", "ethereum", "ethereum-classic", "karbowanec",]
+    var id : [String]?
    
     var ticker = [Ticker]()
     var cryptocurrency = [Ticker]()
     
-   
+    
+    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
         tableView.register(UINib(nibName: "EditCell", bundle: nil), forCellReuseIdentifier: "editCryptocurrency")
         
-        
-
-        print("open")
-        print(ticker.count)
-        for id in id {
-            if let tick = ticker.first(where: {$0.id == id}) {
-                cryptocurrency.append(tick)
-                print(tick.name)
-            }
-        }
-        
         tableView.delegate = self
         tableView.dataSource = self
         
         self.tableView.isEditing = true
+        cryptocurrencyView()
+    }
+    
+
+    func cryptocurrencyView() {
+        let keyStore = NSUbiquitousKeyValueStore ()
+        if let idArray = keyStore.array(forKey: "id") as? [String] {
+            
+            cryptocurrency.removeAll()
+            for id in idArray {
+                if let tick = ticker.first(where: {$0.id == id}) {
+                    cryptocurrency.append(tick)
+                }
+            }
+            tableView.reloadData()
+        }
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        cryptocurrencyView()
+    }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return cryptocurrency.count
@@ -58,6 +68,45 @@ class EditViewController: UIViewController, UITableViewDelegate, UITableViewData
 
         
         return cell
+    }
+    
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete{
+        print("Delete " + String(indexPath.row))
+            
+            let keyStore = NSUbiquitousKeyValueStore ()
+            
+         //   cryptocurrency.remove(at: indexPath.row)
+            
+            if var idArray = keyStore.array(forKey: "id") as? [String] {
+                
+                if let index = idArray.index(of: cryptocurrency[indexPath.row].id){
+                    idArray.remove(at: index)
+                    keyStore.set(idArray, forKey: "id")
+                    keyStore.synchronize()
+                }
+                cryptocurrencyView()
+            }
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
+       
+        let keyStore = NSUbiquitousKeyValueStore ()
+        
+        if var idArray = keyStore.array(forKey: "id") as? [String] {
+            
+            if let index = idArray.index(of: cryptocurrency[sourceIndexPath.row].id){
+                idArray.remove(at: index)
+                idArray.insert(cryptocurrency[sourceIndexPath.row].id, at: destinationIndexPath.row)
+                
+                keyStore.set(idArray, forKey: "id")
+                keyStore.synchronize()
+            }
+             //   cryptocurrencyView()
+        }
+        
     }
     
     @IBAction func Done(_ sender: Any) {

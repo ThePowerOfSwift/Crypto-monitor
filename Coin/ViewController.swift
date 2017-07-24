@@ -10,7 +10,8 @@ import UIKit
 
 class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
-    public var getTicker = [Ticker]()
+    var getTicker = [Ticker]()
+    var cryptocurrency = [Ticker]()
     var refreshControl: UIRefreshControl!
     weak var selectTicker : Ticker?
     var currentIndexPath: NSIndexPath?
@@ -22,29 +23,53 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         tableView.delegate = self
         tableView.dataSource = self
         
-        
-        
         refreshControl = UIRefreshControl()
         refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh")
         refreshControl.addTarget(self, action: #selector(self.refresh), for: UIControlEvents.valueChanged)
         tableView.addSubview(refreshControl)  // not required when using UITableViewController
         
         update()
-        /*
-         let locale = Locale.current
-         let currencySymbol = locale.currencySymbol!
-         let currencyCode = locale.currencyCode!
-         
-         print(currencySymbol)
-         print(currencyCode)
-         */
-        
-    }   
+    }
     
-    // MARK:  UITextFieldDelegate Methods
+    override func viewWillAppear(_ animated: Bool) {
+        if getTicker.isEmpty {
+            update()
+        }
+        else{
+            cryptocurrencyView()
+        }
+    }
+    
+    func cryptocurrencyView() {
+        let keyStore = NSUbiquitousKeyValueStore ()
+        
+        if let idArray = keyStore.array(forKey: "id") as? [String] {
+            
+            if !idArray.isEmpty{
+                cryptocurrency.removeAll()
+                for id in idArray {
+                    if let tick = getTicker.first(where: {$0.id == id}) {
+                        cryptocurrency.append(tick)
+                    }
+                }
+                tableView.reloadData()
+            }
+        }
+        else{
+            var idArray = [String]()
+            
+            for i in getTicker.prefix(10){
+                idArray.append(i.id)
+            }
+            keyStore.set(idArray, forKey: "id")
+            keyStore.synchronize()
+            
+            cryptocurrencyView()
+        }
+    }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return getTicker.count
+        return cryptocurrency.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -52,13 +77,13 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         
         let row = indexPath.row
         
-        let url = URL(string: "https://files.coinmarketcap.com/static/img/coins/32x32/\(getTicker[row].id).png")!
+        let url = URL(string: "https://files.coinmarketcap.com/static/img/coins/32x32/\(cryptocurrency[row].id).png")!
         cell.coinImageView.af_setImage(withURL: url)
-        cell.coinNameLabel.text = getTicker[row].name
-        cell.priceCoinLabel.text = String(getTicker[row].price_usd)
+        cell.coinNameLabel.text = cryptocurrency[row].name
+        cell.priceCoinLabel.text = String(cryptocurrency[row].price_usd)
         
-        if getTicker[row].percent_change_24h >= 0 {
-            cell.percentChange_24h_View.backgroundColor = UIColor.darkGray
+        if cryptocurrency[row].percent_change_24h >= 0 {
+            cell.percentChange_24h_View.backgroundColor = UIColor.green
             cell.percentChange_24h_View.alpha = 0.75
         }
         else{
@@ -66,18 +91,14 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             cell.percentChange_24h_View.alpha = 0.75
         }
         
-        cell.percent_change_24h_Label.text = String(getTicker[row].percent_change_24h) + "%"
-        
-        
-        
+        cell.percent_change_24h_Label.text = String(cryptocurrency[row].percent_change_24h) + "%"
+       
         return cell
 }
     
     func update() {
-        
         if !self.tableView.isEditing {
 
-            
             AlamofireRequest().getTicker(id : "sd", completion: { (ticker : [Ticker]?) in
 
                 if let ticker = ticker {
@@ -86,7 +107,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
                 
                 //update your table data here
                 DispatchQueue.main.async() {
-                    self.tableView.reloadData()
+                    self.cryptocurrencyView()
                 }
             })
         }
@@ -97,28 +118,13 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         update()
         refreshControl.endRefreshing()
     }
-    /*
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
-        currentIndexPath = indexPath as NSIndexPath
-        self.performSegue(withIdentifier: "cryptocurrencyInfoSegue", sender: nil)
-    }
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        
-        if segue.identifier == "cryptocurrencyInfoSegue" {
-            if let destinationVC = segue.destination as? CryptocurrencyInfoViewController {
-                destinationVC.coinName = getTicker[currentIndexPath?.row]
-            }
-        }
-    }
-    */
+
     // MARK: - Navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "cryptocurrencyInfoSegue" {
             if let CryptocurrencyInfoVC = segue.destination as? CryptocurrencyInfoViewController {
                 if let index = tableView.indexPathForSelectedRow?.row {
-                    CryptocurrencyInfoVC.ticker = getTicker[index]
+                    CryptocurrencyInfoVC.ticker = cryptocurrency[index]
                 }
             }
         }
@@ -129,13 +135,9 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
        
                 if let vc = navVC?.viewControllers.first as? EditViewController {
                     vc.ticker = getTicker
-                
             }
         }
-        
-
     }
-    
 }
 
 

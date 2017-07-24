@@ -42,6 +42,12 @@ class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
         let font = UIFont.systemFont(ofSize: 10)
         selectSegmentedControl.setTitleTextAttributes([NSFontAttributeName: font], for: .normal)
         
+        let keyStore = NSUbiquitousKeyValueStore ()
+        
+        selectSegmentedControl.selectedSegmentIndex = Int(keyStore.longLong(forKey: "typeChart"))
+        zoomSegmentedControl.selectedSegmentIndex = Int(keyStore.longLong(forKey: "zoomChart"))
+        
+        
         load()
     }
     
@@ -154,10 +160,16 @@ class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
     }
     
     @IBAction func selectIindexChanged(_ sender: UISegmentedControl) {
+        let keyStore = NSUbiquitousKeyValueStore ()
+        keyStore.set(selectSegmentedControl.selectedSegmentIndex, forKey: "typeChart")
+        keyStore.synchronize()
         lineView()
     }
     
     @IBAction func indexChanged(_ sender: UISegmentedControl) {
+        let keyStore = NSUbiquitousKeyValueStore ()
+        keyStore.set(zoomSegmentedControl.selectedSegmentIndex, forKey: "zoomChart")
+        keyStore.synchronize()
         load()
     }
 }
