@@ -21,6 +21,8 @@ class EditViewController: UIViewController, UITableViewDelegate, UITableViewData
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        tableView.register(UINib(nibName: "EditCell", bundle: nil), forCellReuseIdentifier: "editCryptocurrency")
+        
         
 
         print("open")
@@ -44,11 +46,16 @@ class EditViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "Coin", for: indexPath as IndexPath)
+        // let cell = tableView.dequeueReusableCell(withIdentifier: "addCell", for: indexPath) as! AddTableViewCell
+
+        let cell = tableView.dequeueReusableCell(withIdentifier: "editCryptocurrency", for: indexPath) as! EditTableViewCell
         
        let row = indexPath.row
         
-        cell.textLabel?.text = cryptocurrency[row].name
+        let url = URL(string: "https://files.coinmarketcap.com/static/img/coins/32x32/\(cryptocurrency[row].id).png")!
+        cell.cryptocurrencyImageView.af_setImage(withURL: url)
+        cell.cryptocurrencyNameLabel?.text = cryptocurrency[row].name
+
         
         return cell
     }
