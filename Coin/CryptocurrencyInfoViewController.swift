@@ -14,10 +14,19 @@ class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
     @IBOutlet weak var lineChartView: LineChartView!
     @IBOutlet weak var zoomSegmentedControl: UISegmentedControl!
     @IBOutlet weak var selectSegmentedControl: UISegmentedControl!
+    
+    @IBOutlet weak var imageView: UIImageView!
+    @IBOutlet weak var nameLabel: UILabel!
+    @IBOutlet weak var dataCurrencyLabel: UILabel!
+    @IBOutlet weak var dataCurrencyChangeLabel: UILabel!
+    @IBOutlet weak var dataSecondaryLabel: UILabel!
+    @IBOutlet weak var rankLabel: UILabel!
+    @IBOutlet weak var marketcapLabel: UILabel!
+    @IBOutlet weak var volumeLabel: UILabel!
+    
     var ticker : Ticker?
     
-    // let months = ["Jan" , "Feb", "Mar", "Apr", "May", "June", "July", "August", "Sept", "Oct", "Nov", "Dec"]
-    
+
     
     var currencyCharts: CurrencyCharts?
     
@@ -37,13 +46,43 @@ class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
         lineChartView.leftAxis.enabled = false
         lineChartView.legend.enabled = false
         lineChartView.scaleYEnabled = false
-      
         
         let font = UIFont.systemFont(ofSize: 10)
         selectSegmentedControl.setTitleTextAttributes([NSFontAttributeName: font], for: .normal)
         
-        let keyStore = NSUbiquitousKeyValueStore ()
         
+        if let ticker = ticker {
+            
+            let url = URL(string: "https://files.coinmarketcap.com/static/img/coins/64x64/\(ticker.id).png")!
+            imageView.af_setImage(withURL: url)
+            
+            nameLabel.text = "\(ticker.name) (\(ticker.symbol))"
+            dataCurrencyLabel.text = "\(ticker.price_usd) USD"
+            dataCurrencyChangeLabel.text = "(\(ticker.percent_change_24h)%)"
+            
+            if ticker.percent_change_24h >= 0 {
+                dataCurrencyChangeLabel.textColor = UIColor(red:0.30, green:0.85, blue:0.39, alpha:1.0)
+            }
+            else{
+                dataCurrencyChangeLabel.textColor = UIColor(red:1.00, green:0.23, blue:0.18, alpha:1.0)
+            }
+            
+            let formatter = NumberFormatter()
+            formatter.numberStyle = .decimal
+            formatter.maximumFractionDigits = 25
+            dataSecondaryLabel.text = formatter.string(from: ticker.price_btc as NSNumber)! + " BTC"
+            rankLabel.text = String(ticker.rank)
+            
+            marketcapLabel.minimumScaleFactor = 0.5
+            marketcapLabel.adjustsFontSizeToFitWidth = true
+            marketcapLabel.text = formatCurrency(value: ticker.market_cap_usd)
+            
+            volumeLabel.minimumScaleFactor = 0.5
+            volumeLabel.adjustsFontSizeToFitWidth = true
+            volumeLabel.text = formatCurrency(value: ticker.volume_usd_24h)
+        }
+        
+        let keyStore = NSUbiquitousKeyValueStore ()
         selectSegmentedControl.selectedSegmentIndex = Int(keyStore.longLong(forKey: "typeChart"))
         zoomSegmentedControl.selectedSegmentIndex = Int(keyStore.longLong(forKey: "zoomChart"))
         
@@ -171,6 +210,15 @@ class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
         keyStore.set(zoomSegmentedControl.selectedSegmentIndex, forKey: "zoomChart")
         keyStore.synchronize()
         load()
+    }
+    
+    func formatCurrency(value: Float) -> String {
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .currency
+        formatter.maximumFractionDigits = 2
+        formatter.locale = Locale(identifier: "en_US")
+        let result = formatter.string(from: value as NSNumber)
+        return result!
     }
 }
 
