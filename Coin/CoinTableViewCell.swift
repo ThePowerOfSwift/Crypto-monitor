@@ -13,15 +13,19 @@ class CoinTableViewCell: UITableViewCell {
     @IBOutlet weak var coinImageView: UIImageView!
     @IBOutlet weak var coinNameLabel: UILabel!
     @IBOutlet weak var priceCoinLabel: UILabel!
-    @IBOutlet weak var percentChange_24h_View: UIView!
-    @IBOutlet weak var percent_change_24h_Label: UILabel!
+    @IBOutlet weak var percentChangeView: UIView!
+    @IBOutlet weak var percentChangeLabel: UILabel!
 
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
         
-        percentChange_24h_View.layer.cornerRadius = 3
-        percentChange_24h_View.layer.masksToBounds = true
+        percentChangeView.layer.cornerRadius = 3
+        percentChangeView.layer.masksToBounds = true
+        
+        percentChangeLabel.numberOfLines = 1
+        percentChangeLabel.minimumScaleFactor = 0.5
+        percentChangeLabel.adjustsFontSizeToFitWidth = true
         
         
     }

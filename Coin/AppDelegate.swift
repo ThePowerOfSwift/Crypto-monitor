@@ -16,6 +16,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        
+        let keyStore = NSUbiquitousKeyValueStore ()
+        
+        if !keyStore.bool(forKey: "launchedBefore"){
+            
+            keyStore.set(1, forKey: "percentChange")
+            keyStore.set(1, forKey: "typeChart")
+            keyStore.set(1, forKey: "zoomChart")
+            keyStore.set(true, forKey: "launchedBefore")
+            keyStore.synchronize()
+        }
         return true
     }
 

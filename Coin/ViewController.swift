@@ -27,8 +27,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh")
         refreshControl.addTarget(self, action: #selector(self.refresh), for: UIControlEvents.valueChanged)
         tableView.addSubview(refreshControl)  // not required when using UITableViewController
-        
-        update()
+
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -80,19 +79,32 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         let url = URL(string: "https://files.coinmarketcap.com/static/img/coins/32x32/\(cryptocurrency[row].id).png")!
         cell.coinImageView.af_setImage(withURL: url)
         cell.coinNameLabel.text = cryptocurrency[row].name
+        
         cell.priceCoinLabel.text = String(cryptocurrency[row].price_usd)
         
-        if cryptocurrency[row].percent_change_24h >= 0 {
-            cell.percentChange_24h_View.backgroundColor = UIColor.green
-            cell.percentChange_24h_View.alpha = 0.75
-        }
-        else{
-            cell.percentChange_24h_View.backgroundColor = .red
-            cell.percentChange_24h_View.alpha = 0.75
+        
+        let keyStore = NSUbiquitousKeyValueStore ()
+        
+        var percentChange = Float()
+        
+        switch keyStore.longLong(forKey: "percentChange") {
+        case 0:
+            percentChange = cryptocurrency[row].percent_change_1h
+        case 1:
+            percentChange = cryptocurrency[row].percent_change_24h
+        case 2:
+            percentChange = cryptocurrency[row].percent_change_7d
+        default:
+            percentChange = cryptocurrency[row].percent_change_24h
         }
         
-        cell.percent_change_24h_Label.text = String(cryptocurrency[row].percent_change_24h) + "%"
-       
+        if percentChange >= 0 {
+            cell.percentChangeView.backgroundColor = UIColor(red:0.30, green:0.85, blue:0.39, alpha:1.0)
+        }
+        else{
+            cell.percentChangeView.backgroundColor = UIColor(red:1.00, green:0.23, blue:0.18, alpha:1.0)
+        }
+        cell.percentChangeLabel.text = String(percentChange) + " %"
         return cell
 }
     

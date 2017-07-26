@@ -52,6 +52,7 @@ class AddTableViewController: UITableViewController {
             ticker = self.ticker[row]
         }
         
+        cell.cryptocurrencyImageView.image = nil
         let url = URL(string: "https://files.coinmarketcap.com/static/img/coins/32x32/\(ticker.id).png")!
         cell.cryptocurrencyImageView.af_setImage(withURL: url)
         cell.cryptocurrencyNameLabel?.text = ticker.name
@@ -61,8 +62,6 @@ class AddTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let keyStore = NSUbiquitousKeyValueStore ()
         let row = indexPath.row
-        
-        
         
         let ticker: Ticker
         if searchController.isActive && searchController.searchBar.text != "" {

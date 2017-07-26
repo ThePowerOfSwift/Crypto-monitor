@@ -27,7 +27,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="coin" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="coin" rowHeight="60" id="Jo5-Np-2EU" customClass="CoinTableViewCell" customModule="Coin" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="coin" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="coin" rowHeight="60" id="Jo5-Np-2EU" customClass="CoinTableViewCell" customModule="Coin" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="375" height="60"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" userInteractionEnabled="NO" contentMode="center" tableViewCell="Jo5-Np-2EU" id="o4K-Ee-kjB">
@@ -42,34 +42,34 @@
                                                     </constraints>
                                                 </imageView>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cSh-X8-Pei">
-                                                    <rect key="frame" x="307" y="12" width="60" height="36"/>
+                                                    <rect key="frame" x="292" y="8" width="75" height="43.5"/>
                                                     <subviews>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="-21.5%" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsLetterSpacingToFitWidth="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ao7-NJ-3or">
-                                                            <rect key="frame" x="4" y="10" width="52" height="16"/>
-                                                            <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                                                            <nil key="textColor"/>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="top" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="-21.5%" textAlignment="right" lineBreakMode="tailTruncation" adjustsLetterSpacingToFitWidth="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ao7-NJ-3or">
+                                                            <rect key="frame" x="4" y="13" width="67" height="18"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                            <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                     </subviews>
-                                                    <color key="backgroundColor" red="0.0" green="1" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <color key="backgroundColor" red="0.29803921568627451" green="0.85490196078431369" blue="0.39215686274509803" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="width" constant="60" id="TRx-ES-ra2"/>
+                                                        <constraint firstItem="Ao7-NJ-3or" firstAttribute="centerY" secondItem="cSh-X8-Pei" secondAttribute="centerY" id="DrO-3H-hi9"/>
+                                                        <constraint firstAttribute="width" constant="75" id="TRx-ES-ra2"/>
                                                         <constraint firstAttribute="trailing" secondItem="Ao7-NJ-3or" secondAttribute="trailing" constant="4" id="a0j-3F-mhb"/>
                                                         <constraint firstItem="Ao7-NJ-3or" firstAttribute="leading" secondItem="cSh-X8-Pei" secondAttribute="leading" constant="4" id="a9R-e5-fOi"/>
-                                                        <constraint firstItem="Ao7-NJ-3or" firstAttribute="centerY" secondItem="cSh-X8-Pei" secondAttribute="centerY" id="zs1-85-FOD"/>
                                                     </constraints>
                                                 </view>
                                                 <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Uhl-Qt-paF">
-                                                    <rect key="frame" x="44" y="22" width="259" height="16"/>
+                                                    <rect key="frame" x="44" y="22" width="244" height="16"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="irD-DQ-Tia">
-                                                            <rect key="frame" x="0.0" y="0.0" width="129.5" height="16"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="122" height="16"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="0.75" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="23307.19" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UnM-29-xbU">
-                                                            <rect key="frame" x="129.5" y="0.0" width="129.5" height="16"/>
+                                                            <rect key="frame" x="122" y="0.0" width="122" height="16"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="0.75" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <nil key="highlightedColor"/>
@@ -81,10 +81,10 @@
                                                 <constraint firstItem="Uhl-Qt-paF" firstAttribute="leading" secondItem="N3f-mb-s3K" secondAttribute="trailing" constant="4" id="8Gd-t3-hSo"/>
                                                 <constraint firstItem="N3f-mb-s3K" firstAttribute="centerY" secondItem="o4K-Ee-kjB" secondAttribute="centerY" id="CH3-Hm-qAO"/>
                                                 <constraint firstItem="N3f-mb-s3K" firstAttribute="leading" secondItem="o4K-Ee-kjB" secondAttribute="leadingMargin" id="OjD-3u-jr4"/>
-                                                <constraint firstAttribute="bottomMargin" secondItem="cSh-X8-Pei" secondAttribute="bottom" constant="4" id="TI8-U5-z1k"/>
+                                                <constraint firstAttribute="bottomMargin" secondItem="cSh-X8-Pei" secondAttribute="bottom" id="TI8-U5-z1k"/>
                                                 <constraint firstItem="Uhl-Qt-paF" firstAttribute="centerY" secondItem="o4K-Ee-kjB" secondAttribute="centerY" id="X2x-qf-DNW"/>
                                                 <constraint firstItem="cSh-X8-Pei" firstAttribute="trailing" secondItem="o4K-Ee-kjB" secondAttribute="trailingMargin" id="i9x-q6-r3o"/>
-                                                <constraint firstItem="cSh-X8-Pei" firstAttribute="top" secondItem="o4K-Ee-kjB" secondAttribute="topMargin" constant="4" id="kHk-a4-4Rj"/>
+                                                <constraint firstItem="cSh-X8-Pei" firstAttribute="top" secondItem="o4K-Ee-kjB" secondAttribute="topMargin" id="kHk-a4-4Rj"/>
                                                 <constraint firstItem="cSh-X8-Pei" firstAttribute="leading" secondItem="Uhl-Qt-paF" secondAttribute="trailing" constant="4" id="nEh-9l-kFx"/>
                                             </constraints>
                                         </tableViewCellContentView>
@@ -92,8 +92,8 @@
                                         <connections>
                                             <outlet property="coinImageView" destination="N3f-mb-s3K" id="4vZ-jE-xZK"/>
                                             <outlet property="coinNameLabel" destination="irD-DQ-Tia" id="zaG-HH-qxj"/>
-                                            <outlet property="percentChange_24h_View" destination="cSh-X8-Pei" id="Yr4-D4-Vm2"/>
-                                            <outlet property="percent_change_24h_Label" destination="Ao7-NJ-3or" id="aiy-mF-bFR"/>
+                                            <outlet property="percentChangeLabel" destination="Ao7-NJ-3or" id="261-UX-lmg"/>
+                                            <outlet property="percentChangeView" destination="cSh-X8-Pei" id="FC6-u7-oKk"/>
                                             <outlet property="priceCoinLabel" destination="UnM-29-xbU" id="ghM-hG-7V5"/>
                                             <segue destination="2Ah-xt-ZDa" kind="show" identifier="cryptocurrencyInfoSegue" id="g6n-eT-sLT"/>
                                         </connections>
@@ -147,10 +147,14 @@
                             <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="SEr-dU-pRp">
                                 <rect key="frame" x="16" y="631" width="343" height="29"/>
                                 <segments>
-                                    <segment title="First"/>
-                                    <segment title="Second"/>
-                                    <segment title=""/>
+                                    <segment title="1h"/>
+                                    <segment title="24h"/>
+                                    <segment title="7d"/>
                                 </segments>
+                                <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <connections>
+                                    <action selector="percentIindexChanged:" destination="s1A-aI-Skt" eventType="valueChanged" id="yWx-oQ-Etk"/>
+                                </connections>
                             </segmentedControl>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -177,6 +181,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="percentChangeSegmentedControl" destination="SEr-dU-pRp" id="mPp-Wv-pvM"/>
                         <outlet property="tableView" destination="SYi-4h-oaE" id="6zv-Ue-0ig"/>
                     </connections>
                 </viewController>
@@ -215,7 +220,7 @@
                                     <action selector="indexChanged:" destination="2Ah-xt-ZDa" eventType="valueChanged" id="EBP-Yf-Ueq"/>
                                 </connections>
                             </segmentedControl>
-                            <segmentedControl opaque="NO" contentMode="center" contentHorizontalAlignment="fill" contentVerticalAlignment="fill" segmentControlStyle="plain" selectedSegmentIndex="1" translatesAutoresizingMaskIntoConstraints="NO" id="Y3q-Wh-tVv">
+                            <segmentedControl opaque="NO" contentMode="center" contentHorizontalAlignment="fill" contentVerticalAlignment="fill" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="Y3q-Wh-tVv">
                                 <rect key="frame" x="16" y="305.5" width="343" height="29"/>
                                 <segments>
                                     <segment title="Market Cap"/>

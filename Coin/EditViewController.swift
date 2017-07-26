@@ -11,17 +11,19 @@ import UIKit
 class EditViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var percentChangeSegmentedControl: UISegmentedControl!
     
     var id : [String]?
    
     var ticker = [Ticker]()
     var cryptocurrency = [Ticker]()
     
-    
-    
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        let keyStore = NSUbiquitousKeyValueStore ()
+        percentChangeSegmentedControl.selectedSegmentIndex = Int(keyStore.longLong(forKey: "percentChange"))
         
         tableView.register(UINib(nibName: "EditCell", bundle: nil), forCellReuseIdentifier: "editCryptocurrency")
         
@@ -107,6 +109,12 @@ class EditViewController: UIViewController, UITableViewDelegate, UITableViewData
              //   cryptocurrencyView()
         }
         
+    }
+    
+    @IBAction func percentIindexChanged(_ sender: UISegmentedControl) {
+        let keyStore = NSUbiquitousKeyValueStore ()
+        keyStore.set(percentChangeSegmentedControl.selectedSegmentIndex, forKey: "percentChange")
+        keyStore.synchronize()
     }
     
     @IBAction func Done(_ sender: Any) {
