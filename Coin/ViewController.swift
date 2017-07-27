@@ -16,6 +16,9 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     weak var selectTicker : Ticker?
     var currentIndexPath: NSIndexPath?
     
+     var loadSubview:LoadSubview?
+    
+    @IBOutlet weak var test: UINavigationItem!
     @IBOutlet weak var tableView: UITableView!
     
     override func viewDidLoad() {
@@ -27,6 +30,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh")
         refreshControl.addTarget(self, action: #selector(self.refresh), for: UIControlEvents.valueChanged)
         tableView.addSubview(refreshControl)  // not required when using UITableViewController
+
 
     }
     
@@ -106,10 +110,46 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         }
         cell.percentChangeLabel.text = String(percentChange) + " %"
         return cell
-}
+    }
+    
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView?
+    {
+        let headerView = tableView.dequeueReusableCell(withIdentifier: "header") as! HeaderTableViewCell
+        
+        let keyStore = NSUbiquitousKeyValueStore ()
+        
+        switch keyStore.longLong(forKey: "percentChange") {
+        case 0:
+            headerView.dataCurrencyLabel.text = "1h"
+        case 1:
+            headerView.dataCurrencyLabel.text = "24h"
+        case 2:
+            headerView.dataCurrencyLabel.text = "7d"
+        default:
+            headerView.dataCurrencyLabel.text = "-"
+        }
+        headerView.backgroundColor = UIColor.clear
+        let blurEffect = UIBlurEffect(style: .prominent)
+        let blurEffectView = UIVisualEffectView(effect: blurEffect)
+        blurEffectView.frame = self.view.frame
+        
+        headerView.insertSubview(blurEffectView, at: 0)
+        
+
+        
+        return headerView
+    }
+    
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat
+    {
+        return 20
+    }
     
     func update() {
         if !self.tableView.isEditing {
+            
+            showLoadSubview()
+            
 
             AlamofireRequest().getTicker(id : "sd", completion: { (ticker : [Ticker]?) in
 
@@ -120,6 +160,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
                 //update your table data here
                 DispatchQueue.main.async() {
                     self.cryptocurrencyView()
+                    self.closeLoadSubview()
                 }
             })
         }
@@ -130,6 +171,22 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         update()
         refreshControl.endRefreshing()
     }
+    
+    //MARK:LoadSubview
+    func showLoadSubview() {
+        closeLoadSubview()
+        self.loadSubview = LoadSubview(frame: CGRect(x: 0, y: 0, width: self.view.bounds.width, height: self.view.bounds.height))
+        self.view.addSubview(self.loadSubview!)
+    }
+    
+    func closeLoadSubview() {
+        for view in self.view.subviews {
+            if view is LoadSubview {
+                view.removeFromSuperview()
+            }
+        }
+    }
+    
 
     // MARK: - Navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

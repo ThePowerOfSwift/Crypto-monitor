@@ -106,7 +106,6 @@ class EditViewController: UIViewController, UITableViewDelegate, UITableViewData
                 keyStore.set(idArray, forKey: "id")
                 keyStore.synchronize()
             }
-             //   cryptocurrencyView()
         }
         
     }
@@ -132,6 +131,4 @@ class EditViewController: UIViewController, UITableViewDelegate, UITableViewData
             }
         }
     }
-
-    
 }
