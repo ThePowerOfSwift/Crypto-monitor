@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		1853CEF6208C355CD69D15AE /* Pods_Coin.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FCD523238B38757764B37DC3 /* Pods_Coin.framework */; };
+		FB466DDA1F2D479200D771C9 /* SettingTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB466DD91F2D479200D771C9 /* SettingTableViewController.swift */; };
+		FB4955241F2B627600169CB0 /* ErrorSubview.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB4955221F2B627600169CB0 /* ErrorSubview.swift */; };
+		FB4955251F2B627600169CB0 /* ErrorSubview.xib in Resources */ = {isa = PBXBuildFile; fileRef = FB4955231F2B627600169CB0 /* ErrorSubview.xib */; };
 		FB5326CB1F254A9400D9C498 /* EditTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB5326CA1F254A9400D9C498 /* EditTableViewCell.swift */; };
 		FB5326CE1F25576D00D9C498 /* EditCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FB5326CD1F25576D00D9C498 /* EditCell.xib */; };
 		FB670CE61F16D900005761CF /* CryptocurrencyInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB670CE51F16D900005761CF /* CryptocurrencyInfoViewController.swift */; };
@@ -28,6 +31,9 @@
 /* Begin PBXFileReference section */
 		5E0412321BFD16292136CF2A /* Pods-Coin.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Coin.release.xcconfig"; path = "Pods/Target Support Files/Pods-Coin/Pods-Coin.release.xcconfig"; sourceTree = "<group>"; };
 		D2644E3DDE8034D62D53ACCA /* Pods-Coin.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Coin.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Coin/Pods-Coin.debug.xcconfig"; sourceTree = "<group>"; };
+		FB466DD91F2D479200D771C9 /* SettingTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingTableViewController.swift; sourceTree = "<group>"; };
+		FB4955221F2B627600169CB0 /* ErrorSubview.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ErrorSubview.swift; sourceTree = "<group>"; };
+		FB4955231F2B627600169CB0 /* ErrorSubview.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ErrorSubview.xib; sourceTree = "<group>"; };
 		FB5326CA1F254A9400D9C498 /* EditTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditTableViewCell.swift; sourceTree = "<group>"; };
 		FB5326CD1F25576D00D9C498 /* EditCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EditCell.xib; sourceTree = "<group>"; };
 		FB670CE51F16D900005761CF /* CryptocurrencyInfoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CryptocurrencyInfoViewController.swift; sourceTree = "<group>"; };
@@ -78,6 +84,15 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		FB4955261F2B628600169CB0 /* ErrorSubview */ = {
+			isa = PBXGroup;
+			children = (
+				FB4955221F2B627600169CB0 /* ErrorSubview.swift */,
+				FB4955231F2B627600169CB0 /* ErrorSubview.xib */,
+			);
+			name = ErrorSubview;
+			sourceTree = "<group>";
+		};
 		FB5326CF1F2562FB00D9C498 /* Edit */ = {
 			isa = PBXGroup;
 			children = (
@@ -111,14 +126,16 @@
 				FB9592531F20B8AB00F9F74B /* Coin.entitlements */,
 				FBB2CC9B1F155CF800D800FD /* AppDelegate.swift */,
 				FBB2CC9D1F155CF800D800FD /* ViewController.swift */,
+				FBB2CCAD1F1564F200D800FD /* CoinTableViewCell.swift */,
 				FBD163E91F2A18F700F800E3 /* HeaderTableViewCell.swift */,
 				FB9592561F2116EE00F9F74B /* EditViewController.swift */,
 				FBD5ABE41F214CFA003A3AAC /* AddTableViewController.swift */,
-				FBD163EF1F2AA76500F800E3 /* LoadSubview */,
+				FB466DD91F2D479200D771C9 /* SettingTableViewController.swift */,
 				FB5326CF1F2562FB00D9C498 /* Edit */,
+				FBD163EF1F2AA76500F800E3 /* LoadSubview */,
+				FB4955261F2B628600169CB0 /* ErrorSubview */,
 				FB670CE51F16D900005761CF /* CryptocurrencyInfoViewController.swift */,
 				FBB2CC9F1F155CF800D800FD /* Main.storyboard */,
-				FBB2CCAD1F1564F200D800FD /* CoinTableViewCell.swift */,
 				FBB2CCAF1F156E4000D800FD /* AlamofireRequest.swift */,
 				FBB2CCA21F155CF800D800FD /* Assets.xcassets */,
 				FBB2CCA41F155CF800D800FD /* LaunchScreen.storyboard */,
@@ -130,8 +147,8 @@
 		FBD163EF1F2AA76500F800E3 /* LoadSubview */ = {
 			isa = PBXGroup;
 			children = (
-				FBD163EB1F2AA62E00F800E3 /* LoadSubview.xib */,
 				FBD163ED1F2AA75F00F800E3 /* LoadSubview.swift */,
+				FBD163EB1F2AA62E00F800E3 /* LoadSubview.xib */,
 			);
 			name = LoadSubview;
 			sourceTree = "<group>";
@@ -209,6 +226,7 @@
 			files = (
 				FBB2CCA61F155CF800D800FD /* LaunchScreen.storyboard in Resources */,
 				FBB2CCA31F155CF800D800FD /* Assets.xcassets in Resources */,
+				FB4955251F2B627600169CB0 /* ErrorSubview.xib in Resources */,
 				FBB2CCA11F155CF800D800FD /* Main.storyboard in Resources */,
 				FBD163EC1F2AA62E00F800E3 /* LoadSubview.xib in Resources */,
 				FB5326CE1F25576D00D9C498 /* EditCell.xib in Resources */,
@@ -270,6 +288,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FB466DDA1F2D479200D771C9 /* SettingTableViewController.swift in Sources */,
 				FBB2CCAE1F1564F200D800FD /* CoinTableViewCell.swift in Sources */,
 				FBD163EA1F2A18F700F800E3 /* HeaderTableViewCell.swift in Sources */,
 				FBD5ABE51F214CFA003A3AAC /* AddTableViewController.swift in Sources */,
@@ -277,6 +296,7 @@
 				FB9592571F2116EE00F9F74B /* EditViewController.swift in Sources */,
 				FBB2CC9E1F155CF800D800FD /* ViewController.swift in Sources */,
 				FB5326CB1F254A9400D9C498 /* EditTableViewCell.swift in Sources */,
+				FB4955241F2B627600169CB0 /* ErrorSubview.swift in Sources */,
 				FBD163EE1F2AA75F00F800E3 /* LoadSubview.swift in Sources */,
 				FBB2CCB01F156E4000D800FD /* AlamofireRequest.swift in Sources */,
 				FBB2CC9C1F155CF800D800FD /* AppDelegate.swift in Sources */,

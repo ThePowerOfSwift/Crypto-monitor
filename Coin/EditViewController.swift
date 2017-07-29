@@ -74,9 +74,7 @@ class EditViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete{
-        print("Delete " + String(indexPath.row))
-            
+        if editingStyle == .delete{          
             let keyStore = NSUbiquitousKeyValueStore ()
             
          //   cryptocurrency.remove(at: indexPath.row)

@@ -11,6 +11,91 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
+        <!--Setting-->
+        <scene sceneID="vLu-Jo-9tw">
+            <objects>
+                <tableViewController id="mSk-LG-rjD" customClass="SettingTableViewController" customModule="Coin" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="static" style="grouped" separatorStyle="none" allowsSelection="NO" rowHeight="44" sectionHeaderHeight="18" sectionFooterHeight="18" id="dTI-Sp-KRs">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                        <sections>
+                            <tableViewSection headerTitle="Percent change period" id="uMW-aC-8Ll">
+                                <cells>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="ICd-ip-jyH">
+                                        <rect key="frame" x="0.0" y="55.5" width="375" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ICd-ip-jyH" id="qi5-yv-FDd">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="EKk-hl-QzT">
+                                                    <rect key="frame" x="8" y="8" width="359" height="29"/>
+                                                    <segments>
+                                                        <segment title="1h"/>
+                                                        <segment title="24h"/>
+                                                        <segment title="7d"/>
+                                                    </segments>
+                                                    <connections>
+                                                        <action selector="percentIindexChanged:" destination="s1A-aI-Skt" eventType="valueChanged" id="2jN-yZ-dvg"/>
+                                                        <action selector="percentIindexChanged:" destination="mSk-LG-rjD" eventType="valueChanged" id="v6X-GW-A0L"/>
+                                                    </connections>
+                                                </segmentedControl>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="EKk-hl-QzT" firstAttribute="trailing" secondItem="qi5-yv-FDd" secondAttribute="trailingMargin" id="0II-Yq-1bM"/>
+                                                <constraint firstItem="EKk-hl-QzT" firstAttribute="leading" secondItem="qi5-yv-FDd" secondAttribute="leadingMargin" id="Xv0-wY-pHc"/>
+                                                <constraint firstItem="EKk-hl-QzT" firstAttribute="centerY" secondItem="qi5-yv-FDd" secondAttribute="centerY" id="glB-tt-94B"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
+                            <tableViewSection headerTitle="Price" id="tyt-ZY-uLd">
+                                <cells>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="w4O-Uz-IQo">
+                                        <rect key="frame" x="0.0" y="155.5" width="375" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="w4O-Uz-IQo" id="E1r-Oh-52f">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="AUk-9u-q0O">
+                                                    <rect key="frame" x="8" y="8" width="359" height="29"/>
+                                                    <segments>
+                                                        <segment title="USD"/>
+                                                        <segment title="BTC"/>
+                                                    </segments>
+                                                    <connections>
+                                                        <action selector="priceIindexCurrency:" destination="mSk-LG-rjD" eventType="valueChanged" id="sTP-Qm-7N1"/>
+                                                    </connections>
+                                                </segmentedControl>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="AUk-9u-q0O" firstAttribute="trailing" secondItem="E1r-Oh-52f" secondAttribute="trailingMargin" id="157-bO-Tr0"/>
+                                                <constraint firstItem="AUk-9u-q0O" firstAttribute="centerY" secondItem="E1r-Oh-52f" secondAttribute="centerY" id="kfv-Ev-ZFv"/>
+                                                <constraint firstItem="AUk-9u-q0O" firstAttribute="leading" secondItem="E1r-Oh-52f" secondAttribute="leadingMargin" id="lgh-JZ-VmL"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
+                        </sections>
+                        <connections>
+                            <outlet property="dataSource" destination="mSk-LG-rjD" id="4uz-Or-TJL"/>
+                            <outlet property="delegate" destination="mSk-LG-rjD" id="IgG-kM-BWf"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="Setting" id="a5a-yk-s2O"/>
+                    <connections>
+                        <outlet property="percentChangeSegmentedControl" destination="EKk-hl-QzT" id="0OK-2U-leo"/>
+                        <outlet property="priceCurrencySegmentedControl" destination="AUk-9u-q0O" id="sP1-D8-roH"/>
+                    </connections>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="DAm-mD-TBY" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3408.8000000000002" y="-595.05247376311854"/>
+        </scene>
         <!--View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
@@ -27,7 +112,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="header" rowHeight="20" id="34h-zZ-Zr2" customClass="HeaderTableViewCell" customModule="Coin" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="header" rowHeight="20" id="34h-zZ-Zr2" customClass="HeaderTableViewCell" customModule="Coin" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="375" height="20"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="34h-zZ-Zr2" id="fLX-Wa-CJa">
@@ -41,7 +126,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="24h" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OY8-Ok-g04">
-                                                    <rect key="frame" x="309.5" y="1.5" width="40" height="16"/>
+                                                    <rect key="frame" x="310" y="1.5" width="40" height="16"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="40" id="zDW-Li-cOI"/>
                                                     </constraints>
@@ -88,7 +173,7 @@
                                                         <constraint firstAttribute="width" constant="32" id="5yf-cJ-er9"/>
                                                     </constraints>
                                                 </imageView>
-                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cSh-X8-Pei">
+                                                <view contentMode="center" translatesAutoresizingMaskIntoConstraints="NO" id="cSh-X8-Pei">
                                                     <rect key="frame" x="292" y="8" width="75" height="43.5"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="top" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="-21.5%" textAlignment="right" lineBreakMode="tailTruncation" adjustsLetterSpacingToFitWidth="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ao7-NJ-3or">
@@ -99,6 +184,7 @@
                                                         </label>
                                                     </subviews>
                                                     <color key="backgroundColor" red="0.29803921568627451" green="0.85490196078431369" blue="0.39215686274509803" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <gestureRecognizers/>
                                                     <constraints>
                                                         <constraint firstItem="Ao7-NJ-3or" firstAttribute="centerY" secondItem="cSh-X8-Pei" secondAttribute="centerY" id="DrO-3H-hi9"/>
                                                         <constraint firstAttribute="width" constant="75" id="TRx-ES-ra2"/>
@@ -161,6 +247,12 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="PoJ-hP-4Z7">
+                        <barButtonItem key="leftBarButtonItem" title="Item" id="Krl-iU-Y4y">
+                            <connections>
+                                <action selector="setting:" destination="BYZ-38-t0r" id="Lla-lc-C5M"/>
+                                <segue destination="mSk-LG-rjD" kind="show" identifier="settingSegue" id="eVj-9g-uFX"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="edit" id="GGk-tY-aTY">
                             <connections>
                                 <segue destination="o5k-VV-imJ" kind="presentation" identifier="editSegue" id="3eg-RI-Azo"/>
@@ -174,7 +266,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3409" y="123"/>
+            <point key="canvasLocation" x="3408.8000000000002" y="122.78860569715144"/>
         </scene>
         <!--Edit-->
         <scene sceneID="vL4-Mh-18O">

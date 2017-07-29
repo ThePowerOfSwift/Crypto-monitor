@@ -90,9 +90,10 @@ class Ticker{
 
 class AlamofireRequest {
 
-    func getTicker(id: String, completion: @escaping  ([Ticker]) -> ()) {
+    func getTicker(completion: @escaping  ([Ticker]?, Error?) -> ()) {
         
         var tickerArray = [Ticker]()
+        var error:Error?
         
 
         Alamofire.request("https://api.coinmarketcap.com/v1/ticker/").validate().responseJSON { response in
@@ -119,10 +120,10 @@ class AlamofireRequest {
                                               percent_change_7d: item["percent_change_7d"].floatValue,
                                               last_updated: item["last_updated"].intValue))
                 }
-            case .failure(let error):
-                print(error)
+            case .failure(let errorFailure):
+                error = errorFailure
             }
-            completion(tickerArray)
+            completion(tickerArray, error)
         }
     }
     

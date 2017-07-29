@@ -16,7 +16,8 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     weak var selectTicker : Ticker?
     var currentIndexPath: NSIndexPath?
     
-     var loadSubview:LoadSubview?
+    var loadSubview:LoadSubview?
+    var errorSubview:ErrorSubview?
     
     @IBOutlet weak var test: UINavigationItem!
     @IBOutlet weak var tableView: UITableView!
@@ -27,7 +28,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         tableView.dataSource = self
         
         refreshControl = UIRefreshControl()
-        refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh")
+        //refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh")
         refreshControl.addTarget(self, action: #selector(self.refresh), for: UIControlEvents.valueChanged)
         tableView.addSubview(refreshControl)  // not required when using UITableViewController
 
@@ -36,7 +37,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     override func viewWillAppear(_ animated: Bool) {
         if getTicker.isEmpty {
-            update()
+            load()
         }
         else{
             cryptocurrencyView()
@@ -44,19 +45,26 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     }
     
     func cryptocurrencyView() {
+        
+        self.refreshControl.endRefreshing()
+        for view in self.view.subviews {
+            if (view is LoadSubview || view is ErrorSubview) {
+                view.removeFromSuperview()
+            }
+        }
+        cryptocurrency.removeAll()
+        
         let keyStore = NSUbiquitousKeyValueStore ()
         
         if let idArray = keyStore.array(forKey: "id") as? [String] {
-            
             if !idArray.isEmpty{
-                cryptocurrency.removeAll()
                 for id in idArray {
                     if let tick = getTicker.first(where: {$0.id == id}) {
                         cryptocurrency.append(tick)
                     }
                 }
-                tableView.reloadData()
             }
+            tableView.reloadData()
         }
         else{
             var idArray = [String]()
@@ -111,6 +119,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         cell.percentChangeLabel.text = String(percentChange) + " %"
         return cell
     }
+
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView?
     {
@@ -145,31 +154,39 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         return 20
     }
     
-    func update() {
-        if !self.tableView.isEditing {
-            
-            showLoadSubview()
-            
 
-            AlamofireRequest().getTicker(id : "sd", completion: { (ticker : [Ticker]?) in
-
+    
+    func loadTicker() {
+        AlamofireRequest().getTicker(completion: { (ticker : [Ticker]?, error : Error?) in
+            if error == nil {
                 if let ticker = ticker {
                     self.getTicker = ticker
                 }
-                
                 //update your table data here
                 DispatchQueue.main.async() {
                     self.cryptocurrencyView()
-                    self.closeLoadSubview()
                 }
-            })
-        }
+            }
+            else{
+                self.showErrorSubview(error: error!)
+            }
+        })
+    }
+    
+    func load() {
+        showLoadSubview()
+        loadTicker()
     }
     
     func refresh(sender:AnyObject) {
         // Code to refresh table view
-        update()
-        refreshControl.endRefreshing()
+        loadTicker()
+        
+        
+    }
+    
+    func reload(_ sender:UIButton) {
+        loadTicker()
     }
     
     //MARK:LoadSubview
@@ -187,7 +204,47 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         }
     }
     
+    //MARK: ErrorSubview
+    func showErrorSubview(error: Error) {
+        closeErrorSubview()
+        
+        self.errorSubview = ErrorSubview(frame: CGRect(x: 0, y: 0, width: self.view.bounds.width, height: self.view.bounds.height))
+        
+        if !UIAccessibilityIsReduceTransparencyEnabled() {
+            self.errorSubview?.backgroundColor = UIColor.clear
+            
+            let blurEffect = UIBlurEffect(style: .prominent)
+            let blurEffectView = UIVisualEffectView(effect: blurEffect)
+            //always fill the view
+            blurEffectView.frame = self.view.bounds
+            blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+            
+            self.errorSubview?.insertSubview(blurEffectView, at: 0) //if you have more UIViews, use an insertSubview API to place it where needed
+        } else {
+            self.errorSubview?.backgroundColor = UIColor.black
+        }
+        
+        
+        
+        self.errorSubview?.errorStringLabel.text = error.localizedDescription
+        self.errorSubview?.reloadPressed.addTarget(self, action: #selector(reload(_:)), for: UIControlEvents.touchUpInside)
 
+        self.view.addSubview(self.errorSubview!)
+    }
+    
+    func closeErrorSubview() {
+        for view in self.view.subviews {
+            if view is ErrorSubview {
+                view.removeFromSuperview()
+            }
+        }
+    }
+
+    @IBAction func setting(_ sender: Any) {
+        
+    }
+    
+    
     // MARK: - Navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "cryptocurrencyInfoSegue" {
