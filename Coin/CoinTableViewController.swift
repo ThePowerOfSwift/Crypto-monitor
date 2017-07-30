@@ -1,38 +1,29 @@
 //
-//  ViewController.swift
+//  CoinTableViewController.swift
 //  Coin
 //
-//  Created by Mialin Valentin on 11.07.17.
+//  Created by Mialin Valentin on 31.07.17.
 //  Copyright © 2017 Mialin Valentyn. All rights reserved.
 //
 
 import UIKit
 
-class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class CoinTableViewController: UITableViewController {
     
     var getTicker = [Ticker]()
     var cryptocurrency = [Ticker]()
-    var refreshControl: UIRefreshControl!
+
     weak var selectTicker : Ticker?
     var currentIndexPath: NSIndexPath?
     
     var loadSubview:LoadSubview?
     var errorSubview:ErrorSubview?
-    
-    @IBOutlet weak var test: UINavigationItem!
-    @IBOutlet weak var tableView: UITableView!
-    
+
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        tableView.delegate = self
-        tableView.dataSource = self
-        
-        refreshControl = UIRefreshControl()
-        //refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh")
-        refreshControl.addTarget(self, action: #selector(self.refresh), for: UIControlEvents.valueChanged)
-        tableView.addSubview(refreshControl)  // not required when using UITableViewController
 
-
+        self.refreshControl?.addTarget(self, action: #selector(self.refresh), for: UIControlEvents.valueChanged)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -43,47 +34,15 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             cryptocurrencyView()
         }
     }
-    
-    func cryptocurrencyView() {
-        
-        self.refreshControl.endRefreshing()
-        for view in self.view.subviews {
-            if (view is LoadSubview || view is ErrorSubview) {
-                view.removeFromSuperview()
-            }
-        }
-        cryptocurrency.removeAll()
-        
-        let keyStore = NSUbiquitousKeyValueStore ()
-        
-        if let idArray = keyStore.array(forKey: "id") as? [String] {
-            if !idArray.isEmpty{
-                for id in idArray {
-                    if let tick = getTicker.first(where: {$0.id == id}) {
-                        cryptocurrency.append(tick)
-                    }
-                }
-            }
-            tableView.reloadData()
-        }
-        else{
-            var idArray = [String]()
-            
-            for i in getTicker.prefix(10){
-                idArray.append(i.id)
-            }
-            keyStore.set(idArray, forKey: "id")
-            keyStore.synchronize()
-            
-            cryptocurrencyView()
-        }
-    }
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+
+
+
+    // MARK: - Table view data source
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return cryptocurrency.count
     }
     
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "coin", for: indexPath as IndexPath) as! CoinTableViewCell
         
         let row = indexPath.row
@@ -92,7 +51,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         cell.coinImageView.af_setImage(withURL: url)
         cell.coinNameLabel.text = cryptocurrency[row].name
         
-         let keyStore = NSUbiquitousKeyValueStore ()
+        let keyStore = NSUbiquitousKeyValueStore ()
         
         
         
@@ -109,7 +68,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         default:
             break
         }
-
+        
         var percentChange = Float()
         
         switch keyStore.longLong(forKey: "percentChange") {
@@ -132,9 +91,9 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         cell.percentChangeLabel.text = String(percentChange) + " %"
         return cell
     }
-
     
-    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView?
+    
+    override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView?
     {
         let headerView = tableView.dequeueReusableCell(withIdentifier: "header") as! HeaderTableViewCell
         
@@ -166,17 +125,54 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         blurEffectView.frame = self.view.frame
         
         headerView.insertSubview(blurEffectView, at: 0)
-
+        
         return headerView
     }
     
-    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat
+    override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat
     {
         return 20
     }
     
+    func cryptocurrencyView() {
+           
+        UIView.animate(withDuration: 0.5) {
+            self.refreshControl?.endRefreshing()
+        }
+        
+        
+        for view in self.view.subviews {
+            if (view is LoadSubview || view is ErrorSubview) {
+                view.removeFromSuperview()
+            }
+        }
+        cryptocurrency.removeAll()
+        
+        let keyStore = NSUbiquitousKeyValueStore ()
+        
+        if let idArray = keyStore.array(forKey: "id") as? [String] {
+            if !idArray.isEmpty{
+                for id in idArray {
+                    if let tick = getTicker.first(where: {$0.id == id}) {
+                        cryptocurrency.append(tick)
+                    }
+                }
+            }
+            tableView.reloadData()
+        }
+        else{
+            var idArray = [String]()
+            
+            for i in getTicker.prefix(10){
+                idArray.append(i.id)
+            }
+            keyStore.set(idArray, forKey: "id")
+            keyStore.synchronize()
+            
+            cryptocurrencyView()
+        }
+    }
 
-    
     func loadTicker() {
         AlamofireRequest().getTicker(completion: { (ticker : [Ticker]?, error : Error?) in
             if error == nil {
@@ -249,7 +245,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         
         self.errorSubview?.errorStringLabel.text = error.localizedDescription
         self.errorSubview?.reloadPressed.addTarget(self, action: #selector(reload(_:)), for: UIControlEvents.touchUpInside)
-
+        
         self.view.addSubview(self.errorSubview!)
     }
     
@@ -260,7 +256,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             }
         }
     }
-
+    
     @IBAction func setting(_ sender: Any) {
         
     }
@@ -279,13 +275,12 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         if segue.identifier == "editSegue" {
             
             let navVC = segue.destination as? UINavigationController
-       
-                if let vc = navVC?.viewControllers.first as? EditViewController {
-                    vc.ticker = getTicker
+            
+            if let vc = navVC?.viewControllers.first as? EditViewController {
+                vc.ticker = getTicker
             }
         }
     }
+
+
 }
-
-
-

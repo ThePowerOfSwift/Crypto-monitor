@@ -15,8 +15,8 @@
 		FB5326CE1F25576D00D9C498 /* EditCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FB5326CD1F25576D00D9C498 /* EditCell.xib */; };
 		FB670CE61F16D900005761CF /* CryptocurrencyInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB670CE51F16D900005761CF /* CryptocurrencyInfoViewController.swift */; };
 		FB9592571F2116EE00F9F74B /* EditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB9592561F2116EE00F9F74B /* EditViewController.swift */; };
+		FBA7760D1F2E884D00122D83 /* CoinTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBA7760C1F2E884D00122D83 /* CoinTableViewController.swift */; };
 		FBB2CC9C1F155CF800D800FD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBB2CC9B1F155CF800D800FD /* AppDelegate.swift */; };
-		FBB2CC9E1F155CF800D800FD /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBB2CC9D1F155CF800D800FD /* ViewController.swift */; };
 		FBB2CCA11F155CF800D800FD /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FBB2CC9F1F155CF800D800FD /* Main.storyboard */; };
 		FBB2CCA31F155CF800D800FD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FBB2CCA21F155CF800D800FD /* Assets.xcassets */; };
 		FBB2CCA61F155CF800D800FD /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FBB2CCA41F155CF800D800FD /* LaunchScreen.storyboard */; };
@@ -39,9 +39,9 @@
 		FB670CE51F16D900005761CF /* CryptocurrencyInfoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CryptocurrencyInfoViewController.swift; sourceTree = "<group>"; };
 		FB9592531F20B8AB00F9F74B /* Coin.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Coin.entitlements; sourceTree = "<group>"; };
 		FB9592561F2116EE00F9F74B /* EditViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditViewController.swift; sourceTree = "<group>"; };
+		FBA7760C1F2E884D00122D83 /* CoinTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoinTableViewController.swift; sourceTree = "<group>"; };
 		FBB2CC981F155CF800D800FD /* Coin.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Coin.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FBB2CC9B1F155CF800D800FD /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		FBB2CC9D1F155CF800D800FD /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		FBB2CCA01F155CF800D800FD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		FBB2CCA21F155CF800D800FD /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		FBB2CCA51F155CF800D800FD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -125,7 +125,7 @@
 			children = (
 				FB9592531F20B8AB00F9F74B /* Coin.entitlements */,
 				FBB2CC9B1F155CF800D800FD /* AppDelegate.swift */,
-				FBB2CC9D1F155CF800D800FD /* ViewController.swift */,
+				FBA7760C1F2E884D00122D83 /* CoinTableViewController.swift */,
 				FBB2CCAD1F1564F200D800FD /* CoinTableViewCell.swift */,
 				FBD163E91F2A18F700F800E3 /* HeaderTableViewCell.swift */,
 				FB9592561F2116EE00F9F74B /* EditViewController.swift */,
@@ -294,11 +294,11 @@
 				FBD5ABE51F214CFA003A3AAC /* AddTableViewController.swift in Sources */,
 				FB670CE61F16D900005761CF /* CryptocurrencyInfoViewController.swift in Sources */,
 				FB9592571F2116EE00F9F74B /* EditViewController.swift in Sources */,
-				FBB2CC9E1F155CF800D800FD /* ViewController.swift in Sources */,
 				FB5326CB1F254A9400D9C498 /* EditTableViewCell.swift in Sources */,
 				FB4955241F2B627600169CB0 /* ErrorSubview.swift in Sources */,
 				FBD163EE1F2AA75F00F800E3 /* LoadSubview.swift in Sources */,
 				FBB2CCB01F156E4000D800FD /* AlamofireRequest.swift in Sources */,
+				FBA7760D1F2E884D00122D83 /* CoinTableViewController.swift in Sources */,
 				FBB2CC9C1F155CF800D800FD /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
