@@ -11,6 +11,7 @@ import UIKit
 class HeaderTableViewCell: UITableViewCell {
 
     @IBOutlet weak var dataCurrencyLabel: UILabel!
+    @IBOutlet weak var priceLabel: UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()

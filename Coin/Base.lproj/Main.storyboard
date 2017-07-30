@@ -23,7 +23,7 @@
                             <tableViewSection headerTitle="Percent change period" id="uMW-aC-8Ll">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="ICd-ip-jyH">
-                                        <rect key="frame" x="0.0" y="55.5" width="375" height="44"/>
+                                        <rect key="frame" x="0.0" y="56" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ICd-ip-jyH" id="qi5-yv-FDd">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
@@ -36,6 +36,7 @@
                                                         <segment title="24h"/>
                                                         <segment title="7d"/>
                                                     </segments>
+                                                    <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <connections>
                                                         <action selector="percentIindexChanged:" destination="s1A-aI-Skt" eventType="valueChanged" id="2jN-yZ-dvg"/>
                                                         <action selector="percentIindexChanged:" destination="mSk-LG-rjD" eventType="valueChanged" id="v6X-GW-A0L"/>
@@ -54,7 +55,7 @@
                             <tableViewSection headerTitle="Price" id="tyt-ZY-uLd">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="w4O-Uz-IQo">
-                                        <rect key="frame" x="0.0" y="155.5" width="375" height="44"/>
+                                        <rect key="frame" x="0.0" y="156" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="w4O-Uz-IQo" id="E1r-Oh-52f">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
@@ -66,6 +67,7 @@
                                                         <segment title="USD"/>
                                                         <segment title="BTC"/>
                                                     </segments>
+                                                    <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <connections>
                                                         <action selector="priceIindexCurrency:" destination="mSk-LG-rjD" eventType="valueChanged" id="sTP-Qm-7N1"/>
                                                     </connections>
@@ -119,8 +121,8 @@
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="20"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Cryptocurrency name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KKg-wD-WMV">
-                                                    <rect key="frame" x="44" y="2.5" width="196" height="16"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KKg-wD-WMV">
+                                                    <rect key="frame" x="44" y="2.5" width="161" height="16"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
@@ -135,9 +137,9 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Price" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ctX-Lo-wfE">
-                                                    <rect key="frame" x="248" y="1.5" width="40" height="16"/>
+                                                    <rect key="frame" x="213" y="1.5" width="75" height="16"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="width" constant="40" id="0Fm-BM-xWA"/>
+                                                        <constraint firstAttribute="width" constant="75" id="0Fm-BM-xWA"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                                     <nil key="textColor"/>
@@ -157,6 +159,7 @@
                                         <color key="backgroundColor" white="1" alpha="0.84914206288343563" colorSpace="calibratedWhite"/>
                                         <connections>
                                             <outlet property="dataCurrencyLabel" destination="OY8-Ok-g04" id="tR9-V9-jIG"/>
+                                            <outlet property="priceLabel" destination="ctX-Lo-wfE" id="OxS-UJ-6qC"/>
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="coin" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="coin" rowHeight="60" id="Jo5-Np-2EU" customClass="CoinTableViewCell" customModule="Coin" customModuleProvider="target">
@@ -192,7 +195,7 @@
                                                         <constraint firstItem="Ao7-NJ-3or" firstAttribute="leading" secondItem="cSh-X8-Pei" secondAttribute="leading" constant="4" id="a9R-e5-fOi"/>
                                                     </constraints>
                                                 </view>
-                                                <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Uhl-Qt-paF">
+                                                <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="Uhl-Qt-paF">
                                                     <rect key="frame" x="44" y="22" width="244" height="16"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="irD-DQ-Tia">
@@ -247,7 +250,7 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="PoJ-hP-4Z7">
-                        <barButtonItem key="leftBarButtonItem" title="Item" id="Krl-iU-Y4y">
+                        <barButtonItem key="leftBarButtonItem" title="Setting" id="Krl-iU-Y4y">
                             <connections>
                                 <action selector="setting:" destination="BYZ-38-t0r" id="Lla-lc-C5M"/>
                                 <segue destination="mSk-LG-rjD" kind="show" identifier="settingSegue" id="eVj-9g-uFX"/>
@@ -281,31 +284,16 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="SYi-4h-oaE">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="623"/>
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </tableView>
-                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="SEr-dU-pRp">
-                                <rect key="frame" x="16" y="631" width="343" height="29"/>
-                                <segments>
-                                    <segment title="1h"/>
-                                    <segment title="24h"/>
-                                    <segment title="7d"/>
-                                </segments>
-                                <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <connections>
-                                    <action selector="percentIindexChanged:" destination="s1A-aI-Skt" eventType="valueChanged" id="yWx-oQ-Etk"/>
-                                </connections>
-                            </segmentedControl>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="SYi-4h-oaE" firstAttribute="leading" secondItem="6Rc-ar-1rn" secondAttribute="leading" id="2Rr-Rl-OQk"/>
                             <constraint firstAttribute="trailing" secondItem="SYi-4h-oaE" secondAttribute="trailing" id="LLh-y9-uiZ"/>
-                            <constraint firstItem="8AQ-Jo-dwg" firstAttribute="top" secondItem="SEr-dU-pRp" secondAttribute="bottom" constant="8" id="T4U-BM-nrH"/>
+                            <constraint firstItem="8AQ-Jo-dwg" firstAttribute="top" secondItem="SYi-4h-oaE" secondAttribute="bottom" id="O3i-8B-1Uv"/>
                             <constraint firstItem="SYi-4h-oaE" firstAttribute="top" secondItem="6Rc-ar-1rn" secondAttribute="top" id="gYE-Wj-7G8"/>
-                            <constraint firstItem="SEr-dU-pRp" firstAttribute="leading" secondItem="6Rc-ar-1rn" secondAttribute="leadingMargin" id="qJO-h4-UIe"/>
-                            <constraint firstItem="SEr-dU-pRp" firstAttribute="trailing" secondItem="6Rc-ar-1rn" secondAttribute="trailingMargin" id="tXR-Qg-i50"/>
-                            <constraint firstItem="SEr-dU-pRp" firstAttribute="top" secondItem="SYi-4h-oaE" secondAttribute="bottom" constant="8" id="zFH-bR-xiz"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Edit" id="zNv-nx-6D7">
@@ -321,13 +309,12 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="percentChangeSegmentedControl" destination="SEr-dU-pRp" id="mPp-Wv-pvM"/>
                         <outlet property="tableView" destination="SYi-4h-oaE" id="6zv-Ue-0ig"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ROR-pn-Sce" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4834" y="122"/>
+            <point key="canvasLocation" x="4832.8000000000002" y="121.88905547226388"/>
         </scene>
         <!--Cryptocurrency Info View Controller-->
         <scene sceneID="Apo-J2-FXb">

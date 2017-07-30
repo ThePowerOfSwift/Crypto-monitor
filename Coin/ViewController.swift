@@ -92,11 +92,24 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         cell.coinImageView.af_setImage(withURL: url)
         cell.coinNameLabel.text = cryptocurrency[row].name
         
-        cell.priceCoinLabel.text = String(cryptocurrency[row].price_usd)
+         let keyStore = NSUbiquitousKeyValueStore ()
         
         
-        let keyStore = NSUbiquitousKeyValueStore ()
         
+        switch keyStore.longLong(forKey: "priceCurrency") {
+        case 0:
+            cell.priceCoinLabel.text = CryptocurrencyInfoViewController().formatCurrency(value: cryptocurrency[row].price_usd)
+            
+        case 1:
+            let formatter = NumberFormatter()
+            formatter.numberStyle = .decimal
+            formatter.maximumFractionDigits = 25
+            
+            cell.priceCoinLabel.text = "₿" + formatter.string(from: cryptocurrency[row].price_btc as NSNumber)!
+        default:
+            break
+        }
+
         var percentChange = Float()
         
         switch keyStore.longLong(forKey: "percentChange") {
@@ -137,15 +150,23 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         default:
             headerView.dataCurrencyLabel.text = "-"
         }
+        
+        switch keyStore.longLong(forKey: "priceCurrency") {
+        case 0:
+            headerView.priceLabel.text = "Price (USD)"
+        case 1:
+            headerView.priceLabel.text = "Price (BTC)"
+        default:
+            headerView.priceLabel.text = "-"
+        }
+        
         headerView.backgroundColor = UIColor.clear
         let blurEffect = UIBlurEffect(style: .prominent)
         let blurEffectView = UIVisualEffectView(effect: blurEffect)
         blurEffectView.frame = self.view.frame
         
         headerView.insertSubview(blurEffectView, at: 0)
-        
 
-        
         return headerView
     }
     

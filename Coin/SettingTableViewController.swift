@@ -29,7 +29,7 @@ class SettingTableViewController: UITableViewController {
     
     @IBAction func priceIindexCurrency(_ sender: UISegmentedControl) {
         let keyStore = NSUbiquitousKeyValueStore ()
-        keyStore.set(percentChangeSegmentedControl.selectedSegmentIndex, forKey: "priceCurrency")
+        keyStore.set(priceCurrencySegmentedControl.selectedSegmentIndex, forKey: "priceCurrency")
         keyStore.synchronize()
     }
     
