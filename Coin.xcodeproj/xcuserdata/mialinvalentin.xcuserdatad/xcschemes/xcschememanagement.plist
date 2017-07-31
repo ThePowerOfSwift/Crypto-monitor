@@ -9,9 +9,19 @@
 			<key>orderHint</key>
 			<integer>0</integer>
 		</dict>
+		<key>Cryptocurrency monitor widget.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>6</integer>
+		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
+		<key>FB99B4891F2FEF1F007C0235</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>FBB2CC971F155CF800D800FD</key>
 		<dict>
 			<key>primary</key>

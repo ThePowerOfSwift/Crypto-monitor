@@ -15,6 +15,10 @@
 		FB5326CE1F25576D00D9C498 /* EditCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FB5326CD1F25576D00D9C498 /* EditCell.xib */; };
 		FB670CE61F16D900005761CF /* CryptocurrencyInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB670CE51F16D900005761CF /* CryptocurrencyInfoViewController.swift */; };
 		FB9592571F2116EE00F9F74B /* EditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB9592561F2116EE00F9F74B /* EditViewController.swift */; };
+		FB99B48C1F2FEF1F007C0235 /* NotificationCenter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FB99B48B1F2FEF1F007C0235 /* NotificationCenter.framework */; };
+		FB99B48F1F2FEF1F007C0235 /* TodayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB99B48E1F2FEF1F007C0235 /* TodayViewController.swift */; };
+		FB99B4921F2FEF1F007C0235 /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FB99B4901F2FEF1F007C0235 /* MainInterface.storyboard */; };
+		FB99B4961F2FEF1F007C0235 /* Cryptocurrency monitor widget.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = FB99B48A1F2FEF1F007C0235 /* Cryptocurrency monitor widget.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		FBA7760D1F2E884D00122D83 /* CoinTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBA7760C1F2E884D00122D83 /* CoinTableViewController.swift */; };
 		FBB2CC9C1F155CF800D800FD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBB2CC9B1F155CF800D800FD /* AppDelegate.swift */; };
 		FBB2CCA11F155CF800D800FD /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FBB2CC9F1F155CF800D800FD /* Main.storyboard */; };
@@ -28,6 +32,30 @@
 		FBD5ABE51F214CFA003A3AAC /* AddTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBD5ABE41F214CFA003A3AAC /* AddTableViewController.swift */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		FB99B4941F2FEF1F007C0235 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = FBB2CC901F155CF800D800FD /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = FB99B4891F2FEF1F007C0235;
+			remoteInfo = "Cryptocurrency monitor widget";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		FB99B49A1F2FEF1F007C0235 /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				FB99B4961F2FEF1F007C0235 /* Cryptocurrency monitor widget.appex in Embed App Extensions */,
+			);
+			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		5E0412321BFD16292136CF2A /* Pods-Coin.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Coin.release.xcconfig"; path = "Pods/Target Support Files/Pods-Coin/Pods-Coin.release.xcconfig"; sourceTree = "<group>"; };
 		D2644E3DDE8034D62D53ACCA /* Pods-Coin.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Coin.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Coin/Pods-Coin.debug.xcconfig"; sourceTree = "<group>"; };
@@ -39,6 +67,11 @@
 		FB670CE51F16D900005761CF /* CryptocurrencyInfoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CryptocurrencyInfoViewController.swift; sourceTree = "<group>"; };
 		FB9592531F20B8AB00F9F74B /* Coin.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Coin.entitlements; sourceTree = "<group>"; };
 		FB9592561F2116EE00F9F74B /* EditViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditViewController.swift; sourceTree = "<group>"; };
+		FB99B48A1F2FEF1F007C0235 /* Cryptocurrency monitor widget.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "Cryptocurrency monitor widget.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
+		FB99B48B1F2FEF1F007C0235 /* NotificationCenter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = NotificationCenter.framework; path = System/Library/Frameworks/NotificationCenter.framework; sourceTree = SDKROOT; };
+		FB99B48E1F2FEF1F007C0235 /* TodayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayViewController.swift; sourceTree = "<group>"; };
+		FB99B4911F2FEF1F007C0235 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainInterface.storyboard; sourceTree = "<group>"; };
+		FB99B4931F2FEF1F007C0235 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FBA7760C1F2E884D00122D83 /* CoinTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoinTableViewController.swift; sourceTree = "<group>"; };
 		FBB2CC981F155CF800D800FD /* Coin.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Coin.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FBB2CC9B1F155CF800D800FD /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -56,6 +89,14 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		FB99B4871F2FEF1F007C0235 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FB99B48C1F2FEF1F007C0235 /* NotificationCenter.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		FBB2CC951F155CF800D800FD /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -80,6 +121,7 @@
 			isa = PBXGroup;
 			children = (
 				FCD523238B38757764B37DC3 /* Pods_Coin.framework */,
+				FB99B48B1F2FEF1F007C0235 /* NotificationCenter.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -102,6 +144,16 @@
 			name = Edit;
 			sourceTree = "<group>";
 		};
+		FB99B48D1F2FEF1F007C0235 /* Cryptocurrency monitor widget */ = {
+			isa = PBXGroup;
+			children = (
+				FB99B48E1F2FEF1F007C0235 /* TodayViewController.swift */,
+				FB99B4901F2FEF1F007C0235 /* MainInterface.storyboard */,
+				FB99B4931F2FEF1F007C0235 /* Info.plist */,
+			);
+			path = "Cryptocurrency monitor widget";
+			sourceTree = "<group>";
+		};
 		FBA7760E1F2E928300122D83 /* Coin */ = {
 			isa = PBXGroup;
 			children = (
@@ -116,6 +168,7 @@
 			isa = PBXGroup;
 			children = (
 				FBB2CC9A1F155CF800D800FD /* Coin */,
+				FB99B48D1F2FEF1F007C0235 /* Cryptocurrency monitor widget */,
 				FBB2CC991F155CF800D800FD /* Products */,
 				553399AA7A1E226D38DF1CFA /* Pods */,
 				731467F8FA5309E32222B93E /* Frameworks */,
@@ -126,6 +179,7 @@
 			isa = PBXGroup;
 			children = (
 				FBB2CC981F155CF800D800FD /* Coin.app */,
+				FB99B48A1F2FEF1F007C0235 /* Cryptocurrency monitor widget.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -164,6 +218,23 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		FB99B4891F2FEF1F007C0235 /* Cryptocurrency monitor widget */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = FB99B4991F2FEF1F007C0235 /* Build configuration list for PBXNativeTarget "Cryptocurrency monitor widget" */;
+			buildPhases = (
+				FB99B4861F2FEF1F007C0235 /* Sources */,
+				FB99B4871F2FEF1F007C0235 /* Frameworks */,
+				FB99B4881F2FEF1F007C0235 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Cryptocurrency monitor widget";
+			productName = "Cryptocurrency monitor widget";
+			productReference = FB99B48A1F2FEF1F007C0235 /* Cryptocurrency monitor widget.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 		FBB2CC971F155CF800D800FD /* Coin */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = FBB2CCAA1F155CF800D800FD /* Build configuration list for PBXNativeTarget "Coin" */;
@@ -174,10 +245,12 @@
 				FBB2CC961F155CF800D800FD /* Resources */,
 				AF580A7116C47F2E123CAAAB /* [CP] Embed Pods Frameworks */,
 				B3575A5B366EF9A419323AB5 /* [CP] Copy Pods Resources */,
+				FB99B49A1F2FEF1F007C0235 /* Embed App Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				FB99B4951F2FEF1F007C0235 /* PBXTargetDependency */,
 			);
 			name = Coin;
 			productName = Coin;
@@ -194,6 +267,11 @@
 				LastUpgradeCheck = 0830;
 				ORGANIZATIONNAME = "Mialin Valentyn";
 				TargetAttributes = {
+					FB99B4891F2FEF1F007C0235 = {
+						CreatedOnToolsVersion = 8.3.3;
+						DevelopmentTeam = M6RU8K5R5C;
+						ProvisioningStyle = Automatic;
+					};
 					FBB2CC971F155CF800D800FD = {
 						CreatedOnToolsVersion = 8.3;
 						DevelopmentTeam = M6RU8K5R5C;
@@ -223,11 +301,20 @@
 			projectRoot = "";
 			targets = (
 				FBB2CC971F155CF800D800FD /* Coin */,
+				FB99B4891F2FEF1F007C0235 /* Cryptocurrency monitor widget */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		FB99B4881F2FEF1F007C0235 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FB99B4921F2FEF1F007C0235 /* MainInterface.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		FBB2CC961F155CF800D800FD /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -292,6 +379,14 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		FB99B4861F2FEF1F007C0235 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FB99B48F1F2FEF1F007C0235 /* TodayViewController.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		FBB2CC941F155CF800D800FD /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -313,7 +408,23 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		FB99B4951F2FEF1F007C0235 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = FB99B4891F2FEF1F007C0235 /* Cryptocurrency monitor widget */;
+			targetProxy = FB99B4941F2FEF1F007C0235 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin PBXVariantGroup section */
+		FB99B4901F2FEF1F007C0235 /* MainInterface.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				FB99B4911F2FEF1F007C0235 /* Base */,
+			);
+			name = MainInterface.storyboard;
+			sourceTree = "<group>";
+		};
 		FBB2CC9F1F155CF800D800FD /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -333,6 +444,32 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		FB99B4971F2FEF1F007C0235 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DEVELOPMENT_TEAM = M6RU8K5R5C;
+				INFOPLIST_FILE = "Cryptocurrency monitor widget/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "mialin.Coin.Cryptocurrency-monitor-widget";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 3.0;
+			};
+			name = Debug;
+		};
+		FB99B4981F2FEF1F007C0235 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DEVELOPMENT_TEAM = M6RU8K5R5C;
+				INFOPLIST_FILE = "Cryptocurrency monitor widget/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "mialin.Coin.Cryptocurrency-monitor-widget";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 3.0;
+			};
+			name = Release;
+		};
 		FBB2CCA81F155CF800D800FD /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -430,6 +567,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D2644E3DDE8034D62D53ACCA /* Pods-Coin.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = Coin/Coin.entitlements;
 				DEVELOPMENT_TEAM = M6RU8K5R5C;
@@ -446,6 +584,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 5E0412321BFD16292136CF2A /* Pods-Coin.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = Coin/Coin.entitlements;
 				DEVELOPMENT_TEAM = M6RU8K5R5C;
@@ -461,6 +600,14 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		FB99B4991F2FEF1F007C0235 /* Build configuration list for PBXNativeTarget "Cryptocurrency monitor widget" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FB99B4971F2FEF1F007C0235 /* Debug */,
+				FB99B4981F2FEF1F007C0235 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
 		FBB2CC931F155CF800D800FD /* Build configuration list for PBXProject "Coin" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
