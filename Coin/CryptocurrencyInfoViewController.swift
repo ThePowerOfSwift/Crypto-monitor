@@ -47,6 +47,8 @@ class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
         lineChartView.legend.enabled = false
         lineChartView.scaleYEnabled = false
         
+
+        
         let font = UIFont.systemFont(ofSize: 10)
         selectSegmentedControl.setTitleTextAttributes([NSFontAttributeName: font], for: .normal)
         
@@ -92,6 +94,8 @@ class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
     
     func load() {
         
+        lineChartView.isHidden = true
+        
         var of: NSDate?
         
         let xAxis = self.lineChartView.xAxis
@@ -111,29 +115,36 @@ class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
             of = userCalendar.date(byAdding: .day, value: -1, to: Date())! as NSDate
             xAxis.labelCount = 5
             dateFormatter.setLocalizedDateFormatFromTemplate("HH:mm")
+            lineChartView.viewPortHandler.setMaximumScaleX(4.0)
         case 1:
             of = userCalendar.date(byAdding: .weekOfYear, value: -1, to: Date())! as NSDate
             xAxis.labelCount = 7
             dateFormatter.setLocalizedDateFormatFromTemplate("dd.MM")
+            lineChartView.viewPortHandler.setMaximumScaleX(1.5)
         case 2:
             of = userCalendar.date(byAdding: .month, value: -1, to: Date())! as NSDate
             xAxis.labelCount = 5
             dateFormatter.setLocalizedDateFormatFromTemplate("dd.MM")
+            lineChartView.viewPortHandler.setMaximumScaleX(1.5)
         case 3:
             of = userCalendar.date(byAdding: .month, value: -3, to: Date())! as NSDate
             xAxis.labelCount = 5
             dateFormatter.setLocalizedDateFormatFromTemplate("dd.MM")
+            lineChartView.viewPortHandler.setMaximumScaleX(1.5)
         case 4:
             of = userCalendar.date(byAdding: .year, value: -1, to: Date())! as NSDate
             xAxis.labelCount = 6
             dateFormatter.setLocalizedDateFormatFromTemplate("MMM")
+            lineChartView.viewPortHandler.setMaximumScaleX(1.75)
         case 5:
             of = Calendar.current.date(from: userCalendar.dateComponents([.year], from: Date()))! as NSDate
             xAxis.labelCount = 6
             dateFormatter.setLocalizedDateFormatFromTemplate("MMM")
+            lineChartView.viewPortHandler.setMaximumScaleX(1.0)
         case 6:
             xAxis.labelCount = 5
             dateFormatter.setLocalizedDateFormatFromTemplate("MM.yy")
+            lineChartView.viewPortHandler.setMaximumScaleX(3.0)
         default:
             break
         }
@@ -150,6 +161,7 @@ class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
     
     func lineView() {
 
+        lineChartView.isHidden = false
         
         if let currencyCharts = self.currencyCharts {
             
@@ -183,6 +195,8 @@ class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
             set1.drawValuesEnabled = false // Убрать надписи
             set1.drawCirclesEnabled = false
             set1.setColor(UIColor.black) // color line
+
+  
             
             //3 - create an array to store our LineChartDataSets
             var dataSets : [LineChartDataSet] = [LineChartDataSet]()
@@ -231,6 +245,8 @@ class ChartXAxisFormatter: NSObject {
         //   self.referenceTimeInterval = referenceTimeInterval
         self.dateFormatter = dateFormatter
     }
+    
+
 }
 
 
