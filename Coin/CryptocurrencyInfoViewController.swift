@@ -38,14 +38,14 @@ class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
         self.title = ticker?.name
         
         lineChartView.delegate = self
-        lineChartView.chartDescription?.text = "Tap node for details"
-        lineChartView.chartDescription?.textColor = UIColor.white
+        lineChartView.chartDescription?.enabled = false
         lineChartView.gridBackgroundColor = UIColor.darkGray
-        lineChartView.noDataText = "No data provided"
+        lineChartView.noDataText = "No data load"
         
         lineChartView.leftAxis.enabled = false
         lineChartView.legend.enabled = false
         lineChartView.scaleYEnabled = false
+        
         
 
         
@@ -55,11 +55,19 @@ class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
         
         if let ticker = ticker {
             
+            let formatter = NumberFormatter()
+            formatter.numberStyle = .decimal
+            formatter.maximumFractionDigits = 25
+            
             let url = URL(string: "https://files.coinmarketcap.com/static/img/coins/64x64/\(ticker.id).png")!
             imageView.af_setImage(withURL: url)
             
             nameLabel.text = "\(ticker.name) (\(ticker.symbol))"
-            dataCurrencyLabel.text = "\(ticker.price_usd) USD"
+            
+            scaleFactor(label: dataCurrencyLabel)
+            dataCurrencyLabel.text = "\(formatter.string(from: ticker.price_usd as NSNumber)!) USD"
+            
+            scaleFactor(label: dataCurrencyChangeLabel)
             dataCurrencyChangeLabel.text = "(\(ticker.percent_change_24h)%)"
             
             if ticker.percent_change_24h >= 0 {
@@ -69,18 +77,14 @@ class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
                 dataCurrencyChangeLabel.textColor = UIColor(red:1.00, green:0.23, blue:0.18, alpha:1.0)
             }
             
-            let formatter = NumberFormatter()
-            formatter.numberStyle = .decimal
-            formatter.maximumFractionDigits = 25
+    
             dataSecondaryLabel.text = formatter.string(from: ticker.price_btc as NSNumber)! + " BTC"
             rankLabel.text = String(ticker.rank)
             
-            marketcapLabel.minimumScaleFactor = 0.5
-            marketcapLabel.adjustsFontSizeToFitWidth = true
+            scaleFactor(label: marketcapLabel)
             marketcapLabel.text = formatCurrency(value: ticker.market_cap_usd)
             
-            volumeLabel.minimumScaleFactor = 0.5
-            volumeLabel.adjustsFontSizeToFitWidth = true
+            scaleFactor(label: volumeLabel)
             volumeLabel.text = formatCurrency(value: ticker.volume_usd_24h)
         }
         
@@ -195,8 +199,17 @@ class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
             set1.drawValuesEnabled = false // Убрать надписи
             set1.drawCirclesEnabled = false
             set1.setColor(UIColor.black) // color line
-
-  
+            set1.highlightEnabled = false
+            
+            if selectSegmentedControl.selectedSegmentIndex == 3 || selectSegmentedControl.selectedSegmentIndex == 0 {
+                // let gradientColors = [UIColor.black.cgColor, UIColor.clear.cgColor] as CFArray // Colors of the gradient
+                //   let colorLocations:[CGFloat] = [1.0, 0.0] // Positioning of the gradient
+                //   let gradient = CGGradient.init(colorsSpace: CGColorSpaceCreateDeviceRGB(), colors: gradientColors, locations: colorLocations) // Gradient Object
+                // set1.fill = Fill.fillWithLinearGradient(gradient!, angle: 90.0) // Set the Gradient
+                set1.fill = Fill.fillWithColor(.black)
+                set1.fillAlpha = 1.0
+                set1.drawFilledEnabled = true // Draw the Gradient
+            }
             
             //3 - create an array to store our LineChartDataSets
             var dataSets : [LineChartDataSet] = [LineChartDataSet]()
@@ -229,10 +242,15 @@ class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
     func formatCurrency(value: Float) -> String {
         let formatter = NumberFormatter()
         formatter.numberStyle = .currency
-        formatter.maximumFractionDigits = 2
+        formatter.maximumFractionDigits = 25
         formatter.locale = Locale(identifier: "en_US")
         let result = formatter.string(from: value as NSNumber)
         return result!
+    }
+    
+    func scaleFactor(label: UILabel) {
+        label.minimumScaleFactor = 0.5
+        label.adjustsFontSizeToFitWidth = true
     }
 }
 

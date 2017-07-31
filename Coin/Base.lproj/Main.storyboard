@@ -7,11 +7,12 @@
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
         <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Setting-->
+        <!--Settings-->
         <scene sceneID="vLu-Jo-9tw">
             <objects>
                 <tableViewController id="mSk-LG-rjD" customClass="SettingTableViewController" customModule="Coin" customModuleProvider="target" sceneMemberID="viewController">
@@ -88,7 +89,7 @@
                             <outlet property="delegate" destination="mSk-LG-rjD" id="IgG-kM-BWf"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Setting" id="a5a-yk-s2O"/>
+                    <navigationItem key="navigationItem" title="Settings" id="a5a-yk-s2O"/>
                     <connections>
                         <outlet property="percentChangeSegmentedControl" destination="EKk-hl-QzT" id="0OK-2U-leo"/>
                         <outlet property="priceCurrencySegmentedControl" destination="AUk-9u-q0O" id="sP1-D8-roH"/>
@@ -98,7 +99,7 @@
             </objects>
             <point key="canvasLocation" x="4348" y="-595.05247376311854"/>
         </scene>
-        <!--Coin Table View Controller-->
+        <!--Cryptocurrency monitor-->
         <scene sceneID="5la-10-aik">
             <objects>
                 <tableViewController id="DGE-Ze-KIV" customClass="CoinTableViewController" customModule="Coin" customModuleProvider="target" sceneMemberID="viewController">
@@ -189,17 +190,17 @@
                                             </constraints>
                                         </view>
                                         <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="0Jl-QI-mra">
-                                            <rect key="frame" x="44" y="22" width="244" height="16"/>
+                                            <rect key="frame" x="44" y="8" width="244" height="43.5"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3pI-hc-AXM">
-                                                    <rect key="frame" x="0.0" y="0.0" width="122" height="16"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="122" height="43.5"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="0.75" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="23307.19" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zSM-yy-AP4">
-                                                    <rect key="frame" x="122" y="0.0" width="122" height="16"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                                    <rect key="frame" x="122" y="0.0" width="122" height="43.5"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="0.75" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
@@ -207,12 +208,14 @@
                                         </stackView>
                                     </subviews>
                                     <constraints>
+                                        <constraint firstAttribute="bottomMargin" secondItem="0Jl-QI-mra" secondAttribute="bottom" id="Ngf-Q3-MrU"/>
                                         <constraint firstAttribute="bottomMargin" secondItem="3tL-bj-OU7" secondAttribute="bottom" id="QJa-LT-b2N"/>
                                         <constraint firstItem="3tL-bj-OU7" firstAttribute="top" secondItem="gKs-Ds-5br" secondAttribute="topMargin" id="Qe7-eV-mvO"/>
                                         <constraint firstItem="iSD-Mf-mrE" firstAttribute="centerY" secondItem="gKs-Ds-5br" secondAttribute="centerY" id="Sxv-JM-wok"/>
                                         <constraint firstItem="0Jl-QI-mra" firstAttribute="leading" secondItem="iSD-Mf-mrE" secondAttribute="trailing" constant="4" id="e8a-Yc-MJC"/>
                                         <constraint firstItem="0Jl-QI-mra" firstAttribute="centerY" secondItem="gKs-Ds-5br" secondAttribute="centerY" id="ed6-nu-gWL"/>
                                         <constraint firstItem="3tL-bj-OU7" firstAttribute="leading" secondItem="0Jl-QI-mra" secondAttribute="trailing" constant="4" id="ep4-dx-2fW"/>
+                                        <constraint firstItem="0Jl-QI-mra" firstAttribute="top" secondItem="gKs-Ds-5br" secondAttribute="topMargin" id="g55-bT-V9O"/>
                                         <constraint firstItem="iSD-Mf-mrE" firstAttribute="leading" secondItem="gKs-Ds-5br" secondAttribute="leadingMargin" id="sRf-gj-iNm"/>
                                         <constraint firstItem="3tL-bj-OU7" firstAttribute="trailing" secondItem="gKs-Ds-5br" secondAttribute="trailingMargin" id="tVt-lE-58d"/>
                                     </constraints>
@@ -233,8 +236,8 @@
                             <outlet property="delegate" destination="DGE-Ze-KIV" id="TtW-Cj-wbQ"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" id="obh-JI-x0P">
-                        <barButtonItem key="leftBarButtonItem" title="Setting" id="yMj-9l-wbO">
+                    <navigationItem key="navigationItem" title="Cryptocurrency monitor" id="obh-JI-x0P">
+                        <barButtonItem key="leftBarButtonItem" title="Settings" id="yMj-9l-wbO">
                             <connections>
                                 <segue destination="mSk-LG-rjD" kind="show" id="RhT-CT-VXO"/>
                             </connections>
@@ -246,6 +249,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <refreshControl key="refreshControl" opaque="NO" multipleTouchEnabled="YES" contentMode="center" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" id="oTh-bY-dns">
+                        <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </refreshControl>
                 </tableViewController>
@@ -357,13 +361,19 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0.123589 USD" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tIF-uW-0Bc">
-                                <rect key="frame" x="88" y="94" width="112" height="20.5"/>
+                                <rect key="frame" x="88" y="94" width="115" height="20.5"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="tIF-uW-0Bc" secondAttribute="height" multiplier="28:5" id="8Mo-h1-EUV"/>
+                                </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="(-6.91%) " lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="i39-zS-F63">
-                                <rect key="frame" x="204" y="94" width="68.5" height="20.5"/>
+                                <rect key="frame" x="207" y="94" width="69.5" height="20.5"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="i39-zS-F63" secondAttribute="height" multiplier="17:5" id="ieZ-PR-Bbc"/>
+                                </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
@@ -444,6 +454,7 @@
                             <constraint firstItem="8Nk-dX-NRl" firstAttribute="leading" secondItem="vUv-xu-THx" secondAttribute="trailing" constant="8" id="nAV-kq-65I"/>
                             <constraint firstAttribute="trailingMargin" secondItem="HzE-Tk-7no" secondAttribute="trailing" constant="8" id="qOS-pN-Ctb"/>
                             <constraint firstAttribute="trailing" secondItem="fo5-Jm-Lf6" secondAttribute="trailing" id="qcg-Pz-VMQ"/>
+                            <constraint firstAttribute="trailingMargin" relation="greaterThanOrEqual" secondItem="i39-zS-F63" secondAttribute="trailing" id="s5S-jI-WSN"/>
                             <constraint firstItem="TDy-J3-MGj" firstAttribute="leading" secondItem="xBz-zq-Jrg" secondAttribute="leading" id="tAJ-kE-giP"/>
                             <constraint firstItem="xtc-uj-B2T" firstAttribute="leading" secondItem="Kvc-ny-RjE" secondAttribute="leadingMargin" id="tch-F8-VzX"/>
                             <constraint firstItem="hTZ-ur-F3M" firstAttribute="top" secondItem="vUv-xu-THx" secondAttribute="bottom" constant="8" id="vw6-eK-hIq"/>

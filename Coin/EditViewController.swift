@@ -48,7 +48,12 @@ class EditViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
 
     override func viewWillAppear(_ animated: Bool) {
+         cryptocurrencyView()
+    }
+    
+    func ubiquitousKeyValueStoreDidChange(notification: NSNotification) {
         cryptocurrencyView()
+        print("iCloud key-value-store change detected")
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

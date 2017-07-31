@@ -36,6 +36,11 @@ class CoinTableViewController: UITableViewController {
             cryptocurrencyView()
         }
     }
+    
+    func ubiquitousKeyValueStoreDidChange(notification: NSNotification) {
+        cryptocurrencyView()
+        print("iCloud key-value-store change detected")
+    }
 
     // MARK: - Table view data source
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -57,8 +62,11 @@ class CoinTableViewController: UITableViewController {
         
         switch keyStore.longLong(forKey: "priceCurrency") {
         case 0:
-            cell.priceCoinLabel.text = CryptocurrencyInfoViewController().formatCurrency(value: cryptocurrency[row].price_usd)
-            
+            let formatter = NumberFormatter()
+            formatter.numberStyle = .currency
+            formatter.maximumFractionDigits = 25
+            formatter.locale = Locale(identifier: "en_US")
+            cell.priceCoinLabel.text = formatter.string(from: cryptocurrency[row].price_usd as NSNumber)
         case 1:
             let formatter = NumberFormatter()
             formatter.numberStyle = .decimal
@@ -135,10 +143,8 @@ class CoinTableViewController: UITableViewController {
     }
     
     func cryptocurrencyView() {
-           
-        UIView.animate(withDuration: 0.5) {
-            self.refreshControl?.endRefreshing()
-        }
+        
+        self.refreshControl?.endRefreshing()
         
         if let subviews = self.view.superview?.subviews {
             for view in subviews{

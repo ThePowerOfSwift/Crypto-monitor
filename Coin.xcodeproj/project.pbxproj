@@ -434,6 +434,7 @@
 				CODE_SIGN_ENTITLEMENTS = Coin/Coin.entitlements;
 				DEVELOPMENT_TEAM = M6RU8K5R5C;
 				INFOPLIST_FILE = Coin/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = mialin.Coin;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -449,6 +450,7 @@
 				CODE_SIGN_ENTITLEMENTS = Coin/Coin.entitlements;
 				DEVELOPMENT_TEAM = M6RU8K5R5C;
 				INFOPLIST_FILE = Coin/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = mialin.Coin;
 				PRODUCT_NAME = "$(TARGET_NAME)";

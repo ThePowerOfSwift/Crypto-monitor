@@ -78,8 +78,8 @@ class AddTableViewController: UITableViewController {
                 
                 keyStore.set(idArray, forKey: "id")
                 keyStore.synchronize()
-                
-                searchController.isActive = false
+
+                searchController.dismiss(animated: false, completion: nil)
                 self.dismiss(animated: true, completion: nil)
                 
             }
