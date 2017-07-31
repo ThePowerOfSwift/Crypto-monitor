@@ -102,6 +102,16 @@
 			name = Edit;
 			sourceTree = "<group>";
 		};
+		FBA7760E1F2E928300122D83 /* Coin */ = {
+			isa = PBXGroup;
+			children = (
+				FBA7760C1F2E884D00122D83 /* CoinTableViewController.swift */,
+				FBB2CCAD1F1564F200D800FD /* CoinTableViewCell.swift */,
+				FBD163E91F2A18F700F800E3 /* HeaderTableViewCell.swift */,
+			);
+			name = Coin;
+			sourceTree = "<group>";
+		};
 		FBB2CC8F1F155CF800D800FD = {
 			isa = PBXGroup;
 			children = (
@@ -125,9 +135,7 @@
 			children = (
 				FB9592531F20B8AB00F9F74B /* Coin.entitlements */,
 				FBB2CC9B1F155CF800D800FD /* AppDelegate.swift */,
-				FBA7760C1F2E884D00122D83 /* CoinTableViewController.swift */,
-				FBB2CCAD1F1564F200D800FD /* CoinTableViewCell.swift */,
-				FBD163E91F2A18F700F800E3 /* HeaderTableViewCell.swift */,
+				FBA7760E1F2E928300122D83 /* Coin */,
 				FB9592561F2116EE00F9F74B /* EditViewController.swift */,
 				FBD5ABE41F214CFA003A3AAC /* AddTableViewController.swift */,
 				FB466DD91F2D479200D771C9 /* SettingTableViewController.swift */,

@@ -18,6 +18,8 @@ class CoinTableViewController: UITableViewController {
     
     var loadSubview:LoadSubview?
     var errorSubview:ErrorSubview?
+    
+    var lastUpdate = NSDate()
 
 
     override func viewDidLoad() {
@@ -34,8 +36,6 @@ class CoinTableViewController: UITableViewController {
             cryptocurrencyView()
         }
     }
-
-
 
     // MARK: - Table view data source
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -140,10 +140,11 @@ class CoinTableViewController: UITableViewController {
             self.refreshControl?.endRefreshing()
         }
         
-        
-        for view in self.view.subviews {
-            if (view is LoadSubview || view is ErrorSubview) {
-                view.removeFromSuperview()
+        if let subviews = self.view.superview?.subviews {
+            for view in subviews{
+                if (view is LoadSubview || view is ErrorSubview) {
+                    view.removeFromSuperview()
+                }
             }
         }
         cryptocurrency.removeAll()
@@ -182,6 +183,7 @@ class CoinTableViewController: UITableViewController {
                 //update your table data here
                 DispatchQueue.main.async() {
                     self.cryptocurrencyView()
+                    self.refreshControl?.attributedTitle = NSAttributedString(string: "Last update: \(self.dateToString(date: NSDate()))")
                 }
             }
             else{
@@ -198,8 +200,6 @@ class CoinTableViewController: UITableViewController {
     func refresh(sender:AnyObject) {
         // Code to refresh table view
         loadTicker()
-        
-        
     }
     
     func reload(_ sender:UIButton) {
@@ -208,60 +208,42 @@ class CoinTableViewController: UITableViewController {
     
     //MARK:LoadSubview
     func showLoadSubview() {
-        closeLoadSubview()
-        self.loadSubview = LoadSubview(frame: CGRect(x: 0, y: 0, width: self.view.bounds.width, height: self.view.bounds.height))
-        self.view.addSubview(self.loadSubview!)
-    }
-    
-    func closeLoadSubview() {
-        for view in self.view.subviews {
-            if view is LoadSubview {
-                view.removeFromSuperview()
-            }
-        }
+        self.loadSubview = LoadSubview(frame: CGRect(x: 0, y: 0, width: self.view.bounds.width, height: self.view.bounds.height ))
+        self.view.superview?.addSubview(self.loadSubview!)
     }
     
     //MARK: ErrorSubview
     func showErrorSubview(error: Error) {
-        closeErrorSubview()
-        
         self.errorSubview = ErrorSubview(frame: CGRect(x: 0, y: 0, width: self.view.bounds.width, height: self.view.bounds.height))
-        
+      
         if !UIAccessibilityIsReduceTransparencyEnabled() {
             self.errorSubview?.backgroundColor = UIColor.clear
             
             let blurEffect = UIBlurEffect(style: .prominent)
             let blurEffectView = UIVisualEffectView(effect: blurEffect)
             //always fill the view
-            blurEffectView.frame = self.view.bounds
+            blurEffectView.frame = (self.view.superview?.frame)!
             blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
             
             self.errorSubview?.insertSubview(blurEffectView, at: 0) //if you have more UIViews, use an insertSubview API to place it where needed
         } else {
-            self.errorSubview?.backgroundColor = UIColor.black
+            self.errorSubview?.backgroundColor = UIColor.white
         }
-        
-        
-        
+
         self.errorSubview?.errorStringLabel.text = error.localizedDescription
         self.errorSubview?.reloadPressed.addTarget(self, action: #selector(reload(_:)), for: UIControlEvents.touchUpInside)
         
-        self.view.addSubview(self.errorSubview!)
+        self.view.superview?.addSubview(self.errorSubview!)
     }
     
-    func closeErrorSubview() {
-        for view in self.view.subviews {
-            if view is ErrorSubview {
-                view.removeFromSuperview()
-            }
-        }
+
+    func dateToString(date : NSDate) -> String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "dd.MM.yyyy HH:mm:ss"
+        formatter.locale = Locale.current
+        return formatter.string(from: date as Date)
     }
-    
-    @IBAction func setting(_ sender: Any) {
-        
-    }
-    
-    
+
     // MARK: - Navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "cryptocurrencyInfoSegue" {
