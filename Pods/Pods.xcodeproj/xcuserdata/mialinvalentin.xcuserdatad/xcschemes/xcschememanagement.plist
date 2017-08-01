@@ -24,6 +24,11 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>Pods-Cryptocurrency monitor widget.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>Pods-CryptocurrencyRequest.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -37,6 +42,11 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
+		<key>0E934761E3E0F8BBE46B2C869CA7CDD6</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>27B94E74A7E165D08C30F946DAB646D2</key>
 		<dict>
 			<key>primary</key>

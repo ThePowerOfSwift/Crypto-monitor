@@ -12,3 +12,7 @@ target 'CryptocurrencyRequest' do
 	pod 'Alamofire', '~> 4.4'
 	pod 'SwiftyJSON', '~> 3.1'
 end
+
+target 'Cryptocurrency monitor widget' do
+	pod 'AlamofireImage', '~> 3.1'
+end
