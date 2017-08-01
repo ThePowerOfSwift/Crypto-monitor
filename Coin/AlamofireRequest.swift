@@ -8,16 +8,16 @@
 
 import Foundation
 import Alamofire
-import AlamofireImage
+
 import SwiftyJSON
 
-class CurrencyCharts {
-    var market_cap_by_available_supply:[Chart]
-    var price_btc:[Chart]
-    var price_usd:[Chart]
-    var volume_usd:[Chart]
+public class CurrencyCharts {
+    public var market_cap_by_available_supply:[Chart]
+    public var price_btc:[Chart]
+    public var price_usd:[Chart]
+    public var volume_usd:[Chart]
     
-    init(market_cap_by_available_supply:[Chart], price_btc:[Chart], price_usd:[Chart], volume_usd:[Chart]) {
+    public init(market_cap_by_available_supply:[Chart], price_btc:[Chart], price_usd:[Chart], volume_usd:[Chart]) {
         self.market_cap_by_available_supply = market_cap_by_available_supply
         self.price_btc = price_btc
         self.price_usd = price_usd
@@ -25,11 +25,11 @@ class CurrencyCharts {
     }
 }
 
-class Chart {
-    var timestamp:Double
-    var item:Double
+public class Chart {
+    public var timestamp:Double
+    public var item:Double
     
-    init(timestamp:Double, value:Double) {
+    public init(timestamp:Double, value:Double) {
         self.timestamp = timestamp
         self.item = value
     }
@@ -38,24 +38,24 @@ class Chart {
 }
 
 
-class Ticker{
+public class Ticker{
     
-    var id:String
-    var name:String
-    var symbol:String
-    var rank:Int
-    var price_usd:Float
-    var price_btc:Float
-    var volume_usd_24h:Float
-    var market_cap_usd:Float
-    var available_supply:Float
-    var total_supply:Float
-    var percent_change_1h:Float
-    var percent_change_24h:Float
-    var percent_change_7d:Float
-    var last_updated:NSDate
+    public var id:String
+    public var name:String
+    public var symbol:String
+    public var rank:Int
+    public var price_usd:Float
+    public var price_btc:Float
+    public var volume_usd_24h:Float
+    public var market_cap_usd:Float
+    public var available_supply:Float
+    public var total_supply:Float
+    public var percent_change_1h:Float
+    public var percent_change_24h:Float
+    public var percent_change_7d:Float
+    public var last_updated:NSDate
     
-    init(id:String,
+    public init(id:String,
          name:String,
          symbol:String,
          rank:Int,
@@ -88,9 +88,11 @@ class Ticker{
     
 }
 
-class AlamofireRequest {
+public class AlamofireRequest {
+    
+    public init() {}
 
-    func getTicker(completion: @escaping  ([Ticker]?, Error?) -> ()) {
+    public func getTicker(completion: @escaping  ([Ticker]?, Error?) -> ()) {
         
         var tickerArray = [Ticker]()
         var error:Error?
@@ -127,7 +129,7 @@ class AlamofireRequest {
         }
     }
     
-    func getCurrencyCharts(id: String, of: NSDate?, completion: @escaping  (CurrencyCharts?) -> ()) {
+    public func getCurrencyCharts(id: String, of: NSDate?, completion: @escaping  (CurrencyCharts?) -> ()) {
         
         var url = "https://graphs.coinmarketcap.com/currencies/" + id + "/"
         

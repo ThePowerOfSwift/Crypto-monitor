@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import CryptocurrencyRequest
+
 
 class CoinTableViewController: UITableViewController {
     

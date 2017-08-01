@@ -24,6 +24,11 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>Pods-CryptocurrencyRequest.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>SwiftyJSON.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -33,6 +38,11 @@
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
 		<key>27B94E74A7E165D08C30F946DAB646D2</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>816AD2EC3D21E44432433F7DFBE3A50F</key>
 		<dict>
 			<key>primary</key>
 			<true/>

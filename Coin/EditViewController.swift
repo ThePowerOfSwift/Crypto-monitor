@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CryptocurrencyRequest
 
 class EditViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     

@@ -8,6 +8,9 @@
 
 import UIKit
 import Charts
+import CryptocurrencyRequest
+//import Alamofire
+import AlamofireImage
 
 class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
     
