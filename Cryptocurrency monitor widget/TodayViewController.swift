@@ -14,44 +14,35 @@ import AlamofireImage
 class TodayViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, NCWidgetProviding {
     
     @IBOutlet weak var tableView: UITableView!
-
-   fileprivate var cryptocurrency = [Ticker]()
+    
+    fileprivate var cryptocurrency = [Ticker]()
+    fileprivate var cryptocurrencyCompact = [Ticker]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view from its nib.
-
-
-	extensionContext?.widgetLargestAvailableDisplayMode = .expanded
-
-   
+            self.extensionContext?.widgetLargestAvailableDisplayMode = .expanded
     }
     
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        
         if let decoded = UserDefaults.standard.data(forKey: "cryptocurrency") {
-            if let decodedTicker = NSKeyedUnarchiver.unarchiveObject(with: decoded) as? [Ticker] {
+            if let cache = NSKeyedUnarchiver.unarchiveObject(with: decoded) as? [Ticker] {
+                cryptocurrency = cache
                 
-                print("Cache")
-
-                cryptocurrency = decodedTicker
+                cryptocurrencyCompact.removeAll()
+                for i in 0..<2 {
+                    cryptocurrencyCompact.append(cryptocurrency[i])
+                }
                 tableView.reloadData()
             }
-            
         }
     }
     
-
     
     func widgetPerformUpdate(completionHandler: (@escaping (NCUpdateResult) -> Void)) {
-        // Perform any setup necessary in order to update the view.
-        
-        // If an error is encountered, use NCUpdateResult.Failed
-        // If there's no update required, use NCUpdateResult.NoData
-        // If there's an update, use NCUpdateResult.NewData
+
         
         AlamofireRequest().getTicker(completion: { (ticker : [Ticker]?, error : Error?) in
             if error == nil {
@@ -67,14 +58,21 @@ class TodayViewController: UIViewController, UITableViewDataSource, UITableViewD
                                     cryptocurrencyTemp.append(tick)
                                 }
                             }
+                            self.cryptocurrencyCompact.removeAll()
                             self.cryptocurrency = cryptocurrencyTemp
+                            for i in 0..<2 {
+                                  self.cryptocurrencyCompact.append(self.cryptocurrency[i])
+                            }
+         
                             
                             let encodedData = NSKeyedArchiver.archivedData(withRootObject: self.cryptocurrency )
                             UserDefaults.standard.set(encodedData, forKey: "cryptocurrency")
                             
                             //update your table data here
                             DispatchQueue.main.async() {
+                                if !self.tableView.isEditing {
                                 self.tableView.reloadData()
+                                }
                             }
                         }
                         else{
@@ -92,30 +90,48 @@ class TodayViewController: UIViewController, UITableViewDataSource, UITableViewD
 
     
     func widgetActiveDisplayModeDidChange(_ activeDisplayMode: NCWidgetDisplayMode, withMaximumSize maxSize: CGSize) {
-        if activeDisplayMode == .expanded {
-            let height = 44.0 * Float(cryptocurrency.count)
-            preferredContentSize = CGSize(width: maxSize.width, height: CGFloat(height))
-        }
-        else if activeDisplayMode == .compact {
+        
+        if activeDisplayMode == .compact
+        {
             preferredContentSize = maxSize
+            tableView.reloadData()
         }
-    }
-    
+        else{
+            if activeDisplayMode == .expanded
+            {
+                preferredContentSize = CGSize(width: 0.0, height: 44.0 * CGFloat(self.cryptocurrency.count))
+                tableView.reloadData()
+            }
+        }
+        }
+        
     // MARK: - TableView Data Source
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if extensionContext?.widgetActiveDisplayMode == .compact {
+            return cryptocurrencyCompact.count
+        }
         return cryptocurrency.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "widgetCell", for: indexPath) as! WidgetCellTableViewCell
         
+        var cryptocurrencyShow = [Ticker]()
+        
+        if extensionContext?.widgetActiveDisplayMode == .compact {
+            cryptocurrencyShow = cryptocurrencyCompact
+        }
+        else{
+            cryptocurrencyShow = cryptocurrency
+        }
+        
         
         let row = indexPath.row
         
-        let url = URL(string: "https://files.coinmarketcap.com/static/img/coins/32x32/\(cryptocurrency[row].id).png")!
+        let url = URL(string: "https://files.coinmarketcap.com/static/img/coins/32x32/\(cryptocurrencyShow[row].id).png")!
         cell.coinImageView.af_setImage(withURL: url)
-        cell.coinNameLabel.text = cryptocurrency[row].name
+        cell.coinNameLabel.text = cryptocurrencyShow[row].name
         
         let keyStore = NSUbiquitousKeyValueStore ()
         
@@ -126,16 +142,14 @@ class TodayViewController: UIViewController, UITableViewDataSource, UITableViewD
             formatter.maximumFractionDigits = 25
             formatter.locale = Locale(identifier: "en_US")
             
-            UIView.animate(withDuration: 0.5, animations: {
-            cell.priceCoinLabel.text = formatter.string(from: self.cryptocurrency[row].price_usd as NSNumber)
-            })
-            
-                  case 1:
+            cell.priceCoinLabel.text = formatter.string(from: cryptocurrencyShow[row].price_usd as NSNumber)
+          
+        case 1:
             let formatter = NumberFormatter()
             formatter.numberStyle = .decimal
             formatter.maximumFractionDigits = 25
             
-            cell.priceCoinLabel.text = "₿" + formatter.string(from: cryptocurrency[row].price_btc as NSNumber)!
+            cell.priceCoinLabel.text = "₿" + formatter.string(from: cryptocurrencyShow[row].price_btc as NSNumber)!
         default:
             break
         }
@@ -144,13 +158,13 @@ class TodayViewController: UIViewController, UITableViewDataSource, UITableViewD
         
         switch keyStore.longLong(forKey: "percentChange") {
         case 0:
-            percentChange = cryptocurrency[row].percent_change_1h
+            percentChange = cryptocurrencyShow[row].percent_change_1h
         case 1:
-            percentChange = cryptocurrency[row].percent_change_24h
+            percentChange = cryptocurrencyShow[row].percent_change_24h
         case 2:
-            percentChange = cryptocurrency[row].percent_change_7d
+            percentChange = cryptocurrencyShow[row].percent_change_7d
         default:
-            percentChange = cryptocurrency[row].percent_change_24h
+            percentChange = cryptocurrencyShow[row].percent_change_24h
         }
         
         if percentChange >= 0 {
@@ -163,73 +177,12 @@ class TodayViewController: UIViewController, UITableViewDataSource, UITableViewD
         return cell
     }
     
-    //Mark:Load
-    /*
-    func loadTicker() {
-        AlamofireRequest().getTicker(completion: { (ticker : [Ticker]?, error : Error?) in
-            if error == nil {
-                if let ticker = ticker {
-                    
-                    let keyStore = NSUbiquitousKeyValueStore ()
-                    var cryptocurrencyTemp = [Ticker]()
-                    
-                    if let idArray = keyStore.array(forKey: "id") as? [String] {
-                        if !idArray.isEmpty{
-                            for id in idArray {
-                                if let tick = ticker.first(where: {$0.id == id}) {
-                                    cryptocurrencyTemp.append(tick)
-                                }
-                            }
-                            self.cryptocurrency = cryptocurrencyTemp
-                        }
-                        else{
-                            print("idArray empty!")
-                        }
-                        
-                    }
-                    //update your table data here
-                    DispatchQueue.main.async() {
-                        self.tableView.reloadData()
-                    }
-                    
-                }
-            }
-            else{
-                //  self.showErrorSubview(error: error!)
-            }
-        })
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath)
+    {
+        self.tableView.cellForRow(at: indexPath)?.isSelected = false
+        
+        print(cryptocurrency[indexPath.row].name)
+      
+        //self.extensionContext?.open(URL(string: "NearbyRestaurantsTodayExtension://\((self.nearbyRestaurantsArray.count == 0) ? "" : self.nearbyRestaurantsArray[indexPath.row].placeID)")!, completionHandler: nil)
     }
-    */
-    /*
-    func cryptocurrencyView(ticker : [Ticker]) {
-        
-        cryptocurrency.removeAll()
-        
-        let keyStore = NSUbiquitousKeyValueStore ()
-        
-        if let idArray = keyStore.array(forKey: "id") as? [String] {
-            if !idArray.isEmpty{
-                for id in idArray {
-                    if let tick = ticker.first(where: {$0.id == id}) {
-                        cryptocurrency.append(tick)
-                    }
-                }
-            }
-            
-            tableView.reloadData()
-        }
-        else{
-     
-            var idArray = [String]()
-            
-            for i in getTicker.prefix(10){
-                idArray.append(i.id)
-            }
-            keyStore.set(idArray, forKey: "id")
-            keyStore.synchronize()
-            
-            cryptocurrencyView(ticker: ticker)
- */
-      //  }
-  //  }
 }
