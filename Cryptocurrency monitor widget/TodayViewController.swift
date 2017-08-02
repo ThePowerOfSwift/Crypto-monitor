@@ -43,23 +43,19 @@ class TodayViewController: UIViewController, UITableViewDataSource, UITableViewD
     
     func widgetPerformUpdate(completionHandler: (@escaping (NCUpdateResult) -> Void)) {
 
+        let keyStore = NSUbiquitousKeyValueStore ()
+
         
-        AlamofireRequest().getTicker(completion: { (ticker : [Ticker]?, error : Error?) in
+        if  let idArray = keyStore.array(forKey: "id") as? [String] {
+
+            
+        
+        AlamofireRequest().getTicker(idArray: idArray, completion: { (ticker : [Ticker]?, error : Error?) in
             if error == nil {
                 if let ticker = ticker {
-                    
-                    let keyStore = NSUbiquitousKeyValueStore ()
-                    var cryptocurrencyTemp = [Ticker]()
-                    
-                    if let idArray = keyStore.array(forKey: "id") as? [String] {
-                        if !idArray.isEmpty{
-                            for id in idArray {
-                                if let tick = ticker.first(where: {$0.id == id}) {
-                                    cryptocurrencyTemp.append(tick)
-                                }
-                            }
+                    print(ticker.count)
                             self.cryptocurrencyCompact.removeAll()
-                            self.cryptocurrency = cryptocurrencyTemp
+                            self.cryptocurrency = ticker
                             for i in 0..<2 {
                                   self.cryptocurrencyCompact.append(self.cryptocurrency[i])
                             }
@@ -78,14 +74,14 @@ class TodayViewController: UIViewController, UITableViewDataSource, UITableViewD
                         else{
                             print("idArray empty!")
                         }
-                    }
+                    
                     completionHandler(NCUpdateResult.newData)
                 }
-            }
-            else{
+              else{
                 completionHandler(NCUpdateResult.failed)
             }
         })
+        }
     }
 
     

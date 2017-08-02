@@ -55,22 +55,22 @@ public class Ticker:NSObject, NSCoding{
     public var percent_change_7d:Float
     public var last_updated:NSDate
     
-
+    
     
     public init(id:String,
-         name:String,
-         symbol:String,
-         rank:Int,
-         price_usd:Float,
-         price_btc:Float,
-         volume_usd_24h:Float,
-         market_cap_usd:Float,
-         available_supply:Float,
-         total_supply:Float,
-         percent_change_1h:Float,
-         percent_change_24h:Float,
-         percent_change_7d:Float,
-         last_updated:Int){
+                name:String,
+                symbol:String,
+                rank:Int,
+                price_usd:Float,
+                price_btc:Float,
+                volume_usd_24h:Float,
+                market_cap_usd:Float,
+                available_supply:Float,
+                total_supply:Float,
+                percent_change_1h:Float,
+                percent_change_24h:Float,
+                percent_change_7d:Float,
+                last_updated:Int){
         
         self.id = id
         self.name = name
@@ -128,13 +128,14 @@ public class Ticker:NSObject, NSCoding{
 public class AlamofireRequest {
     
     public init() {}
-
+    
+    /*
     public func getTicker(completion: @escaping  ([Ticker]?, Error?) -> ()) {
         
         var tickerArray = [Ticker]()
         var error:Error?
         
-
+        
         Alamofire.request("https://api.coinmarketcap.com/v1/ticker/").validate().responseJSON { response in
             switch response.result {
             case .success(let value):
@@ -142,7 +143,7 @@ public class AlamofireRequest {
                 
                 let json = JSON(value)
                 
-                for item in json.arrayValue {                    
+                for item in json.arrayValue {
                     
                     tickerArray.append(Ticker(id: item["id"].stringValue,
                                               name: item["name"].stringValue,
@@ -158,6 +159,44 @@ public class AlamofireRequest {
                                               percent_change_24h: item["percent_change_24h"].floatValue,
                                               percent_change_7d: item["percent_change_7d"].floatValue,
                                               last_updated: item["last_updated"].intValue))
+                }
+            case .failure(let errorFailure):
+                error = errorFailure
+            }
+            completion(tickerArray, error)
+        }
+    }
+    */
+    public func getTicker(idArray: [String]?, completion: @escaping  ([Ticker]?, Error?) -> ()) {
+        
+        var tickerArray = [Ticker]()
+        var error:Error?
+        
+        
+        Alamofire.request("https://api.coinmarketcap.com/v1/ticker/").validate().responseJSON { response in
+            switch response.result {
+            case .success(let value):
+                print("Validation Successful")
+                
+                let json = JSON(value)
+                
+                for item in json.arrayValue {
+                        if idArray == nil || (idArray?.contains(where: {$0 == item["id"].stringValue}))!   {
+                        tickerArray.append(Ticker(id: item["id"].stringValue,
+                                                  name: item["name"].stringValue,
+                                                  symbol: item["symbol"].stringValue,
+                                                  rank: item["rank"].intValue,
+                                                  price_usd: item["price_usd"].floatValue,
+                                                  price_btc: item["price_btc"].floatValue,
+                                                  volume_usd_24h: item["24h_volume_usd"].floatValue,
+                                                  market_cap_usd: item["market_cap_usd"].floatValue,
+                                                  available_supply: item["available_supply"].floatValue,
+                                                  total_supply: item["total_supply"].floatValue,
+                                                  percent_change_1h: item["percent_change_1h"].floatValue,
+                                                  percent_change_24h: item["percent_change_24h"].floatValue,
+                                                  percent_change_7d: item["percent_change_7d"].floatValue,
+                                                  last_updated: item["last_updated"].intValue))
+                    }
                 }
             case .failure(let errorFailure):
                 error = errorFailure
@@ -190,7 +229,7 @@ public class AlamofireRequest {
                 var volume_usd = [Chart]()
                 
                 for item in json["market_cap_by_available_supply"].arrayValue {
-                        market_cap_by_available_supply.append(Chart(timestamp: item[0].doubleValue, value: item[1].doubleValue))
+                    market_cap_by_available_supply.append(Chart(timestamp: item[0].doubleValue, value: item[1].doubleValue))
                 }
                 for item in json["price_btc"].arrayValue {
                     price_btc.append(Chart(timestamp: item[0].doubleValue, value: item[1].doubleValue))

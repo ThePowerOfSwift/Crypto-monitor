@@ -187,7 +187,7 @@ class CoinTableViewController: UITableViewController {
     }
 
     func loadTicker() {
-        AlamofireRequest().getTicker(completion: { (ticker : [Ticker]?, error : Error?) in
+        AlamofireRequest().getTicker(idArray: nil, completion: { (ticker : [Ticker]?, error : Error?) in
             if error == nil {
                 if let ticker = ticker {
                     getTicker = ticker
