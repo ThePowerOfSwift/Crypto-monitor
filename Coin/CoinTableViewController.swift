@@ -9,10 +9,12 @@
 import UIKit
 import CryptocurrencyRequest
 
+var openID :String?
+var getTicker = [Ticker]()
 
 class CoinTableViewController: UITableViewController {
     
-    var getTicker = [Ticker]()
+   
     var cryptocurrency = [Ticker]()
 
     weak var selectTicker : Ticker?
@@ -22,7 +24,6 @@ class CoinTableViewController: UITableViewController {
     var errorSubview:ErrorSubview?
     
     var lastUpdate = NSDate()
-
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -102,7 +103,6 @@ class CoinTableViewController: UITableViewController {
         return cell
     }
     
-    
     override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView?
     {
         let headerView = tableView.dequeueReusableCell(withIdentifier: "header") as! HeaderTableViewCell
@@ -142,6 +142,10 @@ class CoinTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat
     {
         return 20
+    }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath){
+        openID = cryptocurrency[indexPath.row].id
     }
     
     func cryptocurrencyView() {
@@ -186,7 +190,7 @@ class CoinTableViewController: UITableViewController {
         AlamofireRequest().getTicker(completion: { (ticker : [Ticker]?, error : Error?) in
             if error == nil {
                 if let ticker = ticker {
-                    self.getTicker = ticker
+                    getTicker = ticker
                 }
                 //update your table data here
                 DispatchQueue.main.async() {
@@ -253,15 +257,8 @@ class CoinTableViewController: UITableViewController {
     }
 
     // MARK: - Navigation
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "cryptocurrencyInfoSegue" {
-            if let CryptocurrencyInfoVC = segue.destination as? CryptocurrencyInfoViewController {
-                if let index = tableView.indexPathForSelectedRow?.row {
-                    CryptocurrencyInfoVC.ticker = cryptocurrency[index]
-                }
-            }
-        }
-        
         if segue.identifier == "editSegue" {
             
             let navVC = segue.destination as? UINavigationController

@@ -12,6 +12,7 @@ import UIKit
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
+   
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
@@ -29,6 +30,31 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         return true
     }
+    
+    func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any] = [:]) -> Bool {
+        // When you type customSchemeExample://red in the search bar in Safari
+        
+        if let urlComponents =  NSURLComponents(url: url, resolvingAgainstBaseURL: false) {
+            if let queryItems = urlComponents.queryItems as [NSURLQueryItem]?{
+                for queryItem in queryItems {
+                    if queryItem.name == "id" {
+                        if let id = queryItem.value {
+                            openID = id
+                        }
+                    }
+                }
+            }
+        }
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        
+        let detailController = storyboard.instantiateViewController(withIdentifier: "CryptocurrencyInfoViewControllerID") as! CryptocurrencyInfoViewController
+      //  (self.window?.rootViewController as! UINavigationController).viewControllers
+        (self.window?.rootViewController as! UINavigationController).pushViewController(detailController, animated: true)
+        
+        return true
+    }
+    
+
 
     func applicationWillResignActive(_ application: UIApplication) {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.

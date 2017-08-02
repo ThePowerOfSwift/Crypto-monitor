@@ -102,7 +102,7 @@
         <!--Cryptocurrency monitor-->
         <scene sceneID="5la-10-aik">
             <objects>
-                <tableViewController id="DGE-Ze-KIV" customClass="CoinTableViewController" customModule="Coin" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="CoinTableViewControllerID" useStoryboardIdentifierAsRestorationIdentifier="YES" id="DGE-Ze-KIV" customClass="CoinTableViewController" customModule="Coin" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="cqg-LB-y6f">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -239,7 +239,7 @@
                     <navigationItem key="navigationItem" title="Cryptocurrency monitor" id="obh-JI-x0P">
                         <barButtonItem key="leftBarButtonItem" title="Settings" id="yMj-9l-wbO">
                             <connections>
-                                <segue destination="mSk-LG-rjD" kind="show" id="RhT-CT-VXO"/>
+                                <segue destination="mSk-LG-rjD" kind="show" identifier="settingSegue" id="RhT-CT-VXO"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="edit" id="3ck-QH-msT">
@@ -305,7 +305,7 @@
         <!--Cryptocurrency Info View Controller-->
         <scene sceneID="Apo-J2-FXb">
             <objects>
-                <viewController id="2Ah-xt-ZDa" customClass="CryptocurrencyInfoViewController" customModule="Coin" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="CryptocurrencyInfoViewControllerID" id="2Ah-xt-ZDa" customClass="CryptocurrencyInfoViewController" customModule="Coin" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Wva-b1-Ivu"/>
                         <viewControllerLayoutGuide type="bottom" id="b9n-gr-h4I"/>
@@ -460,7 +460,6 @@
                             <constraint firstItem="hTZ-ur-F3M" firstAttribute="top" secondItem="vUv-xu-THx" secondAttribute="bottom" constant="8" id="vw6-eK-hIq"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="7ys-Kd-FcN"/>
                     <connections>
                         <outlet property="dataCurrencyChangeLabel" destination="i39-zS-F63" id="6OO-i3-iWn"/>
                         <outlet property="dataCurrencyLabel" destination="tIF-uW-0Bc" id="WfS-pL-ZLP"/>

@@ -37,6 +37,10 @@ class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        if let tick = getTicker.first(where: {$0.id == openID}) {
+            ticker = tick
+        }
+        
         self.title = ticker?.name
         
         lineChartView.delegate = self
@@ -88,14 +92,16 @@ class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
             
             scaleFactor(label: volumeLabel)
             volumeLabel.text = formatCurrency(value: ticker.volume_usd_24h)
+            
+            let keyStore = NSUbiquitousKeyValueStore ()
+            selectSegmentedControl.selectedSegmentIndex = Int(keyStore.longLong(forKey: "typeChart"))
+            zoomSegmentedControl.selectedSegmentIndex = Int(keyStore.longLong(forKey: "zoomChart"))
+            
+            
+            load()
         }
         
-        let keyStore = NSUbiquitousKeyValueStore ()
-        selectSegmentedControl.selectedSegmentIndex = Int(keyStore.longLong(forKey: "typeChart"))
-        zoomSegmentedControl.selectedSegmentIndex = Int(keyStore.longLong(forKey: "zoomChart"))
-        
-        
-        load()
+  
     }
     
     func load() {

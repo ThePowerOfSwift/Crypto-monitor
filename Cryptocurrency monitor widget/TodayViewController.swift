@@ -93,12 +93,14 @@ class TodayViewController: UIViewController, UITableViewDataSource, UITableViewD
         
         if activeDisplayMode == .compact
         {
+            print("compact")
             preferredContentSize = maxSize
             tableView.reloadData()
         }
         else{
             if activeDisplayMode == .expanded
             {
+                print("expanded")
                 preferredContentSize = CGSize(width: 0.0, height: 44.0 * CGFloat(self.cryptocurrency.count))
                 tableView.reloadData()
             }
@@ -181,7 +183,14 @@ class TodayViewController: UIViewController, UITableViewDataSource, UITableViewD
     {
         self.tableView.cellForRow(at: indexPath)?.isSelected = false
         
-        print(cryptocurrency[indexPath.row].name)
+      //  print(cryptocurrency[indexPath.row].name)
+        
+        let myAppUrl = URL(string: "cryptomonitor://?id=\(cryptocurrency[indexPath.row].id)")!
+        extensionContext?.open(myAppUrl, completionHandler: { (success) in
+            if (!success) {
+                print("error: failed to open app from Today Extension")
+            }
+        })
       
         //self.extensionContext?.open(URL(string: "NearbyRestaurantsTodayExtension://\((self.nearbyRestaurantsArray.count == 0) ? "" : self.nearbyRestaurantsArray[indexPath.row].placeID)")!, completionHandler: nil)
     }
