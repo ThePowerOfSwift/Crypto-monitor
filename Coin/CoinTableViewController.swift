@@ -9,7 +9,7 @@
 import UIKit
 import CryptocurrencyRequest
 
-var openID :String?
+var openID = ""
 var getTicker = [Ticker]()
 
 class CoinTableViewController: UITableViewController {
@@ -187,7 +187,7 @@ class CoinTableViewController: UITableViewController {
     }
 
     func loadTicker() {
-        AlamofireRequest().getTicker(idArray: nil, completion: { (ticker : [Ticker]?, error : Error?) in
+        AlamofireRequest().getTicker(completion: { (ticker : [Ticker]?, error : Error?) in
             if error == nil {
                 if let ticker = ticker {
                     getTicker = ticker

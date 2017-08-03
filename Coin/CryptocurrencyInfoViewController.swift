@@ -28,7 +28,10 @@ class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
     
     var ticker : Ticker?
     
-
+    var loadSubview:LoadSubview?
+    var errorSubview:ErrorSubview?
+    
+    
     
     var currencyCharts: CurrencyCharts?
     
@@ -36,10 +39,6 @@ class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        if let tick = getTicker.first(where: {$0.id == openID}) {
-            ticker = tick
-        }
         
         self.title = ticker?.name
         
@@ -52,12 +51,49 @@ class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
         lineChartView.legend.enabled = false
         lineChartView.scaleYEnabled = false
         
-        
-
-        
         let font = UIFont.systemFont(ofSize: 10)
         selectSegmentedControl.setTitleTextAttributes([NSFontAttributeName: font], for: .normal)
         
+        let keyStore = NSUbiquitousKeyValueStore ()
+        selectSegmentedControl.selectedSegmentIndex = Int(keyStore.longLong(forKey: "typeChart"))
+        zoomSegmentedControl.selectedSegmentIndex = Int(keyStore.longLong(forKey: "zoomChart"))
+        
+        if getTicker.isEmpty {
+            loadTicker()
+        }
+        else{
+            viewCryptocurrencyInfo()
+        }
+        
+        self.loadlineView()
+    }
+    
+    func loadTicker() {
+        showLoadSubview()
+        AlamofireRequest().getTicker(completion: { (ticker : [Ticker]?, error : Error?) in
+            if error == nil {
+                if let ticker = ticker {
+                    getTicker = ticker
+                }
+                //update your table data here
+                DispatchQueue.main.async() {
+                    self.viewCryptocurrencyInfo()
+                }
+            }
+            else{
+                self.showErrorSubview(error: error!)
+            }
+        })
+    }
+    
+    
+    func viewCryptocurrencyInfo() {
+        
+
+        
+        if let tick = getTicker.first(where: {$0.id == openID}) {
+            ticker = tick
+        }
         
         if let ticker = ticker {
             
@@ -83,7 +119,7 @@ class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
                 dataCurrencyChangeLabel.textColor = UIColor(red:1.00, green:0.23, blue:0.18, alpha:1.0)
             }
             
-    
+            
             dataSecondaryLabel.text = formatter.string(from: ticker.price_btc as NSNumber)! + " BTC"
             rankLabel.text = String(ticker.rank)
             
@@ -92,19 +128,19 @@ class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
             
             scaleFactor(label: volumeLabel)
             volumeLabel.text = formatCurrency(value: ticker.volume_usd_24h)
-            
-            let keyStore = NSUbiquitousKeyValueStore ()
-            selectSegmentedControl.selectedSegmentIndex = Int(keyStore.longLong(forKey: "typeChart"))
-            zoomSegmentedControl.selectedSegmentIndex = Int(keyStore.longLong(forKey: "zoomChart"))
-            
-            
-            load()
         }
         
-  
+        if let subviews = self.view.superview?.subviews {
+            for view in subviews{
+                if (view is LoadSubview || view is ErrorSubview) {
+                    view.removeFromSuperview()
+                }
+            }
+        }
     }
     
-    func load() {
+    
+    func loadlineView() {
         
         lineChartView.isHidden = true
         
@@ -113,7 +149,7 @@ class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
         let xAxis = self.lineChartView.xAxis
         xAxis.labelPosition = .bottom
         
-       // xAxis.labelCount = 3
+        // xAxis.labelCount = 3
         xAxis.drawLabelsEnabled = true
         xAxis.drawLimitLinesBehindDataEnabled = true
         xAxis.avoidFirstLastClippingEnabled = true
@@ -121,7 +157,7 @@ class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
         
         let dateFormatter = DateFormatter()
         dateFormatter.locale = Locale.current
-
+        
         switch zoomSegmentedControl.selectedSegmentIndex {
         case 0:
             of = userCalendar.date(byAdding: .day, value: -1, to: Date())! as NSDate
@@ -164,15 +200,15 @@ class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
         // Set the x values date formatter
         xAxis.valueFormatter = ChartXAxisFormatter(dateFormatter: dateFormatter)
         
-        AlamofireRequest().getCurrencyCharts(id: (ticker?.id)!, of: of) { (currencyCharts: CurrencyCharts?) in
+        AlamofireRequest().getCurrencyCharts(id: openID, of: of) { (currencyCharts: CurrencyCharts?) in
             self.currencyCharts = currencyCharts
-              self.lineChartView.zoom(scaleX: 0.0, scaleY: 0.0, x: 0.0, y: 0.0)
+            self.lineChartView.zoom(scaleX: 0.0, scaleY: 0.0, x: 0.0, y: 0.0)
             self.lineView()
         }
     }
     
     func lineView() {
-
+        
         lineChartView.isHidden = false
         
         if let currencyCharts = self.currencyCharts {
@@ -244,7 +280,7 @@ class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
         let keyStore = NSUbiquitousKeyValueStore ()
         keyStore.set(zoomSegmentedControl.selectedSegmentIndex, forKey: "zoomChart")
         keyStore.synchronize()
-        load()
+        loadlineView()
     }
     
     func formatCurrency(value: Float) -> String {
@@ -260,6 +296,42 @@ class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
         label.minimumScaleFactor = 0.5
         label.adjustsFontSizeToFitWidth = true
     }
+    
+    func reload(_ sender:UIButton) {
+        loadTicker()
+    }
+    
+    //MARK:LoadSubview
+    func showLoadSubview() {
+        self.loadSubview = LoadSubview(frame: CGRect(x: 0, y: 0, width: self.view.bounds.width, height: self.view.bounds.height ))
+        self.view.superview?.addSubview(self.loadSubview!)
+    }
+    
+    //MARK: ErrorSubview
+    func showErrorSubview(error: Error) {
+        self.errorSubview = ErrorSubview(frame: CGRect(x: 0, y: 0, width: self.view.bounds.width, height: self.view.bounds.height))
+        
+        if !UIAccessibilityIsReduceTransparencyEnabled() {
+            self.errorSubview?.backgroundColor = UIColor.clear
+            
+            let blurEffect = UIBlurEffect(style: .prominent)
+            let blurEffectView = UIVisualEffectView(effect: blurEffect)
+            //always fill the view
+            blurEffectView.frame = (self.view.superview?.frame)!
+            blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+            
+            self.errorSubview?.insertSubview(blurEffectView, at: 0) //if you have more UIViews, use an insertSubview API to place it where needed
+        } else {
+            self.errorSubview?.backgroundColor = UIColor.white
+        }
+        
+        self.errorSubview?.errorStringLabel.text = error.localizedDescription
+        self.errorSubview?.reloadPressed.addTarget(self, action: #selector(reload(_:)), for: UIControlEvents.touchUpInside)
+        
+        self.view.superview?.addSubview(self.errorSubview!)
+    }
+    
+
 }
 
 class ChartXAxisFormatter: NSObject {
@@ -272,7 +344,7 @@ class ChartXAxisFormatter: NSObject {
         self.dateFormatter = dateFormatter
     }
     
-
+    
 }
 
 

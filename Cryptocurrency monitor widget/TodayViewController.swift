@@ -44,18 +44,17 @@ class TodayViewController: UIViewController, UITableViewDataSource, UITableViewD
     func widgetPerformUpdate(completionHandler: (@escaping (NCUpdateResult) -> Void)) {
 
         let keyStore = NSUbiquitousKeyValueStore ()
-
-        
         if  let idArray = keyStore.array(forKey: "id") as? [String] {
-
             
-        
-        AlamofireRequest().getTicker(idArray: idArray, completion: { (ticker : [Ticker]?, error : Error?) in
+            print(idArray)
+
+        AlamofireRequest().getTickerID(idArray: idArray, completion: { (ticker : [Ticker]?, error : Error?) in
             if error == nil {
                 if let ticker = ticker {
                     print(ticker.count)
-                            self.cryptocurrencyCompact.removeAll()
+
                             self.cryptocurrency = ticker
+                            self.cryptocurrencyCompact.removeAll()
                             for i in 0..<2 {
                                   self.cryptocurrencyCompact.append(self.cryptocurrency[i])
                             }

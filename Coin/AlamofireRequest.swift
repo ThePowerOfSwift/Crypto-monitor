@@ -128,9 +128,7 @@ public class Ticker:NSObject, NSCoding{
 public class AlamofireRequest {
     
     public init() {}
-    
-    /*
-    public func getTicker(completion: @escaping  ([Ticker]?, Error?) -> ()) {
+        public func getTicker(completion: @escaping  ([Ticker]?, Error?) -> ()) {
         
         var tickerArray = [Ticker]()
         var error:Error?
@@ -166,8 +164,8 @@ public class AlamofireRequest {
             completion(tickerArray, error)
         }
     }
-    */
-    public func getTicker(idArray: [String]?, completion: @escaping  ([Ticker]?, Error?) -> ()) {
+ 
+    public func getTickerID(idArray: [String], completion: @escaping  ([Ticker]?, Error?) -> ()) {
         
         var tickerArray = [Ticker]()
         var error:Error?
@@ -179,9 +177,9 @@ public class AlamofireRequest {
                 print("Validation Successful")
                 
                 let json = JSON(value)
-                
+                for id in idArray{
                 for item in json.arrayValue {
-                        if idArray == nil || (idArray?.contains(where: {$0 == item["id"].stringValue}))!   {
+                    if id == item["id"].stringValue {
                         tickerArray.append(Ticker(id: item["id"].stringValue,
                                                   name: item["name"].stringValue,
                                                   symbol: item["symbol"].stringValue,
@@ -196,7 +194,9 @@ public class AlamofireRequest {
                                                   percent_change_24h: item["percent_change_24h"].floatValue,
                                                   percent_change_7d: item["percent_change_7d"].floatValue,
                                                   last_updated: item["last_updated"].intValue))
+                        break
                     }
+                }
                 }
             case .failure(let errorFailure):
                 error = errorFailure

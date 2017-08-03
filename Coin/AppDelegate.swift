@@ -50,7 +50,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let detailController = storyboard.instantiateViewController(withIdentifier: "CryptocurrencyInfoViewControllerID") as! CryptocurrencyInfoViewController
         (self.window?.rootViewController as! UINavigationController).popToRootViewController(animated: false)
         self.window?.rootViewController?.dismiss(animated: false, completion: nil)
-        (self.window?.rootViewController as! UINavigationController).pushViewController(detailController, animated: true)
+        (self.window?.rootViewController as! UINavigationController).pushViewController(detailController, animated: false)
         
         return true
     }
