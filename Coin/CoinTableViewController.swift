@@ -10,13 +10,13 @@ import UIKit
 import CryptocurrencyRequest
 
 var openID = ""
-var getTicker = [Ticker]()
+var getTickerID = [Ticker]()
 
 class CoinTableViewController: UITableViewController {
     
-   
-    var cryptocurrency = [Ticker]()
-
+    
+    // var cryptocurrency = [Ticker]()
+    
     weak var selectTicker : Ticker?
     var currentIndexPath: NSIndexPath?
     
@@ -24,16 +24,17 @@ class CoinTableViewController: UITableViewController {
     var errorSubview:ErrorSubview?
     
     var lastUpdate = NSDate()
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         self.refreshControl?.addTarget(self, action: #selector(self.refresh), for: UIControlEvents.valueChanged)
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        if getTicker.isEmpty {
-            load()
+        if getTickerID.isEmpty {
+            showLoadSubview()
+            loadTicker()
         }
         else{
             cryptocurrencyView()
@@ -44,10 +45,10 @@ class CoinTableViewController: UITableViewController {
         cryptocurrencyView()
         print("iCloud key-value-store change detected")
     }
-
+    
     // MARK: - Table view data source
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return cryptocurrency.count
+        return getTickerID.count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -55,9 +56,9 @@ class CoinTableViewController: UITableViewController {
         
         let row = indexPath.row
         
-        let url = URL(string: "https://files.coinmarketcap.com/static/img/coins/32x32/\(cryptocurrency[row].id).png")!
+        let url = URL(string: "https://files.coinmarketcap.com/static/img/coins/32x32/\(getTickerID[row].id).png")!
         cell.coinImageView.af_setImage(withURL: url)
-        cell.coinNameLabel.text = cryptocurrency[row].name
+        cell.coinNameLabel.text = getTickerID[row].name
         
         let keyStore = NSUbiquitousKeyValueStore ()
         
@@ -69,13 +70,13 @@ class CoinTableViewController: UITableViewController {
             formatter.numberStyle = .currency
             formatter.maximumFractionDigits = 25
             formatter.locale = Locale(identifier: "en_US")
-            cell.priceCoinLabel.text = formatter.string(from: cryptocurrency[row].price_usd as NSNumber)
+            cell.priceCoinLabel.text = formatter.string(from: getTickerID[row].price_usd as NSNumber)
         case 1:
             let formatter = NumberFormatter()
             formatter.numberStyle = .decimal
             formatter.maximumFractionDigits = 25
             
-            cell.priceCoinLabel.text = "₿" + formatter.string(from: cryptocurrency[row].price_btc as NSNumber)!
+            cell.priceCoinLabel.text = "₿" + formatter.string(from: getTickerID[row].price_btc as NSNumber)!
         default:
             break
         }
@@ -84,13 +85,13 @@ class CoinTableViewController: UITableViewController {
         
         switch keyStore.longLong(forKey: "percentChange") {
         case 0:
-            percentChange = cryptocurrency[row].percent_change_1h
+            percentChange = getTickerID[row].percent_change_1h
         case 1:
-            percentChange = cryptocurrency[row].percent_change_24h
+            percentChange = getTickerID[row].percent_change_24h
         case 2:
-            percentChange = cryptocurrency[row].percent_change_7d
+            percentChange = getTickerID[row].percent_change_7d
         default:
-            percentChange = cryptocurrency[row].percent_change_24h
+            percentChange = getTickerID[row].percent_change_24h
         }
         
         if percentChange >= 0 {
@@ -145,7 +146,7 @@ class CoinTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath){
-        openID = cryptocurrency[indexPath.row].id
+        openID = getTickerID[indexPath.row].id
     }
     
     func cryptocurrencyView() {
@@ -159,55 +160,44 @@ class CoinTableViewController: UITableViewController {
                 }
             }
         }
-        cryptocurrency.removeAll()
-        
-        let keyStore = NSUbiquitousKeyValueStore ()
-        
-        if let idArray = keyStore.array(forKey: "id") as? [String] {
-            if !idArray.isEmpty{
-                for id in idArray {
-                    if let tick = getTicker.first(where: {$0.id == id}) {
-                        cryptocurrency.append(tick)
-                    }
-                }
-            }
-            tableView.reloadData()
-        }
-        else{
-            var idArray = [String]()
-            
-            for i in getTicker.prefix(10){
-                idArray.append(i.id)
-            }
-            keyStore.set(idArray, forKey: "id")
-            keyStore.synchronize()
-            
-            cryptocurrencyView()
-        }
-    }
-
-    func loadTicker() {
-        AlamofireRequest().getTicker(completion: { (ticker : [Ticker]?, error : Error?) in
-            if error == nil {
-                if let ticker = ticker {
-                    getTicker = ticker
-                }
-                //update your table data here
-                DispatchQueue.main.async() {
-                    self.cryptocurrencyView()
-                    self.refreshControl?.attributedTitle = NSAttributedString(string: "Last update: \(self.dateToString(date: NSDate()))")
-                }
-            }
-            else{
-                self.showErrorSubview(error: error!)
-            }
-        })
+        tableView.reloadData()
     }
     
+    func loadTicker() {
+        
+        let keyStore = NSUbiquitousKeyValueStore ()
+        if  let idArray = keyStore.array(forKey: "id") as? [String] {
+            
+            AlamofireRequest().getTickerID(idArray: idArray, completion: { (ticker : [Ticker]?, error : Error?) in
+                if error == nil {
+                    if let ticker = ticker {
+                        
+                        getTickerID = ticker
+                        //update your table data here
+                        DispatchQueue.main.async() {
+                            if !self.tableView.isEditing {
+                                self.cryptocurrencyView()
+                                self.refreshControl?.attributedTitle = NSAttributedString(string: "Last update: \(self.dateToString(date: NSDate()))")
+                            }
+                        }
+                    }
+                    else{
+                        print("idArray empty!")
+                    }
+                    
+                }
+                else{
+                    self.showErrorSubview(error: error!)
+                }
+            })
+        }
+    }
+    
+    /*
     func load() {
         showLoadSubview()
         loadTicker()
-    }
+    }*/
     
     func refresh(sender:AnyObject) {
         // Code to refresh table view
@@ -227,7 +217,7 @@ class CoinTableViewController: UITableViewController {
     //MARK: ErrorSubview
     func showErrorSubview(error: Error) {
         self.errorSubview = ErrorSubview(frame: CGRect(x: 0, y: 0, width: self.view.bounds.width, height: self.view.bounds.height))
-      
+        
         if !UIAccessibilityIsReduceTransparencyEnabled() {
             self.errorSubview?.backgroundColor = UIColor.clear
             
@@ -241,33 +231,34 @@ class CoinTableViewController: UITableViewController {
         } else {
             self.errorSubview?.backgroundColor = UIColor.white
         }
-
+        
         self.errorSubview?.errorStringLabel.text = error.localizedDescription
         self.errorSubview?.reloadPressed.addTarget(self, action: #selector(reload(_:)), for: UIControlEvents.touchUpInside)
         
         self.view.superview?.addSubview(self.errorSubview!)
     }
     
-
+    
     func dateToString(date : NSDate) -> String {
         let formatter = DateFormatter()
         formatter.dateFormat = "dd.MM.yyyy HH:mm:ss"
         formatter.locale = Locale.current
         return formatter.string(from: date as Date)
     }
-
-    // MARK: - Navigation
     
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "editSegue" {
-            
-            let navVC = segue.destination as? UINavigationController
-            
-            if let vc = navVC?.viewControllers.first as? EditViewController {
-                vc.ticker = getTicker
-            }
-        }
-    }
-
-
+    /*
+     // MARK: - Navigation
+     
+     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+     if segue.identifier == "editSegue" {
+     
+     let navVC = segue.destination as? UINavigationController
+     
+     if let vc = navVC?.viewControllers.first as? EditViewController {
+     vc.ticker = getTickerID
+     }
+     }
+     }
+     */
+    
 }

@@ -58,7 +58,7 @@ class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
         selectSegmentedControl.selectedSegmentIndex = Int(keyStore.longLong(forKey: "typeChart"))
         zoomSegmentedControl.selectedSegmentIndex = Int(keyStore.longLong(forKey: "zoomChart"))
         
-        if getTicker.isEmpty {
+        if getTickerID.isEmpty {
             loadTicker()
         }
         else{
@@ -73,7 +73,7 @@ class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
         AlamofireRequest().getTicker(completion: { (ticker : [Ticker]?, error : Error?) in
             if error == nil {
                 if let ticker = ticker {
-                    getTicker = ticker
+                    getTickerID = ticker
                 }
                 //update your table data here
                 DispatchQueue.main.async() {
@@ -91,7 +91,7 @@ class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
         
 
         
-        if let tick = getTicker.first(where: {$0.id == openID}) {
+        if let tick = getTickerID.first(where: {$0.id == openID}) {
             ticker = tick
         }
         

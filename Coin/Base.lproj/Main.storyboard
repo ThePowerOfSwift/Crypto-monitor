@@ -99,7 +99,7 @@
             </objects>
             <point key="canvasLocation" x="4348" y="-595.05247376311854"/>
         </scene>
-        <!--Cryptocurrency monitor-->
+        <!--Crypto monitor-->
         <scene sceneID="5la-10-aik">
             <objects>
                 <tableViewController storyboardIdentifier="CoinTableViewControllerID" useStoryboardIdentifierAsRestorationIdentifier="YES" id="DGE-Ze-KIV" customClass="CoinTableViewController" customModule="Coin" customModuleProvider="target" sceneMemberID="viewController">
@@ -236,7 +236,7 @@
                             <outlet property="delegate" destination="DGE-Ze-KIV" id="TtW-Cj-wbQ"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Cryptocurrency monitor" id="obh-JI-x0P">
+                    <navigationItem key="navigationItem" title="Crypto monitor" id="obh-JI-x0P">
                         <barButtonItem key="leftBarButtonItem" title="Settings" id="yMj-9l-wbO">
                             <connections>
                                 <segue destination="mSk-LG-rjD" kind="show" identifier="settingSegue" id="RhT-CT-VXO"/>

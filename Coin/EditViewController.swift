@@ -13,16 +13,14 @@ class EditViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     @IBOutlet weak var tableView: UITableView!
     
-    var id : [String]?
+  //  var id : [String]?
    
-    var ticker = [Ticker]()
-    var cryptocurrency = [Ticker]()
+ //   var ticker = [Ticker]()
+  //  var cryptocurrency = [Ticker]()
     
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-
         
         tableView.register(UINib(nibName: "EditCell", bundle: nil), forCellReuseIdentifier: "editCryptocurrency")
         
@@ -35,17 +33,15 @@ class EditViewController: UIViewController, UITableViewDelegate, UITableViewData
     
 
     func cryptocurrencyView() {
-        let keyStore = NSUbiquitousKeyValueStore ()
-        if let idArray = keyStore.array(forKey: "id") as? [String] {
-            
-            cryptocurrency.removeAll()
-            for id in idArray {
-                if let tick = ticker.first(where: {$0.id == id}) {
-                    cryptocurrency.append(tick)
+       // self.refreshControl?.endRefreshing()
+        if let subviews = self.view.superview?.subviews {
+            for view in subviews{
+                if (view is LoadSubview || view is ErrorSubview) {
+                    view.removeFromSuperview()
                 }
             }
-            tableView.reloadData()
         }
+        tableView.reloadData()
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -58,7 +54,7 @@ class EditViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return cryptocurrency.count
+        return getTickerID.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -68,9 +64,9 @@ class EditViewController: UIViewController, UITableViewDelegate, UITableViewData
         
        let row = indexPath.row
         
-        let url = URL(string: "https://files.coinmarketcap.com/static/img/coins/32x32/\(cryptocurrency[row].id).png")!
+        let url = URL(string: "https://files.coinmarketcap.com/static/img/coins/32x32/\(getTickerID[row].id).png")!
         cell.cryptocurrencyImageView.af_setImage(withURL: url)
-        cell.cryptocurrencyNameLabel?.text = cryptocurrency[row].name
+        cell.cryptocurrencyNameLabel?.text = getTickerID[row].name
 
         
         return cell
@@ -81,12 +77,12 @@ class EditViewController: UIViewController, UITableViewDelegate, UITableViewData
         if editingStyle == .delete{          
             let keyStore = NSUbiquitousKeyValueStore ()
             
-         //   cryptocurrency.remove(at: indexPath.row)
-            
             if var idArray = keyStore.array(forKey: "id") as? [String] {
                 
-                if let index = idArray.index(of: cryptocurrency[indexPath.row].id){
+                if let index = idArray.index(of: getTickerID[indexPath.row].id){
                     idArray.remove(at: index)
+                    getTickerID.remove(at: indexPath.row)
+                    
                     keyStore.set(idArray, forKey: "id")
                     keyStore.synchronize()
                 }
@@ -101,31 +97,28 @@ class EditViewController: UIViewController, UITableViewDelegate, UITableViewData
         
         if var idArray = keyStore.array(forKey: "id") as? [String] {
             
-            if let index = idArray.index(of: cryptocurrency[sourceIndexPath.row].id){
+            if let index = idArray.index(of: getTickerID[sourceIndexPath.row].id){
                 idArray.remove(at: index)
-                idArray.insert(cryptocurrency[sourceIndexPath.row].id, at: destinationIndexPath.row)
-                
+                idArray.insert(getTickerID[sourceIndexPath.row].id, at: destinationIndexPath.row)
+                getTickerID.rearrange(from: sourceIndexPath.row, to: destinationIndexPath.row)
+                print(getTickerID)
                 keyStore.set(idArray, forKey: "id")
                 keyStore.synchronize()
             }
         }
         
+
     }
-    
+
     
     @IBAction func Done(_ sender: Any) {
          self.dismiss(animated: true, completion: nil)
     }
     
-    // MARK: - Navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "addSegue" {
-            
-            if let navVC = segue.destination as? UINavigationController {
-                if let vc = navVC.viewControllers.first as? AddTableViewController {
-                    vc.ticker = ticker
-                }
-            }
-        }
+}
+
+extension Array {
+    mutating func rearrange(from: Int, to: Int) {
+        insert(remove(at: from), at: to)
     }
 }
