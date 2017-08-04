@@ -27,20 +27,24 @@ class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
     @IBOutlet weak var volumeLabel: UILabel!
     
     var ticker : Ticker?
-    
     var loadSubview:LoadSubview?
     var errorSubview:ErrorSubview?
-    
-    
-    
     var currencyCharts: CurrencyCharts?
-    
     let userCalendar = Calendar.current
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         self.title = ticker?.name
+        
+        nameLabel.text = ""
+        dataCurrencyLabel.text = ""
+        dataCurrencyChangeLabel.text = ""
+        dataSecondaryLabel.text = ""
+        rankLabel.text = ""
+        marketcapLabel.text = ""
+        volumeLabel.text = ""
+        
         
         lineChartView.delegate = self
         lineChartView.chartDescription?.enabled = false
@@ -53,44 +57,93 @@ class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
         
         let font = UIFont.systemFont(ofSize: 10)
         selectSegmentedControl.setTitleTextAttributes([NSFontAttributeName: font], for: .normal)
-        
+
         let keyStore = NSUbiquitousKeyValueStore ()
         selectSegmentedControl.selectedSegmentIndex = Int(keyStore.longLong(forKey: "typeChart"))
         zoomSegmentedControl.selectedSegmentIndex = Int(keyStore.longLong(forKey: "zoomChart"))
+
+    }
+    
+        override func viewWillAppear(_ animated: Bool) {
+            if getTickerID.isEmpty {
+                showLoadSubview()
+                loadTicker()
+            }
+            else{
+                viewCryptocurrencyInfo()
+                
+                if lastUpdate <= (userCalendar.date(byAdding: .minute, value: -5, to: Date())! ){
+                    loadTicker()
+                }
+            }
+            
+            AlamofireRequest().getMinDateCharts(id: openID) { (minDate: Date?) in
+                if let minDate = minDate{
+                    // 1 weak
+                    if  minDate >=  self.userCalendar.date(byAdding: .weekOfYear, value: -1, to: Date())! {
+                        self.zoomSelectedSegment(index: 1)
+                    }
+                    else{
+                        // 1m
+                        if  minDate >=  self.userCalendar.date(byAdding: .month, value: -1, to: Date())! {
+                            self.zoomSelectedSegment(index: 2)
+                        }
+                        else{
+                            // 3m
+                            if  minDate >=  self.userCalendar.date(byAdding: .month, value: -3, to: Date())! {
+                                self.zoomSelectedSegment(index: 3)
+                            }
+                            else{
+                                // 1 year
+                                if  minDate >=  self.userCalendar.date(byAdding: .year, value: -1, to: Date())! {
+                                    self.zoomSelectedSegment(index: 4)
+                                }
+                            }
+                        }
+                    }
+                }
+                self.loadlineView()
+            }
+    }
+    
+    func zoomSelectedSegment(index: Int){
+        var index = index
         
-        if getTickerID.isEmpty {
-            loadTicker()
-        }
-        else{
-            viewCryptocurrencyInfo()
+        if self.zoomSegmentedControl.selectedSegmentIndex >= index && self.zoomSegmentedControl.selectedSegmentIndex <= 4 {
+            self.zoomSegmentedControl.selectedSegmentIndex = index
         }
         
-        self.loadlineView()
+        index = index + 1
+        for i in index..<5{
+            self.zoomSegmentedControl.setEnabled(false, forSegmentAt: i)
+        }
     }
     
     func loadTicker() {
-        showLoadSubview()
-        AlamofireRequest().getTicker(completion: { (ticker : [Ticker]?, error : Error?) in
+        
+        let keyStore = NSUbiquitousKeyValueStore ()
+        if  let idArray = keyStore.array(forKey: "id") as? [String] {
+    
+        AlamofireRequest().getTickerID(idArray: idArray, completion: { (ticker : [Ticker]?, error : Error?) in
             if error == nil {
                 if let ticker = ticker {
                     getTickerID = ticker
                 }
-                //update your table data here
+                
                 DispatchQueue.main.async() {
                     self.viewCryptocurrencyInfo()
+                    lastUpdate = Date()
                 }
             }
             else{
                 self.showErrorSubview(error: error!)
             }
         })
+        }
     }
     
     
     func viewCryptocurrencyInfo() {
-        
-
-        
         if let tick = getTickerID.first(where: {$0.id == openID}) {
             ticker = tick
         }

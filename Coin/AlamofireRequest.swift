@@ -252,4 +252,30 @@ public class AlamofireRequest {
         }
         
     }
+    
+    public func getMinDateCharts(id: String,completion: @escaping  (Date?) -> ()) {
+         let url = "https://graphs.coinmarketcap.com/currencies/" + id
+        
+        Alamofire.request(url).validate().responseJSON { response in
+            
+            switch response.result {
+            case .success(let value):
+                print("Validation Successful")
+                
+                let json = JSON(value)
+                
+                let timestamp = json["price_usd"].arrayValue[0][0].doubleValue
+                let minDate = NSDate(timeIntervalSince1970: TimeInterval(timestamp / 1000)) as Date
+                completion(minDate)
+                
+            case .failure(let error):
+                print(error)
+            }
+        }
+        
+        
+        
+        
+    
+    }
 }

@@ -269,8 +269,8 @@
 				FBD163EF1F2AA76500F800E3 /* LoadSubview */,
 				FB4955261F2B628600169CB0 /* ErrorSubview */,
 				FBB2CC9F1F155CF800D800FD /* Main.storyboard */,
-				FBB2CCA21F155CF800D800FD /* Assets.xcassets */,
 				FBB2CCA41F155CF800D800FD /* LaunchScreen.storyboard */,
+				FBB2CCA21F155CF800D800FD /* Assets.xcassets */,
 				FBB2CCA71F155CF800D800FD /* Info.plist */,
 			);
 			path = Coin;

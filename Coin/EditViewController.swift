@@ -13,12 +13,6 @@ class EditViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     @IBOutlet weak var tableView: UITableView!
     
-  //  var id : [String]?
-   
- //   var ticker = [Ticker]()
-  //  var cryptocurrency = [Ticker]()
-    
-
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -33,7 +27,6 @@ class EditViewController: UIViewController, UITableViewDelegate, UITableViewData
     
 
     func cryptocurrencyView() {
-       // self.refreshControl?.endRefreshing()
         if let subviews = self.view.superview?.subviews {
             for view in subviews{
                 if (view is LoadSubview || view is ErrorSubview) {

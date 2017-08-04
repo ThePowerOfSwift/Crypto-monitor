@@ -11,11 +11,9 @@ import CryptocurrencyRequest
 
 var openID = ""
 var getTickerID = [Ticker]()
+var lastUpdate = Date()
 
 class CoinTableViewController: UITableViewController {
-    
-    
-    // var cryptocurrency = [Ticker]()
     
     weak var selectTicker : Ticker?
     var currentIndexPath: NSIndexPath?
@@ -23,7 +21,7 @@ class CoinTableViewController: UITableViewController {
     var loadSubview:LoadSubview?
     var errorSubview:ErrorSubview?
     
-    var lastUpdate = NSDate()
+    let userCalendar = Calendar.current
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,11 +31,14 @@ class CoinTableViewController: UITableViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         if getTickerID.isEmpty {
-            showLoadSubview()
             loadTicker()
         }
         else{
             cryptocurrencyView()
+            
+            if lastUpdate <= (userCalendar.date(byAdding: .minute, value: -5, to: Date())! ){
+                loadTicker()
+            }
         }
     }
     
@@ -165,6 +166,10 @@ class CoinTableViewController: UITableViewController {
     
     func loadTicker() {
         
+        if getTickerID.isEmpty {
+            showLoadSubview()
+        }
+        
         let keyStore = NSUbiquitousKeyValueStore ()
         if  let idArray = keyStore.array(forKey: "id") as? [String] {
             
@@ -178,6 +183,7 @@ class CoinTableViewController: UITableViewController {
                             if !self.tableView.isEditing {
                                 self.cryptocurrencyView()
                                 self.refreshControl?.attributedTitle = NSAttributedString(string: "Last update: \(self.dateToString(date: NSDate()))")
+                                lastUpdate = Date()
                             }
                         }
                     }
@@ -193,14 +199,7 @@ class CoinTableViewController: UITableViewController {
         }
     }
     
-    /*
-    func load() {
-        showLoadSubview()
-        loadTicker()
-    }*/
-    
     func refresh(sender:AnyObject) {
-        // Code to refresh table view
         loadTicker()
     }
     
@@ -227,7 +226,7 @@ class CoinTableViewController: UITableViewController {
             blurEffectView.frame = (self.view.superview?.frame)!
             blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
             
-            self.errorSubview?.insertSubview(blurEffectView, at: 0) //if you have more UIViews, use an insertSubview API to place it where needed
+            self.errorSubview?.insertSubview(blurEffectView, at: 0)
         } else {
             self.errorSubview?.backgroundColor = UIColor.white
         }
@@ -238,27 +237,10 @@ class CoinTableViewController: UITableViewController {
         self.view.superview?.addSubview(self.errorSubview!)
     }
     
-    
     func dateToString(date : NSDate) -> String {
         let formatter = DateFormatter()
         formatter.dateFormat = "dd.MM.yyyy HH:mm:ss"
         formatter.locale = Locale.current
         return formatter.string(from: date as Date)
     }
-    
-    /*
-     // MARK: - Navigation
-     
-     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-     if segue.identifier == "editSegue" {
-     
-     let navVC = segue.destination as? UINavigationController
-     
-     if let vc = navVC?.viewControllers.first as? EditViewController {
-     vc.ticker = getTickerID
-     }
-     }
-     }
-     */
-    
 }
