@@ -22,12 +22,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         if !keyStore.bool(forKey: "launchedBefore"){
             
+            keyStore.set(["bitcoin", "ethereum", "ripple", "bitcoin-cash"], forKey: "id")
+            
             keyStore.set(1, forKey: "percentChange")
             keyStore.set(1, forKey: "typeChart")
             keyStore.set(1, forKey: "zoomChart")
             keyStore.set(true, forKey: "launchedBefore")
             keyStore.synchronize()
         }
+        
+        /*
+        let backImage = UIImage(named: "BackNavigation")?.withRenderingMode(.alwaysOriginal)
+        UINavigationBar.appearance().backIndicatorImage = backImage
+        UINavigationBar.appearance().backIndicatorTransitionMaskImage = backImage
+        UIBarButtonItem.appearance().setBackButtonTitlePositionAdjustment(UIOffsetMake(0, -80.0), for: .default)
+        */
         return true
     }
     

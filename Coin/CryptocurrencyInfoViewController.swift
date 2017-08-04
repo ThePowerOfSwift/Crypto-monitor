@@ -14,17 +14,30 @@ import AlamofireImage
 class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
     
     @IBOutlet weak var lineChartView: LineChartView!
+    @IBOutlet weak var lineChartActivityIndicator: UIActivityIndicatorView!
+    
     @IBOutlet weak var zoomSegmentedControl: UISegmentedControl!
     @IBOutlet weak var selectSegmentedControl: UISegmentedControl!
     
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var dataCurrencyLabel: UILabel!
-    @IBOutlet weak var dataCurrencyChangeLabel: UILabel!
+    
+    
+    @IBOutlet weak var oneHourChangeView: UIView!
+    @IBOutlet weak var oneHourChangeLabel: UILabel!
+    @IBOutlet weak var dayChangeView: UIView!
+    @IBOutlet weak var dayChangeLabel: UILabel!
+    @IBOutlet weak var weekChangeView: UIView!
+    @IBOutlet weak var weekChangeLabel: UILabel!
+    
+    
     @IBOutlet weak var dataSecondaryLabel: UILabel!
     @IBOutlet weak var rankLabel: UILabel!
     @IBOutlet weak var marketcapLabel: UILabel!
     @IBOutlet weak var volumeLabel: UILabel!
+    
+
     
     var ticker : Ticker?
     var loadSubview:LoadSubview?
@@ -39,13 +52,20 @@ class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
         
         nameLabel.text = ""
         dataCurrencyLabel.text = ""
-        dataCurrencyChangeLabel.text = ""
         dataSecondaryLabel.text = ""
         rankLabel.text = ""
         marketcapLabel.text = ""
         volumeLabel.text = ""
         
+        // percent change view
+        oneHourChangeView.layer.cornerRadius = 3
+        oneHourChangeView.layer.masksToBounds = true
+        dayChangeView.layer.cornerRadius = 3
+        dayChangeView.layer.masksToBounds = true
+        weekChangeView.layer.cornerRadius = 3
+        weekChangeView.layer.masksToBounds = true
         
+        lineChartView.isHidden = true
         lineChartView.delegate = self
         lineChartView.chartDescription?.enabled = false
         lineChartView.gridBackgroundColor = UIColor.darkGray
@@ -54,7 +74,7 @@ class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
         lineChartView.leftAxis.enabled = false
         lineChartView.legend.enabled = false
         lineChartView.scaleYEnabled = false
-        
+                
         let font = UIFont.systemFont(ofSize: 10)
         selectSegmentedControl.setTitleTextAttributes([NSFontAttributeName: font], for: .normal)
 
@@ -157,20 +177,25 @@ class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
             let url = URL(string: "https://files.coinmarketcap.com/static/img/coins/64x64/\(ticker.id).png")!
             imageView.af_setImage(withURL: url)
             
+            navigationItem.title = ticker.symbol
+            
             nameLabel.text = "\(ticker.name) (\(ticker.symbol))"
             
             scaleFactor(label: dataCurrencyLabel)
             dataCurrencyLabel.text = "\(formatter.string(from: ticker.price_usd as NSNumber)!) USD"
-            
-            scaleFactor(label: dataCurrencyChangeLabel)
-            dataCurrencyChangeLabel.text = "(\(ticker.percent_change_24h)%)"
-            
-            if ticker.percent_change_24h >= 0 {
-                dataCurrencyChangeLabel.textColor = UIColor(red:0.30, green:0.85, blue:0.39, alpha:1.0)
-            }
-            else{
-                dataCurrencyChangeLabel.textColor = UIColor(red:1.00, green:0.23, blue:0.18, alpha:1.0)
-            }
+           
+            // 1h
+            scaleFactor(label: oneHourChangeLabel)
+            oneHourChangeLabel.text = "\(ticker.percent_change_1h)%"
+            backgroundColorView(view: oneHourChangeView, percentChange: ticker.percent_change_1h)
+            // 24h
+            scaleFactor(label: dayChangeLabel)
+            dayChangeLabel.text = "\(ticker.percent_change_24h)%"
+            backgroundColorView(view: dayChangeView, percentChange: ticker.percent_change_24h)
+            // 7d
+            scaleFactor(label: weekChangeLabel)
+            weekChangeLabel.text = "\(ticker.percent_change_7d)%"
+            backgroundColorView(view: weekChangeView, percentChange: ticker.percent_change_7d)
             
             
             dataSecondaryLabel.text = formatter.string(from: ticker.price_btc as NSNumber)! + " BTC"
@@ -192,9 +217,19 @@ class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
         }
     }
     
+    func backgroundColorView(view: UIView, percentChange: Float) {
+        if percentChange >= 0 {
+            view.backgroundColor = UIColor(red:0.30, green:0.85, blue:0.39, alpha:1.0)
+        }
+        else{
+            view.backgroundColor = UIColor(red:1.00, green:0.23, blue:0.18, alpha:1.0)
+        }
+    }
+    
     
     func loadlineView() {
         
+        lineChartActivityIndicator.isHidden = false
         lineChartView.isHidden = true
         
         var of: NSDate?
@@ -262,6 +297,7 @@ class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
     
     func lineView() {
         
+        lineChartActivityIndicator.isHidden = true
         lineChartView.isHidden = false
         
         if let currencyCharts = self.currencyCharts {
@@ -383,7 +419,6 @@ class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
         
         self.view.superview?.addSubview(self.errorSubview!)
     }
-    
 
 }
 
