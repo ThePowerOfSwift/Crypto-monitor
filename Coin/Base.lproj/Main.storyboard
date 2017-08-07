@@ -106,6 +106,23 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <view key="tableFooterView" contentMode="scaleToFill" id="rfY-TX-ple" customClass="FooterView" customModule="Coin" customModuleProvider="target">
+                            <rect key="frame" x="0.0" y="108" width="320" height="44"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <subviews>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="62f-DU-Bep">
+                                    <rect key="frame" x="106.5" y="7" width="107" height="30"/>
+                                    <state key="normal" title="CoinMarketCap"/>
+                                    <connections>
+                                        <action selector="coinMarketCapAction:" destination="rfY-TX-ple" eventType="touchUpInside" id="rKg-C0-g2F"/>
+                                    </connections>
+                                </button>
+                            </subviews>
+                            <constraints>
+                                <constraint firstItem="62f-DU-Bep" firstAttribute="centerY" secondItem="rfY-TX-ple" secondAttribute="centerY" id="c2Y-fV-mZm"/>
+                                <constraint firstItem="62f-DU-Bep" firstAttribute="centerX" secondItem="rfY-TX-ple" secondAttribute="centerX" id="lDk-rs-ARq"/>
+                            </constraints>
+                        </view>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="header" rowHeight="20" id="phM-i4-zth" customClass="HeaderTableViewCell" customModule="Coin" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="28" width="320" height="20"/>
@@ -272,6 +289,23 @@
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="SYi-4h-oaE">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <view key="tableFooterView" contentMode="scaleToFill" id="YhQ-hV-GAb" customClass="FooterView" customModule="Coin" customModuleProvider="target">
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <subviews>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Zkm-og-it6">
+                                            <rect key="frame" x="106.5" y="7" width="107" height="30"/>
+                                            <state key="normal" title="CoinMarketCap"/>
+                                            <connections>
+                                                <action selector="coinMarketCapAction:" destination="YhQ-hV-GAb" eventType="touchUpInside" id="QzJ-bQ-TGb"/>
+                                            </connections>
+                                        </button>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="Zkm-og-it6" firstAttribute="centerY" secondItem="YhQ-hV-GAb" secondAttribute="centerY" id="XYu-tK-jAl"/>
+                                        <constraint firstItem="Zkm-og-it6" firstAttribute="centerX" secondItem="YhQ-hV-GAb" secondAttribute="centerX" id="anN-7Q-kD6"/>
+                                    </constraints>
+                                </view>
                             </tableView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -616,6 +650,23 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <view key="tableFooterView" contentMode="scaleToFill" id="oeF-5c-AaY" customClass="FooterView" customModule="Coin" customModuleProvider="target">
+                            <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <subviews>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2N2-lj-Jjq">
+                                    <rect key="frame" x="106.5" y="7" width="107" height="30"/>
+                                    <state key="normal" title="CoinMarketCap"/>
+                                    <connections>
+                                        <action selector="coinMarketCapAction:" destination="oeF-5c-AaY" eventType="touchUpInside" id="si8-8W-Rkh"/>
+                                    </connections>
+                                </button>
+                            </subviews>
+                            <constraints>
+                                <constraint firstItem="2N2-lj-Jjq" firstAttribute="centerX" secondItem="oeF-5c-AaY" secondAttribute="centerX" id="bsE-xi-7Pu"/>
+                                <constraint firstItem="2N2-lj-Jjq" firstAttribute="centerY" secondItem="oeF-5c-AaY" secondAttribute="centerY" id="dai-b7-WbT"/>
+                            </constraints>
+                        </view>
                         <connections>
                             <outlet property="dataSource" destination="C1j-e5-RAf" id="VGJ-7V-4FJ"/>
                             <outlet property="delegate" destination="C1j-e5-RAf" id="i7q-SX-qgl"/>

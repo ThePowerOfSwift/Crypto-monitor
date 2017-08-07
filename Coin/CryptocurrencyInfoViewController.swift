@@ -80,11 +80,14 @@ class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
 
         let keyStore = NSUbiquitousKeyValueStore ()
         selectSegmentedControl.selectedSegmentIndex = Int(keyStore.longLong(forKey: "typeChart"))
-        zoomSegmentedControl.selectedSegmentIndex = Int(keyStore.longLong(forKey: "zoomChart"))
-
+        zoomSegmentedControl.selectedSegmentIndex = Int(keyStore.longLong(forKey: "zoomChart"))  
+   
     }
+
     
         override func viewWillAppear(_ animated: Bool) {
+    
+            
             if getTickerID.isEmpty {
                 showLoadSubview()
                 loadTicker()

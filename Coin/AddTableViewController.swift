@@ -8,6 +8,7 @@
 
 import UIKit
 import CryptocurrencyRequest
+import AlamofireImage
 
 var getTickerAll = [Ticker]()
 
@@ -18,12 +19,23 @@ class AddTableViewController: UITableViewController {
     var ticker = [Ticker]()
     var tickerSearchResult  = [Ticker]()
     
+
+    
+    var imageDownloader = ImageDownloader(
+        configuration: ImageDownloader.defaultURLSessionConfiguration(),
+
+        downloadPrioritization: .fifo,
+        maximumActiveDownloads: 4,
+        imageCache: AutoPurgingImageCache(memoryCapacity: 2 * 1024 * 1024, preferredMemoryUsageAfterPurge: UInt64(0.5 * 1024 * 1024))
+
+    )
+    
     var loadSubview:LoadSubview?
     var errorSubview:ErrorSubview?
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         tableView.register(UINib(nibName: "EditCell", bundle: nil), forCellReuseIdentifier: "editCryptocurrency")
         
         // Setup the Search Controller
@@ -44,6 +56,7 @@ class AddTableViewController: UITableViewController {
             cryptocurrencyView()
         }
     }
+    
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -118,6 +131,18 @@ class AddTableViewController: UITableViewController {
         cell.cryptocurrencyImageView.image = nil
         let url = URL(string: "https://files.coinmarketcap.com/static/img/coins/32x32/\(ticker.id).png")!
         cell.cryptocurrencyImageView.af_setImage(withURL: url)
+        
+/*
+        
+        imageDownloader.download(URLRequest(url: url)) { response in
+         //   print(response.request)
+          //  print(response.response)
+        //    debugPrint(response.result)
+            if let image = response.result.value {
+                cell.cryptocurrencyImageView.image = image
+            }
+        }
+*/
         cell.cryptocurrencyNameLabel?.text = ticker.name
         return cell
     }

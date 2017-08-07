@@ -31,12 +31,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             keyStore.synchronize()
         }
         
-        /*
-        let backImage = UIImage(named: "BackNavigation")?.withRenderingMode(.alwaysOriginal)
-        UINavigationBar.appearance().backIndicatorImage = backImage
-        UINavigationBar.appearance().backIndicatorTransitionMaskImage = backImage
-        UIBarButtonItem.appearance().setBackButtonTitlePositionAdjustment(UIOffsetMake(0, -80.0), for: .default)
-        */
+        #if arch(i386) || arch(x86_64)
+            if let documentsPath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first?.path {
+                print("Documents Directory: \(documentsPath)")
+            }
+        #endif
         return true
     }
     

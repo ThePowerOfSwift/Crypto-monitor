@@ -136,7 +136,24 @@ class CoinTableViewController: UITableViewController {
         
         return headerView
     }
+    /*
+    override func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        let footerView = tableView.dequeueReusableCell(withIdentifier: "footer") as! FooterTableViewCell
+        
+        footerView.backgroundColor = UIColor.clear
+        let blurEffect = UIBlurEffect(style: .prominent)
+        let blurEffectView = UIVisualEffectView(effect: blurEffect)
+        footerView.frame = self.view.frame
+ 
+       footerView.insertSubview(blurEffectView, at: 0)
+        
+        return footerView
+    }
     
+    override func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        return 40
+    }
+    */
     override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat
     {
         return 20
@@ -239,4 +256,7 @@ class CoinTableViewController: UITableViewController {
         formatter.locale = Locale.current
         return formatter.string(from: date as Date)
     }
+    
+    
+
 }

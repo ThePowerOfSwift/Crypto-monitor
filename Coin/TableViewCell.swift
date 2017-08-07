@@ -1,8 +1,8 @@
 //
-//  CoinTableViewCell.swift
+//  HeaderTableViewCell.swift
 //  Coin
 //
-//  Created by Mialin Valentin on 11.07.17.
+//  Created by Mialin Valentin on 27.07.17.
 //  Copyright © 2017 Mialin Valentyn. All rights reserved.
 //
 
@@ -34,4 +34,19 @@ class CoinTableViewCell: UITableViewCell {
         label.minimumScaleFactor = 0.5
         label.adjustsFontSizeToFitWidth = true
     }
+}
+
+class HeaderTableViewCell: UITableViewCell {
+
+    @IBOutlet weak var dataCurrencyLabel: UILabel!
+    @IBOutlet weak var priceLabel: UILabel!
+
+}
+
+class FooterView: UIView {
+   
+    @IBAction func coinMarketCapAction(_ sender: Any) {
+         UIApplication.shared.open(URL(string: "https://coinmarketcap.com")!, options: [:], completionHandler: nil)
+    }
+ 
 }

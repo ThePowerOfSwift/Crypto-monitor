@@ -221,7 +221,12 @@ public class AlamofireRequest {
         
         print(url)
         
-        Alamofire.request(url).validate().responseJSON { response in
+        let configuration = URLSessionConfiguration.default
+      //  configuration.timeoutIntervalForRequest = 60
+        configuration.urlCache = nil
+        let  sessionManager = Alamofire.SessionManager(configuration: configuration)
+
+        sessionManager.request(url).validate().responseJSON { response in
             
             switch response.result {
             case .success(let value):
@@ -255,14 +260,20 @@ public class AlamofireRequest {
             case .failure(let error):
                 print(error)
             }
+            sessionManager.session.invalidateAndCancel()
         }
         
     }
     
-    public func getMinDateCharts(id: String,completion: @escaping  (Date?) -> ()) {
-         let url = "https://graphs.coinmarketcap.com/currencies/" + id
+    public func getMinDateCharts(id: String, completion: @escaping  (Date?) -> ()) {
+        let url = "https://graphs.coinmarketcap.com/currencies/" + id
         
-        Alamofire.request(url).validate().responseJSON { response in
+        let configuration = URLSessionConfiguration.default
+        configuration.urlCache = nil
+        let  sessionManager = Alamofire.SessionManager(configuration: configuration)
+        
+        
+        sessionManager.request(url).validate().responseJSON { response in
             
             switch response.result {
             case .success(let value):
@@ -277,6 +288,7 @@ public class AlamofireRequest {
             case .failure(let error):
                 print(error)
             }
+            sessionManager.session.invalidateAndCancel()
         }
         
         
