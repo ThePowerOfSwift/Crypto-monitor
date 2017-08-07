@@ -176,10 +176,17 @@ public class AlamofireRequest {
             case .success(let value):
                 print("Validation Successful")
                 
-                let json = JSON(value)
+                let json = JSON(value).arrayValue
+                var jsonIdArray = [JSON]()
+                
                 for id in idArray{
-                for item in json.arrayValue {
-                    if id == item["id"].stringValue {
+                    if let json = json.filter({ $0["id"].stringValue == id}).first{
+                        jsonIdArray.append(json)
+                    }
+                }
+                
+                for item in jsonIdArray {
+ 
                         tickerArray.append(Ticker(id: item["id"].stringValue,
                                                   name: item["name"].stringValue,
                                                   symbol: item["symbol"].stringValue,
@@ -194,10 +201,9 @@ public class AlamofireRequest {
                                                   percent_change_24h: item["percent_change_24h"].floatValue,
                                                   percent_change_7d: item["percent_change_7d"].floatValue,
                                                   last_updated: item["last_updated"].intValue))
-                        break
-                    }
+
                 }
-                }
+                
             case .failure(let errorFailure):
                 error = errorFailure
             }

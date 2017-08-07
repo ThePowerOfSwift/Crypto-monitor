@@ -95,12 +95,8 @@ class CoinTableViewController: UITableViewController {
             percentChange = getTickerID[row].percent_change_24h
         }
         
-        if percentChange >= 0 {
-            cell.percentChangeView.backgroundColor = UIColor(red:0.30, green:0.85, blue:0.39, alpha:1.0)
-        }
-        else{
-            cell.percentChangeView.backgroundColor = UIColor(red:1.00, green:0.23, blue:0.18, alpha:1.0)
-        }
+        CryptocurrencyInfoViewController().backgroundColorView(view: cell.percentChangeView, percentChange: percentChange)
+        
         cell.percentChangeLabel.text = String(percentChange) + " %"
         return cell
     }
