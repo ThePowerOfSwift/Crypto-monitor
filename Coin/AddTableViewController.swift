@@ -131,18 +131,6 @@ class AddTableViewController: UITableViewController {
         cell.cryptocurrencyImageView.image = nil
         let url = URL(string: "https://files.coinmarketcap.com/static/img/coins/32x32/\(ticker.id).png")!
         cell.cryptocurrencyImageView.af_setImage(withURL: url)
-        
-/*
-        
-        imageDownloader.download(URLRequest(url: url)) { response in
-         //   print(response.request)
-          //  print(response.response)
-        //    debugPrint(response.result)
-            if let image = response.result.value {
-                cell.cryptocurrencyImageView.image = image
-            }
-        }
-*/
         cell.cryptocurrencyNameLabel?.text = ticker.name
         return cell
     }
@@ -167,7 +155,12 @@ class AddTableViewController: UITableViewController {
                 keyStore.set(idArray, forKey: "id")
                 keyStore.synchronize()
                 
-                getTickerID.append(ticker)
+                getTickerID!.append(ticker)
+                
+                let encodedData = NSKeyedArchiver.archivedData(withRootObject: getTickerID! )
+                let userDefaults = UserDefaults(suiteName: "group.mialin.valentyn.crypto.monitor")
+                userDefaults?.set(encodedData, forKey: "cryptocurrency")
+                userDefaults?.synchronize()
 
                 searchController.dismiss(animated: false, completion: nil)
                 self.dismiss(animated: true, completion: nil)

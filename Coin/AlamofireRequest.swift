@@ -265,7 +265,7 @@ public class AlamofireRequest {
         
     }
     
-    public func getMinDateCharts(id: String, completion: @escaping  (Date?) -> ()) {
+    public func getMinDateCharts(id: String, completion: @escaping  (Date) -> ()) {
         let url = "https://graphs.coinmarketcap.com/currencies/" + id
         
         let configuration = URLSessionConfiguration.default
@@ -290,10 +290,5 @@ public class AlamofireRequest {
             }
             sessionManager.session.invalidateAndCancel()
         }
-        
-        
-        
-        
-    
     }
 }

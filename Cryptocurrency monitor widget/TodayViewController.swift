@@ -20,21 +20,29 @@ class TodayViewController: UIViewController, UITableViewDataSource, UITableViewD
     
     override func viewDidLoad() {
         super.viewDidLoad()
-            self.extensionContext?.widgetLargestAvailableDisplayMode = .expanded
+      //  self.extensionContext?.widgetLargestAvailableDisplayMode = .expanded
     }
     
-
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
-        if let decoded = UserDefaults.standard.data(forKey: "cryptocurrency") {
+        let userDefaults = UserDefaults(suiteName: "group.mialin.valentyn.crypto.monitor")
+        if let decoded = userDefaults?.data(forKey: "cryptocurrency")
+        {
             if let cache = NSKeyedUnarchiver.unarchiveObject(with: decoded) as? [Ticker] {
+                cryptocurrencyCompact.removeAll()
                 cryptocurrency = cache
                 
-                cryptocurrencyCompact.removeAll()
-                for i in 0..<2 {
-                    cryptocurrencyCompact.append(cryptocurrency[i])
+                if cache.count > 2 {
+                    for i in 0..<2 {
+                        self.cryptocurrencyCompact.append(self.cryptocurrency[i])
+                        self.extensionContext?.widgetLargestAvailableDisplayMode = .expanded
+                    }
                 }
+                else{
+                    self.cryptocurrencyCompact = cache
+                    self.extensionContext?.widgetLargestAvailableDisplayMode = .compact
+                }
+                
                 tableView.reloadData()
             }
         }
@@ -42,43 +50,58 @@ class TodayViewController: UIViewController, UITableViewDataSource, UITableViewD
     
     
     func widgetPerformUpdate(completionHandler: (@escaping (NCUpdateResult) -> Void)) {
-
+        
         let keyStore = NSUbiquitousKeyValueStore ()
         if  let idArray = keyStore.array(forKey: "id") as? [String] {
             
             print(idArray)
+            
+            AlamofireRequest().getTickerID(idArray: idArray, completion: { (ticker : [Ticker]?, error : Error?) in
+                if error == nil {
+                    if let ticker = ticker {
+                        print(ticker.count)
+                        
+      
 
-        AlamofireRequest().getTickerID(idArray: idArray, completion: { (ticker : [Ticker]?, error : Error?) in
-            if error == nil {
-                if let ticker = ticker {
-                    print(ticker.count)
-
-                            self.cryptocurrency = ticker
-                            self.cryptocurrencyCompact.removeAll()
+                        
+                        self.cryptocurrency = ticker
+                        
+                        self.cryptocurrencyCompact.removeAll()
+                        if ticker.count > 2 {
                             for i in 0..<2 {
-                                  self.cryptocurrencyCompact.append(self.cryptocurrency[i])
-                            }
-         
-                            
-                            let encodedData = NSKeyedArchiver.archivedData(withRootObject: self.cryptocurrency )
-                            UserDefaults.standard.set(encodedData, forKey: "cryptocurrency")
-                            
-                            //update your table data here
-                            DispatchQueue.main.async() {
-                                if !self.tableView.isEditing {
-                                self.tableView.reloadData()
-                                }
+                                self.cryptocurrencyCompact.append(self.cryptocurrency[i])
+                                self.extensionContext?.widgetLargestAvailableDisplayMode = .expanded
                             }
                         }
                         else{
-                            print("idArray empty!")
+                            self.cryptocurrencyCompact = ticker
+                            self.extensionContext?.widgetLargestAvailableDisplayMode = .compact
                         }
+                        
+                        // set UserDefaults
+                        let encodedData = NSKeyedArchiver.archivedData(withRootObject: self.cryptocurrency )
+                        let userDefaults = UserDefaults(suiteName: "group.mialin.valentyn.crypto.monitor")
+                        userDefaults?.set(encodedData, forKey: "cryptocurrency")
+                        userDefaults?.set(Date(), forKey: "lastUpdate")
+                        userDefaults?.synchronize()
+                        
+                        
+                        //update your table data here
+                        DispatchQueue.main.async() {
+                            if !self.tableView.isEditing {
+                                self.tableView.reloadData()
+                            }
+                        }
+                    }
+                    else{
+                        print("idArray empty!")
+                    }
                     
                     completionHandler(NCUpdateResult.newData)
                 }
-              else{
-                completionHandler(NCUpdateResult.failed)
-            }
+                else{
+                    completionHandler(NCUpdateResult.failed)
+                }
         })
         }
     }
@@ -102,10 +125,10 @@ class TodayViewController: UIViewController, UITableViewDataSource, UITableViewD
         }
         }
         
-    // MARK: - TableView Data Source
-    
+    // MARK: - TableView Data Source    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if extensionContext?.widgetActiveDisplayMode == .compact {
+            print("Show compact")
             return cryptocurrencyCompact.count
         }
         return cryptocurrency.count
@@ -178,15 +201,11 @@ class TodayViewController: UIViewController, UITableViewDataSource, UITableViewD
     {
         self.tableView.cellForRow(at: indexPath)?.isSelected = false
         
-      //  print(cryptocurrency[indexPath.row].name)
-        
         let myAppUrl = URL(string: "cryptomonitor://?id=\(cryptocurrency[indexPath.row].id)")!
         extensionContext?.open(myAppUrl, completionHandler: { (success) in
             if (!success) {
                 print("error: failed to open app from Today Extension")
             }
         })
-      
-        //self.extensionContext?.open(URL(string: "NearbyRestaurantsTodayExtension://\((self.nearbyRestaurantsArray.count == 0) ? "" : self.nearbyRestaurantsArray[indexPath.row].placeID)")!, completionHandler: nil)
     }
 }

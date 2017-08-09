@@ -10,8 +10,7 @@ import UIKit
 import CryptocurrencyRequest
 
 var openID = ""
-var getTickerID = [Ticker]()
-var lastUpdate = Date()
+var getTickerID:[Ticker]?
 
 class CoinTableViewController: UITableViewController {
     
@@ -26,22 +25,55 @@ class CoinTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        NotificationCenter.default.addObserver(self, selector: #selector(applicationDidBecomeActiveNotification), name:NSNotification.Name.UIApplicationDidBecomeActive, object: nil)
         self.refreshControl?.addTarget(self, action: #selector(self.refresh), for: UIControlEvents.valueChanged)
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        if getTickerID.isEmpty {
-            loadTicker()
-        }
-        else{
-            cryptocurrencyView()
-            
-            if lastUpdate <= (userCalendar.date(byAdding: .minute, value: -5, to: Date())! ){
-                loadTicker()
+        
+  
+        
+        let userDefaults = UserDefaults(suiteName: "group.mialin.valentyn.crypto.monitor")
+        
+        if let decodedTicker = userDefaults?.data(forKey: "cryptocurrency"){
+            if let cacheTicker = NSKeyedUnarchiver.unarchiveObject(with: decodedTicker) as? [Ticker] {
+                getTickerID = cacheTicker
+                cryptocurrencyView()
+                
+                if let lastUpdate = userDefaults?.object(forKey: "lastUpdate") as? Date {
+                    if lastUpdate <= (userCalendar.date(byAdding: .minute, value: -5, to: Date())! ){
+                        loadTicker()
+                    }
+                }
             }
         }
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        if getTickerID == nil {
+            loadTicker()
+        }
+        else{
+            cryptocurrencyView()
+        }
+    }
+    
+
+    func applicationDidBecomeActiveNotification(notification : NSNotification) {
+        print("unlock")
+        
+        let userDefaults = UserDefaults(suiteName: "group.mialin.valentyn.crypto.monitor")
+        if let decodedTicker = userDefaults?.data(forKey: "cryptocurrency"){
+            if let cacheTicker = NSKeyedUnarchiver.unarchiveObject(with: decodedTicker) as? [Ticker] {
+                getTickerID = cacheTicker
+                cryptocurrencyView()
+                
+                if let lastUpdate = userDefaults?.object(forKey: "lastUpdate") as? Date {
+                    if lastUpdate <= (userCalendar.date(byAdding: .minute, value: -5, to: Date())! ){
+                        loadTicker()
+                    }
+                }
+            }
+        }
+    }
+
     func ubiquitousKeyValueStoreDidChange(notification: NSNotification) {
         cryptocurrencyView()
         print("iCloud key-value-store change detected")
@@ -49,7 +81,12 @@ class CoinTableViewController: UITableViewController {
     
     // MARK: - Table view data source
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return getTickerID.count
+        if getTickerID == nil {
+            return 0
+        }
+        else{
+            return getTickerID!.count
+        }
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -57,9 +94,11 @@ class CoinTableViewController: UITableViewController {
         
         let row = indexPath.row
         
-        let url = URL(string: "https://files.coinmarketcap.com/static/img/coins/32x32/\(getTickerID[row].id).png")!
+        if let ticker = getTickerID {
+        
+        let url = URL(string: "https://files.coinmarketcap.com/static/img/coins/32x32/\(String(describing: ticker[row].id)).png")!
         cell.coinImageView.af_setImage(withURL: url)
-        cell.coinNameLabel.text = getTickerID[row].name
+        cell.coinNameLabel.text = ticker[row].name
         
         let keyStore = NSUbiquitousKeyValueStore ()
         
@@ -71,13 +110,13 @@ class CoinTableViewController: UITableViewController {
             formatter.numberStyle = .currency
             formatter.maximumFractionDigits = 25
             formatter.locale = Locale(identifier: "en_US")
-            cell.priceCoinLabel.text = formatter.string(from: getTickerID[row].price_usd as NSNumber)
+            cell.priceCoinLabel.text = formatter.string(from: ticker[row].price_usd as NSNumber)
         case 1:
             let formatter = NumberFormatter()
             formatter.numberStyle = .decimal
             formatter.maximumFractionDigits = 25
             
-            cell.priceCoinLabel.text = "₿" + formatter.string(from: getTickerID[row].price_btc as NSNumber)!
+            cell.priceCoinLabel.text = "₿" + formatter.string(from: ticker[row].price_btc as NSNumber)!
         default:
             break
         }
@@ -86,18 +125,19 @@ class CoinTableViewController: UITableViewController {
         
         switch keyStore.longLong(forKey: "percentChange") {
         case 0:
-            percentChange = getTickerID[row].percent_change_1h
+            percentChange = ticker[row].percent_change_1h
         case 1:
-            percentChange = getTickerID[row].percent_change_24h
+            percentChange = ticker[row].percent_change_24h
         case 2:
-            percentChange = getTickerID[row].percent_change_7d
+            percentChange = ticker[row].percent_change_7d
         default:
-            percentChange = getTickerID[row].percent_change_24h
+            percentChange = ticker[row].percent_change_24h
         }
         
         CryptocurrencyInfoViewController().backgroundColorView(view: cell.percentChangeView, percentChange: percentChange)
         
         cell.percentChangeLabel.text = String(percentChange) + " %"
+        }
         return cell
     }
     
@@ -136,31 +176,16 @@ class CoinTableViewController: UITableViewController {
         
         return headerView
     }
-    /*
-    override func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-        let footerView = tableView.dequeueReusableCell(withIdentifier: "footer") as! FooterTableViewCell
-        
-        footerView.backgroundColor = UIColor.clear
-        let blurEffect = UIBlurEffect(style: .prominent)
-        let blurEffectView = UIVisualEffectView(effect: blurEffect)
-        footerView.frame = self.view.frame
- 
-       footerView.insertSubview(blurEffectView, at: 0)
-        
-        return footerView
-    }
     
-    override func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        return 40
-    }
-    */
     override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat
     {
         return 20
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath){
-        openID = getTickerID[indexPath.row].id
+        if getTickerID != nil {
+            openID = getTickerID![indexPath.row].id
+        }
     }
     
     func cryptocurrencyView() {
@@ -174,14 +199,27 @@ class CoinTableViewController: UITableViewController {
                 }
             }
         }
+        
+        let userDefaults = UserDefaults(suiteName: "group.mialin.valentyn.crypto.monitor")
+        
+        if let lastUpdate = userDefaults?.object(forKey: "lastUpdate") as? NSDate {
+            self.refreshControl?.attributedTitle = NSAttributedString(string: dateToString(date: lastUpdate))
+        }
+        
+
         tableView.reloadData()
     }
     
-    func loadTicker() {
-        
-        if getTickerID.isEmpty {
+    func loadTicker() { 
+        if getTickerID == nil {
             showLoadSubview()
         }
+        else{
+            self.tableView.setContentOffset(CGPoint(x: 0, y: -self.refreshControl!.frame.size.height - self.topLayoutGuide.length), animated: true)
+            self.refreshControl!.beginRefreshing()
+            
+        }
+       
         
         let keyStore = NSUbiquitousKeyValueStore ()
         if  let idArray = keyStore.array(forKey: "id") as? [String] {
@@ -195,10 +233,14 @@ class CoinTableViewController: UITableViewController {
                         DispatchQueue.main.async() {
                             if !self.tableView.isEditing {
                                 self.cryptocurrencyView()
-                                self.refreshControl?.attributedTitle = NSAttributedString(string: "Last update: \(self.dateToString(date: NSDate()))")
-                                lastUpdate = Date()
                             }
                         }
+                        let encodedData = NSKeyedArchiver.archivedData(withRootObject: getTickerID! )
+                        let userDefaults = UserDefaults(suiteName: "group.mialin.valentyn.crypto.monitor")
+                        userDefaults?.set(encodedData, forKey: "cryptocurrency")
+                        userDefaults?.set(Date(), forKey: "lastUpdate")
+                        userDefaults?.synchronize()
+                        
                     }
                     else{
                         print("idArray empty!")

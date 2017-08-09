@@ -37,16 +37,19 @@ class CoinTableViewCell: UITableViewCell {
 }
 
 class HeaderTableViewCell: UITableViewCell {
-
+    
     @IBOutlet weak var dataCurrencyLabel: UILabel!
     @IBOutlet weak var priceLabel: UILabel!
-
+    
 }
 
 class FooterView: UIView {
-   
+    
+    @IBOutlet weak var  lastUpdateLabel: UILabel!
+    
+    
     @IBAction func coinMarketCapAction(_ sender: Any) {
-         UIApplication.shared.open(URL(string: "https://coinmarketcap.com")!, options: [:], completionHandler: nil)
+        UIApplication.shared.open(URL(string: "https://coinmarketcap.com")!, options: [:], completionHandler: nil)
     }
- 
+    
 }

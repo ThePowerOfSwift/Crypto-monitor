@@ -80,24 +80,45 @@ class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
 
         let keyStore = NSUbiquitousKeyValueStore ()
         selectSegmentedControl.selectedSegmentIndex = Int(keyStore.longLong(forKey: "typeChart"))
-        zoomSegmentedControl.selectedSegmentIndex = Int(keyStore.longLong(forKey: "zoomChart"))  
-   
+        zoomSegmentedControl.selectedSegmentIndex = Int(keyStore.longLong(forKey: "zoomChart"))
+        
+        let userDefaults = UserDefaults(suiteName: "group.mialin.valentyn.crypto.monitor")
+        
+        if let lastUpdate = userDefaults?.object(forKey: "lastUpdate") as? Date {
+            if lastUpdate <= (userCalendar.date(byAdding: .minute, value: -5, to: Date())! ){
+                loadTicker()
+            }
+            else{
+                if let decodedTicker = userDefaults?.data(forKey: "cryptocurrency"){
+                    if let cacheTicker = NSKeyedUnarchiver.unarchiveObject(with: decodedTicker) as? [Ticker] {
+                        getTickerID = cacheTicker
+                        viewCryptocurrencyInfo()
+                    }
+                }
+                else{
+                    loadTicker()
+                }
+            }
+        }
+        else{
+            loadTicker()
+        }
     }
 
     
         override func viewWillAppear(_ animated: Bool) {
     
             
-            if getTickerID.isEmpty {
+            if getTickerID == nil {
                 showLoadSubview()
                 loadTicker()
             }
             else{
                 viewCryptocurrencyInfo()
                 
-                if lastUpdate <= (userCalendar.date(byAdding: .minute, value: -5, to: Date())! ){
+               // if lastUpdate <= (userCalendar.date(byAdding: .minute, value: -5, to: Date())! ){
                     loadTicker()
-                }
+              //  }
             }
             
             AlamofireRequest().getMinDateCharts(id: openID) { (minDate: Date?) in
@@ -155,7 +176,7 @@ class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
                 
                 DispatchQueue.main.async() {
                     self.viewCryptocurrencyInfo()
-                    lastUpdate = Date()
+                  //  lastUpdate = Date()
                 }
             }
             else{
@@ -167,9 +188,12 @@ class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
     
     
     func viewCryptocurrencyInfo() {
-        if let tick = getTickerID.first(where: {$0.id == openID}) {
-            ticker = tick
-        }
+        
+        if getTickerID != nil {
+            if let tick = getTickerID!.first(where: {$0.id == openID}) {
+                ticker = tick
+            }
+        
         
         if let ticker = ticker {
             
@@ -181,8 +205,9 @@ class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
             imageView.af_setImage(withURL: url)
             
             navigationItem.title = ticker.symbol
+
             
-            nameLabel.text = "\(ticker.name) (\(ticker.symbol))"
+            nameLabel.text = ticker.name
             
             scaleFactor(label: dataCurrencyLabel)
             dataCurrencyLabel.text = "\(formatter.string(from: ticker.price_usd as NSNumber)!) USD"
@@ -210,6 +235,7 @@ class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
             scaleFactor(label: volumeLabel)
             volumeLabel.text = formatCurrency(value: ticker.volume_usd_24h)
         }
+            }
         
         if let subviews = self.view.superview?.subviews {
             for view in subviews{

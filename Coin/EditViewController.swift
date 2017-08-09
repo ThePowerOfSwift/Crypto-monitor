@@ -47,7 +47,12 @@ class EditViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return getTickerID.count
+        if getTickerID == nil{
+            return 0
+        }
+        else{
+            return getTickerID!.count
+        }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -57,9 +62,9 @@ class EditViewController: UIViewController, UITableViewDelegate, UITableViewData
         
        let row = indexPath.row
         
-        let url = URL(string: "https://files.coinmarketcap.com/static/img/coins/32x32/\(getTickerID[row].id).png")!
+        let url = URL(string: "https://files.coinmarketcap.com/static/img/coins/32x32/\(getTickerID![row].id).png")!
         cell.cryptocurrencyImageView.af_setImage(withURL: url)
-        cell.cryptocurrencyNameLabel?.text = getTickerID[row].name
+        cell.cryptocurrencyNameLabel?.text = getTickerID![row].name
 
         
         return cell
@@ -72,12 +77,14 @@ class EditViewController: UIViewController, UITableViewDelegate, UITableViewData
             
             if var idArray = keyStore.array(forKey: "id") as? [String] {
                 
-                if let index = idArray.index(of: getTickerID[indexPath.row].id){
+                if let index = idArray.index(of: getTickerID![indexPath.row].id){
                     idArray.remove(at: index)
-                    getTickerID.remove(at: indexPath.row)
+                    getTickerID!.remove(at: indexPath.row)
                     
                     keyStore.set(idArray, forKey: "id")
                     keyStore.synchronize()
+                    
+                    setUserDefaults(ticher: getTickerID!)
                 }
                 cryptocurrencyView()
             }
@@ -90,17 +97,26 @@ class EditViewController: UIViewController, UITableViewDelegate, UITableViewData
         
         if var idArray = keyStore.array(forKey: "id") as? [String] {
             
-            if let index = idArray.index(of: getTickerID[sourceIndexPath.row].id){
+            if let index = idArray.index(of: getTickerID![sourceIndexPath.row].id){
                 idArray.remove(at: index)
-                idArray.insert(getTickerID[sourceIndexPath.row].id, at: destinationIndexPath.row)
-                getTickerID.rearrange(from: sourceIndexPath.row, to: destinationIndexPath.row)
-                print(getTickerID)
+                idArray.insert(getTickerID![sourceIndexPath.row].id, at: destinationIndexPath.row)
+                getTickerID!.rearrange(from: sourceIndexPath.row, to: destinationIndexPath.row)
                 keyStore.set(idArray, forKey: "id")
                 keyStore.synchronize()
+                
+                setUserDefaults(ticher: getTickerID!)
+                
+                
             }
         }
-        
-
+    }
+    
+    func setUserDefaults(ticher: [Ticker]) {
+        // set UserDefaults
+        let encodedData = NSKeyedArchiver.archivedData(withRootObject: ticher)
+        let userDefaults = UserDefaults(suiteName: "group.mialin.valentyn.crypto.monitor")
+        userDefaults?.set(encodedData, forKey: "cryptocurrency")
+        userDefaults?.synchronize()
     }
 
     

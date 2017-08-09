@@ -111,7 +111,8 @@
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="62f-DU-Bep">
-                                    <rect key="frame" x="106.5" y="7" width="107" height="30"/>
+                                    <rect key="frame" x="113" y="8" width="94" height="28"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                     <state key="normal" title="CoinMarketCap"/>
                                     <connections>
                                         <action selector="coinMarketCapAction:" destination="rfY-TX-ple" eventType="touchUpInside" id="rKg-C0-g2F"/>
@@ -272,7 +273,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Pn9-uy-4an" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3428" y="-96"/>
+            <point key="canvasLocation" x="3427.5" y="-96.126760563380287"/>
         </scene>
         <!--Edit-->
         <scene sceneID="vL4-Mh-18O">
