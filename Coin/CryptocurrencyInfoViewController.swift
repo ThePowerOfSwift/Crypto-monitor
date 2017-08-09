@@ -153,6 +153,9 @@ class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
         if getTickerID == nil {
             showLoadSubview()
         }
+        else{
+             startRefreshActivityIndicator()
+        }
         
         let keyStore = NSUbiquitousKeyValueStore ()
         if  let idArray = keyStore.array(forKey: "id") as? [String] {
@@ -160,13 +163,25 @@ class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
             AlamofireRequest().getTickerID(idArray: idArray, completion: { (ticker : [Ticker]?, error : Error?) in
                 if error == nil {
                     if let ticker = ticker {
+                        
                         getTickerID = ticker
+                        //update your table data here
+                        DispatchQueue.main.async() {
+                            if !self.isEditing {
+                                self.viewCryptocurrencyInfo()
+                            }
+                        }
+                        let encodedData = NSKeyedArchiver.archivedData(withRootObject: getTickerID! )
+                        let userDefaults = UserDefaults(suiteName: "group.mialin.valentyn.crypto.monitor")
+                        userDefaults?.set(encodedData, forKey: "cryptocurrency")
+                        userDefaults?.set(Date(), forKey: "lastUpdate")
+                        userDefaults?.synchronize()
+                        
+                    }
+                    else{
+                        print("idArray empty!")
                     }
                     
-                    DispatchQueue.main.async() {
-                        self.viewCryptocurrencyInfo()
-                        //  lastUpdate = Date()
-                    }
                 }
                 else{
                     self.showErrorSubview(error: error!)
@@ -177,6 +192,8 @@ class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
     
     
     func viewCryptocurrencyInfo() {
+        
+        refreshBarButtonItem()
         
         if getTickerID != nil {
             if let tick = getTickerID!.first(where: {$0.id == openID}) {
@@ -375,6 +392,21 @@ class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
         }
         
     }
+    
+    func refreshBarButtonItem(){
+        let refreshBarButton = UIBarButtonItem.init(barButtonSystemItem: .refresh, target: self, action: #selector(loadTicker))
+        self.navigationItem.rightBarButtonItem = refreshBarButton
+    }
+    
+    func startRefreshActivityIndicator() {
+        let activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView.init(activityIndicatorStyle: .gray)
+        activityIndicator.color = UIColor(red:0.00, green:0.48, blue:1.00, alpha:1.0)
+        let refreshBarButton = UIBarButtonItem(customView: activityIndicator)
+        self.navigationItem.rightBarButtonItem = refreshBarButton
+        activityIndicator.startAnimating()
+    }
+    
+
     
     @IBAction func selectIindexChanged(_ sender: UISegmentedControl) {
         let keyStore = NSUbiquitousKeyValueStore ()
