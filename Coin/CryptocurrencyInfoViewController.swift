@@ -37,7 +37,7 @@ class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
     @IBOutlet weak var marketcapLabel: UILabel!
     @IBOutlet weak var volumeLabel: UILabel!
     
-
+    
     
     var ticker : Ticker?
     var loadSubview:LoadSubview?
@@ -48,14 +48,9 @@ class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.title = ticker?.name
+        NotificationCenter.default.addObserver(self, selector: #selector(applicationDidBecomeActiveNotification), name:NSNotification.Name.UIApplicationDidBecomeActive, object: nil)
         
-        nameLabel.text = ""
-        dataCurrencyLabel.text = ""
-        dataSecondaryLabel.text = ""
-        rankLabel.text = ""
-        marketcapLabel.text = ""
-        volumeLabel.text = ""
+        self.title = ticker?.name
         
         // percent change view
         oneHourChangeView.layer.cornerRadius = 3
@@ -74,80 +69,71 @@ class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
         lineChartView.leftAxis.enabled = false
         lineChartView.legend.enabled = false
         lineChartView.scaleYEnabled = false
-                
-        let font = UIFont.systemFont(ofSize: 10)
-        selectSegmentedControl.setTitleTextAttributes([NSFontAttributeName: font], for: .normal)
-
+        
         let keyStore = NSUbiquitousKeyValueStore ()
         selectSegmentedControl.selectedSegmentIndex = Int(keyStore.longLong(forKey: "typeChart"))
         zoomSegmentedControl.selectedSegmentIndex = Int(keyStore.longLong(forKey: "zoomChart"))
         
-        let userDefaults = UserDefaults(suiteName: "group.mialin.valentyn.crypto.monitor")
-        
-        if let lastUpdate = userDefaults?.object(forKey: "lastUpdate") as? Date {
-            if lastUpdate <= (userCalendar.date(byAdding: .minute, value: -5, to: Date())! ){
-                loadTicker()
-            }
-            else{
-                if let decodedTicker = userDefaults?.data(forKey: "cryptocurrency"){
-                    if let cacheTicker = NSKeyedUnarchiver.unarchiveObject(with: decodedTicker) as? [Ticker] {
-                        getTickerID = cacheTicker
-                        viewCryptocurrencyInfo()
-                    }
-                }
-                else{
-                    loadTicker()
-                }
-            }
-        }
-        else{
+        loadCache()
+    }
+    
+    
+    override func viewWillAppear(_ animated: Bool) {
+        if getTickerID == nil {
             loadTicker()
         }
-    }
-
-    
-        override func viewWillAppear(_ animated: Bool) {
-    
-            
-            if getTickerID == nil {
-                showLoadSubview()
-                loadTicker()
-            }
-            else{
-                viewCryptocurrencyInfo()
-                
-               // if lastUpdate <= (userCalendar.date(byAdding: .minute, value: -5, to: Date())! ){
-                    loadTicker()
-              //  }
-            }
-            
-            AlamofireRequest().getMinDateCharts(id: openID) { (minDate: Date?) in
-                if let minDate = minDate{
-                    // 1 weak
-                    if  minDate >=  self.userCalendar.date(byAdding: .weekOfYear, value: -1, to: Date())! {
-                        self.zoomSelectedSegment(index: 1)
+        else{
+            viewCryptocurrencyInfo()
+        }
+        
+        AlamofireRequest().getMinDateCharts(id: openID) { (minDate: Date?) in
+            if let minDate = minDate{
+                // 1 weak
+                if  minDate >=  self.userCalendar.date(byAdding: .weekOfYear, value: -1, to: Date())! {
+                    self.zoomSelectedSegment(index: 1)
+                }
+                else{
+                    // 1m
+                    if  minDate >=  self.userCalendar.date(byAdding: .month, value: -1, to: Date())! {
+                        self.zoomSelectedSegment(index: 2)
                     }
                     else{
-                        // 1m
-                        if  minDate >=  self.userCalendar.date(byAdding: .month, value: -1, to: Date())! {
-                            self.zoomSelectedSegment(index: 2)
+                        // 3m
+                        if  minDate >=  self.userCalendar.date(byAdding: .month, value: -3, to: Date())! {
+                            self.zoomSelectedSegment(index: 3)
                         }
                         else{
-                            // 3m
-                            if  minDate >=  self.userCalendar.date(byAdding: .month, value: -3, to: Date())! {
-                                self.zoomSelectedSegment(index: 3)
-                            }
-                            else{
-                                // 1 year
-                                if  minDate >=  self.userCalendar.date(byAdding: .year, value: -1, to: Date())! {
-                                    self.zoomSelectedSegment(index: 4)
-                                }
+                            // 1 year
+                            if  minDate >=  self.userCalendar.date(byAdding: .year, value: -1, to: Date())! {
+                                self.zoomSelectedSegment(index: 4)
                             }
                         }
                     }
                 }
-                self.loadlineView()
             }
+            self.loadlineView()
+        }
+    }
+    
+    func applicationDidBecomeActiveNotification(notification : NSNotification) {
+        print("unlock")
+        loadCache()
+    }
+    
+    private func loadCache() {
+        let userDefaults = UserDefaults(suiteName: "group.mialin.valentyn.crypto.monitor")
+        if let decodedTicker = userDefaults?.data(forKey: "cryptocurrency"){
+            if let cacheTicker = NSKeyedUnarchiver.unarchiveObject(with: decodedTicker) as? [Ticker] {
+                getTickerID = cacheTicker
+                viewCryptocurrencyInfo()
+                
+                if let lastUpdate = userDefaults?.object(forKey: "lastUpdate") as? Date {
+                    if lastUpdate <= (userCalendar.date(byAdding: .minute, value: -5, to: Date())! ){
+                        loadTicker()
+                    }
+                }
+            }
+        }
     }
     
     func zoomSelectedSegment(index: Int){
@@ -164,25 +150,28 @@ class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
     }
     
     func loadTicker() {
+        if getTickerID == nil {
+            showLoadSubview()
+        }
         
         let keyStore = NSUbiquitousKeyValueStore ()
         if  let idArray = keyStore.array(forKey: "id") as? [String] {
-    
-        AlamofireRequest().getTickerID(idArray: idArray, completion: { (ticker : [Ticker]?, error : Error?) in
-            if error == nil {
-                if let ticker = ticker {
-                    getTickerID = ticker
+            
+            AlamofireRequest().getTickerID(idArray: idArray, completion: { (ticker : [Ticker]?, error : Error?) in
+                if error == nil {
+                    if let ticker = ticker {
+                        getTickerID = ticker
+                    }
+                    
+                    DispatchQueue.main.async() {
+                        self.viewCryptocurrencyInfo()
+                        //  lastUpdate = Date()
+                    }
                 }
-                
-                DispatchQueue.main.async() {
-                    self.viewCryptocurrencyInfo()
-                  //  lastUpdate = Date()
+                else{
+                    self.showErrorSubview(error: error!)
                 }
-            }
-            else{
-                self.showErrorSubview(error: error!)
-            }
-        })
+            })
         }
     }
     
@@ -193,49 +182,49 @@ class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
             if let tick = getTickerID!.first(where: {$0.id == openID}) {
                 ticker = tick
             }
-        
-        
-        if let ticker = ticker {
-            
-            let formatter = NumberFormatter()
-            formatter.numberStyle = .decimal
-            formatter.maximumFractionDigits = 25
-            
-            let url = URL(string: "https://files.coinmarketcap.com/static/img/coins/64x64/\(ticker.id).png")!
-            imageView.af_setImage(withURL: url)
-            
-            navigationItem.title = ticker.symbol
-
-            
-            nameLabel.text = ticker.name
-            
-            scaleFactor(label: dataCurrencyLabel)
-            dataCurrencyLabel.text = "\(formatter.string(from: ticker.price_usd as NSNumber)!) USD"
-           
-            // 1h
-            scaleFactor(label: oneHourChangeLabel)
-            oneHourChangeLabel.text = "\(ticker.percent_change_1h)%"
-            backgroundColorView(view: oneHourChangeView, percentChange: ticker.percent_change_1h)
-            // 24h
-            scaleFactor(label: dayChangeLabel)
-            dayChangeLabel.text = "\(ticker.percent_change_24h)%"
-            backgroundColorView(view: dayChangeView, percentChange: ticker.percent_change_24h)
-            // 7d
-            scaleFactor(label: weekChangeLabel)
-            weekChangeLabel.text = "\(ticker.percent_change_7d)%"
-            backgroundColorView(view: weekChangeView, percentChange: ticker.percent_change_7d)
             
             
-            dataSecondaryLabel.text = formatter.string(from: ticker.price_btc as NSNumber)! + " BTC"
-            rankLabel.text = String(ticker.rank)
-            
-            scaleFactor(label: marketcapLabel)
-            marketcapLabel.text = formatCurrency(value: ticker.market_cap_usd)
-            
-            scaleFactor(label: volumeLabel)
-            volumeLabel.text = formatCurrency(value: ticker.volume_usd_24h)
-        }
+            if let ticker = ticker {
+                
+                let formatter = NumberFormatter()
+                formatter.numberStyle = .decimal
+                formatter.maximumFractionDigits = 25
+                
+                let url = URL(string: "https://files.coinmarketcap.com/static/img/coins/64x64/\(ticker.id).png")!
+                imageView.af_setImage(withURL: url)
+                
+                navigationItem.title = ticker.symbol
+                
+                
+                nameLabel.text = ticker.name
+                
+                scaleFactor(label: dataCurrencyLabel)
+                dataCurrencyLabel.text = "\(formatter.string(from: ticker.price_usd as NSNumber)!) USD"
+                
+                // 1h
+                scaleFactor(label: oneHourChangeLabel)
+                oneHourChangeLabel.text = "\(ticker.percent_change_1h)%"
+                backgroundColorView(view: oneHourChangeView, percentChange: ticker.percent_change_1h)
+                // 24h
+                scaleFactor(label: dayChangeLabel)
+                dayChangeLabel.text = "\(ticker.percent_change_24h)%"
+                backgroundColorView(view: dayChangeView, percentChange: ticker.percent_change_24h)
+                // 7d
+                scaleFactor(label: weekChangeLabel)
+                weekChangeLabel.text = "\(ticker.percent_change_7d)%"
+                backgroundColorView(view: weekChangeView, percentChange: ticker.percent_change_7d)
+                
+                
+                dataSecondaryLabel.text = formatter.string(from: ticker.price_btc as NSNumber)! + " BTC"
+                rankLabel.text = String(ticker.rank)
+                
+                scaleFactor(label: marketcapLabel)
+                marketcapLabel.text = formatCurrency(value: ticker.market_cap_usd)
+                
+                scaleFactor(label: volumeLabel)
+                volumeLabel.text = formatCurrency(value: ticker.volume_usd_24h)
             }
+        }
         
         if let subviews = self.view.superview?.subviews {
             for view in subviews{
@@ -448,7 +437,7 @@ class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
         
         self.view.superview?.addSubview(self.errorSubview!)
     }
-
+    
 }
 
 class ChartXAxisFormatter: NSObject {

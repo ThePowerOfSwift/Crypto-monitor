@@ -28,22 +28,7 @@ class CoinTableViewController: UITableViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(applicationDidBecomeActiveNotification), name:NSNotification.Name.UIApplicationDidBecomeActive, object: nil)
         self.refreshControl?.addTarget(self, action: #selector(self.refresh), for: UIControlEvents.valueChanged)
         
-  
-        
-        let userDefaults = UserDefaults(suiteName: "group.mialin.valentyn.crypto.monitor")
-        
-        if let decodedTicker = userDefaults?.data(forKey: "cryptocurrency"){
-            if let cacheTicker = NSKeyedUnarchiver.unarchiveObject(with: decodedTicker) as? [Ticker] {
-                getTickerID = cacheTicker
-                cryptocurrencyView()
-                
-                if let lastUpdate = userDefaults?.object(forKey: "lastUpdate") as? Date {
-                    if lastUpdate <= (userCalendar.date(byAdding: .minute, value: -5, to: Date())! ){
-                        loadTicker()
-                    }
-                }
-            }
-        }
+        loadCache()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -55,10 +40,12 @@ class CoinTableViewController: UITableViewController {
         }
     }
     
-
     func applicationDidBecomeActiveNotification(notification : NSNotification) {
         print("unlock")
-        
+        loadCache()
+    }
+    
+    private func loadCache() {
         let userDefaults = UserDefaults(suiteName: "group.mialin.valentyn.crypto.monitor")
         if let decodedTicker = userDefaults?.data(forKey: "cryptocurrency"){
             if let cacheTicker = NSKeyedUnarchiver.unarchiveObject(with: decodedTicker) as? [Ticker] {
@@ -73,7 +60,7 @@ class CoinTableViewController: UITableViewController {
             }
         }
     }
-
+    
     func ubiquitousKeyValueStoreDidChange(notification: NSNotification) {
         cryptocurrencyView()
         print("iCloud key-value-store change detected")
