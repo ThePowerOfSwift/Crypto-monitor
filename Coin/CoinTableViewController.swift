@@ -27,7 +27,6 @@ class CoinTableViewController: UITableViewController {
         
         NotificationCenter.default.addObserver(self, selector: #selector(applicationDidBecomeActiveNotification), name:NSNotification.Name.UIApplicationDidBecomeActive, object: nil)
         self.refreshControl?.addTarget(self, action: #selector(self.refresh), for: UIControlEvents.valueChanged)
-        
         loadCache()
     }
     
@@ -285,7 +284,4 @@ class CoinTableViewController: UITableViewController {
         formatter.locale = Locale.current
         return formatter.string(from: date as Date)
     }
-    
-    
-
 }

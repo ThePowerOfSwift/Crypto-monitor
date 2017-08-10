@@ -46,24 +46,35 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if let urlComponents =  NSURLComponents(url: url, resolvingAgainstBaseURL: false) {
             if let queryItems = urlComponents.queryItems as [NSURLQueryItem]?{
                 for queryItem in queryItems {
-                    if queryItem.name == "id" {
+                    
+                    switch queryItem.name {
+                    case "id":
                         if let id = queryItem.value {
                             openID = id
+                            showViewControllet(withIdentifier: "CryptocurrencyInfoViewControllerID")
                         }
+                    case "add":
+                            showViewControllet(withIdentifier: "EditViewControllerID")
+                    default:
+                        break
                     }
                 }
             }
         }
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        
-        let detailController = storyboard.instantiateViewController(withIdentifier: "CryptocurrencyInfoViewControllerID") as! CryptocurrencyInfoViewController
-        (self.window?.rootViewController as! UINavigationController).popToRootViewController(animated: false)
-        self.window?.rootViewController?.dismiss(animated: false, completion: nil)
-        (self.window?.rootViewController as! UINavigationController).pushViewController(detailController, animated: false)
+
         
         return true
     }
     
+    func showViewControllet(withIdentifier: String){
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        
+        let detailController = storyboard.instantiateViewController(withIdentifier: withIdentifier)// as! CryptocurrencyInfoViewController
+        (self.window?.rootViewController as! UINavigationController).popToRootViewController(animated: false)
+        self.window?.rootViewController?.dismiss(animated: false, completion: nil)
+        (self.window?.rootViewController as! UINavigationController).pushViewController(detailController, animated: false)
+        
+    }
 
 
     func applicationWillResignActive(_ application: UIApplication) {

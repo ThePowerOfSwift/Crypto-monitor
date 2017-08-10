@@ -109,12 +109,26 @@
                                     <outlet property="delegate" destination="M4Y-Lb-cyx" id="sKo-ql-sKq"/>
                                 </connections>
                             </tableView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0UA-3N-NJl">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="110"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <state key="normal" title="Коснитесь для настройки">
+                                    <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="0.39734710509999999" colorSpace="calibratedRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="emptyButton:" destination="M4Y-Lb-cyx" eventType="touchUpInside" id="0Cy-gi-Qxc"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <constraints>
                             <constraint firstItem="Lhn-oQ-ibQ" firstAttribute="top" secondItem="Ft6-oW-KC0" secondAttribute="bottom" id="24S-2G-aOV"/>
+                            <constraint firstItem="0UA-3N-NJl" firstAttribute="top" secondItem="Ft6-oW-KC0" secondAttribute="bottom" id="6sa-lQ-2Eh"/>
+                            <constraint firstAttribute="trailing" secondItem="0UA-3N-NJl" secondAttribute="trailing" id="9ix-Ay-UEz"/>
                             <constraint firstAttribute="trailing" secondItem="Lhn-oQ-ibQ" secondAttribute="trailing" id="C5Z-qR-k6l"/>
+                            <constraint firstItem="FKl-LY-JtV" firstAttribute="top" secondItem="0UA-3N-NJl" secondAttribute="bottom" id="iXI-rS-ZQK"/>
                             <constraint firstItem="FKl-LY-JtV" firstAttribute="top" secondItem="Lhn-oQ-ibQ" secondAttribute="bottom" id="nTx-Q5-hEG"/>
                             <constraint firstItem="Lhn-oQ-ibQ" firstAttribute="leading" secondItem="S3S-Oj-5AN" secondAttribute="leading" id="rLW-6D-cbO"/>
+                            <constraint firstItem="0UA-3N-NJl" firstAttribute="leading" secondItem="S3S-Oj-5AN" secondAttribute="leading" id="vog-sF-J05"/>
                         </constraints>
                     </view>
                     <extendedEdge key="edgesForExtendedLayout"/>
@@ -124,12 +138,13 @@
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                     <size key="freeformSize" width="320" height="110"/>
                     <connections>
+                        <outlet property="emptyButton" destination="0UA-3N-NJl" id="vXn-Ec-7wC"/>
                         <outlet property="tableView" destination="Lhn-oQ-ibQ" id="VeC-n9-WuM"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vXp-U4-Rya" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="357" y="261"/>
+            <point key="canvasLocation" x="352" y="179"/>
         </scene>
     </scenes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">

@@ -14,6 +14,7 @@ import AlamofireImage
 class TodayViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, NCWidgetProviding {
     
     @IBOutlet weak var tableView: UITableView!
+     @IBOutlet weak var emptyButton: UIButton!
     
     fileprivate var cryptocurrency = [Ticker]()
     fileprivate var cryptocurrencyCompact = [Ticker]()
@@ -29,8 +30,12 @@ class TodayViewController: UIViewController, UITableViewDataSource, UITableViewD
         if let decoded = userDefaults?.data(forKey: "cryptocurrency")
         {
             if let cache = NSKeyedUnarchiver.unarchiveObject(with: decoded) as? [Ticker] {
+                
+                emptyButton.isHidden = !cache.isEmpty
+                
                 cryptocurrencyCompact.removeAll()
                 cryptocurrency = cache
+                
                 
                 if cache.count > 2 {
                     for i in 0..<2 {
@@ -59,10 +64,8 @@ class TodayViewController: UIViewController, UITableViewDataSource, UITableViewD
             AlamofireRequest().getTickerID(idArray: idArray, completion: { (ticker : [Ticker]?, error : Error?) in
                 if error == nil {
                     if let ticker = ticker {
-                        print(ticker.count)
                         
-      
-
+                        self.emptyButton.isHidden = !ticker.isEmpty
                         
                         self.cryptocurrency = ticker
                         
@@ -208,4 +211,17 @@ class TodayViewController: UIViewController, UITableViewDataSource, UITableViewD
             }
         })
     }
+
+    @IBAction func emptyButton(_ sender: Any) {
+        let myAppUrl = URL(string: "cryptomonitor://?add")!
+        extensionContext?.open(myAppUrl, completionHandler: { (success) in
+            if (!success) {
+                print("error: failed to open app from Today Extension")
+            }
+        })
+        
+    }
+
+
+    
 }

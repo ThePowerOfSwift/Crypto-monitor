@@ -254,15 +254,15 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Crypto monitor" id="obh-JI-x0P">
-                        <barButtonItem key="backBarButtonItem" title="Back" id="6Tv-qD-UpR"/>
-                        <barButtonItem key="leftBarButtonItem" title="Settings" id="yMj-9l-wbO">
+                        <barButtonItem key="backBarButtonItem" title=" " id="2wB-Tb-5JM"/>
+                        <barButtonItem key="leftBarButtonItem" image="Setting" id="yMj-9l-wbO">
                             <connections>
                                 <segue destination="mSk-LG-rjD" kind="show" identifier="settingSegue" id="RhT-CT-VXO"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="edit" id="3ck-QH-msT">
                             <connections>
-                                <segue destination="o5k-VV-imJ" kind="presentation" identifier="editSegue" id="atJ-sN-uiw"/>
+                                <segue destination="s1A-aI-Skt" kind="show" identifier="editSegue" id="hhZ-18-7Ny"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -278,7 +278,7 @@
         <!--Edit-->
         <scene sceneID="vL4-Mh-18O">
             <objects>
-                <viewController id="s1A-aI-Skt" customClass="EditViewController" customModule="Coin" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="EditViewControllerID" id="s1A-aI-Skt" customClass="EditViewController" customModule="Coin" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="O0b-bc-Xn8"/>
                         <viewControllerLayoutGuide type="bottom" id="8AQ-Jo-dwg"/>
@@ -318,14 +318,9 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Edit" id="zNv-nx-6D7">
-                        <barButtonItem key="leftBarButtonItem" systemItem="add" id="zuL-0e-jqP">
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="zuL-0e-jqP">
                             <connections>
                                 <segue destination="kUp-GD-yrC" kind="presentation" identifier="addSegue" id="623-DX-vKc"/>
-                            </connections>
-                        </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" systemItem="done" id="K67-TG-5zl">
-                            <connections>
-                                <action selector="Done:" destination="s1A-aI-Skt" id="kJL-yb-Nfg"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -335,7 +330,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ROR-pn-Sce" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5110" y="123"/>
+            <point key="canvasLocation" x="4346" y="92"/>
         </scene>
         <!--Cryptocurrency Info View Controller-->
         <scene sceneID="Apo-J2-FXb">
@@ -688,7 +683,7 @@
         <!--Add-->
         <scene sceneID="sfg-x9-UdE">
             <objects>
-                <tableViewController id="C1j-e5-RAf" customClass="AddTableViewController" customModule="Coin" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="AddTableViewControllerID" id="C1j-e5-RAf" customClass="AddTableViewController" customModule="Coin" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="hbR-aN-vPM">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -746,28 +741,6 @@
             <point key="canvasLocation" x="5860" y="123"/>
         </scene>
         <!--Navigation Controller-->
-        <scene sceneID="xrB-hL-fag">
-            <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="o5k-VV-imJ" sceneMemberID="viewController">
-                    <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="7cM-nK-mbV">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <nil name="viewControllers"/>
-                    <toolbar key="toolbar" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="yR8-Pb-NMq">
-                        <rect key="frame" x="0.0" y="623" width="375" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </toolbar>
-                    <connections>
-                        <segue destination="s1A-aI-Skt" kind="relationship" relationship="rootViewController" id="mZ8-kl-Tpu"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Skr-Lo-pvi" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="4348" y="122"/>
-        </scene>
-        <!--Navigation Controller-->
         <scene sceneID="1zu-Ix-gFQ">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="S9O-U0-Qd5" sceneMemberID="viewController">
@@ -786,4 +759,7 @@
             <point key="canvasLocation" x="2584.8000000000002" y="-95.802098950524751"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="Setting" width="75" height="75"/>
+    </resources>
 </document>

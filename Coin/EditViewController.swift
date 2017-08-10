@@ -118,11 +118,6 @@ class EditViewController: UIViewController, UITableViewDelegate, UITableViewData
         userDefaults?.set(encodedData, forKey: "cryptocurrency")
         userDefaults?.synchronize()
     }
-
-    
-    @IBAction func Done(_ sender: Any) {
-         self.dismiss(animated: true, completion: nil)
-    }
     
 }
 
