@@ -110,9 +110,22 @@
                             <rect key="frame" x="0.0" y="108" width="320" height="44"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
-                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="62f-DU-Bep">
-                                    <rect key="frame" x="113" y="8" width="94" height="28"/>
-                                    <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="bottom" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Data source:" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hky-V5-UY0">
+                                    <rect key="frame" x="124" y="0.0" width="72" height="12"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="12" id="Uyj-Ai-W9j"/>
+                                    </constraints>
+                                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                    <nil key="textColor"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="top" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="62f-DU-Bep">
+                                    <rect key="frame" x="114" y="12" width="92" height="19"/>
+                                    <constraints>
+                                        <constraint firstAttribute="width" constant="92" id="NVE-sE-2Gd"/>
+                                        <constraint firstAttribute="height" constant="19" id="XAc-ct-Gdv"/>
+                                    </constraints>
+                                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                     <state key="normal" title="CoinMarketCap"/>
                                     <connections>
                                         <action selector="coinMarketCapAction:" destination="rfY-TX-ple" eventType="touchUpInside" id="rKg-C0-g2F"/>
@@ -120,8 +133,10 @@
                                 </button>
                             </subviews>
                             <constraints>
-                                <constraint firstItem="62f-DU-Bep" firstAttribute="centerY" secondItem="rfY-TX-ple" secondAttribute="centerY" id="c2Y-fV-mZm"/>
-                                <constraint firstItem="62f-DU-Bep" firstAttribute="centerX" secondItem="rfY-TX-ple" secondAttribute="centerX" id="lDk-rs-ARq"/>
+                                <constraint firstItem="hky-V5-UY0" firstAttribute="centerX" secondItem="rfY-TX-ple" secondAttribute="centerX" id="4LG-L6-qJx"/>
+                                <constraint firstItem="hky-V5-UY0" firstAttribute="top" secondItem="rfY-TX-ple" secondAttribute="top" id="Jif-Ut-Bo0"/>
+                                <constraint firstItem="62f-DU-Bep" firstAttribute="centerX" secondItem="rfY-TX-ple" secondAttribute="centerX" id="rg5-Mx-6yw"/>
+                                <constraint firstItem="62f-DU-Bep" firstAttribute="top" secondItem="hky-V5-UY0" secondAttribute="bottom" id="sJY-bd-7vp"/>
                             </constraints>
                         </view>
                         <prototypes>
@@ -711,7 +726,7 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Add" id="fra-i8-hjZ">
-                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="g7p-Pm-Ycr">
+                        <barButtonItem key="rightBarButtonItem" systemItem="cancel" id="g7p-Pm-Ycr">
                             <connections>
                                 <action selector="cance:" destination="C1j-e5-RAf" id="PfE-nk-YFA"/>
                             </connections>
@@ -720,7 +735,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="O8t-Et-wRZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="6566" y="122"/>
+            <point key="canvasLocation" x="6673" y="123"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="4a3-Re-0Yw">

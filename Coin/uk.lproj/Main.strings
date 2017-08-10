@@ -1,4 +1,3 @@
-
 /* Class = "UIButton"; normalTitle = "CoinMarketCap"; ObjectID = "2N2-lj-Jjq"; */
 "2N2-lj-Jjq.normalTitle" = "CoinMarketCap";
 
@@ -6,136 +5,41 @@
 "2wB-Tb-5JM.title" = " ";
 
 /* Class = "UILabel"; text = "Name"; ObjectID = "3pI-hc-AXM"; */
-"3pI-hc-AXM.text" = "Name";
-
-/* Class = "UILabel"; text = "$489.96 K"; ObjectID = "4z8-zK-QWk"; */
-"4z8-zK-QWk.text" = "$489.96 K";
-
-/* Class = "UIButton"; normalTitle = "CoinMarketCap"; ObjectID = "62f-DU-Bep"; */
-"62f-DU-Bep.normalTitle" = "CoinMarketCap";
-
-/* Class = "UILabel"; text = "0.00004984 BTC"; ObjectID = "8Nk-dX-NRl"; */
-"8Nk-dX-NRl.text" = "0.00004984 BTC";
-
-/* Class = "UILabel"; text = "VOLUME (24H) "; ObjectID = "9P0-Kf-92n"; */
-"9P0-Kf-92n.text" = "VOLUME (24H) ";
-
-/* Class = "UISegmentedControl"; AUk-9u-q0O.segmentTitles[0] = "USD"; ObjectID = "AUk-9u-q0O"; */
-"AUk-9u-q0O.segmentTitles[0]" = "USD";
-
-/* Class = "UISegmentedControl"; AUk-9u-q0O.segmentTitles[1] = "BTC"; ObjectID = "AUk-9u-q0O"; */
-"AUk-9u-q0O.segmentTitles[1]" = "BTC";
-
-/* Class = "UILabel"; text = "-21.5%"; ObjectID = "Cgg-tA-57L"; */
-"Cgg-tA-57L.text" = "-21.5%";
-
-/* Class = "UISegmentedControl"; EKk-hl-QzT.segmentTitles[0] = "1h"; ObjectID = "EKk-hl-QzT"; */
-"EKk-hl-QzT.segmentTitles[0]" = "1h";
-
-/* Class = "UISegmentedControl"; EKk-hl-QzT.segmentTitles[1] = "24h"; ObjectID = "EKk-hl-QzT"; */
-"EKk-hl-QzT.segmentTitles[1]" = "24h";
-
-/* Class = "UISegmentedControl"; EKk-hl-QzT.segmentTitles[2] = "7d"; ObjectID = "EKk-hl-QzT"; */
-"EKk-hl-QzT.segmentTitles[2]" = "7d";
-
-/* Class = "UILabel"; text = "24h"; ObjectID = "FBj-3W-hNJ"; */
-"FBj-3W-hNJ.text" = "24h";
-
-/* Class = "UILabel"; text = "7d"; ObjectID = "Fm0-dh-sZO"; */
-"Fm0-dh-sZO.text" = "7d";
+"3pI-hc-AXM.text" = "Ім'я";
 
 /* Class = "UILabel"; text = "Price"; ObjectID = "Ghs-Sl-vBt"; */
-"Ghs-Sl-vBt.text" = "Price";
-
-/* Class = "UILabel"; text = "Karbowanec"; ObjectID = "HzE-Tk-7no"; */
-"HzE-Tk-7no.text" = "Karbowanec";
-
-/* Class = "UILabel"; text = "24h"; ObjectID = "Rjm-wZ-6Jd"; */
-"Rjm-wZ-6Jd.text" = "24h";
+"Ghs-Sl-vBt.text" = "Ціна";
 
 /* Class = "UILabel"; text = "$8.18 K"; ObjectID = "TDy-J3-MGj"; */
-"TDy-J3-MGj.text" = "$8.18 K";
-
-/* Class = "UISegmentedControl"; Y3q-Wh-tVv.segmentTitles[0] = "Market Cap"; ObjectID = "Y3q-Wh-tVv"; */
-"Y3q-Wh-tVv.segmentTitles[0]" = "Market Cap";
-
-/* Class = "UISegmentedControl"; Y3q-Wh-tVv.segmentTitles[1] = "Price (USD)"; ObjectID = "Y3q-Wh-tVv"; */
-"Y3q-Wh-tVv.segmentTitles[1]" = "Price (USD)";
-
-/* Class = "UISegmentedControl"; Y3q-Wh-tVv.segmentTitles[2] = "Price (BTC)"; ObjectID = "Y3q-Wh-tVv"; */
-"Y3q-Wh-tVv.segmentTitles[2]" = "Price (BTC)";
-
-/* Class = "UISegmentedControl"; Y3q-Wh-tVv.segmentTitles[3] = "24h Vol"; ObjectID = "Y3q-Wh-tVv"; */
-"Y3q-Wh-tVv.segmentTitles[3]" = "24h Vol";
-
-/* Class = "UIButton"; normalTitle = "CoinMarketCap"; ObjectID = "Zkm-og-it6"; */
-"Zkm-og-it6.normalTitle" = "CoinMarketCap";
+"TDy-J3-MGj.text" = "";
 
 /* Class = "UINavigationItem"; title = "Settings"; ObjectID = "a5a-yk-s2O"; */
-"a5a-yk-s2O.title" = "Settings";
-
-/* Class = "UILabel"; text = "-21.5%"; ObjectID = "ero-gf-MrV"; */
-"ero-gf-MrV.text" = "-21.5%";
+"a5a-yk-s2O.title" = "Налаштування";
 
 /* Class = "UINavigationItem"; title = "Add"; ObjectID = "fra-i8-hjZ"; */
-"fra-i8-hjZ.title" = "Add";
-
-/* Class = "UILabel"; text = "MARKET CAP"; ObjectID = "gMI-Ox-j4O"; */
-"gMI-Ox-j4O.text" = "MARKET CAP";
+"fra-i8-hjZ.title" = "Додати";
 
 /* Class = "UILabel"; text = "RANK"; ObjectID = "hTZ-ur-F3M"; */
 "hTZ-ur-F3M.text" = "RANK";
 
+/* Class = "UILabel"; text = "Data source:"; ObjectID = "hky-V5-UY0"; */
+"hky-V5-UY0.text" = "Джерело даних:";
+
 /* Class = "UILabel"; text = "1h"; ObjectID = "hqn-dg-kiF"; */
-"hqn-dg-kiF.text" = "1h";
+"hqn-dg-kiF.text" = "1г";
 
 /* Class = "UILabel"; text = "Name"; ObjectID = "jdj-IP-7pG"; */
-"jdj-IP-7pG.text" = "Name";
-
-/* Class = "UINavigationItem"; title = "Crypto monitor"; ObjectID = "obh-JI-x0P"; */
-"obh-JI-x0P.title" = "Crypto monitor";
-
-/* Class = "UILabel"; text = "-21.5%"; ObjectID = "qvM-fr-xLG"; */
-"qvM-fr-xLG.text" = "-21.5%";
-
-/* Class = "UILabel"; text = "0.123589 USD"; ObjectID = "tIF-uW-0Bc"; */
-"tIF-uW-0Bc.text" = "0.123589 USD";
-
-/* Class = "UILabel"; text = "-21.5%"; ObjectID = "tLa-nc-r5Z"; */
-"tLa-nc-r5Z.text" = "-21.5%";
+"jdj-IP-7pG.text" = "Ім'я";
 
 /* Class = "UITableViewSection"; headerTitle = "Price"; ObjectID = "tyt-ZY-uLd"; */
-"tyt-ZY-uLd.headerTitle" = "Price";
+"tyt-ZY-uLd.headerTitle" = "Ціна";
 
 /* Class = "UITableViewSection"; headerTitle = "Percent change period"; ObjectID = "uMW-aC-8Ll"; */
-"uMW-aC-8Ll.headerTitle" = "Percent change period";
+"uMW-aC-8Ll.headerTitle" = "Процентний період зміни";
 
 /* Class = "UILabel"; text = "368"; ObjectID = "xBz-zq-Jrg"; */
-"xBz-zq-Jrg.text" = "368";
-
-/* Class = "UISegmentedControl"; xtc-uj-B2T.segmentTitles[0] = "1d"; ObjectID = "xtc-uj-B2T"; */
-"xtc-uj-B2T.segmentTitles[0]" = "1d";
-
-/* Class = "UISegmentedControl"; xtc-uj-B2T.segmentTitles[1] = "7d"; ObjectID = "xtc-uj-B2T"; */
-"xtc-uj-B2T.segmentTitles[1]" = "7d";
-
-/* Class = "UISegmentedControl"; xtc-uj-B2T.segmentTitles[2] = "1m"; ObjectID = "xtc-uj-B2T"; */
-"xtc-uj-B2T.segmentTitles[2]" = "1m";
-
-/* Class = "UISegmentedControl"; xtc-uj-B2T.segmentTitles[3] = "3m"; ObjectID = "xtc-uj-B2T"; */
-"xtc-uj-B2T.segmentTitles[3]" = "3m";
-
-/* Class = "UISegmentedControl"; xtc-uj-B2T.segmentTitles[4] = "1y"; ObjectID = "xtc-uj-B2T"; */
-"xtc-uj-B2T.segmentTitles[4]" = "1y";
-
-/* Class = "UISegmentedControl"; xtc-uj-B2T.segmentTitles[5] = "YTD"; ObjectID = "xtc-uj-B2T"; */
-"xtc-uj-B2T.segmentTitles[5]" = "YTD";
-
-/* Class = "UISegmentedControl"; xtc-uj-B2T.segmentTitles[6] = "ALL"; ObjectID = "xtc-uj-B2T"; */
-"xtc-uj-B2T.segmentTitles[6]" = "ALL";
+"xBz-zq-Jrg.text" = "";
 
 /* Class = "UINavigationItem"; title = "Edit"; ObjectID = "zNv-nx-6D7"; */
-"zNv-nx-6D7.title" = "Edit";
+"zNv-nx-6D7.title" = "Редагування";
 
-/* Class = "UILabel"; text = "23307.19"; ObjectID = "zSM-yy-AP4"; */
-"zSM-yy-AP4.text" = "23307.19";

@@ -11,6 +11,9 @@
 		1853CEF6208C355CD69D15AE /* Pods_Coin.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FCD523238B38757764B37DC3 /* Pods_Coin.framework */; };
 		7C0E811403C22CFE861428B3 /* Pods_CryptocurrencyRequest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F9241DFCEEB224CD89245A5F /* Pods_CryptocurrencyRequest.framework */; };
 		FB0EB47B1F30648B0008D8B2 /* Pods_Coin.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FCD523238B38757764B37DC3 /* Pods_Coin.framework */; };
+		FB3990251F3CA92100A1EAC8 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = FB3990271F3CA92100A1EAC8 /* InfoPlist.strings */; };
+		FB39902A1F3CA92200A1EAC8 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = FB39902C1F3CA92200A1EAC8 /* InfoPlist.strings */; };
+		FB39902F1F3CA92200A1EAC8 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = FB3990311F3CA92200A1EAC8 /* InfoPlist.strings */; };
 		FB466DDA1F2D479200D771C9 /* SettingTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB466DD91F2D479200D771C9 /* SettingTableViewController.swift */; };
 		FB4955241F2B627600169CB0 /* ErrorSubview.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB4955221F2B627600169CB0 /* ErrorSubview.swift */; };
 		FB4955251F2B627600169CB0 /* ErrorSubview.xib in Resources */ = {isa = PBXBuildFile; fileRef = FB4955231F2B627600169CB0 /* ErrorSubview.xib */; };
@@ -91,6 +94,12 @@
 		D2644E3DDE8034D62D53ACCA /* Pods-Coin.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Coin.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Coin/Pods-Coin.debug.xcconfig"; sourceTree = "<group>"; };
 		F9241DFCEEB224CD89245A5F /* Pods_CryptocurrencyRequest.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CryptocurrencyRequest.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FB0EB4791F30632A0008D8B2 /* Alamofire.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Alamofire.framework; path = "Pods/../build/Release-iphoneos/Alamofire/Alamofire.framework"; sourceTree = "<group>"; };
+		FB3990261F3CA92100A1EAC8 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		FB39902B1F3CA92200A1EAC8 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		FB3990301F3CA92200A1EAC8 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		FB3990321F3CBC8300A1EAC8 /* uk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = uk; path = uk.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		FB3990331F3CBC8300A1EAC8 /* uk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = uk; path = uk.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		FB3990341F3CBC8400A1EAC8 /* uk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = uk; path = uk.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		FB466DD91F2D479200D771C9 /* SettingTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingTableViewController.swift; sourceTree = "<group>"; };
 		FB4955221F2B627600169CB0 /* ErrorSubview.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ErrorSubview.swift; sourceTree = "<group>"; };
 		FB4955231F2B627600169CB0 /* ErrorSubview.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ErrorSubview.xib; sourceTree = "<group>"; };
@@ -108,10 +117,10 @@
 		FB9E8E021F30621B000D72C0 /* CryptocurrencyRequest.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = CryptocurrencyRequest.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FB9E8E041F30621B000D72C0 /* CryptocurrencyRequest.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CryptocurrencyRequest.h; sourceTree = "<group>"; };
 		FB9E8E051F30621B000D72C0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		FBA4A9341F3CA0F00089D721 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Main.strings; sourceTree = "<group>"; };
 		FBA4A9351F3CA0F00089D721 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
-		FBA4A9361F3CA0F70089D721 /* uk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = uk; path = uk.lproj/Main.strings; sourceTree = "<group>"; };
 		FBA4A9371F3CA0F70089D721 /* uk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = uk; path = uk.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
+		FBA4A9391F3CA7100089D721 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Main.strings; sourceTree = "<group>"; };
+		FBA4A93B1F3CA7250089D721 /* uk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = uk; path = uk.lproj/Main.strings; sourceTree = "<group>"; };
 		FBA7760C1F2E884D00122D83 /* CoinTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoinTableViewController.swift; sourceTree = "<group>"; };
 		FBB2CC981F155CF800D800FD /* Coin.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Coin.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FBB2CC9B1F155CF800D800FD /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -206,6 +215,7 @@
 		FB99B48D1F2FEF1F007C0235 /* Cryptocurrency monitor widget */ = {
 			isa = PBXGroup;
 			children = (
+				FB3990311F3CA92200A1EAC8 /* InfoPlist.strings */,
 				FB99B49B1F2FF552007C0235 /* Cryptocurrency monitor widget.entitlements */,
 				FB99B48E1F2FEF1F007C0235 /* TodayViewController.swift */,
 				FBCDD40E1F307E50002B9BA4 /* WidgetCellTableViewCell.swift */,
@@ -218,6 +228,7 @@
 		FB9E8E031F30621B000D72C0 /* CryptocurrencyRequest */ = {
 			isa = PBXGroup;
 			children = (
+				FB39902C1F3CA92200A1EAC8 /* InfoPlist.strings */,
 				FBB2CCAF1F156E4000D800FD /* AlamofireRequest.swift */,
 				FB9E8E041F30621B000D72C0 /* CryptocurrencyRequest.h */,
 				FB9E8E051F30621B000D72C0 /* Info.plist */,
@@ -259,6 +270,7 @@
 		FBB2CC9A1F155CF800D800FD /* Coin */ = {
 			isa = PBXGroup;
 			children = (
+				FB3990271F3CA92100A1EAC8 /* InfoPlist.strings */,
 				FB9592531F20B8AB00F9F74B /* Coin.entitlements */,
 				FBB2CC9B1F155CF800D800FD /* AppDelegate.swift */,
 				FBA7760E1F2E928300122D83 /* Coin */,
@@ -435,6 +447,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				FB99B49D1F2FFF74007C0235 /* MainInterface.storyboard in Resources */,
+				FB39902F1F3CA92200A1EAC8 /* InfoPlist.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -442,6 +455,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FB39902A1F3CA92200A1EAC8 /* InfoPlist.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -450,6 +464,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				FBB2CCA61F155CF800D800FD /* LaunchScreen.storyboard in Resources */,
+				FB3990251F3CA92100A1EAC8 /* InfoPlist.strings in Resources */,
 				FBB2CCA31F155CF800D800FD /* Assets.xcassets in Resources */,
 				FB4955251F2B627600169CB0 /* ErrorSubview.xib in Resources */,
 				FBB2CCA11F155CF800D800FD /* Main.storyboard in Resources */,
@@ -619,12 +634,39 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
+		FB3990271F3CA92100A1EAC8 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				FB3990261F3CA92100A1EAC8 /* ru */,
+				FB3990321F3CBC8300A1EAC8 /* uk */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		FB39902C1F3CA92200A1EAC8 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				FB39902B1F3CA92200A1EAC8 /* ru */,
+				FB3990331F3CBC8300A1EAC8 /* uk */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		FB3990311F3CA92200A1EAC8 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				FB3990301F3CA92200A1EAC8 /* ru */,
+				FB3990341F3CBC8400A1EAC8 /* uk */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
 		FBB2CC9F1F155CF800D800FD /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
 				FBB2CCA01F155CF800D800FD /* Base */,
-				FBA4A9341F3CA0F00089D721 /* ru */,
-				FBA4A9361F3CA0F70089D721 /* uk */,
+				FBA4A9391F3CA7100089D721 /* ru */,
+				FBA4A93B1F3CA7250089D721 /* uk */,
 			);
 			name = Main.storyboard;
 			sourceTree = "<group>";
@@ -768,7 +810,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -813,7 +855,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
