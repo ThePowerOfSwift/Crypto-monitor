@@ -102,7 +102,7 @@ class CoinTableViewController: UITableViewController {
             formatter.numberStyle = .decimal
             formatter.maximumFractionDigits = 25
             
-            cell.priceCoinLabel.text = "₿" + formatter.string(from: ticker[row].price_btc as NSNumber)!
+            cell.priceCoinLabel.text = "₿ " + formatter.string(from: ticker[row].price_btc as NSNumber)!
         default:
             break
         }

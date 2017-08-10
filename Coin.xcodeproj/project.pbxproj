@@ -365,6 +365,7 @@
 				B3575A5B366EF9A419323AB5 /* [CP] Copy Pods Resources */,
 				FB99B49A1F2FEF1F007C0235 /* Embed App Extensions */,
 				FB9E8E0E1F30621B000D72C0 /* Embed Frameworks */,
+				FB2256331F3CD24A003ECFFB /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -584,6 +585,19 @@
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Coin/Pods-Coin-resources.sh\"\n";
 			showEnvVarsInLog = 0;
+		};
+		FB2256331F3CD24A003ECFFB /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "buildNumber=$(/usr/libexec/PlistBuddy -c \"Print CFBundleVersion\" \"${PROJECT_DIR}/${INFOPLIST_FILE}\")\nbuildNumber=$(($buildNumber + 1))\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $buildNumber\" \"${PROJECT_DIR}/${INFOPLIST_FILE}\"";
 		};
 /* End PBXShellScriptBuildPhase section */
 

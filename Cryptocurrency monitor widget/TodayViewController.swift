@@ -18,29 +18,22 @@ class TodayViewController: UIViewController, UITableViewDataSource, UITableViewD
     
     fileprivate var cryptocurrency = [Ticker]()
     fileprivate var cryptocurrencyCompact = [Ticker]()
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-      //  self.extensionContext?.widgetLargestAvailableDisplayMode = .expanded
-    }
-    
+
     override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
+          super.viewWillAppear(animated)
+        
         let userDefaults = UserDefaults(suiteName: "group.mialin.valentyn.crypto.monitor")
         if let decoded = userDefaults?.data(forKey: "cryptocurrency")
         {
             if let cache = NSKeyedUnarchiver.unarchiveObject(with: decoded) as? [Ticker] {
-                
+                contentSize(count: cache.count)
                 emptyButton.isHidden = !cache.isEmpty
-                
-                cryptocurrencyCompact.removeAll()
                 cryptocurrency = cache
-                
-                
+    
                 if cache.count > 2 {
+                    cryptocurrencyCompact.removeAll()
                     for i in 0..<2 {
                         self.cryptocurrencyCompact.append(self.cryptocurrency[i])
-                        self.extensionContext?.widgetLargestAvailableDisplayMode = .expanded
                     }
                 }
                 else{
@@ -58,7 +51,7 @@ class TodayViewController: UIViewController, UITableViewDataSource, UITableViewD
         
         let keyStore = NSUbiquitousKeyValueStore ()
         if  let idArray = keyStore.array(forKey: "id") as? [String] {
-            
+            self.contentSize(count: idArray.count)
             print(idArray)
             
             AlamofireRequest().getTickerID(idArray: idArray, completion: { (ticker : [Ticker]?, error : Error?) in
@@ -66,14 +59,13 @@ class TodayViewController: UIViewController, UITableViewDataSource, UITableViewD
                     if let ticker = ticker {
                         
                         self.emptyButton.isHidden = !ticker.isEmpty
-                        
                         self.cryptocurrency = ticker
                         
-                        self.cryptocurrencyCompact.removeAll()
+                        
                         if ticker.count > 2 {
+                            self.cryptocurrencyCompact.removeAll()
                             for i in 0..<2 {
                                 self.cryptocurrencyCompact.append(self.cryptocurrency[i])
-                                self.extensionContext?.widgetLargestAvailableDisplayMode = .expanded
                             }
                         }
                         else{
@@ -99,7 +91,6 @@ class TodayViewController: UIViewController, UITableViewDataSource, UITableViewD
                     else{
                         print("idArray empty!")
                     }
-                    
                     completionHandler(NCUpdateResult.newData)
                 }
                 else{
@@ -111,7 +102,6 @@ class TodayViewController: UIViewController, UITableViewDataSource, UITableViewD
 
     
     func widgetActiveDisplayModeDidChange(_ activeDisplayMode: NCWidgetDisplayMode, withMaximumSize maxSize: CGSize) {
-        
         if activeDisplayMode == .compact
         {
             print("compact")
@@ -126,14 +116,32 @@ class TodayViewController: UIViewController, UITableViewDataSource, UITableViewD
                 tableView.reloadData()
             }
         }
-        }
+    }
+    
+    func contentSize(count: Int) {
         
-    // MARK: - TableView Data Source    
+        switch extensionContext!.widgetActiveDisplayMode {
+        case NCWidgetDisplayMode.compact:
+            print("compact")
+            //  preferredContentSize = maxSize
+            tableView.reloadData()
+            
+        case NCWidgetDisplayMode.expanded:
+            print("expanded")
+            
+            preferredContentSize = CGSize(width: 0.0, height: 44.0 * CGFloat(count))
+            tableView.reloadData()
+        }
+
+    }
+    
+    // MARK: - TableView Data Source
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if extensionContext?.widgetActiveDisplayMode == .compact {
             print("Show compact")
             return cryptocurrencyCompact.count
         }
+          print("Show expanded")
         return cryptocurrency.count
     }
     
@@ -172,7 +180,7 @@ class TodayViewController: UIViewController, UITableViewDataSource, UITableViewD
             formatter.numberStyle = .decimal
             formatter.maximumFractionDigits = 25
             
-            cell.priceCoinLabel.text = "₿" + formatter.string(from: cryptocurrencyShow[row].price_btc as NSNumber)!
+            cell.priceCoinLabel.text = "₿ " + formatter.string(from: cryptocurrencyShow[row].price_btc as NSNumber)!
         default:
             break
         }

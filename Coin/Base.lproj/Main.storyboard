@@ -20,7 +20,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <sections>
-                            <tableViewSection headerTitle="Percent change period" id="uMW-aC-8Ll">
+                            <tableViewSection headerTitle="Rate change period" id="uMW-aC-8Ll">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="ICd-ip-jyH">
                                         <rect key="frame" x="0.0" y="56" width="320" height="44"/>
@@ -110,33 +110,29 @@
                             <rect key="frame" x="0.0" y="108" width="320" height="44"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="bottom" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Data source:" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hky-V5-UY0">
-                                    <rect key="frame" x="124" y="0.0" width="72" height="12"/>
-                                    <constraints>
-                                        <constraint firstAttribute="height" constant="12" id="Uyj-Ai-W9j"/>
-                                    </constraints>
-                                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                    <nil key="textColor"/>
-                                    <nil key="highlightedColor"/>
-                                </label>
-                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="top" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="62f-DU-Bep">
-                                    <rect key="frame" x="114" y="12" width="92" height="19"/>
-                                    <constraints>
-                                        <constraint firstAttribute="width" constant="92" id="NVE-sE-2Gd"/>
-                                        <constraint firstAttribute="height" constant="19" id="XAc-ct-Gdv"/>
-                                    </constraints>
-                                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                    <state key="normal" title="CoinMarketCap"/>
-                                    <connections>
-                                        <action selector="coinMarketCapAction:" destination="rfY-TX-ple" eventType="touchUpInside" id="rKg-C0-g2F"/>
-                                    </connections>
-                                </button>
+                                <stackView opaque="NO" contentMode="top" axis="vertical" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="o6Z-bf-nhU">
+                                    <rect key="frame" x="116" y="0.0" width="88" height="41.5"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="bottom" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Data source:" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hky-V5-UY0">
+                                            <rect key="frame" x="8" y="0.0" width="72" height="14.5"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <button opaque="NO" contentMode="top" contentHorizontalAlignment="left" contentVerticalAlignment="top" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="62f-DU-Bep">
+                                            <rect key="frame" x="0.0" y="14.5" width="88" height="27"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                            <state key="normal" title="CoinMarketCap"/>
+                                            <connections>
+                                                <action selector="coinMarketCapAction:" destination="rfY-TX-ple" eventType="touchUpInside" id="rKg-C0-g2F"/>
+                                            </connections>
+                                        </button>
+                                    </subviews>
+                                </stackView>
                             </subviews>
                             <constraints>
-                                <constraint firstItem="hky-V5-UY0" firstAttribute="centerX" secondItem="rfY-TX-ple" secondAttribute="centerX" id="4LG-L6-qJx"/>
-                                <constraint firstItem="hky-V5-UY0" firstAttribute="top" secondItem="rfY-TX-ple" secondAttribute="top" id="Jif-Ut-Bo0"/>
-                                <constraint firstItem="62f-DU-Bep" firstAttribute="centerX" secondItem="rfY-TX-ple" secondAttribute="centerX" id="rg5-Mx-6yw"/>
-                                <constraint firstItem="62f-DU-Bep" firstAttribute="top" secondItem="hky-V5-UY0" secondAttribute="bottom" id="sJY-bd-7vp"/>
+                                <constraint firstItem="o6Z-bf-nhU" firstAttribute="centerX" secondItem="rfY-TX-ple" secondAttribute="centerX" id="Lds-L8-H2F"/>
+                                <constraint firstItem="o6Z-bf-nhU" firstAttribute="top" secondItem="rfY-TX-ple" secondAttribute="top" id="lVk-oC-PM3"/>
                             </constraints>
                         </view>
                         <prototypes>
@@ -305,39 +301,6 @@
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="SYi-4h-oaE">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <view key="tableFooterView" contentMode="scaleToFill" id="uSR-w0-xg9" customClass="FooterView" customModule="Coin" customModuleProvider="target">
-                                    <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
-                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                    <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="bottom" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Data source:" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fvv-ct-fH3">
-                                            <rect key="frame" x="124" y="0.0" width="72" height="12"/>
-                                            <constraints>
-                                                <constraint firstAttribute="height" constant="12" id="ay1-Qt-EJc"/>
-                                            </constraints>
-                                            <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                            <nil key="textColor"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
-                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="top" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dQ1-t6-Dr1">
-                                            <rect key="frame" x="114" y="12" width="92" height="19"/>
-                                            <constraints>
-                                                <constraint firstAttribute="width" constant="92" id="HCj-Ny-0es"/>
-                                                <constraint firstAttribute="height" constant="19" id="krS-VA-0YU"/>
-                                            </constraints>
-                                            <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                            <state key="normal" title="CoinMarketCap"/>
-                                            <connections>
-                                                <action selector="coinMarketCapAction:" destination="uSR-w0-xg9" eventType="touchUpInside" id="0oi-8J-lf4"/>
-                                            </connections>
-                                        </button>
-                                    </subviews>
-                                    <constraints>
-                                        <constraint firstItem="fvv-ct-fH3" firstAttribute="centerX" secondItem="uSR-w0-xg9" secondAttribute="centerX" id="6mW-8F-syd"/>
-                                        <constraint firstItem="fvv-ct-fH3" firstAttribute="top" secondItem="uSR-w0-xg9" secondAttribute="top" id="OdL-4T-r4A"/>
-                                        <constraint firstItem="dQ1-t6-Dr1" firstAttribute="top" secondItem="fvv-ct-fH3" secondAttribute="bottom" id="SAq-Kw-Ge7"/>
-                                        <constraint firstItem="dQ1-t6-Dr1" firstAttribute="centerX" secondItem="uSR-w0-xg9" secondAttribute="centerX" id="U8m-4F-HWW"/>
-                                    </constraints>
-                                </view>
                             </tableView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -719,39 +682,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <view key="tableFooterView" contentMode="scaleToFill" id="xa3-8h-Kca" customClass="FooterView" customModule="Coin" customModuleProvider="target">
-                            <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <subviews>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="bottom" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Data source:" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Wgt-YA-RvZ">
-                                    <rect key="frame" x="124" y="0.0" width="72" height="12"/>
-                                    <constraints>
-                                        <constraint firstAttribute="height" constant="12" id="RDd-9c-H9y"/>
-                                    </constraints>
-                                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                    <nil key="textColor"/>
-                                    <nil key="highlightedColor"/>
-                                </label>
-                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="top" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AZH-Hh-xaS">
-                                    <rect key="frame" x="114" y="12" width="92" height="19"/>
-                                    <constraints>
-                                        <constraint firstAttribute="height" constant="19" id="Lm5-W5-czC"/>
-                                        <constraint firstAttribute="width" constant="92" id="Odl-II-MuB"/>
-                                    </constraints>
-                                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                    <state key="normal" title="CoinMarketCap"/>
-                                    <connections>
-                                        <action selector="coinMarketCapAction:" destination="xa3-8h-Kca" eventType="touchUpInside" id="Yfo-LA-AYr"/>
-                                    </connections>
-                                </button>
-                            </subviews>
-                            <constraints>
-                                <constraint firstItem="AZH-Hh-xaS" firstAttribute="top" secondItem="Wgt-YA-RvZ" secondAttribute="bottom" id="SBZ-2l-Lpv"/>
-                                <constraint firstItem="Wgt-YA-RvZ" firstAttribute="centerX" secondItem="xa3-8h-Kca" secondAttribute="centerX" id="a4B-qe-x97"/>
-                                <constraint firstItem="AZH-Hh-xaS" firstAttribute="centerX" secondItem="xa3-8h-Kca" secondAttribute="centerX" id="cQI-84-Evr"/>
-                                <constraint firstItem="Wgt-YA-RvZ" firstAttribute="top" secondItem="xa3-8h-Kca" secondAttribute="top" id="qqN-7r-VsC"/>
-                            </constraints>
-                        </view>
                         <connections>
                             <outlet property="dataSource" destination="C1j-e5-RAf" id="VGJ-7V-4FJ"/>
                             <outlet property="delegate" destination="C1j-e5-RAf" id="i7q-SX-qgl"/>
@@ -807,6 +737,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="Setting" width="75" height="75"/>
+        <image name="Setting" width="25" height="25"/>
     </resources>
 </document>

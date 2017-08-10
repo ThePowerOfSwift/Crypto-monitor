@@ -20,7 +20,7 @@
 "tyt-ZY-uLd.headerTitle" = "Ціна";
 
 /* Class = "UITableViewSection"; headerTitle = "Percent change period"; ObjectID = "uMW-aC-8Ll"; */
-"uMW-aC-8Ll.headerTitle" = "Процентний період зміни";
+"uMW-aC-8Ll.headerTitle" = "Період зміни курсу";
 
 /* Class = "UINavigationItem"; title = "Edit"; ObjectID = "zNv-nx-6D7"; */
 "zNv-nx-6D7.title" = "Редагування";
