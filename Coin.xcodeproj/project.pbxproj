@@ -14,6 +14,7 @@
 		FB3990251F3CA92100A1EAC8 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = FB3990271F3CA92100A1EAC8 /* InfoPlist.strings */; };
 		FB39902A1F3CA92200A1EAC8 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = FB39902C1F3CA92200A1EAC8 /* InfoPlist.strings */; };
 		FB39902F1F3CA92200A1EAC8 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = FB3990311F3CA92200A1EAC8 /* InfoPlist.strings */; };
+		FB3990351F3CCBB400A1EAC8 /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FB3990371F3CCBB400A1EAC8 /* MainInterface.storyboard */; };
 		FB466DDA1F2D479200D771C9 /* SettingTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB466DD91F2D479200D771C9 /* SettingTableViewController.swift */; };
 		FB4955241F2B627600169CB0 /* ErrorSubview.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB4955221F2B627600169CB0 /* ErrorSubview.swift */; };
 		FB4955251F2B627600169CB0 /* ErrorSubview.xib in Resources */ = {isa = PBXBuildFile; fileRef = FB4955231F2B627600169CB0 /* ErrorSubview.xib */; };
@@ -24,7 +25,6 @@
 		FB99B48C1F2FEF1F007C0235 /* NotificationCenter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FB99B48B1F2FEF1F007C0235 /* NotificationCenter.framework */; };
 		FB99B48F1F2FEF1F007C0235 /* TodayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB99B48E1F2FEF1F007C0235 /* TodayViewController.swift */; };
 		FB99B4961F2FEF1F007C0235 /* Cryptocurrency monitor widget.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = FB99B48A1F2FEF1F007C0235 /* Cryptocurrency monitor widget.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		FB99B49D1F2FFF74007C0235 /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FB99B49C1F2FFF74007C0235 /* MainInterface.storyboard */; };
 		FB9E8E061F30621B000D72C0 /* CryptocurrencyRequest.h in Headers */ = {isa = PBXBuildFile; fileRef = FB9E8E041F30621B000D72C0 /* CryptocurrencyRequest.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		FB9E8E091F30621B000D72C0 /* CryptocurrencyRequest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FB9E8E021F30621B000D72C0 /* CryptocurrencyRequest.framework */; };
 		FB9E8E0A1F30621B000D72C0 /* CryptocurrencyRequest.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FB9E8E021F30621B000D72C0 /* CryptocurrencyRequest.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -100,6 +100,9 @@
 		FB3990321F3CBC8300A1EAC8 /* uk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = uk; path = uk.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		FB3990331F3CBC8300A1EAC8 /* uk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = uk; path = uk.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		FB3990341F3CBC8400A1EAC8 /* uk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = uk; path = uk.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		FB3990361F3CCBB400A1EAC8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainInterface.storyboard; sourceTree = "<group>"; };
+		FB3990391F3CCBBB00A1EAC8 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/MainInterface.strings; sourceTree = "<group>"; };
+		FB39903B1F3CCBBC00A1EAC8 /* uk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = uk; path = uk.lproj/MainInterface.strings; sourceTree = "<group>"; };
 		FB466DD91F2D479200D771C9 /* SettingTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingTableViewController.swift; sourceTree = "<group>"; };
 		FB4955221F2B627600169CB0 /* ErrorSubview.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ErrorSubview.swift; sourceTree = "<group>"; };
 		FB4955231F2B627600169CB0 /* ErrorSubview.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ErrorSubview.xib; sourceTree = "<group>"; };
@@ -113,7 +116,6 @@
 		FB99B48E1F2FEF1F007C0235 /* TodayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayViewController.swift; sourceTree = "<group>"; };
 		FB99B4931F2FEF1F007C0235 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FB99B49B1F2FF552007C0235 /* Cryptocurrency monitor widget.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Cryptocurrency monitor widget.entitlements"; sourceTree = "<group>"; };
-		FB99B49C1F2FFF74007C0235 /* MainInterface.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = MainInterface.storyboard; sourceTree = "<group>"; };
 		FB9E8E021F30621B000D72C0 /* CryptocurrencyRequest.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = CryptocurrencyRequest.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FB9E8E041F30621B000D72C0 /* CryptocurrencyRequest.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CryptocurrencyRequest.h; sourceTree = "<group>"; };
 		FB9E8E051F30621B000D72C0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -219,7 +221,7 @@
 				FB99B49B1F2FF552007C0235 /* Cryptocurrency monitor widget.entitlements */,
 				FB99B48E1F2FEF1F007C0235 /* TodayViewController.swift */,
 				FBCDD40E1F307E50002B9BA4 /* WidgetCellTableViewCell.swift */,
-				FB99B49C1F2FFF74007C0235 /* MainInterface.storyboard */,
+				FB3990371F3CCBB400A1EAC8 /* MainInterface.storyboard */,
 				FB99B4931F2FEF1F007C0235 /* Info.plist */,
 			);
 			path = "Cryptocurrency monitor widget";
@@ -428,6 +430,8 @@
 			knownRegions = (
 				en,
 				Base,
+				ru,
+				uk,
 			);
 			mainGroup = FBB2CC8F1F155CF800D800FD;
 			productRefGroup = FBB2CC991F155CF800D800FD /* Products */;
@@ -446,7 +450,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FB99B49D1F2FFF74007C0235 /* MainInterface.storyboard in Resources */,
+				FB3990351F3CCBB400A1EAC8 /* MainInterface.storyboard in Resources */,
 				FB39902F1F3CA92200A1EAC8 /* InfoPlist.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -659,6 +663,16 @@
 				FB3990341F3CBC8400A1EAC8 /* uk */,
 			);
 			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		FB3990371F3CCBB400A1EAC8 /* MainInterface.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				FB3990361F3CCBB400A1EAC8 /* Base */,
+				FB3990391F3CCBBB00A1EAC8 /* ru */,
+				FB39903B1F3CCBBC00A1EAC8 /* uk */,
+			);
+			name = MainInterface.storyboard;
 			sourceTree = "<group>";
 		};
 		FBB2CC9F1F155CF800D800FD /* Main.storyboard */ = {

@@ -305,21 +305,37 @@
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="SYi-4h-oaE">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <view key="tableFooterView" contentMode="scaleToFill" id="YhQ-hV-GAb" customClass="FooterView" customModule="Coin" customModuleProvider="target">
+                                <view key="tableFooterView" contentMode="scaleToFill" id="uSR-w0-xg9" customClass="FooterView" customModule="Coin" customModuleProvider="target">
                                     <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <subviews>
-                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Zkm-og-it6">
-                                            <rect key="frame" x="106.5" y="7" width="107" height="30"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="bottom" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Data source:" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fvv-ct-fH3">
+                                            <rect key="frame" x="124" y="0.0" width="72" height="12"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="12" id="ay1-Qt-EJc"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="top" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dQ1-t6-Dr1">
+                                            <rect key="frame" x="114" y="12" width="92" height="19"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="92" id="HCj-Ny-0es"/>
+                                                <constraint firstAttribute="height" constant="19" id="krS-VA-0YU"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                             <state key="normal" title="CoinMarketCap"/>
                                             <connections>
-                                                <action selector="coinMarketCapAction:" destination="YhQ-hV-GAb" eventType="touchUpInside" id="QzJ-bQ-TGb"/>
+                                                <action selector="coinMarketCapAction:" destination="uSR-w0-xg9" eventType="touchUpInside" id="0oi-8J-lf4"/>
                                             </connections>
                                         </button>
                                     </subviews>
                                     <constraints>
-                                        <constraint firstItem="Zkm-og-it6" firstAttribute="centerY" secondItem="YhQ-hV-GAb" secondAttribute="centerY" id="XYu-tK-jAl"/>
-                                        <constraint firstItem="Zkm-og-it6" firstAttribute="centerX" secondItem="YhQ-hV-GAb" secondAttribute="centerX" id="anN-7Q-kD6"/>
+                                        <constraint firstItem="fvv-ct-fH3" firstAttribute="centerX" secondItem="uSR-w0-xg9" secondAttribute="centerX" id="6mW-8F-syd"/>
+                                        <constraint firstItem="fvv-ct-fH3" firstAttribute="top" secondItem="uSR-w0-xg9" secondAttribute="top" id="OdL-4T-r4A"/>
+                                        <constraint firstItem="dQ1-t6-Dr1" firstAttribute="top" secondItem="fvv-ct-fH3" secondAttribute="bottom" id="SAq-Kw-Ge7"/>
+                                        <constraint firstItem="dQ1-t6-Dr1" firstAttribute="centerX" secondItem="uSR-w0-xg9" secondAttribute="centerX" id="U8m-4F-HWW"/>
                                     </constraints>
                                 </view>
                             </tableView>
@@ -703,21 +719,37 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <view key="tableFooterView" contentMode="scaleToFill" id="oeF-5c-AaY" customClass="FooterView" customModule="Coin" customModuleProvider="target">
+                        <view key="tableFooterView" contentMode="scaleToFill" id="xa3-8h-Kca" customClass="FooterView" customModule="Coin" customModuleProvider="target">
                             <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
-                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2N2-lj-Jjq">
-                                    <rect key="frame" x="106.5" y="7" width="107" height="30"/>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="bottom" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Data source:" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Wgt-YA-RvZ">
+                                    <rect key="frame" x="124" y="0.0" width="72" height="12"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="12" id="RDd-9c-H9y"/>
+                                    </constraints>
+                                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                    <nil key="textColor"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="top" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AZH-Hh-xaS">
+                                    <rect key="frame" x="114" y="12" width="92" height="19"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="19" id="Lm5-W5-czC"/>
+                                        <constraint firstAttribute="width" constant="92" id="Odl-II-MuB"/>
+                                    </constraints>
+                                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                     <state key="normal" title="CoinMarketCap"/>
                                     <connections>
-                                        <action selector="coinMarketCapAction:" destination="oeF-5c-AaY" eventType="touchUpInside" id="si8-8W-Rkh"/>
+                                        <action selector="coinMarketCapAction:" destination="xa3-8h-Kca" eventType="touchUpInside" id="Yfo-LA-AYr"/>
                                     </connections>
                                 </button>
                             </subviews>
                             <constraints>
-                                <constraint firstItem="2N2-lj-Jjq" firstAttribute="centerX" secondItem="oeF-5c-AaY" secondAttribute="centerX" id="bsE-xi-7Pu"/>
-                                <constraint firstItem="2N2-lj-Jjq" firstAttribute="centerY" secondItem="oeF-5c-AaY" secondAttribute="centerY" id="dai-b7-WbT"/>
+                                <constraint firstItem="AZH-Hh-xaS" firstAttribute="top" secondItem="Wgt-YA-RvZ" secondAttribute="bottom" id="SBZ-2l-Lpv"/>
+                                <constraint firstItem="Wgt-YA-RvZ" firstAttribute="centerX" secondItem="xa3-8h-Kca" secondAttribute="centerX" id="a4B-qe-x97"/>
+                                <constraint firstItem="AZH-Hh-xaS" firstAttribute="centerX" secondItem="xa3-8h-Kca" secondAttribute="centerX" id="cQI-84-Evr"/>
+                                <constraint firstItem="Wgt-YA-RvZ" firstAttribute="top" secondItem="xa3-8h-Kca" secondAttribute="top" id="qqN-7r-VsC"/>
                             </constraints>
                         </view>
                         <connections>
@@ -735,7 +767,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="O8t-Et-wRZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="6673" y="123"/>
+            <point key="canvasLocation" x="5743" y="92"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="4a3-Re-0Yw">
@@ -753,7 +785,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="pZk-sE-smB" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5860" y="123"/>
+            <point key="canvasLocation" x="5061" y="92"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="1zu-Ix-gFQ">

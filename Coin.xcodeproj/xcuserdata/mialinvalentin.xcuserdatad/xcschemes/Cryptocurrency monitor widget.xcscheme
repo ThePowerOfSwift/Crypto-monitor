@@ -66,17 +66,28 @@
       debugDocumentVersioning = "YES"
       debugServiceExtension = "internal"
       allowLocationSimulation = "YES"
+      language = "uk"
       launchAutomaticallySubstyle = "2">
-      <BuildableProductRunnable
-         runnableDebuggingMode = "0">
+      <RemoteRunnable
+         runnableDebuggingMode = "2"
+         BundleIdentifier = "com.apple.springboard">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "FBB2CC971F155CF800D800FD"
-            BuildableName = "Coin.app"
-            BlueprintName = "Coin"
+            BlueprintIdentifier = "FB99B4891F2FEF1F007C0235"
+            BuildableName = "Cryptocurrency monitor widget.appex"
+            BlueprintName = "Cryptocurrency monitor widget"
             ReferencedContainer = "container:Coin.xcodeproj">
          </BuildableReference>
-      </BuildableProductRunnable>
+      </RemoteRunnable>
+      <MacroExpansion>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "FB99B4891F2FEF1F007C0235"
+            BuildableName = "Cryptocurrency monitor widget.appex"
+            BlueprintName = "Cryptocurrency monitor widget"
+            ReferencedContainer = "container:Coin.xcodeproj">
+         </BuildableReference>
+      </MacroExpansion>
       <AdditionalOptions>
       </AdditionalOptions>
    </LaunchAction>

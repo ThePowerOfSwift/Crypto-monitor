@@ -1,17 +1,9 @@
-/* Class = "UIButton"; normalTitle = "CoinMarketCap"; ObjectID = "2N2-lj-Jjq"; */
-"2N2-lj-Jjq.normalTitle" = "";
-
-/* Class = "UIBarButtonItem"; title = " "; ObjectID = "2wB-Tb-5JM"; */
-"2wB-Tb-5JM.title" = " ";
 
 /* Class = "UILabel"; text = "Name"; ObjectID = "3pI-hc-AXM"; */
 "3pI-hc-AXM.text" = "Имя";
 
 /* Class = "UILabel"; text = "Price"; ObjectID = "Ghs-Sl-vBt"; */
 "Ghs-Sl-vBt.text" = "Цена";
-
-/* Class = "UILabel"; text = "$8.18 K"; ObjectID = "TDy-J3-MGj"; */
-"TDy-J3-MGj.text" = "";
 
 /* Class = "UINavigationItem"; title = "Settings"; ObjectID = "a5a-yk-s2O"; */
 "a5a-yk-s2O.title" = "Настройки";
@@ -27,7 +19,3 @@
 
 /* Class = "UITableViewSection"; headerTitle = "Price"; ObjectID = "tyt-ZY-uLd"; */
 "tyt-ZY-uLd.headerTitle" = "Цена";
-
-/* Class = "UILabel"; text = "368"; ObjectID = "xBz-zq-Jrg"; */
-"xBz-zq-Jrg.text" = "";
-

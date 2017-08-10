@@ -112,7 +112,7 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0UA-3N-NJl">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="110"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <state key="normal" title="Коснитесь для настройки">
+                                <state key="normal" title="Touch to set">
                                     <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="0.39734710509999999" colorSpace="calibratedRGB"/>
                                 </state>
                                 <connections>
