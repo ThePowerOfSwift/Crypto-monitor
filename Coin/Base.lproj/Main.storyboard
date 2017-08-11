@@ -106,34 +106,10 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <view key="tableFooterView" contentMode="scaleToFill" id="rfY-TX-ple" customClass="FooterView" customModule="Coin" customModuleProvider="target">
+                        <view key="tableFooterView" contentMode="scaleToFill" id="HPy-vJ-WMr">
                             <rect key="frame" x="0.0" y="108" width="320" height="44"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <subviews>
-                                <stackView opaque="NO" contentMode="top" axis="vertical" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="o6Z-bf-nhU">
-                                    <rect key="frame" x="116" y="0.0" width="88" height="41.5"/>
-                                    <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="bottom" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Data source:" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hky-V5-UY0">
-                                            <rect key="frame" x="8" y="0.0" width="72" height="14.5"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                            <nil key="textColor"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
-                                        <button opaque="NO" contentMode="top" contentHorizontalAlignment="left" contentVerticalAlignment="top" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="62f-DU-Bep">
-                                            <rect key="frame" x="0.0" y="14.5" width="88" height="27"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                            <state key="normal" title="CoinMarketCap"/>
-                                            <connections>
-                                                <action selector="coinMarketCapAction:" destination="rfY-TX-ple" eventType="touchUpInside" id="rKg-C0-g2F"/>
-                                            </connections>
-                                        </button>
-                                    </subviews>
-                                </stackView>
-                            </subviews>
-                            <constraints>
-                                <constraint firstItem="o6Z-bf-nhU" firstAttribute="centerX" secondItem="rfY-TX-ple" secondAttribute="centerX" id="Lds-L8-H2F"/>
-                                <constraint firstItem="o6Z-bf-nhU" firstAttribute="top" secondItem="rfY-TX-ple" secondAttribute="top" id="lVk-oC-PM3"/>
-                            </constraints>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         </view>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="header" rowHeight="20" id="phM-i4-zth" customClass="HeaderTableViewCell" customModule="Coin" customModuleProvider="target">
@@ -589,14 +565,14 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fo5-Jm-Lf6" customClass="LineChartView" customModule="Charts">
-                                <rect key="frame" x="0.0" y="287" width="320" height="241"/>
+                                <rect key="frame" x="0.0" y="287" width="320" height="197"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
                             <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" animating="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="h9j-rX-z27">
-                                <rect key="frame" x="150" y="397.5" width="20" height="20"/>
+                                <rect key="frame" x="150" y="375.5" width="20" height="20"/>
                             </activityIndicatorView>
                             <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="xtc-uj-B2T">
-                                <rect key="frame" x="16" y="532" width="288" height="29"/>
+                                <rect key="frame" x="16" y="488" width="288" height="29"/>
                                 <segments>
                                     <segment title="1d"/>
                                     <segment title="7d"/>
@@ -699,6 +675,24 @@
             </objects>
             <point key="canvasLocation" x="5149" y="92"/>
         </scene>
+        <!--Test View Controller-->
+        <scene sceneID="EzE-w9-3f4">
+            <objects>
+                <viewController id="n6r-VE-pcQ" customClass="TestViewController" customModule="Coin" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="5J9-6h-SYs"/>
+                        <viewControllerLayoutGuide type="bottom" id="S1b-WJ-Prs"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="0wo-VT-tLF">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" red="0.0" green="1" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="CKB-Xd-vAh" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="6009" y="7"/>
+        </scene>
         <!--Navigation Controller-->
         <scene sceneID="1zu-Ix-gFQ">
             <objects>
@@ -709,6 +703,10 @@
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
+                    <toolbar key="toolbar" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" barStyle="black" id="D4H-Kc-DCF">
+                        <rect key="frame" x="0.0" y="524" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </toolbar>
                     <connections>
                         <segue destination="DGE-Ze-KIV" kind="relationship" relationship="rootViewController" id="u0t-Yo-nGs"/>
                     </connections>

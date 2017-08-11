@@ -27,6 +27,7 @@ class CoinTableViewController: UITableViewController {
         
         NotificationCenter.default.addObserver(self, selector: #selector(applicationDidBecomeActiveNotification), name:NSNotification.Name.UIApplicationDidBecomeActive, object: nil)
         self.refreshControl?.addTarget(self, action: #selector(self.refresh), for: UIControlEvents.valueChanged)
+               //refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh")
         loadCache()
     }
     
@@ -221,17 +222,10 @@ class CoinTableViewController: UITableViewController {
                                 self.cryptocurrencyView()
                             }
                         }
-                        let encodedData = NSKeyedArchiver.archivedData(withRootObject: getTickerID! )
-                        let userDefaults = UserDefaults(suiteName: "group.mialin.valentyn.crypto.monitor")
-                        userDefaults?.set(encodedData, forKey: "cryptocurrency")
-                        userDefaults?.set(Date(), forKey: "lastUpdate")
-                        userDefaults?.synchronize()
+                        
+                        SettingsUserDefaults().setUserDefaults(ticher: getTickerID!, idArray: idArray, lastUpdate: Date())
                         
                     }
-                    else{
-                        print("idArray empty!")
-                    }
-                    
                 }
                 else{
                     self.showErrorSubview(error: error!)

@@ -171,11 +171,7 @@ class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
                                 self.viewCryptocurrencyInfo()
                             }
                         }
-                        let encodedData = NSKeyedArchiver.archivedData(withRootObject: getTickerID! )
-                        let userDefaults = UserDefaults(suiteName: "group.mialin.valentyn.crypto.monitor")
-                        userDefaults?.set(encodedData, forKey: "cryptocurrency")
-                        userDefaults?.set(Date(), forKey: "lastUpdate")
-                        userDefaults?.synchronize()
+                        SettingsUserDefaults().setUserDefaults(ticher: getTickerID!, idArray: idArray, lastUpdate: Date())
                         
                     }
                     else{

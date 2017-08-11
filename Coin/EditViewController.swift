@@ -23,21 +23,15 @@ class EditViewController: UIViewController, UITableViewDelegate, UITableViewData
         tableView.dataSource = self
         
         self.tableView.isEditing = true
-
+        
     }
-    
+
     override func viewWillAppear(_ animated: Bool) {
-        cryptocurrencyView()
+      super.viewWillAppear(true)
+         cryptocurrencyView()
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        if getTickerID != nil{
-            if getTickerID!.isEmpty {
-              self.showEmptySubview()
-            }
-        }
-
-    }
+    
     func cryptocurrencyView() {
         
         if getTickerID != nil{
@@ -45,15 +39,14 @@ class EditViewController: UIViewController, UITableViewDelegate, UITableViewData
                 self.showEmptySubview()
             }
             else{
-                if let subviews = self.view.superview?.subviews {
+                if let subviews = self.view?.subviews {
                     for view in subviews{
-                        if (view is LoadSubview || view is ErrorSubview) {
+                        if (view is EmptySubview) {
                             view.removeFromSuperview()
                         }
-
                     }
                 }
-                                        tableView.reloadData()
+                tableView.reloadData()
             }
         }
     }
@@ -92,15 +85,16 @@ class EditViewController: UIViewController, UITableViewDelegate, UITableViewData
                 
                 if let index = idArray.index(of: getTickerID![indexPath.row].id){
                     idArray.remove(at: index)
+                    
                     getTickerID!.remove(at: indexPath.row)
                     
                     keyStore.set(idArray, forKey: "id")
                     keyStore.synchronize()
                     
-                    setUserDefaults(ticher: getTickerID!)
+                    SettingsUserDefaults().setUserDefaults(ticher: getTickerID!, idArray: idArray, lastUpdate: nil)
                 }
-                cryptocurrencyView()
             }
+            cryptocurrencyView()
         }
     }
     
@@ -117,23 +111,19 @@ class EditViewController: UIViewController, UITableViewDelegate, UITableViewData
                 keyStore.set(idArray, forKey: "id")
                 keyStore.synchronize()
                 
-                setUserDefaults(ticher: getTickerID!)
+                SettingsUserDefaults().setUserDefaults(ticher: getTickerID!, idArray: idArray, lastUpdate: nil)
             }
         }
     }
-    
-    func setUserDefaults(ticher: [Ticker]) {
-        // set UserDefaults
-        let encodedData = NSKeyedArchiver.archivedData(withRootObject: ticher)
-        let userDefaults = UserDefaults(suiteName: "group.mialin.valentyn.crypto.monitor")
-        userDefaults?.set(encodedData, forKey: "cryptocurrency")
-        userDefaults?.synchronize()
-    }
-    
+
     //MARK:Subview
     func showEmptySubview() {
+        
         self.emptySubview = EmptySubview(frame: CGRect(x: 0, y: 0, width: self.view.bounds.width, height: self.view.bounds.height ))
-        self.view.superview?.addSubview(self.emptySubview!)
+        
+        self.view.insertSubview(emptySubview!, at: 1)
+        
+        //self.view.superview?.addSubview(self.emptySubview!)
         self.emptySubview?.addCryptocurrency.addTarget(self, action: #selector(addShow(_:)), for: UIControlEvents.touchUpInside)
         
     }

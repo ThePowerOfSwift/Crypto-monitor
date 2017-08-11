@@ -292,3 +292,19 @@ public class AlamofireRequest {
         }
     }
 }
+
+public class SettingsUserDefaults{
+    
+    public init() {}
+    
+    public func setUserDefaults(ticher: [Ticker], idArray: [String], lastUpdate: Date?) {
+        let encodedData = NSKeyedArchiver.archivedData(withRootObject: ticher)
+        let userDefaults = UserDefaults(suiteName: "group.mialin.valentyn.crypto.monitor")
+        userDefaults?.set(idArray, forKey: "id")
+        userDefaults?.set(encodedData, forKey: "cryptocurrency")
+        if lastUpdate != nil{
+            userDefaults?.set(lastUpdate, forKey: "lastUpdate")
+        }
+        userDefaults?.synchronize()
+    }
+}

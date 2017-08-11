@@ -136,10 +136,9 @@ class AddTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let keyStore = NSUbiquitousKeyValueStore ()
         let row = indexPath.row
         
-        let ticker: Ticker
+        var ticker: Ticker
         if searchController.isActive && searchController.searchBar.text != "" {
             ticker = self.tickerSearchResult[row]
         }
@@ -147,8 +146,9 @@ class AddTableViewController: UITableViewController {
             ticker = self.ticker[row]
         }
         
+        let keyStore = NSUbiquitousKeyValueStore ()
         if var idArray = keyStore.array(forKey: "id") as? [String] {
-        
+            
             if !idArray.contains(ticker.id){
                 idArray.append(ticker.id)
                 
@@ -157,13 +157,8 @@ class AddTableViewController: UITableViewController {
                 
                 getTickerID!.append(ticker)
                 
-                let encodedData = NSKeyedArchiver.archivedData(withRootObject: getTickerID! )
-                let userDefaults = UserDefaults(suiteName: "group.mialin.valentyn.crypto.monitor")
-                userDefaults?.set(encodedData, forKey: "cryptocurrency")
-                userDefaults?.synchronize()
-
-                //searchController.dismiss(animated: false, completion: nil)
-                //self.dismiss(animated: true, completion: nil)
+                SettingsUserDefaults().setUserDefaults(ticher: getTickerID!, idArray: idArray, lastUpdate: nil)
+                
                 _ = navigationController?.popViewController(animated: true)
             }
             else{
