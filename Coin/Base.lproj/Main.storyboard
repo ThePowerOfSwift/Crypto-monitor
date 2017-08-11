@@ -675,24 +675,6 @@
             </objects>
             <point key="canvasLocation" x="5149" y="92"/>
         </scene>
-        <!--Test View Controller-->
-        <scene sceneID="EzE-w9-3f4">
-            <objects>
-                <viewController id="n6r-VE-pcQ" customClass="TestViewController" customModule="Coin" customModuleProvider="target" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="5J9-6h-SYs"/>
-                        <viewControllerLayoutGuide type="bottom" id="S1b-WJ-Prs"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="0wo-VT-tLF">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" red="0.0" green="1" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                    </view>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="CKB-Xd-vAh" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="6009" y="7"/>
-        </scene>
         <!--Navigation Controller-->
         <scene sceneID="1zu-Ix-gFQ">
             <objects>

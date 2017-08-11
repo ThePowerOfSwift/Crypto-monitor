@@ -24,6 +24,10 @@ class EditViewController: UIViewController, UITableViewDelegate, UITableViewData
         
         self.tableView.isEditing = true
         
+        if getTickerID!.isEmpty {
+              self.performSegue(withIdentifier: "addSegue", sender: nil)
+        }
+        
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -120,10 +124,7 @@ class EditViewController: UIViewController, UITableViewDelegate, UITableViewData
     func showEmptySubview() {
         
         self.emptySubview = EmptySubview(frame: CGRect(x: 0, y: 0, width: self.view.bounds.width, height: self.view.bounds.height ))
-        
         self.view.insertSubview(emptySubview!, at: 1)
-        
-        //self.view.superview?.addSubview(self.emptySubview!)
         self.emptySubview?.addCryptocurrency.addTarget(self, action: #selector(addShow(_:)), for: UIControlEvents.touchUpInside)
         
     }

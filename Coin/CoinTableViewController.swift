@@ -19,6 +19,7 @@ class CoinTableViewController: UITableViewController {
     
     var loadSubview:LoadSubview?
     var errorSubview:ErrorSubview?
+    var emptySubview:EmptySubview?
     
     let userCalendar = Calendar.current
     
@@ -179,13 +180,20 @@ class CoinTableViewController: UITableViewController {
         
         self.refreshControl?.endRefreshing()
         
-        if let subviews = self.view.superview?.subviews {
-            for view in subviews{
-                if (view is LoadSubview || view is ErrorSubview) {
-                    view.removeFromSuperview()
+        if getTickerID!.isEmpty {
+            self.showEmptySubview()
+        }
+        else{
+            if let subviews = self.view?.subviews {
+                for view in subviews{
+                    if (view is LoadSubview || view is ErrorSubview || view is EmptySubview) {
+                        view.removeFromSuperview()
+                    }
                 }
             }
         }
+        
+
         
         let userDefaults = UserDefaults(suiteName: "group.mialin.valentyn.crypto.monitor")
         
@@ -245,7 +253,7 @@ class CoinTableViewController: UITableViewController {
     //MARK:LoadSubview
     func showLoadSubview() {
         self.loadSubview = LoadSubview(frame: CGRect(x: 0, y: 0, width: self.view.bounds.width, height: self.view.bounds.height ))
-        self.view.superview?.addSubview(self.loadSubview!)
+        self.view.insertSubview(self.loadSubview!, at: 1)
     }
     
     //MARK: ErrorSubview
@@ -269,7 +277,24 @@ class CoinTableViewController: UITableViewController {
         self.errorSubview?.errorStringLabel.text = error.localizedDescription
         self.errorSubview?.reloadPressed.addTarget(self, action: #selector(reload(_:)), for: UIControlEvents.touchUpInside)
         
-        self.view.superview?.addSubview(self.errorSubview!)
+        self.view.insertSubview(self.errorSubview!, at: 1)
+    }
+    
+    func showEmptySubview() {
+        
+        self.emptySubview = EmptySubview(frame: CGRect(x: 0, y: 0, width: self.view.bounds.width, height: self.view.bounds.height ))
+        self.view.insertSubview(emptySubview!, at: 1)
+        self.emptySubview?.addCryptocurrency.addTarget(self, action: #selector(addShow(_:)), for: UIControlEvents.touchUpInside)
+        
+    }
+    
+    func addShow(_ sender:UIButton) {
+     /*   if let AddTableViewController = storyboard?.instantiateViewController(withIdentifier: "AddTableViewControllerID"){
+            self.navigationController?.pushViewController(AddTableViewController, animated: false)
+        }
+        */
+          self.performSegue(withIdentifier: "editSegue", sender: nil)
+       
     }
     
     func dateToString(date : NSDate) -> String {
