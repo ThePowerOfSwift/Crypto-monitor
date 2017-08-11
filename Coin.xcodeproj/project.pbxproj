@@ -40,6 +40,8 @@
 		FBD163EC1F2AA62E00F800E3 /* LoadSubview.xib in Resources */ = {isa = PBXBuildFile; fileRef = FBD163EB1F2AA62E00F800E3 /* LoadSubview.xib */; };
 		FBD163EE1F2AA75F00F800E3 /* LoadSubview.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBD163ED1F2AA75F00F800E3 /* LoadSubview.swift */; };
 		FBD5ABE51F214CFA003A3AAC /* AddTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBD5ABE41F214CFA003A3AAC /* AddTableViewController.swift */; };
+		FBE0F44A1F3D1E1A008DF778 /* EmptySubview.xib in Resources */ = {isa = PBXBuildFile; fileRef = FBE0F4491F3D1E1A008DF778 /* EmptySubview.xib */; };
+		FBE0F44C1F3D1E33008DF778 /* EmptySubview.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBE0F44B1F3D1E33008DF778 /* EmptySubview.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -136,6 +138,8 @@
 		FBD163EB1F2AA62E00F800E3 /* LoadSubview.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoadSubview.xib; sourceTree = "<group>"; };
 		FBD163ED1F2AA75F00F800E3 /* LoadSubview.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadSubview.swift; sourceTree = "<group>"; };
 		FBD5ABE41F214CFA003A3AAC /* AddTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddTableViewController.swift; sourceTree = "<group>"; };
+		FBE0F4491F3D1E1A008DF778 /* EmptySubview.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EmptySubview.xib; sourceTree = "<group>"; };
+		FBE0F44B1F3D1E33008DF778 /* EmptySubview.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmptySubview.swift; sourceTree = "<group>"; };
 		FCD523238B38757764B37DC3 /* Pods_Coin.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Coin.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -282,6 +286,7 @@
 				FB466DD91F2D479200D771C9 /* SettingTableViewController.swift */,
 				FB5326CF1F2562FB00D9C498 /* Edit */,
 				FBD163EF1F2AA76500F800E3 /* LoadSubview */,
+				FBE0F44D1F3D1E3E008DF778 /* EmptySubview */,
 				FB4955261F2B628600169CB0 /* ErrorSubview */,
 				FBB2CC9F1F155CF800D800FD /* Main.storyboard */,
 				FBB2CCA41F155CF800D800FD /* LaunchScreen.storyboard */,
@@ -298,6 +303,15 @@
 				FBD163EB1F2AA62E00F800E3 /* LoadSubview.xib */,
 			);
 			name = LoadSubview;
+			sourceTree = "<group>";
+		};
+		FBE0F44D1F3D1E3E008DF778 /* EmptySubview */ = {
+			isa = PBXGroup;
+			children = (
+				FBE0F44B1F3D1E33008DF778 /* EmptySubview.swift */,
+				FBE0F4491F3D1E1A008DF778 /* EmptySubview.xib */,
+			);
+			name = EmptySubview;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -473,6 +487,7 @@
 				FBB2CCA31F155CF800D800FD /* Assets.xcassets in Resources */,
 				FB4955251F2B627600169CB0 /* ErrorSubview.xib in Resources */,
 				FBB2CCA11F155CF800D800FD /* Main.storyboard in Resources */,
+				FBE0F44A1F3D1E1A008DF778 /* EmptySubview.xib in Resources */,
 				FBD163EC1F2AA62E00F800E3 /* LoadSubview.xib in Resources */,
 				FB5326CE1F25576D00D9C498 /* EditCell.xib in Resources */,
 			);
@@ -633,6 +648,7 @@
 				FBD163EE1F2AA75F00F800E3 /* LoadSubview.swift in Sources */,
 				FBA7760D1F2E884D00122D83 /* CoinTableViewController.swift in Sources */,
 				FBB2CC9C1F155CF800D800FD /* AppDelegate.swift in Sources */,
+				FBE0F44C1F3D1E33008DF778 /* EmptySubview.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

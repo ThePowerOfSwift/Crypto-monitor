@@ -162,9 +162,9 @@ class AddTableViewController: UITableViewController {
                 userDefaults?.set(encodedData, forKey: "cryptocurrency")
                 userDefaults?.synchronize()
 
-                searchController.dismiss(animated: false, completion: nil)
-                self.dismiss(animated: true, completion: nil)
-                
+                //searchController.dismiss(animated: false, completion: nil)
+                //self.dismiss(animated: true, completion: nil)
+                _ = navigationController?.popViewController(animated: true)
             }
             else{
                 let alert = UIAlertController(title: "Alert", message: "\(ticker.id) уже добавлен", preferredStyle: UIAlertControllerStyle.alert)

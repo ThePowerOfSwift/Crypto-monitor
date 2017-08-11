@@ -9,8 +9,8 @@
 import UIKit
 
 class LoadSubview: UIView {
-     var view:UIView!
-
+    var view:UIView!
+    
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     func loadViewFromNib() -> UIView {
         
@@ -22,7 +22,7 @@ class LoadSubview: UIView {
     func xibSetup() {
         view = loadViewFromNib()
         view.frame = bounds
-
+        
         view.autoresizingMask = [UIViewAutoresizing.flexibleWidth, UIViewAutoresizing.flexibleHeight]
         addSubview(view)
     }
