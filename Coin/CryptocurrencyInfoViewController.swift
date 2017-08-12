@@ -70,6 +70,9 @@ class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
         lineChartView.legend.enabled = false
         lineChartView.scaleYEnabled = false
         
+        let font = UIFont.systemFont(ofSize: 10)
+        selectSegmentedControl.setTitleTextAttributes([NSFontAttributeName: font], for: .normal)
+        
         let keyStore = NSUbiquitousKeyValueStore ()
         selectSegmentedControl.selectedSegmentIndex = Int(keyStore.longLong(forKey: "typeChart"))
         zoomSegmentedControl.selectedSegmentIndex = Int(keyStore.longLong(forKey: "zoomChart"))

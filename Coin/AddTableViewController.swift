@@ -155,8 +155,13 @@ class AddTableViewController: UITableViewController {
                 keyStore.set(idArray, forKey: "id")
                 keyStore.synchronize()
                 
-                getTickerID!.append(ticker)
-                
+                if getTickerID == nil {
+                    getTickerID = [ticker]
+                }
+                else{
+                    getTickerID!.append(ticker)
+                }
+
                 SettingsUserDefaults().setUserDefaults(ticher: getTickerID!, idArray: idArray, lastUpdate: nil)
                 
                 _ = navigationController?.popViewController(animated: true)

@@ -565,14 +565,14 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fo5-Jm-Lf6" customClass="LineChartView" customModule="Charts">
-                                <rect key="frame" x="0.0" y="287" width="320" height="197"/>
+                                <rect key="frame" x="0.0" y="287" width="320" height="241"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
                             <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" animating="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="h9j-rX-z27">
-                                <rect key="frame" x="150" y="375.5" width="20" height="20"/>
+                                <rect key="frame" x="150" y="397.5" width="20" height="20"/>
                             </activityIndicatorView>
                             <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="xtc-uj-B2T">
-                                <rect key="frame" x="16" y="488" width="288" height="29"/>
+                                <rect key="frame" x="16" y="532" width="288" height="29"/>
                                 <segments>
                                     <segment title="1d"/>
                                     <segment title="7d"/>
@@ -663,13 +663,7 @@
                             <outlet property="delegate" destination="C1j-e5-RAf" id="i7q-SX-qgl"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Add" id="fra-i8-hjZ">
-                        <barButtonItem key="rightBarButtonItem" systemItem="cancel" id="g7p-Pm-Ycr">
-                            <connections>
-                                <action selector="cance:" destination="C1j-e5-RAf" id="PfE-nk-YFA"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" title="Add" id="fra-i8-hjZ"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="O8t-Et-wRZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

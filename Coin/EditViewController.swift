@@ -21,15 +21,19 @@ class EditViewController: UIViewController, UITableViewDelegate, UITableViewData
         
         tableView.delegate = self
         tableView.dataSource = self
-        
         self.tableView.isEditing = true
         
-        if getTickerID!.isEmpty {
-              self.performSegue(withIdentifier: "addSegue", sender: nil)
+        if getTickerID == nil {
+            self.performSegue(withIdentifier: "addSegue", sender: nil)
         }
-        
-    }
+        else{
+            if getTickerID!.isEmpty {
+                self.performSegue(withIdentifier: "addSegue", sender: nil)
+            }
+        }
 
+    }
+    
     override func viewWillAppear(_ animated: Bool) {
       super.viewWillAppear(true)
          cryptocurrencyView()
@@ -37,7 +41,6 @@ class EditViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     
     func cryptocurrencyView() {
-        
         if getTickerID != nil{
             if getTickerID!.isEmpty {
                 self.showEmptySubview()
@@ -53,6 +56,9 @@ class EditViewController: UIViewController, UITableViewDelegate, UITableViewData
                 tableView.reloadData()
             }
         }
+        else{
+            self.showEmptySubview()
+        }
     }
     
     
@@ -66,17 +72,13 @@ class EditViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        // let cell = tableView.dequeueReusableCell(withIdentifier: "addCell", for: indexPath) as! AddTableViewCell
-
         let cell = tableView.dequeueReusableCell(withIdentifier: "editCryptocurrency", for: indexPath) as! EditTableViewCell
-        
-       let row = indexPath.row
+        let row = indexPath.row
         
         let url = URL(string: "https://files.coinmarketcap.com/static/img/coins/32x32/\(getTickerID![row].id).png")!
         cell.cryptocurrencyImageView.af_setImage(withURL: url)
         cell.cryptocurrencyNameLabel?.text = getTickerID![row].name
 
-        
         return cell
     }
     
@@ -84,17 +86,16 @@ class EditViewController: UIViewController, UITableViewDelegate, UITableViewData
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete{          
             let keyStore = NSUbiquitousKeyValueStore ()
-            
             if var idArray = keyStore.array(forKey: "id") as? [String] {
-                
                 if let index = idArray.index(of: getTickerID![indexPath.row].id){
                     idArray.remove(at: index)
-                    
                     getTickerID!.remove(at: indexPath.row)
                     
+                    // set iCloud key-value
                     keyStore.set(idArray, forKey: "id")
                     keyStore.synchronize()
                     
+                    // set UserDefaults
                     SettingsUserDefaults().setUserDefaults(ticher: getTickerID!, idArray: idArray, lastUpdate: nil)
                 }
             }
@@ -112,9 +113,12 @@ class EditViewController: UIViewController, UITableViewDelegate, UITableViewData
                 idArray.remove(at: index)
                 idArray.insert(getTickerID![sourceIndexPath.row].id, at: destinationIndexPath.row)
                 getTickerID!.rearrange(from: sourceIndexPath.row, to: destinationIndexPath.row)
+                
+                // set iCloud key-value
                 keyStore.set(idArray, forKey: "id")
                 keyStore.synchronize()
                 
+                // set UserDefaults
                 SettingsUserDefaults().setUserDefaults(ticher: getTickerID!, idArray: idArray, lastUpdate: nil)
             }
         }

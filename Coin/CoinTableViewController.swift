@@ -28,7 +28,7 @@ class CoinTableViewController: UITableViewController {
         
         NotificationCenter.default.addObserver(self, selector: #selector(applicationDidBecomeActiveNotification), name:NSNotification.Name.UIApplicationDidBecomeActive, object: nil)
         self.refreshControl?.addTarget(self, action: #selector(self.refresh), for: UIControlEvents.valueChanged)
-               //refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh")
+        
         loadCache()
     }
     
@@ -178,7 +178,11 @@ class CoinTableViewController: UITableViewController {
     
     func cryptocurrencyView() {
         
+     //   self.refreshControl =  UIRefreshControl()
+       // self.refreshControl?.addTarget(self, action: #selector(self.refresh), for: UIControlEvents.valueChanged)
         self.refreshControl?.endRefreshing()
+        
+        self.tableView.isScrollEnabled = true
         
         if getTickerID!.isEmpty {
             self.showEmptySubview()
@@ -205,40 +209,40 @@ class CoinTableViewController: UITableViewController {
         tableView.reloadData()
     }
     
-    func loadTicker() { 
-        if getTickerID == nil {
-            showLoadSubview()
-        }
-        else{
-            self.tableView.setContentOffset(CGPoint(x: 0, y: -self.refreshControl!.frame.size.height - self.topLayoutGuide.length), animated: true)
-            self.refreshControl!.beginRefreshing()
-            
-        }
-       
+    func loadTicker() {
         
         let keyStore = NSUbiquitousKeyValueStore ()
-        if  let idArray = keyStore.array(forKey: "id") as? [String] {
-            
-            AlamofireRequest().getTickerID(idArray: idArray, completion: { (ticker : [Ticker]?, error : Error?) in
-                if error == nil {
-                    if let ticker = ticker {
-                        
-                        getTickerID = ticker
-                        //update your table data here
-                        DispatchQueue.main.async() {
-                            if !self.tableView.isEditing {
+        if let idArray = keyStore.array(forKey: "id") as? [String] {
+            if idArray.isEmpty {
+                showEmptySubview()
+            }
+            else{
+                
+                // Какой вид загрузки отображать
+                if getTickerID == nil {
+                    showLoadSubview()
+                }
+                else{
+                    self.tableView.setContentOffset(CGPoint(x: 0, y: -self.refreshControl!.frame.size.height - self.topLayoutGuide.length), animated: true)
+                    self.refreshControl!.beginRefreshing()
+                }
+                
+                AlamofireRequest().getTickerID(idArray: idArray, completion: { (ticker : [Ticker]?, error : Error?) in
+                    if error == nil {
+                        if let ticker = ticker {
+                            getTickerID = ticker
+                            SettingsUserDefaults().setUserDefaults(ticher: getTickerID!, idArray: idArray, lastUpdate: Date())
+                            
+                            DispatchQueue.main.async() {
                                 self.cryptocurrencyView()
                             }
                         }
-                        
-                        SettingsUserDefaults().setUserDefaults(ticher: getTickerID!, idArray: idArray, lastUpdate: Date())
-                        
                     }
-                }
-                else{
-                    self.showErrorSubview(error: error!)
-                }
-            })
+                    else{
+                        self.showErrorSubview(error: error!)
+                    }
+                })
+            }
         }
     }
     
@@ -281,6 +285,7 @@ class CoinTableViewController: UITableViewController {
     }
     
     func showEmptySubview() {
+        self.tableView.isScrollEnabled = false
         
         self.emptySubview = EmptySubview(frame: CGRect(x: 0, y: 0, width: self.view.bounds.width, height: self.view.bounds.height ))
         self.view.insertSubview(emptySubview!, at: 1)

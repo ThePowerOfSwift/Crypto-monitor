@@ -20,7 +20,6 @@
 		FB4955251F2B627600169CB0 /* ErrorSubview.xib in Resources */ = {isa = PBXBuildFile; fileRef = FB4955231F2B627600169CB0 /* ErrorSubview.xib */; };
 		FB5326CB1F254A9400D9C498 /* EditTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB5326CA1F254A9400D9C498 /* EditTableViewCell.swift */; };
 		FB5326CE1F25576D00D9C498 /* EditCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FB5326CD1F25576D00D9C498 /* EditCell.xib */; };
-		FB66AA5D1F3E622E00CB3C8E /* TestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB66AA5C1F3E622E00CB3C8E /* TestViewController.swift */; };
 		FB670CE61F16D900005761CF /* CryptocurrencyInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB670CE51F16D900005761CF /* CryptocurrencyInfoViewController.swift */; };
 		FB9592571F2116EE00F9F74B /* EditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB9592561F2116EE00F9F74B /* EditViewController.swift */; };
 		FB99B48C1F2FEF1F007C0235 /* NotificationCenter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FB99B48B1F2FEF1F007C0235 /* NotificationCenter.framework */; };
@@ -41,8 +40,8 @@
 		FBD163EC1F2AA62E00F800E3 /* LoadSubview.xib in Resources */ = {isa = PBXBuildFile; fileRef = FBD163EB1F2AA62E00F800E3 /* LoadSubview.xib */; };
 		FBD163EE1F2AA75F00F800E3 /* LoadSubview.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBD163ED1F2AA75F00F800E3 /* LoadSubview.swift */; };
 		FBD5ABE51F214CFA003A3AAC /* AddTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBD5ABE41F214CFA003A3AAC /* AddTableViewController.swift */; };
-		FBE0F44A1F3D1E1A008DF778 /* EmptySubview.xib in Resources */ = {isa = PBXBuildFile; fileRef = FBE0F4491F3D1E1A008DF778 /* EmptySubview.xib */; };
 		FBE0F44C1F3D1E33008DF778 /* EmptySubview.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBE0F44B1F3D1E33008DF778 /* EmptySubview.swift */; };
+		FBF950FA1F3FA58D00F56DF3 /* EmptySubview.xib in Resources */ = {isa = PBXBuildFile; fileRef = FBF950FC1F3FA58D00F56DF3 /* EmptySubview.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -104,14 +103,12 @@
 		FB3990331F3CBC8300A1EAC8 /* uk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = uk; path = uk.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		FB3990341F3CBC8400A1EAC8 /* uk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = uk; path = uk.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		FB3990361F3CCBB400A1EAC8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainInterface.storyboard; sourceTree = "<group>"; };
-		FB3990391F3CCBBB00A1EAC8 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/MainInterface.strings; sourceTree = "<group>"; };
 		FB39903B1F3CCBBC00A1EAC8 /* uk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = uk; path = uk.lproj/MainInterface.strings; sourceTree = "<group>"; };
 		FB466DD91F2D479200D771C9 /* SettingTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingTableViewController.swift; sourceTree = "<group>"; };
 		FB4955221F2B627600169CB0 /* ErrorSubview.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ErrorSubview.swift; sourceTree = "<group>"; };
 		FB4955231F2B627600169CB0 /* ErrorSubview.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ErrorSubview.xib; sourceTree = "<group>"; };
 		FB5326CA1F254A9400D9C498 /* EditTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditTableViewCell.swift; sourceTree = "<group>"; };
 		FB5326CD1F25576D00D9C498 /* EditCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EditCell.xib; sourceTree = "<group>"; };
-		FB66AA5C1F3E622E00CB3C8E /* TestViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestViewController.swift; sourceTree = "<group>"; };
 		FB670CE51F16D900005761CF /* CryptocurrencyInfoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CryptocurrencyInfoViewController.swift; sourceTree = "<group>"; };
 		FB9592531F20B8AB00F9F74B /* Coin.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Coin.entitlements; sourceTree = "<group>"; };
 		FB9592561F2116EE00F9F74B /* EditViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditViewController.swift; sourceTree = "<group>"; };
@@ -140,8 +137,11 @@
 		FBD163EB1F2AA62E00F800E3 /* LoadSubview.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoadSubview.xib; sourceTree = "<group>"; };
 		FBD163ED1F2AA75F00F800E3 /* LoadSubview.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadSubview.swift; sourceTree = "<group>"; };
 		FBD5ABE41F214CFA003A3AAC /* AddTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddTableViewController.swift; sourceTree = "<group>"; };
-		FBE0F4491F3D1E1A008DF778 /* EmptySubview.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EmptySubview.xib; sourceTree = "<group>"; };
 		FBE0F44B1F3D1E33008DF778 /* EmptySubview.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmptySubview.swift; sourceTree = "<group>"; };
+		FBF950FB1F3FA58D00F56DF3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/EmptySubview.xib; sourceTree = "<group>"; };
+		FBF950FE1F3FA59000F56DF3 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/EmptySubview.strings; sourceTree = "<group>"; };
+		FBF951001F3FA59100F56DF3 /* uk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = uk; path = uk.lproj/EmptySubview.strings; sourceTree = "<group>"; };
+		FBF951011F3FA87600F56DF3 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/MainInterface.strings; sourceTree = "<group>"; };
 		FCD523238B38757764B37DC3 /* Pods_Coin.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Coin.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -291,7 +291,6 @@
 				FBE0F44D1F3D1E3E008DF778 /* EmptySubview */,
 				FB4955261F2B628600169CB0 /* ErrorSubview */,
 				FBB2CC9F1F155CF800D800FD /* Main.storyboard */,
-				FB66AA5C1F3E622E00CB3C8E /* TestViewController.swift */,
 				FBB2CCA41F155CF800D800FD /* LaunchScreen.storyboard */,
 				FBB2CCA21F155CF800D800FD /* Assets.xcassets */,
 				FBB2CCA71F155CF800D800FD /* Info.plist */,
@@ -312,7 +311,7 @@
 			isa = PBXGroup;
 			children = (
 				FBE0F44B1F3D1E33008DF778 /* EmptySubview.swift */,
-				FBE0F4491F3D1E1A008DF778 /* EmptySubview.xib */,
+				FBF950FC1F3FA58D00F56DF3 /* EmptySubview.xib */,
 			);
 			name = EmptySubview;
 			sourceTree = "<group>";
@@ -382,7 +381,6 @@
 				B3575A5B366EF9A419323AB5 /* [CP] Copy Pods Resources */,
 				FB99B49A1F2FEF1F007C0235 /* Embed App Extensions */,
 				FB9E8E0E1F30621B000D72C0 /* Embed Frameworks */,
-				FB2256331F3CD24A003ECFFB /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -490,7 +488,7 @@
 				FBB2CCA31F155CF800D800FD /* Assets.xcassets in Resources */,
 				FB4955251F2B627600169CB0 /* ErrorSubview.xib in Resources */,
 				FBB2CCA11F155CF800D800FD /* Main.storyboard in Resources */,
-				FBE0F44A1F3D1E1A008DF778 /* EmptySubview.xib in Resources */,
+				FBF950FA1F3FA58D00F56DF3 /* EmptySubview.xib in Resources */,
 				FBD163EC1F2AA62E00F800E3 /* LoadSubview.xib in Resources */,
 				FB5326CE1F25576D00D9C498 /* EditCell.xib in Resources */,
 			);
@@ -604,19 +602,6 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Coin/Pods-Coin-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		FB2256331F3CD24A003ECFFB /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "buildNumber=$(/usr/libexec/PlistBuddy -c \"Print CFBundleVersion\" \"${PROJECT_DIR}/${INFOPLIST_FILE}\")\nbuildNumber=$(($buildNumber + 1))\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $buildNumber\" \"${PROJECT_DIR}/${INFOPLIST_FILE}\"";
-		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -651,7 +636,6 @@
 				FBD163EE1F2AA75F00F800E3 /* LoadSubview.swift in Sources */,
 				FBA7760D1F2E884D00122D83 /* CoinTableViewController.swift in Sources */,
 				FBB2CC9C1F155CF800D800FD /* AppDelegate.swift in Sources */,
-				FB66AA5D1F3E622E00CB3C8E /* TestViewController.swift in Sources */,
 				FBE0F44C1F3D1E33008DF778 /* EmptySubview.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -703,8 +687,8 @@
 			isa = PBXVariantGroup;
 			children = (
 				FB3990361F3CCBB400A1EAC8 /* Base */,
-				FB3990391F3CCBBB00A1EAC8 /* ru */,
 				FB39903B1F3CCBBC00A1EAC8 /* uk */,
+				FBF951011F3FA87600F56DF3 /* ru */,
 			);
 			name = MainInterface.storyboard;
 			sourceTree = "<group>";
@@ -727,6 +711,16 @@
 				FBA4A9371F3CA0F70089D721 /* uk */,
 			);
 			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+		FBF950FC1F3FA58D00F56DF3 /* EmptySubview.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				FBF950FB1F3FA58D00F56DF3 /* Base */,
+				FBF950FE1F3FA59000F56DF3 /* ru */,
+				FBF951001F3FA59100F56DF3 /* uk */,
+			);
+			name = EmptySubview.xib;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */

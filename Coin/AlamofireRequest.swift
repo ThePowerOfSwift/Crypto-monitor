@@ -142,21 +142,7 @@ public class AlamofireRequest {
                 let json = JSON(value)
                 
                 for item in json.arrayValue {
-                    
-                    tickerArray.append(Ticker(id: item["id"].stringValue,
-                                              name: item["name"].stringValue,
-                                              symbol: item["symbol"].stringValue,
-                                              rank: item["rank"].intValue,
-                                              price_usd: item["price_usd"].floatValue,
-                                              price_btc: item["price_btc"].floatValue,
-                                              volume_usd_24h: item["24h_volume_usd"].floatValue,
-                                              market_cap_usd: item["market_cap_usd"].floatValue,
-                                              available_supply: item["available_supply"].floatValue,
-                                              total_supply: item["total_supply"].floatValue,
-                                              percent_change_1h: item["percent_change_1h"].floatValue,
-                                              percent_change_24h: item["percent_change_24h"].floatValue,
-                                              percent_change_7d: item["percent_change_7d"].floatValue,
-                                              last_updated: item["last_updated"].intValue))
+                    tickerArray.append(self.jsonToTicker(json: item))
                 }
             case .failure(let errorFailure):
                 error = errorFailure
@@ -186,29 +172,30 @@ public class AlamofireRequest {
                 }
                 
                 for item in jsonIdArray {
- 
-                        tickerArray.append(Ticker(id: item["id"].stringValue,
-                                                  name: item["name"].stringValue,
-                                                  symbol: item["symbol"].stringValue,
-                                                  rank: item["rank"].intValue,
-                                                  price_usd: item["price_usd"].floatValue,
-                                                  price_btc: item["price_btc"].floatValue,
-                                                  volume_usd_24h: item["24h_volume_usd"].floatValue,
-                                                  market_cap_usd: item["market_cap_usd"].floatValue,
-                                                  available_supply: item["available_supply"].floatValue,
-                                                  total_supply: item["total_supply"].floatValue,
-                                                  percent_change_1h: item["percent_change_1h"].floatValue,
-                                                  percent_change_24h: item["percent_change_24h"].floatValue,
-                                                  percent_change_7d: item["percent_change_7d"].floatValue,
-                                                  last_updated: item["last_updated"].intValue))
-
+                        tickerArray.append(self.jsonToTicker(json: item))
                 }
-                
             case .failure(let errorFailure):
                 error = errorFailure
             }
             completion(tickerArray, error)
         }
+    }
+    
+    private func jsonToTicker(json: JSON) -> Ticker {
+       return Ticker(id: json["id"].stringValue,
+                            name: json["name"].stringValue,
+                            symbol: json["symbol"].stringValue,
+                            rank: json["rank"].intValue,
+                            price_usd: json["price_usd"].floatValue,
+                            price_btc: json["price_btc"].floatValue,
+                            volume_usd_24h: json["24h_volume_usd"].floatValue,
+                            market_cap_usd: json["market_cap_usd"].floatValue,
+                            available_supply: json["available_supply"].floatValue,
+                            total_supply: json["total_supply"].floatValue,
+                            percent_change_1h: json["percent_change_1h"].floatValue,
+                            percent_change_24h: json["percent_change_24h"].floatValue,
+                            percent_change_7d: json["percent_change_7d"].floatValue,
+                            last_updated: json["last_updated"].intValue)
     }
     
     public func getCurrencyCharts(id: String, of: NSDate?, completion: @escaping  (CurrencyCharts?) -> ()) {

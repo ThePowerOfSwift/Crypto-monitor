@@ -54,7 +54,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                             showViewControllet(withIdentifier: "CryptocurrencyInfoViewControllerID")
                         }
                     case "add":
-                            showViewControllet(withIdentifier: "EditViewControllerID")
+                        showViewControllet(withIdentifier: "EditViewControllerID")
                     default:
                         break
                     }
@@ -73,6 +73,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         (self.window?.rootViewController as! UINavigationController).popToRootViewController(animated: false)
         self.window?.rootViewController?.dismiss(animated: false, completion: nil)
         (self.window?.rootViewController as! UINavigationController).pushViewController(detailController, animated: false)
+        
+        /*   if let AddTableViewController = storyboard?.instantiateViewController(withIdentifier: "AddTableViewControllerID"){
+         self.navigationController?.pushViewController(AddTableViewController, animated: false)
+         }
+         */
         
     }
 
