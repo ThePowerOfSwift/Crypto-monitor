@@ -1,0 +1,6 @@
+
+/* Class = "UILabel"; text = "No cryptocurrencies"; ObjectID = "LuI-kP-EpJ"; */
+"LuI-kP-EpJ.text" = "Список криптовалют порожній";
+
+/* Class = "UIButton"; normalTitle = "Add"; ObjectID = "Zgl-Zx-Fmf"; */
+"Zgl-Zx-Fmf.normalTitle" = "Додати";
