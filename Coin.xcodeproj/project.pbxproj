@@ -137,11 +137,11 @@
 		FBD163EB1F2AA62E00F800E3 /* LoadSubview.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoadSubview.xib; sourceTree = "<group>"; };
 		FBD163ED1F2AA75F00F800E3 /* LoadSubview.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadSubview.swift; sourceTree = "<group>"; };
 		FBD5ABE41F214CFA003A3AAC /* AddTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddTableViewController.swift; sourceTree = "<group>"; };
+		FBD7DA281F3FB170003F01DC /* uk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = uk; path = uk.lproj/EmptySubview.strings; sourceTree = "<group>"; };
 		FBE0F44B1F3D1E33008DF778 /* EmptySubview.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmptySubview.swift; sourceTree = "<group>"; };
 		FBF950FB1F3FA58D00F56DF3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/EmptySubview.xib; sourceTree = "<group>"; };
-		FBF950FE1F3FA59000F56DF3 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/EmptySubview.strings; sourceTree = "<group>"; };
-		FBF951001F3FA59100F56DF3 /* uk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = uk; path = uk.lproj/EmptySubview.strings; sourceTree = "<group>"; };
 		FBF951011F3FA87600F56DF3 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/MainInterface.strings; sourceTree = "<group>"; };
+		FBF951031F3FB14D00F56DF3 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/EmptySubview.strings; sourceTree = "<group>"; };
 		FCD523238B38757764B37DC3 /* Pods_Coin.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Coin.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -717,8 +717,8 @@
 			isa = PBXVariantGroup;
 			children = (
 				FBF950FB1F3FA58D00F56DF3 /* Base */,
-				FBF950FE1F3FA59000F56DF3 /* ru */,
-				FBF951001F3FA59100F56DF3 /* uk */,
+				FBF951031F3FB14D00F56DF3 /* ru */,
+				FBD7DA281F3FB170003F01DC /* uk */,
 			);
 			name = EmptySubview.xib;
 			sourceTree = "<group>";

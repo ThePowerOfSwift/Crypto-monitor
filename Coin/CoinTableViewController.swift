@@ -288,9 +288,8 @@ class CoinTableViewController: UITableViewController {
         self.tableView.isScrollEnabled = false
         
         self.emptySubview = EmptySubview(frame: CGRect(x: 0, y: 0, width: self.view.bounds.width, height: self.view.bounds.height ))
-        self.view.insertSubview(emptySubview!, at: 1)
+        self.view.addSubview(emptySubview!)
         self.emptySubview?.addCryptocurrency.addTarget(self, action: #selector(addShow(_:)), for: UIControlEvents.touchUpInside)
-        
     }
     
     func addShow(_ sender:UIButton) {
@@ -298,7 +297,7 @@ class CoinTableViewController: UITableViewController {
             self.navigationController?.pushViewController(AddTableViewController, animated: false)
         }
         */
-          self.performSegue(withIdentifier: "editSegue", sender: nil)
+          self.performSegue(withIdentifier: "add", sender: nil)
        
     }
     

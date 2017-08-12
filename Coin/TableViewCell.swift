@@ -42,25 +42,12 @@ class HeaderTableViewCell: UITableViewCell {
     @IBOutlet weak var priceLabel: UILabel!
     
 }
-/*
+
 class FooterView: UIView {
-    
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        // Initialization code
-        
-        let blurEffect = UIBlurEffect(style: .regular)
-        let blurEffectView = UIVisualEffectView(effect: blurEffect)
-        //always fill the view
-        blurEffectView.frame = (self.superview?.frame)!
-        blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        self.insertSubview(blurEffectView, at: 0)
-    }
- 
     
     @IBAction func coinMarketCapAction(_ sender: Any) {
         UIApplication.shared.open(URL(string: "https://coinmarketcap.com")!, options: [:], completionHandler: nil)
     }
     
 }
-*/
+

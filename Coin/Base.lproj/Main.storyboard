@@ -106,10 +106,22 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <view key="tableFooterView" contentMode="scaleToFill" id="HPy-vJ-WMr">
+                        <view key="tableFooterView" contentMode="scaleToFill" id="HPy-vJ-WMr" userLabel="footer" customClass="FooterView" customModule="Coin" customModuleProvider="target">
                             <rect key="frame" x="0.0" y="108" width="320" height="44"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <subviews>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="CoinMarketCap" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="b7k-ig-Tnm">
+                                    <rect key="frame" x="113" y="14.5" width="94" height="16"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                    <color key="textColor" red="0.0039215686269999999" green="0.47843137250000001" blue="1" alpha="0.75171347776073616" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                            </subviews>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <constraints>
+                                <constraint firstItem="b7k-ig-Tnm" firstAttribute="centerX" secondItem="HPy-vJ-WMr" secondAttribute="centerX" id="PHS-y8-KdT"/>
+                                <constraint firstItem="b7k-ig-Tnm" firstAttribute="centerY" secondItem="HPy-vJ-WMr" secondAttribute="centerY" id="lwa-Ib-vsT"/>
+                            </constraints>
                         </view>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="header" rowHeight="20" id="phM-i4-zth" customClass="HeaderTableViewCell" customModule="Coin" customModuleProvider="target">
@@ -257,6 +269,9 @@
                         <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </refreshControl>
+                    <connections>
+                        <segue destination="C1j-e5-RAf" kind="show" identifier="add" id="E6T-mz-IS4"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Pn9-uy-4an" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -695,4 +710,7 @@
     <resources>
         <image name="Setting" width="25" height="25"/>
     </resources>
+    <inferredMetricsTieBreakers>
+        <segue reference="E6T-mz-IS4"/>
+    </inferredMetricsTieBreakers>
 </document>

@@ -4,3 +4,6 @@
 
 /* Class = "UIButton"; normalTitle = "Add"; ObjectID = "Zgl-Zx-Fmf"; */
 "Zgl-Zx-Fmf.normalTitle" = "Добавить";
+
+/* Class = "UILabel"; text = "Add cryptocurrencies for tracking"; ObjectID = "kCV-Yn-bmp"; */
+"kCV-Yn-bmp.text" = "Добавьте криптовалюты для отслеживания";

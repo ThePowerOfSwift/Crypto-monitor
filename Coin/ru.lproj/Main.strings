@@ -1,7 +1,4 @@
 
-/* Class = "UILabel"; text = "Name"; ObjectID = "3pI-hc-AXM"; */
-"3pI-hc-AXM.text" = "Имя";
-
 /* Class = "UILabel"; text = "Price"; ObjectID = "Ghs-Sl-vBt"; */
 "Ghs-Sl-vBt.text" = "Цена";
 
@@ -13,9 +10,6 @@
 
 /* Class = "UILabel"; text = "Data source:"; ObjectID = "hky-V5-UY0"; */
 "hky-V5-UY0.text" = "Источник данных:";
-
-/* Class = "UILabel"; text = "Name"; ObjectID = "jdj-IP-7pG"; */
-"jdj-IP-7pG.text" = "Имя";
 
 /* Class = "UITableViewSection"; headerTitle = "Price"; ObjectID = "tyt-ZY-uLd"; */
 "tyt-ZY-uLd.headerTitle" = "Цена";

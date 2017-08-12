@@ -34,8 +34,15 @@
                     <color key="textColor" red="0.08327513188123703" green="0.49436831474304199" blue="0.98262661695480347" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Add cryptocurrencies for tracking" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kCV-Yn-bmp">
+                    <rect key="frame" x="83" y="369" width="209.5" height="16"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <fontDescription key="fontDescription" type="system" weight="medium" pointSize="13"/>
+                    <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                    <nil key="highlightedColor"/>
+                </label>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Zgl-Zx-Fmf">
-                    <rect key="frame" x="123" y="397.5" width="128" height="42"/>
+                    <rect key="frame" x="123" y="497" width="128" height="42"/>
                     <color key="backgroundColor" red="0.08235294118" green="0.4941176471" blue="0.98431372549999996" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="128" id="gY3-2q-T0y"/>
@@ -48,14 +55,16 @@
                     </state>
                 </button>
             </subviews>
-            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
             <constraints>
                 <constraint firstItem="KCZ-ZZ-bSC" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="3yU-8g-tx2"/>
                 <constraint firstItem="LuI-kP-EpJ" firstAttribute="top" secondItem="KCZ-ZZ-bSC" secondAttribute="bottom" constant="8" id="AJk-AO-Y6V"/>
                 <constraint firstItem="KCZ-ZZ-bSC" firstAttribute="bottom" secondItem="iN0-l3-epB" secondAttribute="centerY" id="BMV-7A-cUA"/>
                 <constraint firstItem="LuI-kP-EpJ" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="TSP-A9-nLx"/>
                 <constraint firstItem="Zgl-Zx-Fmf" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="UPe-gC-wy5"/>
-                <constraint firstItem="Zgl-Zx-Fmf" firstAttribute="top" secondItem="KCZ-ZZ-bSC" secondAttribute="bottom" constant="64" id="f9F-my-CHo"/>
+                <constraint firstItem="kCV-Yn-bmp" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="aXJ-ZZ-w6W"/>
+                <constraint firstAttribute="bottom" secondItem="Zgl-Zx-Fmf" secondAttribute="bottom" constant="128" id="agR-no-6jU"/>
+                <constraint firstItem="kCV-Yn-bmp" firstAttribute="top" secondItem="LuI-kP-EpJ" secondAttribute="bottom" constant="7.5" id="sff-s9-Jrc"/>
             </constraints>
             <point key="canvasLocation" x="26.5" y="52.5"/>
         </view>

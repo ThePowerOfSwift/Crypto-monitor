@@ -23,6 +23,7 @@ class EditViewController: UIViewController, UITableViewDelegate, UITableViewData
         tableView.dataSource = self
         self.tableView.isEditing = true
         
+        /*
         if getTickerID == nil {
             self.performSegue(withIdentifier: "addSegue", sender: nil)
         }
@@ -31,7 +32,7 @@ class EditViewController: UIViewController, UITableViewDelegate, UITableViewData
                 self.performSegue(withIdentifier: "addSegue", sender: nil)
             }
         }
-
+*/
     }
     
     override func viewWillAppear(_ animated: Bool) {
