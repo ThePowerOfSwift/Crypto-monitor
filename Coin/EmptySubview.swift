@@ -12,7 +12,8 @@ class EmptySubview: UIView {
     var view:UIView!
 
     @IBOutlet weak var addCryptocurrency: UIButton!
-
+    @IBOutlet weak var bottomImageLayout: NSLayoutConstraint!
+    
     func loadViewFromNib() -> UIView {
         
         let nib = UINib(nibName: "EmptySubview", bundle: nil)
@@ -37,22 +38,4 @@ class EmptySubview: UIView {
         super.init(coder: aDecoder)!
         xibSetup()
     }
-    
-    @IBAction func addCryptocurrency(_ sender: Any) {
-        print("fff")
-
-        //   showViewControllet(withIdentifier: "AddTableViewControllerID")
-    }
-    
-    func showViewControllet(withIdentifier: String){
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        
-        let detailController = storyboard.instantiateViewController(withIdentifier: withIdentifier)// as! CryptocurrencyInfoViewController
-        (self.window?.rootViewController as! UINavigationController).popToRootViewController(animated: false)
-        self.window?.rootViewController?.dismiss(animated: false, completion: nil)
-        (self.window?.rootViewController as! UINavigationController).pushViewController(detailController, animated: false)
-        
-    }
-    
-
 }

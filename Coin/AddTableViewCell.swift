@@ -8,7 +8,7 @@
 
 import UIKit
 
-class EditTableViewCell: UITableViewCell {
+class AddTableViewCell: UITableViewCell {
 
     @IBOutlet weak var cryptocurrencyImageView: UIImageView!
     @IBOutlet weak var cryptocurrencyNameLabel: UILabel!

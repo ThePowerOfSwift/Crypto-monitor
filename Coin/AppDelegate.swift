@@ -19,7 +19,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
         
         let keyStore = NSUbiquitousKeyValueStore ()
-        
         if !keyStore.bool(forKey: "launchedBefore"){
             
             keyStore.set(["bitcoin", "ethereum", "ripple", "bitcoin-cash", "nem"], forKey: "id")

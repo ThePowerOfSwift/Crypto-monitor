@@ -12,6 +12,8 @@ class LoadSubview: UIView {
     var view:UIView!
     
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
+    @IBOutlet weak var bottomImageLayout: UIActivityIndicatorView!
+    
     func loadViewFromNib() -> UIView {
         
         let nib = UINib(nibName: "LoadSubview", bundle: nil)

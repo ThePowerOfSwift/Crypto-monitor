@@ -19,15 +19,11 @@ class AddTableViewController: UITableViewController {
     var ticker = [Ticker]()
     var tickerSearchResult  = [Ticker]()
     
-
-    
     var imageDownloader = ImageDownloader(
         configuration: ImageDownloader.defaultURLSessionConfiguration(),
-
         downloadPrioritization: .fifo,
         maximumActiveDownloads: 4,
         imageCache: AutoPurgingImageCache(memoryCapacity: 2 * 1024 * 1024, preferredMemoryUsageAfterPurge: UInt64(0.5 * 1024 * 1024))
-
     )
     
     var loadSubview:LoadSubview?
@@ -35,8 +31,6 @@ class AddTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        tableView.register(UINib(nibName: "EditCell", bundle: nil), forCellReuseIdentifier: "editCryptocurrency")
         
         // Setup the Search Controller
         searchController.searchResultsUpdater = self
@@ -71,7 +65,13 @@ class AddTableViewController: UITableViewController {
     
     func cryptocurrencyView() {
         
-        self.refreshControl?.endRefreshing()
+        if let subviews = self.view?.subviews {
+            for view in subviews{
+                if (view is LoadSubview || view is ErrorSubview || view is EmptySubview) {
+                    view.removeFromSuperview()
+                }
+            }
+        }
         
         if let subviews = self.view.superview?.subviews {
             for view in subviews{
@@ -118,7 +118,8 @@ class AddTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "editCryptocurrency", for: indexPath) as! EditTableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "addCryptocurrency", for: indexPath as IndexPath) as! AddTableViewCell
+        
         let row = indexPath.row
         
         let ticker: Ticker
@@ -181,7 +182,8 @@ class AddTableViewController: UITableViewController {
     //MARK:LoadSubview
     func showLoadSubview() {
         self.loadSubview = LoadSubview(frame: CGRect(x: 0, y: 0, width: self.view.bounds.width, height: self.view.bounds.height ))
-        self.view.superview?.addSubview(self.loadSubview!)
+        self.view.addSubview(self.loadSubview!)
+       // self.view.superview?.addSubview(self.loadSubview!)
     }
     
     //MARK: ErrorSubview

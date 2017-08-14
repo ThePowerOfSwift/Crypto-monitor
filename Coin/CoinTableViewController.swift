@@ -22,12 +22,25 @@ class CoinTableViewController: UITableViewController {
     var emptySubview:EmptySubview?
     
     let userCalendar = Calendar.current
+    //var keyStore: NSUbiquitousKeyValueStore?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         NotificationCenter.default.addObserver(self, selector: #selector(applicationDidBecomeActiveNotification), name:NSNotification.Name.UIApplicationDidBecomeActive, object: nil)
         self.refreshControl?.addTarget(self, action: #selector(self.refresh), for: UIControlEvents.valueChanged)
+        
+        let keyStore = NSUbiquitousKeyValueStore()
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(
+                                                CoinTableViewController.ubiquitousKeyValueStoreDidChange),
+                                               name: NSUbiquitousKeyValueStore.didChangeExternallyNotification,
+                                               object: keyStore)
+        
+        let editBarButton = UIBarButtonItem.init(barButtonSystemItem: .edit, target: self, action: #selector(edit))
+        self.navigationItem.rightBarButtonItem = editBarButton
+        
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "Setting"), style: UIBarButtonItemStyle.plain, target: self, action: #selector(settingsShow))
         
         loadCache()
     }
@@ -40,10 +53,15 @@ class CoinTableViewController: UITableViewController {
             cryptocurrencyView()
         }
     }
-    
+
     func applicationDidBecomeActiveNotification(notification : NSNotification) {
         print("unlock")
         loadCache()
+    }
+    
+    func ubiquitousKeyValueStoreDidChange(notification: NSNotification) {
+        loadTicker()
+        print("iCloud key-value-store change detected")
     }
     
     private func loadCache() {
@@ -62,11 +80,6 @@ class CoinTableViewController: UITableViewController {
         }
     }
     
-    func ubiquitousKeyValueStoreDidChange(notification: NSNotification) {
-        cryptocurrencyView()
-        print("iCloud key-value-store change detected")
-    }
-    
     // MARK: - Table view data source
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if getTickerID == nil {
@@ -79,36 +92,32 @@ class CoinTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "coin", for: indexPath as IndexPath) as! CoinTableViewCell
-        
         let row = indexPath.row
         
         if let ticker = getTickerID {
-        
-        let url = URL(string: "https://files.coinmarketcap.com/static/img/coins/32x32/\(String(describing: ticker[row].id)).png")!
-        cell.coinImageView.af_setImage(withURL: url)
-        cell.coinNameLabel.text = ticker[row].name
-        
-        let keyStore = NSUbiquitousKeyValueStore ()
-        
-        
-        
-        switch keyStore.longLong(forKey: "priceCurrency") {
-        case 0:
-            let formatter = NumberFormatter()
-            formatter.numberStyle = .currency
-            formatter.maximumFractionDigits = 25
-            formatter.locale = Locale(identifier: "en_US")
-            cell.priceCoinLabel.text = formatter.string(from: ticker[row].price_usd as NSNumber)
-        case 1:
-            let formatter = NumberFormatter()
-            formatter.numberStyle = .decimal
-            formatter.maximumFractionDigits = 25
+            let url = URL(string: "https://files.coinmarketcap.com/static/img/coins/32x32/\(String(describing: ticker[row].id)).png")!
+            cell.coinImageView.af_setImage(withURL: url)
+            cell.coinNameLabel.text = ticker[row].name
             
-            cell.priceCoinLabel.text = "₿ " + formatter.string(from: ticker[row].price_btc as NSNumber)!
-        default:
-            break
-        }
-        
+            let keyStore = NSUbiquitousKeyValueStore ()
+            
+            switch keyStore.longLong(forKey: "priceCurrency") {
+            case 0:
+                let formatter = NumberFormatter()
+                formatter.numberStyle = .currency
+                formatter.maximumFractionDigits = 25
+                formatter.locale = Locale(identifier: "en_US")
+                cell.priceCoinLabel.text = formatter.string(from: ticker[row].price_usd as NSNumber)
+            case 1:
+                let formatter = NumberFormatter()
+                formatter.numberStyle = .decimal
+                formatter.maximumFractionDigits = 25
+                
+                cell.priceCoinLabel.text = "₿ " + formatter.string(from: ticker[row].price_btc as NSNumber)!
+            default:
+                break
+            }
+            
         var percentChange = Float()
         
         switch keyStore.longLong(forKey: "percentChange") {
@@ -175,14 +184,63 @@ class CoinTableViewController: UITableViewController {
             openID = getTickerID![indexPath.row].id
         }
     }
+
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete{
+            let keyStore = NSUbiquitousKeyValueStore ()
+            if var idArray = keyStore.array(forKey: "id") as? [String] {
+                if let index = idArray.index(of: getTickerID![indexPath.row].id){
+                    idArray.remove(at: index)
+                    getTickerID!.remove(at: indexPath.row)
+                    
+                    // set iCloud key-value
+                    keyStore.set(idArray, forKey: "id")
+                    keyStore.synchronize()
+                    
+                    // set UserDefaults
+                    SettingsUserDefaults().setUserDefaults(ticher: getTickerID!, idArray: idArray, lastUpdate: nil)
+                }
+            }
+            cryptocurrencyView()
+        }
+    }
+ 
+    
+    
+    override func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCellEditingStyle {
+        if (self.tableView.isEditing) {
+            return UITableViewCellEditingStyle.delete
+        }
+        return UITableViewCellEditingStyle.none
+    }
+ 
+    override func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
+        
+        let keyStore = NSUbiquitousKeyValueStore ()
+        
+        if var idArray = keyStore.array(forKey: "id") as? [String] {
+            
+            if let index = idArray.index(of: getTickerID![sourceIndexPath.row].id){
+                idArray.remove(at: index)
+                idArray.insert(getTickerID![sourceIndexPath.row].id, at: destinationIndexPath.row)
+                getTickerID!.rearrange(from: sourceIndexPath.row, to: destinationIndexPath.row)
+                
+                // set iCloud key-value
+                keyStore.set(idArray, forKey: "id")
+                keyStore.synchronize()
+                
+                // set UserDefaults
+                SettingsUserDefaults().setUserDefaults(ticher: getTickerID!, idArray: idArray, lastUpdate: nil)
+            }
+        }
+    }
+    
+    
     
     func cryptocurrencyView() {
         
-     //   self.refreshControl =  UIRefreshControl()
-       // self.refreshControl?.addTarget(self, action: #selector(self.refresh), for: UIControlEvents.valueChanged)
-        self.refreshControl?.endRefreshing()
-        
         self.tableView.isScrollEnabled = true
+        self.refreshControl?.endRefreshing()
         
         if getTickerID!.isEmpty {
             self.showEmptySubview()
@@ -196,24 +254,21 @@ class CoinTableViewController: UITableViewController {
                 }
             }
         }
-        
 
-        
         let userDefaults = UserDefaults(suiteName: "group.mialin.valentyn.crypto.monitor")
         
         if let lastUpdate = userDefaults?.object(forKey: "lastUpdate") as? NSDate {
             self.refreshControl?.attributedTitle = NSAttributedString(string: dateToString(date: lastUpdate))
         }
-        
-
         tableView.reloadData()
     }
     
     func loadTicker() {
-        
         let keyStore = NSUbiquitousKeyValueStore ()
         if let idArray = keyStore.array(forKey: "id") as? [String] {
             if idArray.isEmpty {
+                getTickerID = [Ticker]()
+                SettingsUserDefaults().setUserDefaults(ticher: [Ticker](), idArray: idArray, lastUpdate: nil)
                 showEmptySubview()
             }
             else{
@@ -246,23 +301,47 @@ class CoinTableViewController: UITableViewController {
         }
     }
     
+    @objc private func edit(_ sender: Any) {
+        self.tableView.setEditing(true, animated: true)
+
+        let doneBarButton = UIBarButtonItem.init(barButtonSystemItem: .done, target: self, action: #selector(done))
+        self.navigationItem.rightBarButtonItem = doneBarButton
+        
+        let addBarButton = UIBarButtonItem.init(barButtonSystemItem: .add, target: self, action: #selector(addShow))
+        self.navigationItem.leftBarButtonItem = addBarButton
+    }
+    
+    @objc private func done(_ sender: Any) {
+        self.tableView.setEditing(false, animated: true)
+        
+        let editBarButton = UIBarButtonItem.init(barButtonSystemItem: .edit, target: self, action: #selector(edit))
+        self.navigationItem.rightBarButtonItem = editBarButton
+        
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "Setting"), style: UIBarButtonItemStyle.plain, target: self, action: #selector(settingsShow))
+    }
+    
+    
     func refresh(sender:AnyObject) {
         loadTicker()
     }
     
-    func reload(_ sender:UIButton) {
-        loadTicker()
-    }
     
     //MARK:LoadSubview
     func showLoadSubview() {
+        self.tableView.isScrollEnabled = false
+        self.refreshControl?.endRefreshing()
+        
         self.loadSubview = LoadSubview(frame: CGRect(x: 0, y: 0, width: self.view.bounds.width, height: self.view.bounds.height ))
-        self.view.insertSubview(self.loadSubview!, at: 1)
+        self.view.addSubview(self.loadSubview!)
     }
     
     //MARK: ErrorSubview
     func showErrorSubview(error: Error) {
+
+        self.refreshControl?.endRefreshing()
+        
         self.errorSubview = ErrorSubview(frame: CGRect(x: 0, y: 0, width: self.view.bounds.width, height: self.view.bounds.height))
+        self.errorSubview?.bottomImageLayout.constant = 0 - self.navigationController!.navigationBar.frame.height
         
         if !UIAccessibilityIsReduceTransparencyEnabled() {
             self.errorSubview?.backgroundColor = UIColor.clear
@@ -279,26 +358,26 @@ class CoinTableViewController: UITableViewController {
         }
         
         self.errorSubview?.errorStringLabel.text = error.localizedDescription
-        self.errorSubview?.reloadPressed.addTarget(self, action: #selector(reload(_:)), for: UIControlEvents.touchUpInside)
         
-        self.view.insertSubview(self.errorSubview!, at: 1)
+        self.view.addSubview(self.errorSubview!)
     }
     
     func showEmptySubview() {
         self.tableView.isScrollEnabled = false
+        self.refreshControl?.endRefreshing()
         
         self.emptySubview = EmptySubview(frame: CGRect(x: 0, y: 0, width: self.view.bounds.width, height: self.view.bounds.height ))
+        self.emptySubview?.bottomImageLayout.constant = 0 - self.navigationController!.navigationBar.frame.height
         self.view.addSubview(emptySubview!)
         self.emptySubview?.addCryptocurrency.addTarget(self, action: #selector(addShow(_:)), for: UIControlEvents.touchUpInside)
     }
     
+    func settingsShow(_ sender:UIButton) {
+        self.performSegue(withIdentifier: "settingSegue", sender: nil)
+    }
+    
     func addShow(_ sender:UIButton) {
-     /*   if let AddTableViewController = storyboard?.instantiateViewController(withIdentifier: "AddTableViewControllerID"){
-            self.navigationController?.pushViewController(AddTableViewController, animated: false)
-        }
-        */
           self.performSegue(withIdentifier: "add", sender: nil)
-       
     }
     
     func dateToString(date : NSDate) -> String {
@@ -306,5 +385,11 @@ class CoinTableViewController: UITableViewController {
         formatter.dateFormat = "dd.MM.yyyy HH:mm:ss"
         formatter.locale = Locale.current
         return formatter.string(from: date as Date)
+    }
+}
+
+extension Array {
+    mutating func rearrange(from: Int, to: Int) {
+        insert(remove(at: from), at: to)
     }
 }

@@ -22,11 +22,13 @@ class CoinTableViewCell: UITableViewCell {
         percentChangeView.layer.cornerRadius = 3
         percentChangeView.layer.masksToBounds = true
         
+        coinNameLabel.numberOfLines = 3
         coinNameLabel.minimumScaleFactor = 0.5
         coinNameLabel.adjustsFontSizeToFitWidth = true
         
         scaleFactor(label: priceCoinLabel)
         scaleFactor(label: percentChangeLabel)
+        
     }
     
     func scaleFactor(label: UILabel) {

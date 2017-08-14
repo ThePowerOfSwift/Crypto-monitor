@@ -25,6 +25,7 @@ extension UIView {
     
     @IBOutlet weak var errorStringLabel: UILabel!
     @IBOutlet weak var reloadPressed: UIButton!
+    @IBOutlet weak var bottomImageLayout: NSLayoutConstraint!
     var degree = CGFloat(Float.pi/10)
     
     

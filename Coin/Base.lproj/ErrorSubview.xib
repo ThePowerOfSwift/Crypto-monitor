@@ -6,13 +6,14 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
+        <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ErrorSubview" customModule="EPIC_today">
             <connections>
+                <outlet property="bottomImageLayout" destination="g2U-gL-bgn" id="HbY-ZB-Guj"/>
                 <outlet property="errorStringLabel" destination="A5E-n7-JtZ" id="OG4-DA-eMd"/>
-                <outlet property="reloadPressed" destination="anZ-vP-KFr" id="rlt-Pt-4qU"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
@@ -33,26 +34,21 @@
                         <constraint firstAttribute="width" constant="100" id="z3e-vO-d0b"/>
                     </constraints>
                 </imageView>
-                <button opaque="NO" contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="anZ-vP-KFr">
-                    <rect key="frame" x="163" y="370" width="50" height="50"/>
-                    <constraints>
-                        <constraint firstAttribute="width" constant="50" id="2YL-ET-ktd"/>
-                        <constraint firstAttribute="height" constant="50" id="Gh9-L4-tPn"/>
-                    </constraints>
-                    <state key="normal" image="Refresh"/>
-                    <connections>
-                        <action selector="rotate:" destination="-1" eventType="touchUpInside" id="03a-Y0-yJp"/>
-                    </connections>
-                </button>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Please pull down to refresh" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hMR-kc-2ws">
+                    <rect key="frame" x="103.5" y="370" width="168.5" height="16"/>
+                    <fontDescription key="fontDescription" type="system" weight="medium" pointSize="13"/>
+                    <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                    <nil key="highlightedColor"/>
+                </label>
             </subviews>
             <constraints>
                 <constraint firstItem="A5E-n7-JtZ" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="16" id="FIE-Kh-geU"/>
                 <constraint firstItem="xDz-mq-MIv" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="LDH-os-81R"/>
                 <constraint firstItem="A5E-n7-JtZ" firstAttribute="top" secondItem="xDz-mq-MIv" secondAttribute="bottom" constant="8" id="Sjd-id-h4v"/>
                 <constraint firstAttribute="trailing" secondItem="A5E-n7-JtZ" secondAttribute="trailing" constant="16" id="b5e-cc-Ol0"/>
-                <constraint firstItem="anZ-vP-KFr" firstAttribute="top" secondItem="A5E-n7-JtZ" secondAttribute="bottom" constant="8" id="cPh-Sp-PQW"/>
-                <constraint firstItem="xDz-mq-MIv" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" constant="-50" id="g2U-gL-bgn"/>
-                <constraint firstItem="anZ-vP-KFr" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="hG6-Bw-z8Z"/>
+                <constraint firstItem="hMR-kc-2ws" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="dT8-R1-UkM"/>
+                <constraint firstItem="xDz-mq-MIv" firstAttribute="bottom" secondItem="iN0-l3-epB" secondAttribute="centerY" id="g2U-gL-bgn"/>
+                <constraint firstItem="hMR-kc-2ws" firstAttribute="top" secondItem="A5E-n7-JtZ" secondAttribute="bottom" constant="8" id="lE5-WI-EaC"/>
             </constraints>
             <nil key="simulatedTopBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
@@ -61,6 +57,5 @@
     </objects>
     <resources>
         <image name="Cloud error" width="128" height="128"/>
-        <image name="Refresh" width="25" height="25"/>
     </resources>
 </document>
