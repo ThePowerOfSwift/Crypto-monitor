@@ -36,12 +36,4 @@ class WidgetCellTableViewCell: UITableViewCell {
         label.minimumScaleFactor = 0.5
         label.adjustsFontSizeToFitWidth = true
     }
-
-    /*
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
-    }*/
-
 }

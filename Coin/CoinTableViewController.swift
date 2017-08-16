@@ -16,13 +16,12 @@ class CoinTableViewController: UITableViewController {
     
     weak var selectTicker : Ticker?
     var currentIndexPath: NSIndexPath?
-    
-    var loadSubview:LoadSubview?
-    var errorSubview:ErrorSubview?
-    var emptySubview:EmptySubview?
-    
     let userCalendar = Calendar.current
-    //var keyStore: NSUbiquitousKeyValueStore?
+    
+    // Subview
+    var loadSubview:LoadSubview?
+
+    var emptySubview:EmptySubview?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -69,7 +68,11 @@ class CoinTableViewController: UITableViewController {
         if let decodedTicker = userDefaults?.data(forKey: "cryptocurrency"){
             if let cacheTicker = NSKeyedUnarchiver.unarchiveObject(with: decodedTicker) as? [Ticker] {
                 getTickerID = cacheTicker
-                cryptocurrencyView()
+                let userDefaults = UserDefaults(suiteName: "group.mialin.valentyn.crypto.monitor")
+                if let lastUpdate = userDefaults?.object(forKey: "lastUpdate") as? NSDate {
+                    self.refreshControl?.attributedTitle = NSAttributedString(string: dateToString(date: lastUpdate))
+                }
+                tableView.reloadData()
                 
                 if let lastUpdate = userDefaults?.object(forKey: "lastUpdate") as? Date {
                     if lastUpdate <= (userCalendar.date(byAdding: .minute, value: -5, to: Date())! ){
@@ -140,6 +143,7 @@ class CoinTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView?
     {
+        //let cell = tableView.dequeueReusableCell(withIdentifier: "header", for: indexPath) as! EditTableViewCell
         let headerView = tableView.dequeueReusableCell(withIdentifier: "header") as! HeaderTableViewCell
         
         let keyStore = NSUbiquitousKeyValueStore ()
@@ -170,8 +174,7 @@ class CoinTableViewController: UITableViewController {
         blurEffectView.frame = self.view.frame
         
         headerView.insertSubview(blurEffectView, at: 0)
-        
-        return headerView
+        return headerView.contentView
     }
     
     override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat
@@ -205,8 +208,6 @@ class CoinTableViewController: UITableViewController {
         }
     }
  
-    
-    
     override func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCellEditingStyle {
         if (self.tableView.isEditing) {
             return UITableViewCellEditingStyle.delete
@@ -217,9 +218,7 @@ class CoinTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
         
         let keyStore = NSUbiquitousKeyValueStore ()
-        
         if var idArray = keyStore.array(forKey: "id") as? [String] {
-            
             if let index = idArray.index(of: getTickerID![sourceIndexPath.row].id){
                 idArray.remove(at: index)
                 idArray.insert(getTickerID![sourceIndexPath.row].id, at: destinationIndexPath.row)
@@ -235,18 +234,14 @@ class CoinTableViewController: UITableViewController {
         }
     }
     
-    
-    
-    func cryptocurrencyView() {
-        
-        self.tableView.isScrollEnabled = true
+    private func cryptocurrencyView() {
         self.refreshControl?.endRefreshing()
         
         if getTickerID!.isEmpty {
             self.showEmptySubview()
         }
         else{
-            if let subviews = self.view?.subviews {
+            if let subviews = self.view.superview?.subviews {
                 for view in subviews{
                     if (view is LoadSubview || view is ErrorSubview || view is EmptySubview) {
                         view.removeFromSuperview()
@@ -256,14 +251,13 @@ class CoinTableViewController: UITableViewController {
         }
 
         let userDefaults = UserDefaults(suiteName: "group.mialin.valentyn.crypto.monitor")
-        
         if let lastUpdate = userDefaults?.object(forKey: "lastUpdate") as? NSDate {
             self.refreshControl?.attributedTitle = NSAttributedString(string: dateToString(date: lastUpdate))
         }
         tableView.reloadData()
     }
     
-    func loadTicker() {
+    private func loadTicker() {
         let keyStore = NSUbiquitousKeyValueStore ()
         if let idArray = keyStore.array(forKey: "id") as? [String] {
             if idArray.isEmpty {
@@ -272,14 +266,15 @@ class CoinTableViewController: UITableViewController {
                 showEmptySubview()
             }
             else{
-                
                 // Какой вид загрузки отображать
                 if getTickerID == nil {
                     showLoadSubview()
                 }
                 else{
-                    self.tableView.setContentOffset(CGPoint(x: 0, y: -self.refreshControl!.frame.size.height - self.topLayoutGuide.length), animated: true)
-                    self.refreshControl!.beginRefreshing()
+                    if  self.refreshControl?.isRefreshing == false {
+                        self.tableView.setContentOffset(CGPoint(x: 0, y: -self.refreshControl!.frame.size.height - self.topLayoutGuide.length), animated: true)
+                        self.refreshControl!.beginRefreshing()
+                    }
                 }
                 
                 AlamofireRequest().getTickerID(idArray: idArray, completion: { (ticker : [Ticker]?, error : Error?) in
@@ -325,52 +320,69 @@ class CoinTableViewController: UITableViewController {
         loadTicker()
     }
     
+    func reload(_ sender:UIButton) {
+        loadTicker()
+    }
+    
     
     //MARK:LoadSubview
     func showLoadSubview() {
-        self.tableView.isScrollEnabled = false
         self.refreshControl?.endRefreshing()
-        
         self.loadSubview = LoadSubview(frame: CGRect(x: 0, y: 0, width: self.view.bounds.width, height: self.view.bounds.height ))
-        self.view.addSubview(self.loadSubview!)
+        self.view.superview?.addSubview(self.loadSubview!)
     }
     
     //MARK: ErrorSubview
     func showErrorSubview(error: Error) {
-
+        var errorSubview:ErrorSubview?
         self.refreshControl?.endRefreshing()
         
-        self.errorSubview = ErrorSubview(frame: CGRect(x: 0, y: 0, width: self.view.bounds.width, height: self.view.bounds.height))
-        self.errorSubview?.bottomImageLayout.constant = 0 - self.navigationController!.navigationBar.frame.height
+        errorSubview = ErrorSubview(frame: CGRect(x: 0, y: 0, width: self.view.bounds.width, height: self.view.bounds.height))
         
         if !UIAccessibilityIsReduceTransparencyEnabled() {
-            self.errorSubview?.backgroundColor = UIColor.clear
+            errorSubview?.backgroundColor = UIColor.clear
             
             let blurEffect = UIBlurEffect(style: .prominent)
             let blurEffectView = UIVisualEffectView(effect: blurEffect)
             //always fill the view
-            blurEffectView.frame = (self.view.superview?.frame)!
+            blurEffectView.frame = CGRect(x: 0, y: 0, width: self.view.bounds.width, height: self.view.bounds.height)
             blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
             
-            self.errorSubview?.insertSubview(blurEffectView, at: 0)
+            errorSubview?.insertSubview(blurEffectView, at: 0)
         } else {
-            self.errorSubview?.backgroundColor = UIColor.white
+            errorSubview?.backgroundColor = UIColor.white
         }
         
-        self.errorSubview?.errorStringLabel.text = error.localizedDescription
+        errorSubview?.errorStringLabel.text = error.localizedDescription
+        errorSubview?.reloadPressed.addTarget(self, action: #selector(reload(_:)), for: UIControlEvents.touchUpInside)
         
-        self.view.addSubview(self.errorSubview!)
+        self.view.superview?.addSubview(errorSubview!)
     }
     
     func showEmptySubview() {
-        self.tableView.isScrollEnabled = false
         self.refreshControl?.endRefreshing()
         
         self.emptySubview = EmptySubview(frame: CGRect(x: 0, y: 0, width: self.view.bounds.width, height: self.view.bounds.height ))
-        self.emptySubview?.bottomImageLayout.constant = 0 - self.navigationController!.navigationBar.frame.height
-        self.view.addSubview(emptySubview!)
+        
+        if !UIAccessibilityIsReduceTransparencyEnabled() {
+            self.emptySubview?.backgroundColor = UIColor.clear
+            
+            let blurEffect = UIBlurEffect(style: .dark)
+            let blurEffectView = UIVisualEffectView(effect: blurEffect)
+            //always fill the view
+            blurEffectView.frame = CGRect(x: 0, y: 0, width: self.view.bounds.width, height: self.view.bounds.height )
+            blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+            
+            self.emptySubview?.insertSubview(blurEffectView, at: 0)
+        } else {
+            self.emptySubview?.backgroundColor = UIColor.white
+        }
+        
         self.emptySubview?.addCryptocurrency.addTarget(self, action: #selector(addShow(_:)), for: UIControlEvents.touchUpInside)
+        self.view.superview?.addSubview(emptySubview!)
+
     }
+    
     
     func settingsShow(_ sender:UIButton) {
         self.performSegue(withIdentifier: "settingSegue", sender: nil)
@@ -380,7 +392,7 @@ class CoinTableViewController: UITableViewController {
           self.performSegue(withIdentifier: "add", sender: nil)
     }
     
-    func dateToString(date : NSDate) -> String {
+    private func dateToString(date : NSDate) -> String {
         let formatter = DateFormatter()
         formatter.dateFormat = "dd.MM.yyyy HH:mm:ss"
         formatter.locale = Locale.current

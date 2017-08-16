@@ -15,6 +15,8 @@ class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
     
     @IBOutlet weak var lineChartView: LineChartView!
     @IBOutlet weak var lineChartActivityIndicator: UIActivityIndicatorView!
+    @IBOutlet weak var LineChartErrorView: UIView!
+    @IBOutlet weak var LineChartErrorLabel: UILabel!
     
     @IBOutlet weak var zoomSegmentedControl: UISegmentedControl!
     @IBOutlet weak var selectSegmentedControl: UISegmentedControl!
@@ -83,43 +85,49 @@ class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
     
     override func viewWillAppear(_ animated: Bool) {
         if getTickerID == nil {
-            loadTicker()
+            refresh()
         }
         else{
             viewCryptocurrencyInfo()
         }
-        
-        AlamofireRequest().getMinDateCharts(id: openID) { (minDate: Date?) in
-            if let minDate = minDate{
-                // 1 weak
-                if  minDate >=  self.userCalendar.date(byAdding: .weekOfYear, value: -1, to: Date())! {
-                    self.zoomSelectedSegment(index: 1)
-                }
-                else{
-                    // 1m
-                    if  minDate >=  self.userCalendar.date(byAdding: .month, value: -1, to: Date())! {
-                        self.zoomSelectedSegment(index: 2)
+        AlamofireRequest().getMinDateCharts(id: openID, completion: { (minDate: Date?, error : Error?) in
+            if error == nil {
+                if let minDate = minDate{
+                    // 1 weak
+                    if  minDate >=  self.userCalendar.date(byAdding: .weekOfYear, value: -1, to: Date())! {
+                        self.zoomSelectedSegment(index: 1)
                     }
                     else{
-                        // 3m
-                        if  minDate >=  self.userCalendar.date(byAdding: .month, value: -3, to: Date())! {
-                            self.zoomSelectedSegment(index: 3)
+                        // 1m
+                        if  minDate >=  self.userCalendar.date(byAdding: .month, value: -1, to: Date())! {
+                            self.zoomSelectedSegment(index: 2)
                         }
                         else{
-                            // 1 year
-                            if  minDate >=  self.userCalendar.date(byAdding: .year, value: -1, to: Date())! {
-                                self.zoomSelectedSegment(index: 4)
+                            // 3m
+                            if  minDate >=  self.userCalendar.date(byAdding: .month, value: -3, to: Date())! {
+                                self.zoomSelectedSegment(index: 3)
+                            }
+                            else{
+                                // 1 year
+                                if  minDate >=  self.userCalendar.date(byAdding: .year, value: -1, to: Date())! {
+                                    self.zoomSelectedSegment(index: 4)
+                                }
                             }
                         }
                     }
                 }
+                self.loadlineView()
             }
-            self.loadlineView()
-        }
+            else{
+                DispatchQueue.main.async() {
+                    self.lineChartErrorView(error: error!)
+                }
+            }
+        })
     }
     
+    //Unlock
     func applicationDidBecomeActiveNotification(notification : NSNotification) {
-        print("unlock")
         loadCache()
     }
     
@@ -127,12 +135,13 @@ class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
         let userDefaults = UserDefaults(suiteName: "group.mialin.valentyn.crypto.monitor")
         if let decodedTicker = userDefaults?.data(forKey: "cryptocurrency"){
             if let cacheTicker = NSKeyedUnarchiver.unarchiveObject(with: decodedTicker) as? [Ticker] {
-                getTickerID = cacheTicker
-                viewCryptocurrencyInfo()
-                
                 if let lastUpdate = userDefaults?.object(forKey: "lastUpdate") as? Date {
                     if lastUpdate <= (userCalendar.date(byAdding: .minute, value: -5, to: Date())! ){
-                        loadTicker()
+                        refresh()
+                    }
+                    else{
+                        getTickerID = cacheTicker
+                        viewCryptocurrencyInfo()
                     }
                 }
             }
@@ -153,37 +162,23 @@ class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
     }
     
     func loadTicker() {
-        if getTickerID == nil {
-            showLoadSubview()
-        }
-        else{
-             startRefreshActivityIndicator()
-        }
-        
+        startRefreshActivityIndicator()
+
         let keyStore = NSUbiquitousKeyValueStore ()
         if  let idArray = keyStore.array(forKey: "id") as? [String] {
-            
             AlamofireRequest().getTickerID(idArray: idArray, completion: { (ticker : [Ticker]?, error : Error?) in
                 if error == nil {
                     if let ticker = ticker {
                         
                         getTickerID = ticker
-                        //update your table data here
-                        DispatchQueue.main.async() {
-                            if !self.isEditing {
-                                self.viewCryptocurrencyInfo()
-                            }
-                        }
                         SettingsUserDefaults().setUserDefaults(ticher: getTickerID!, idArray: idArray, lastUpdate: Date())
-                        
+                        DispatchQueue.main.async() {
+                            self.viewCryptocurrencyInfo()
+                        }
                     }
-                    else{
-                        print("idArray empty!")
-                    }
-                    
                 }
                 else{
-                    self.showErrorSubview(error: error!)
+                    self.showErrorSubview(error: error!, frame: CGRect(x: 0, y: 0, width: self.view.bounds.width, height: self.view.bounds.height))
                 }
             })
         }
@@ -191,15 +186,13 @@ class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
     
     
     func viewCryptocurrencyInfo() {
-        
         refreshBarButtonItem()
         
         if getTickerID != nil {
             if let tick = getTickerID!.first(where: {$0.id == openID}) {
                 ticker = tick
             }
-            
-            
+
             if let ticker = ticker {
                 
                 let formatter = NumberFormatter()
@@ -263,8 +256,9 @@ class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
     
     func loadlineView() {
         
-        lineChartActivityIndicator.isHidden = false
         lineChartView.isHidden = true
+        lineChartActivityIndicator.isHidden = false
+     //   LineChartErrorView.isHidden = true
         
         var of: NSDate?
         
@@ -322,17 +316,30 @@ class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
         // Set the x values date formatter
         xAxis.valueFormatter = ChartXAxisFormatter(dateFormatter: dateFormatter)
         
-        AlamofireRequest().getCurrencyCharts(id: openID, of: of) { (currencyCharts: CurrencyCharts?) in
-            self.currencyCharts = currencyCharts
-            self.lineChartView.zoom(scaleX: 0.0, scaleY: 0.0, x: 0.0, y: 0.0)
-            self.lineView()
-        }
+        AlamofireRequest().getCurrencyCharts(id: openID, of: of, completion: { (currencyCharts: CurrencyCharts?, error: Error?) in
+            if error == nil {
+                if let currencyCharts = currencyCharts {
+                    self.currencyCharts = currencyCharts
+                    DispatchQueue.main.async() {
+                        self.lineChartView.zoom(scaleX: 0.0, scaleY: 0.0, x: 0.0, y: 0.0)
+                        self.lineView()
+                    }
+                }
+            }
+            else{
+                DispatchQueue.main.async() {
+                    self.lineChartErrorView(error: error!)
+                }
+            }
+        })
     }
     
     func lineView() {
         
-        lineChartActivityIndicator.isHidden = true
+
         lineChartView.isHidden = false
+        lineChartActivityIndicator.isHidden = true
+        LineChartErrorView.isHidden = true
         
         if let currencyCharts = self.currencyCharts {
             
@@ -393,8 +400,17 @@ class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
     }
     
     func refreshBarButtonItem(){
-        let refreshBarButton = UIBarButtonItem.init(barButtonSystemItem: .refresh, target: self, action: #selector(loadTicker))
+        let refreshBarButton = UIBarButtonItem.init(barButtonSystemItem: .refresh, target: self, action: #selector(refresh))
         self.navigationItem.rightBarButtonItem = refreshBarButton
+    }
+    
+    func refresh() {
+        let userDefaults = UserDefaults(suiteName: "group.mialin.valentyn.crypto.monitor")
+        userDefaults?.set(userCalendar.date(byAdding: .minute, value: -5, to: Date())!, forKey: "lastUpdate")
+        userDefaults?.synchronize()
+        
+        loadTicker()
+        loadlineView()
     }
     
     func startRefreshActivityIndicator() {
@@ -436,18 +452,22 @@ class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
     }
     
     func reload(_ sender:UIButton) {
-        loadTicker()
+        refresh()
     }
     
+    /*
     //MARK:LoadSubview
     func showLoadSubview() {
         self.loadSubview = LoadSubview(frame: CGRect(x: 0, y: 0, width: self.view.bounds.width, height: self.view.bounds.height ))
         self.view.superview?.addSubview(self.loadSubview!)
-    }
+    }*/
     
     //MARK: ErrorSubview
-    func showErrorSubview(error: Error) {
-        self.errorSubview = ErrorSubview(frame: CGRect(x: 0, y: 0, width: self.view.bounds.width, height: self.view.bounds.height))
+    func showErrorSubview(error: Error, frame: CGRect) {
+        
+        refreshBarButtonItem()
+        
+        self.errorSubview = ErrorSubview(frame: frame)
         
         if !UIAccessibilityIsReduceTransparencyEnabled() {
             self.errorSubview?.backgroundColor = UIColor.clear
@@ -467,6 +487,13 @@ class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
         self.errorSubview?.reloadPressed.addTarget(self, action: #selector(reload(_:)), for: UIControlEvents.touchUpInside)
         
         self.view.superview?.addSubview(self.errorSubview!)
+    }
+    
+    func lineChartErrorView(error: Error) {
+        self.LineChartErrorView.isHidden = false
+        refreshBarButtonItem()
+        
+        LineChartErrorLabel.text = error.localizedDescription
     }
     
 }

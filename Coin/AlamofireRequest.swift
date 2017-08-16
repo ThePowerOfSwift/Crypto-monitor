@@ -198,21 +198,23 @@ public class AlamofireRequest {
                             last_updated: json["last_updated"].intValue)
     }
     
-    public func getCurrencyCharts(id: String, of: NSDate?, completion: @escaping  (CurrencyCharts?) -> ()) {
+    public func getCurrencyCharts(id: String, of: NSDate?, completion: @escaping  (CurrencyCharts?, Error?) -> ()) {
+        
+        var currencyCharts:CurrencyCharts?
+        var error:Error?
+        
+        
         
         var url = "https://graphs.coinmarketcap.com/currencies/" + id + "/"
         
         if let of = of {
             url += String(Int(of.timeIntervalSince1970 * 1000)) + "/" + String(Int(NSDate().timeIntervalSince1970 * 1000)) + "/"
         }
-        
-        print(url)
-        
         let configuration = URLSessionConfiguration.default
-      //  configuration.timeoutIntervalForRequest = 60
+        //  configuration.timeoutIntervalForRequest = 60
         configuration.urlCache = nil
         let  sessionManager = Alamofire.SessionManager(configuration: configuration)
-
+        
         sessionManager.request(url).validate().responseJSON { response in
             
             switch response.result {
@@ -239,20 +241,26 @@ public class AlamofireRequest {
                     volume_usd.append(Chart(timestamp: item[0].doubleValue, value: item[1].doubleValue))
                 }
                 
-                completion(CurrencyCharts(market_cap_by_available_supply: market_cap_by_available_supply,
-                                          price_btc: price_btc,
-                                          price_usd: price_usd,
-                                          volume_usd: volume_usd))
+                currencyCharts = CurrencyCharts(market_cap_by_available_supply: market_cap_by_available_supply,
+                                                price_btc: price_btc,
+                                                price_usd: price_usd,
+                                                volume_usd: volume_usd)
                 
-            case .failure(let error):
-                print(error)
+            case .failure(let errorFailure):
+                error = errorFailure
             }
+            completion(currencyCharts, error)
+            
             sessionManager.session.invalidateAndCancel()
         }
         
     }
     
-    public func getMinDateCharts(id: String, completion: @escaping  (Date) -> ()) {
+    public func getMinDateCharts(id: String, completion: @escaping  (Date?, Error?) -> ()) {
+        
+        var minDate:Date?
+        var error:Error?
+        
         let url = "https://graphs.coinmarketcap.com/currencies/" + id
         
         let configuration = URLSessionConfiguration.default
@@ -269,12 +277,12 @@ public class AlamofireRequest {
                 let json = JSON(value)
                 
                 let timestamp = json["price_usd"].arrayValue[0][0].doubleValue
-                let minDate = NSDate(timeIntervalSince1970: TimeInterval(timestamp / 1000)) as Date
-                completion(minDate)
-                
-            case .failure(let error):
-                print(error)
+                minDate = NSDate(timeIntervalSince1970: TimeInterval(timestamp / 1000)) as Date?
+            case .failure(let errorFailure):
+                error = errorFailure
             }
+            completion(minDate , error)
+            
             sessionManager.session.invalidateAndCancel()
         }
     }
@@ -295,3 +303,6 @@ public class SettingsUserDefaults{
         userDefaults?.synchronize()
     }
 }
+
+
+

@@ -52,15 +52,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                             showViewControllet(withIdentifier: "CryptocurrencyInfoViewControllerID")
                         }
                     case "add":
-                        showViewControllet(withIdentifier: "EditViewControllerID")
+                        showViewControllet(withIdentifier: "CoinTableViewControllerID")
                     default:
                         break
                     }
                 }
             }
-        }
-
-        
+        }        
         return true
     }
     

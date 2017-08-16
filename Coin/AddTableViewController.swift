@@ -25,9 +25,9 @@ class AddTableViewController: UITableViewController {
         maximumActiveDownloads: 4,
         imageCache: AutoPurgingImageCache(memoryCapacity: 2 * 1024 * 1024, preferredMemoryUsageAfterPurge: UInt64(0.5 * 1024 * 1024))
     )
-    
-    var loadSubview:LoadSubview?
-    var errorSubview:ErrorSubview?
+    deinit {
+        self.searchController.view.removeFromSuperview()
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -37,13 +37,17 @@ class AddTableViewController: UITableViewController {
         definesPresentationContext = true
         searchController.dimsBackgroundDuringPresentation = false
         tableView.tableHeaderView = searchController.searchBar
-
+        
+        // Setting refresh control
+        self.refreshControl?.addTarget(self, action: #selector(loadTicker), for: UIControlEvents.valueChanged)
+        
+        ticker = getTickerAll
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-            ticker = getTickerAll
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(true)
+        
         if ticker.isEmpty {
-            showLoadSubview()
             loadTicker()
         }
         else{
@@ -51,64 +55,43 @@ class AddTableViewController: UITableViewController {
         }
     }
     
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        
-        getTickerAll.removeAll()
-    }
-    
-    deinit {
-        self.searchController.view.removeFromSuperview()
-    }
-    
-    
     func cryptocurrencyView() {
+        self.refreshControl?.endRefreshing()
         
-        if let subviews = self.view?.subviews {
-            for view in subviews{
-                if (view is LoadSubview || view is ErrorSubview || view is EmptySubview) {
-                    view.removeFromSuperview()
+        if !ticker.isEmpty {
+            if let subviews = self.view.superview?.subviews {
+                for view in subviews{
+                    if view is ErrorSubview {
+                        view.removeFromSuperview()
+                    }
                 }
             }
+            tableView.reloadData()
         }
-        
-        if let subviews = self.view.superview?.subviews {
-            for view in subviews{
-                if (view is LoadSubview || view is ErrorSubview) {
-                    view.removeFromSuperview()
-                }
-            }
-        }
-        tableView.reloadData()
     }
     
     func loadTicker() {
-        AlamofireRequest().getTicker(completion: { (ticker : [Ticker]?, error : Error?) in
-                if error == nil {
-                    if let ticker = ticker {
-                        
-                        getTickerAll = ticker
-                        self.ticker = ticker
-                        //update your table data here
-                        DispatchQueue.main.async() {
-                            if !self.tableView.isEditing {
-                                self.cryptocurrencyView()
-                            }
-                        }
-                    }
-                    else{
-                        print("idArray empty!")
-                    }
-                    
-                }
-                else{
-                    self.showErrorSubview(error: error!)
-                }
-            })
+        self.tableView.setContentOffset(CGPoint(x: 0, y: -self.refreshControl!.frame.size.height - self.topLayoutGuide.length), animated: true)
+        self.refreshControl!.beginRefreshing()
         
+        AlamofireRequest().getTicker(completion: { (ticker : [Ticker]?, error : Error?) in
+            if error == nil {
+                if let ticker = ticker {
+                    
+                    getTickerAll = ticker
+                    self.ticker = ticker
+                    
+                    DispatchQueue.main.async() {
+                        self.cryptocurrencyView()
+                    }
+                }
+            }
+            else{
+                self.showErrorSubview(error: error!)
+            }
+        })
     }
- 
+    
     // MARK: - Table view data source
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if searchController.isActive && searchController.searchBar.text != "" {
@@ -162,7 +145,7 @@ class AddTableViewController: UITableViewController {
                 else{
                     getTickerID!.append(ticker)
                 }
-
+                
                 SettingsUserDefaults().setUserDefaults(ticher: getTickerID!, idArray: idArray, lastUpdate: nil)
                 
                 _ = navigationController?.popViewController(animated: true)
@@ -175,41 +158,36 @@ class AddTableViewController: UITableViewController {
         }
     }
     
-    func reload(_ sender:UIButton) {
-        loadTicker()
-    }
-    
-    //MARK:LoadSubview
-    func showLoadSubview() {
-        self.loadSubview = LoadSubview(frame: CGRect(x: 0, y: 0, width: self.view.bounds.width, height: self.view.bounds.height ))
-        self.view.addSubview(self.loadSubview!)
-       // self.view.superview?.addSubview(self.loadSubview!)
-    }
-    
     //MARK: ErrorSubview
     func showErrorSubview(error: Error) {
-        self.errorSubview = ErrorSubview(frame: CGRect(x: 0, y: 0, width: self.view.bounds.width, height: self.view.bounds.height))
+        var errorSubview:ErrorSubview?
+        self.refreshControl?.endRefreshing()
+        
+        errorSubview = ErrorSubview(frame: CGRect(x: 0, y: 0, width: self.view.bounds.width, height: self.view.bounds.height))
         
         if !UIAccessibilityIsReduceTransparencyEnabled() {
-            self.errorSubview?.backgroundColor = UIColor.clear
+            errorSubview?.backgroundColor = UIColor.clear
             
             let blurEffect = UIBlurEffect(style: .prominent)
             let blurEffectView = UIVisualEffectView(effect: blurEffect)
             //always fill the view
-            blurEffectView.frame = (self.view.superview?.frame)!
+            blurEffectView.frame = CGRect(x: 0, y: 0, width: self.view.bounds.width, height: self.view.bounds.height)
             blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
             
-            self.errorSubview?.insertSubview(blurEffectView, at: 0) //if you have more UIViews, use an insertSubview API to place it where needed
+            errorSubview?.insertSubview(blurEffectView, at: 0)
         } else {
-            self.errorSubview?.backgroundColor = UIColor.white
+            errorSubview?.backgroundColor = UIColor.white
         }
         
-        self.errorSubview?.errorStringLabel.text = error.localizedDescription
-        self.errorSubview?.reloadPressed.addTarget(self, action: #selector(reload(_:)), for: UIControlEvents.touchUpInside)
+        errorSubview?.errorStringLabel.text = error.localizedDescription
+        errorSubview?.reloadPressed.addTarget(self, action: #selector(reload(_:)), for: UIControlEvents.touchUpInside)
         
-        self.view.superview?.addSubview(self.errorSubview!)
+        self.view.superview?.addSubview(errorSubview!)
     }
     
+    func reload(_ sender:UIButton) {
+        loadTicker()
+    }
     
     func filter(searchText: String)  {
         tickerSearchResult = ticker.filter{$0.name.lowercased().contains(searchText.lowercased())}
