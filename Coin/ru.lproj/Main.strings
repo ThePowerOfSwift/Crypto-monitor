@@ -1,6 +1,3 @@
-/* Class = "UINavigationItem"; title = "Settings"; ObjectID = "a5a-yk-s2O"; */
-"a5a-yk-s2O.title" = "Настройки";
-
 /* Class = "UINavigationItem"; title = "Add"; ObjectID = "fra-i8-hjZ"; */
 "fra-i8-hjZ.title" = "Добавить";
 
@@ -10,3 +7,5 @@
 /* Class = "UITableViewSection"; headerTitle = "Rate change period"; ObjectID = "uMW-aC-8Ll"; */
 "uMW-aC-8Ll.headerTitle" = "Период изменения курса";
 
+/* Class = "UITableViewSection"; headerTitle = "Data source"; ObjectID = "yeO-1L-1gs"; */
+"yeO-1L-1gs.headerTitle" = "Источник данных";

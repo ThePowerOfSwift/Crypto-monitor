@@ -10,3 +10,5 @@
 /* Class = "UITableViewSection"; headerTitle = "Rate change period"; ObjectID = "uMW-aC-8Ll"; */
 "uMW-aC-8Ll.headerTitle" = "Період зміни курсу";
 
+/* Class = "UITableViewSection"; headerTitle = "Data source"; ObjectID = "yeO-1L-1gs"; */
+"yeO-1L-1gs.headerTitle" = "Джерело даних";

@@ -81,6 +81,45 @@
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
+                            <tableViewSection headerTitle="Data source" id="yeO-1L-1gs">
+                                <cells>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="QAV-OG-fBc">
+                                        <rect key="frame" x="0.0" y="256" width="320" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="QAV-OG-fBc" id="rIA-YP-x6x">
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Link" translatesAutoresizingMaskIntoConstraints="NO" id="0Bx-WM-IXH">
+                                                    <rect key="frame" x="8" y="6" width="32" height="32"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="32" id="fXF-60-M61"/>
+                                                        <constraint firstAttribute="height" constant="32" id="wFO-1I-xOw"/>
+                                                    </constraints>
+                                                </imageView>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="E8q-si-UcI">
+                                                    <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                                    <state key="normal" title="CoinMarketCap">
+                                                        <color key="titleColor" red="0.0" green="0.45798993110656738" blue="0.99927455186843872" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    </state>
+                                                    <connections>
+                                                        <action selector="coinMarketCapAction:" destination="mSk-LG-rjD" eventType="touchUpInside" id="xH8-ix-8y0"/>
+                                                    </connections>
+                                                </button>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="bottom" secondItem="E8q-si-UcI" secondAttribute="bottom" id="8nJ-jU-gHb"/>
+                                                <constraint firstItem="0Bx-WM-IXH" firstAttribute="centerY" secondItem="rIA-YP-x6x" secondAttribute="centerY" id="Aw1-wx-VLe"/>
+                                                <constraint firstItem="0Bx-WM-IXH" firstAttribute="leading" secondItem="rIA-YP-x6x" secondAttribute="leading" constant="8" id="Awv-mt-dNw"/>
+                                                <constraint firstItem="E8q-si-UcI" firstAttribute="leading" secondItem="rIA-YP-x6x" secondAttribute="leading" id="GTc-lw-HK7"/>
+                                                <constraint firstAttribute="trailing" secondItem="E8q-si-UcI" secondAttribute="trailing" id="gIn-va-OOx"/>
+                                                <constraint firstItem="E8q-si-UcI" firstAttribute="top" secondItem="rIA-YP-x6x" secondAttribute="top" id="rhl-wv-DNf"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
                         </sections>
                         <connections>
                             <outlet property="dataSource" destination="mSk-LG-rjD" id="4uz-Or-TJL"/>
@@ -95,7 +134,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="DAm-mD-TBY" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4348" y="-595.05247376311854"/>
+            <point key="canvasLocation" x="4346.25" y="-595.77464788732391"/>
         </scene>
         <!--Crypto monitor-->
         <scene sceneID="5la-10-aik">
@@ -105,40 +144,10 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <view key="tableFooterView" contentMode="scaleToFill" id="HPy-vJ-WMr" userLabel="footer" customClass="FooterView" customModule="Coin">
+                        <view key="tableFooterView" contentMode="scaleToFill" id="5EB-M0-VaN">
                             <rect key="frame" x="0.0" y="108" width="320" height="44"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <subviews>
-                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="B1j-Bj-lEw">
-                                    <rect key="frame" x="110.5" y="16" width="99" height="12"/>
-                                    <constraints>
-                                        <constraint firstAttribute="height" constant="12" id="gv5-7s-W5d"/>
-                                    </constraints>
-                                    <fontDescription key="fontDescription" type="system" weight="light" pointSize="14"/>
-                                    <state key="normal" title="CoinMarketCap">
-                                        <color key="titleColor" red="0.0039215686269999999" green="0.47843137250000001" blue="1" alpha="0.80170389187116564" colorSpace="custom" customColorSpace="sRGB"/>
-                                    </state>
-                                    <connections>
-                                        <action selector="coinMarketCapAction:" destination="HPy-vJ-WMr" eventType="touchUpInside" id="WLX-MQ-VaA"/>
-                                    </connections>
-                                </button>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Data source:" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZX1-hJ-ab7">
-                                    <rect key="frame" x="124.5" y="2" width="71" height="12"/>
-                                    <constraints>
-                                        <constraint firstAttribute="height" constant="12" id="LDJ-sx-MsH"/>
-                                    </constraints>
-                                    <fontDescription key="fontDescription" type="system" weight="light" pointSize="12"/>
-                                    <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
-                                    <nil key="highlightedColor"/>
-                                </label>
-                            </subviews>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                            <constraints>
-                                <constraint firstItem="ZX1-hJ-ab7" firstAttribute="centerX" secondItem="HPy-vJ-WMr" secondAttribute="centerX" id="RUh-OE-wlB"/>
-                                <constraint firstItem="B1j-Bj-lEw" firstAttribute="centerX" secondItem="HPy-vJ-WMr" secondAttribute="centerX" id="UUC-dQ-5jb"/>
-                                <constraint firstItem="B1j-Bj-lEw" firstAttribute="centerY" secondItem="HPy-vJ-WMr" secondAttribute="centerY" id="Zg4-j9-x2C"/>
-                                <constraint firstItem="B1j-Bj-lEw" firstAttribute="top" secondItem="ZX1-hJ-ab7" secondAttribute="bottom" constant="2" id="raK-ql-khY"/>
-                            </constraints>
                         </view>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="header" rowHeight="20" id="USQ-2Y-P15" customClass="HeaderTableViewCell" customModule="Coin" customModuleProvider="target">
@@ -761,6 +770,7 @@
     <resources>
         <image name="Check" width="32" height="32"/>
         <image name="Cloud error" width="128" height="128"/>
+        <image name="Link" width="32" height="32"/>
         <image name="Setting" width="25" height="25"/>
     </resources>
 </document>
