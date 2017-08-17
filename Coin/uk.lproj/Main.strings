@@ -1,21 +1,12 @@
-/* Class = "UILabel"; text = "Price"; ObjectID = "Ghs-Sl-vBt"; */
-"Ghs-Sl-vBt.text" = "Ціна";
-
 /* Class = "UINavigationItem"; title = "Settings"; ObjectID = "a5a-yk-s2O"; */
 "a5a-yk-s2O.title" = "Налаштування";
 
 /* Class = "UINavigationItem"; title = "Add"; ObjectID = "fra-i8-hjZ"; */
 "fra-i8-hjZ.title" = "Додати";
 
-/* Class = "UILabel"; text = "Data source:"; ObjectID = "hky-V5-UY0"; */
-"hky-V5-UY0.text" = "Джерело даних:";
-
 /* Class = "UITableViewSection"; headerTitle = "Price"; ObjectID = "tyt-ZY-uLd"; */
 "tyt-ZY-uLd.headerTitle" = "Ціна";
 
-/* Class = "UITableViewSection"; headerTitle = "Percent change period"; ObjectID = "uMW-aC-8Ll"; */
+/* Class = "UITableViewSection"; headerTitle = "Rate change period"; ObjectID = "uMW-aC-8Ll"; */
 "uMW-aC-8Ll.headerTitle" = "Період зміни курсу";
-
-/* Class = "UINavigationItem"; title = "Edit"; ObjectID = "zNv-nx-6D7"; */
-"zNv-nx-6D7.title" = "Редагування";
 

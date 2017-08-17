@@ -116,6 +116,14 @@ class AddTableViewController: UITableViewController {
         let url = URL(string: "https://files.coinmarketcap.com/static/img/coins/32x32/\(ticker.id).png")!
         cell.cryptocurrencyImageView.af_setImage(withURL: url)
         cell.cryptocurrencyNameLabel?.text = ticker.name
+        
+        if (getTickerID?.filter({ $0.id == ticker.id}).first) != nil{
+           cell.checkImageView.isHidden = false
+        }
+        else{
+            cell.checkImageView.isHidden = true
+        }
+        
         return cell
     }
     
@@ -150,8 +158,10 @@ class AddTableViewController: UITableViewController {
                 
                 _ = navigationController?.popViewController(animated: true)
             }
-            else{
-                let alert = UIAlertController(title: "Alert", message: "\(ticker.id) уже добавлен", preferredStyle: UIAlertControllerStyle.alert)
+            else{ 
+                let messageString = ticker.name + NSLocalizedString(", has already been added to favorites.", comment: "Title message")
+                
+                let alert = UIAlertController(title: NSLocalizedString("Added", comment: "Title alert"), message: messageString, preferredStyle: .alert)
                 alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler: nil))
                 self.present(alert, animated: true, completion: nil)
             }

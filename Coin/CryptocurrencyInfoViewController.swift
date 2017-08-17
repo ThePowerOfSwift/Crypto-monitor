@@ -383,7 +383,14 @@ class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
                 set1.fill = Fill.fillWithColor(.black)
                 set1.fillAlpha = 1.0
                 set1.drawFilledEnabled = true // Draw the Gradient
+                
+                lineChartView.animate(yAxisDuration: 2.0)
+
             }
+            else{
+                lineChartView.animate(xAxisDuration: 2.0)
+            }
+
             
             //3 - create an array to store our LineChartDataSets
             var dataSets : [LineChartDataSet] = [LineChartDataSet]()
@@ -392,6 +399,10 @@ class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
             //4 - pass our months in for our x-axis label value along with our dataSets
             let data: LineChartData = LineChartData(dataSets: dataSets)
             //  data.setValueTextColor(UIColor.white)
+            
+            
+
+
             
             //5 - finally set our data
             self.lineChartView.data = data

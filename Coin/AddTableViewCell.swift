@@ -12,6 +12,7 @@ class AddTableViewCell: UITableViewCell {
 
     @IBOutlet weak var cryptocurrencyImageView: UIImageView!
     @IBOutlet weak var cryptocurrencyNameLabel: UILabel!
+    @IBOutlet weak var checkImageView: UIImageView!
     
     
     override func awakeFromNib() {

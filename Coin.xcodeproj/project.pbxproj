@@ -10,6 +10,7 @@
 		04B9C53BE8656AD28A1B6FD8 /* Pods_Cryptocurrency_monitor_widget.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1B53037A98436C37114E5FBD /* Pods_Cryptocurrency_monitor_widget.framework */; };
 		1853CEF6208C355CD69D15AE /* Pods_Coin.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FCD523238B38757764B37DC3 /* Pods_Coin.framework */; };
 		7C0E811403C22CFE861428B3 /* Pods_CryptocurrencyRequest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F9241DFCEEB224CD89245A5F /* Pods_CryptocurrencyRequest.framework */; };
+		FB0205091F45E7A0006F9F61 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = FB02050B1F45E7A0006F9F61 /* Localizable.strings */; };
 		FB0EB47B1F30648B0008D8B2 /* Pods_Coin.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FCD523238B38757764B37DC3 /* Pods_Coin.framework */; };
 		FB3990251F3CA92100A1EAC8 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = FB3990271F3CA92100A1EAC8 /* InfoPlist.strings */; };
 		FB39902A1F3CA92200A1EAC8 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = FB39902C1F3CA92200A1EAC8 /* InfoPlist.strings */; };
@@ -93,6 +94,8 @@
 		CF8EA22E115F6A7756461806 /* Pods-Cryptocurrency monitor widget.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Cryptocurrency monitor widget.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Cryptocurrency monitor widget/Pods-Cryptocurrency monitor widget.debug.xcconfig"; sourceTree = "<group>"; };
 		D2644E3DDE8034D62D53ACCA /* Pods-Coin.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Coin.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Coin/Pods-Coin.debug.xcconfig"; sourceTree = "<group>"; };
 		F9241DFCEEB224CD89245A5F /* Pods_CryptocurrencyRequest.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CryptocurrencyRequest.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		FB02050A1F45E7A0006F9F61 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
+		FB02050C1F45E7B3006F9F61 /* uk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = uk; path = uk.lproj/Localizable.strings; sourceTree = "<group>"; };
 		FB0EB4791F30632A0008D8B2 /* Alamofire.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Alamofire.framework; path = "Pods/../build/Release-iphoneos/Alamofire/Alamofire.framework"; sourceTree = "<group>"; };
 		FB3990261F3CA92100A1EAC8 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		FB39902B1F3CA92200A1EAC8 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -278,6 +281,7 @@
 		FBB2CC9A1F155CF800D800FD /* Coin */ = {
 			isa = PBXGroup;
 			children = (
+				FB02050B1F45E7A0006F9F61 /* Localizable.strings */,
 				FB3990271F3CA92100A1EAC8 /* InfoPlist.strings */,
 				FB9592531F20B8AB00F9F74B /* Coin.entitlements */,
 				FBB2CC9B1F155CF800D800FD /* AppDelegate.swift */,
@@ -486,6 +490,7 @@
 				FBB2CCA31F155CF800D800FD /* Assets.xcassets in Resources */,
 				FB565C4D1F42349C004EA42F /* ErrorSubview.xib in Resources */,
 				FBB2CCA11F155CF800D800FD /* Main.storyboard in Resources */,
+				FB0205091F45E7A0006F9F61 /* Localizable.strings in Resources */,
 				FBF950FA1F3FA58D00F56DF3 /* EmptySubview.xib in Resources */,
 				FB565C541F4235E8004EA42F /* LoadSubview.xib in Resources */,
 			);
@@ -652,6 +657,15 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
+		FB02050B1F45E7A0006F9F61 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				FB02050A1F45E7A0006F9F61 /* ru */,
+				FB02050C1F45E7B3006F9F61 /* uk */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
 		FB3990271F3CA92100A1EAC8 /* InfoPlist.strings */ = {
 			isa = PBXVariantGroup;
 			children = (

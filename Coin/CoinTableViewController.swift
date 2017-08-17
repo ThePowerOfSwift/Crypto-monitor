@@ -59,7 +59,17 @@ class CoinTableViewController: UITableViewController {
     }
     
     func ubiquitousKeyValueStoreDidChange(notification: NSNotification) {
-        loadTicker()
+        
+        let keyStore = NSUbiquitousKeyValueStore ()
+        let idKeyStore = keyStore.array(forKey: "id") as! [String]
+        let userDefaults = UserDefaults(suiteName: "group.mialin.valentyn.crypto.monitor")
+        let idUserDefaults = userDefaults?.array(forKey: "id") as! [String]
+            
+        if idKeyStore != idUserDefaults {
+                    loadTicker()
+        }
+        
+
         print("iCloud key-value-store change detected")
     }
     
@@ -143,7 +153,6 @@ class CoinTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView?
     {
-        //let cell = tableView.dequeueReusableCell(withIdentifier: "header", for: indexPath) as! EditTableViewCell
         let headerView = tableView.dequeueReusableCell(withIdentifier: "header") as! HeaderTableViewCell
         
         let keyStore = NSUbiquitousKeyValueStore ()
@@ -168,13 +177,15 @@ class CoinTableViewController: UITableViewController {
             headerView.priceLabel.text = "-"
         }
         
-        headerView.backgroundColor = UIColor.clear
+        let contentView = headerView.contentView
+        
+        contentView.backgroundColor = UIColor.clear
         let blurEffect = UIBlurEffect(style: .prominent)
         let blurEffectView = UIVisualEffectView(effect: blurEffect)
         blurEffectView.frame = self.view.frame
         
-        headerView.insertSubview(blurEffectView, at: 0)
-        return headerView.contentView
+        contentView.insertSubview(blurEffectView, at: 0)
+        return contentView
     }
     
     override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat
