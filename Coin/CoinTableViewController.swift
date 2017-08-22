@@ -45,11 +45,21 @@ class CoinTableViewController: UITableViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
         if getTickerID == nil {
             loadTicker()
         }
         else{
             cryptocurrencyView()
+        }
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(true)
+        if getTickerID != nil {
+            if getTickerID!.isEmpty {
+                self.showEmptySubview()
+            }
         }
     }
 
@@ -61,14 +71,15 @@ class CoinTableViewController: UITableViewController {
     func ubiquitousKeyValueStoreDidChange(notification: NSNotification) {
         
         let keyStore = NSUbiquitousKeyValueStore ()
-        let idKeyStore = keyStore.array(forKey: "id") as! [String]
+        let idKeyStore = keyStore.array(forKey: "id") as? [String]
         let userDefaults = UserDefaults(suiteName: "group.mialin.valentyn.crypto.monitor")
-        let idUserDefaults = userDefaults?.array(forKey: "id") as! [String]
-            
-        if idKeyStore != idUserDefaults {
-                    loadTicker()
-        }
+        let idUserDefaults = userDefaults?.array(forKey: "id") as? [String]
         
+        if idKeyStore != nil && idUserDefaults != nil {
+            if idKeyStore! != idUserDefaults! {
+                loadTicker()
+            }
+        }
 
         print("iCloud key-value-store change detected")
     }

@@ -18,13 +18,14 @@ class AddTableViewController: UITableViewController {
     
     var ticker = [Ticker]()
     var tickerSearchResult  = [Ticker]()
-    
+    /*
     var imageDownloader = ImageDownloader(
         configuration: ImageDownloader.defaultURLSessionConfiguration(),
         downloadPrioritization: .fifo,
         maximumActiveDownloads: 4,
         imageCache: AutoPurgingImageCache(memoryCapacity: 2 * 1024 * 1024, preferredMemoryUsageAfterPurge: UInt64(0.5 * 1024 * 1024))
     )
+ */
     deinit {
         self.searchController.view.removeFromSuperview()
     }
@@ -159,7 +160,7 @@ class AddTableViewController: UITableViewController {
                 _ = navigationController?.popViewController(animated: true)
             }
             else{ 
-                let messageString = ticker.name + NSLocalizedString(", has already been added to favorites.", comment: "Title message")
+                let messageString = ticker.name + NSLocalizedString(" has already been added to favorites.", comment: "Title message")
                 
                 let alert = UIAlertController(title: NSLocalizedString("Added", comment: "Title alert"), message: messageString, preferredStyle: .alert)
                 alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler: nil))

@@ -21,7 +21,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let keyStore = NSUbiquitousKeyValueStore ()
         if !keyStore.bool(forKey: "launchedBefore"){
             
-            keyStore.set(["bitcoin", "ethereum", "ripple", "bitcoin-cash", "nem"], forKey: "id")
+            keyStore.set(["bitcoin", "ethereum", "bitcoin-cash", "ripple", "iota", "litecoin", "nem", "neo", "dash", "ethereum-classic"], forKey: "id")
             keyStore.set(1, forKey: "percentChange")
             keyStore.set(1, forKey: "typeChart")
             keyStore.set(1, forKey: "zoomChart")
