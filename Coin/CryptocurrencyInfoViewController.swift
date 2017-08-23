@@ -486,7 +486,7 @@ class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
             let blurEffect = UIBlurEffect(style: .prominent)
             let blurEffectView = UIVisualEffectView(effect: blurEffect)
             //always fill the view
-            blurEffectView.frame = (self.view.superview?.frame)!
+            blurEffectView.frame = CGRect(x: 0, y: 0, width: self.view.bounds.width, height: self.view.bounds.height)
             blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
             
             self.errorSubview?.insertSubview(blurEffectView, at: 0) //if you have more UIViews, use an insertSubview API to place it where needed

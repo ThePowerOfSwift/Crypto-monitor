@@ -136,12 +136,16 @@ class TodayViewController: UIViewController, UITableViewDataSource, UITableViewD
 
     // MARK: - TableView Data Source
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        switch extensionContext!.widgetActiveDisplayMode {
-        case NCWidgetDisplayMode.compact:
-            return cryptocurrencyCompact.count
-        case NCWidgetDisplayMode.expanded:
-            return cryptocurrency.count
+        var count = 0
+        if extensionContext != nil {
+            switch extensionContext!.widgetActiveDisplayMode {
+            case NCWidgetDisplayMode.compact:
+                count = cryptocurrencyCompact.count
+            case NCWidgetDisplayMode.expanded:
+                count = cryptocurrency.count
+            }
         }
+        return count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

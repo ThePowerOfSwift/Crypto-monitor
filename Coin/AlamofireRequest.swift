@@ -208,7 +208,7 @@ public class AlamofireRequest {
         var url = "https://graphs.coinmarketcap.com/currencies/" + id + "/"
         
         if let of = of {
-            url += String(Int(of.timeIntervalSince1970 * 1000)) + "/" + String(Int(NSDate().timeIntervalSince1970 * 1000)) + "/"
+            url += String(Int(of.timeIntervalSince1970)) + "000/" + String(Int(NSDate().timeIntervalSince1970)) + "000/"
         }
         let configuration = URLSessionConfiguration.default
         //  configuration.timeoutIntervalForRequest = 60
