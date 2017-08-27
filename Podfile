@@ -1,4 +1,4 @@
-platform :ios, ’10.0’
+#platform :ios, ’10.0’
 use_frameworks!
 
 target 'Coin' do
@@ -15,4 +15,9 @@ end
 
 target 'Cryptocurrency monitor widget' do
 	pod 'AlamofireImage', '~> 3.1'
+end
+
+target 'Crypto monitor Watch Extension' do
+	pod 'Alamofire', '~> 4.4'
+	pod 'SwiftyJSON', '~> 3.1'
 end

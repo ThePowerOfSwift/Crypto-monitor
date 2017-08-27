@@ -4,84 +4,100 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
-		<key>Alamofire.xcscheme</key>
+		<key>Alamofire-iOS.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
-			<key>orderHint</key>
-			<integer>3</integer>
+		</dict>
+		<key>Alamofire-watchOS.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
 		</dict>
 		<key>AlamofireImage.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
-			<key>orderHint</key>
-			<integer>4</integer>
 		</dict>
 		<key>Charts.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
-			<key>orderHint</key>
-			<integer>5</integer>
 		</dict>
 		<key>Pods-Coin.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
-			<key>orderHint</key>
-			<integer>6</integer>
+		</dict>
+		<key>Pods-Crypto monitor Watch Extension.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
 		</dict>
 		<key>Pods-Cryptocurrency monitor widget.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
-			<key>orderHint</key>
-			<integer>7</integer>
 		</dict>
 		<key>Pods-CryptocurrencyRequest.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
-			<key>orderHint</key>
-			<integer>8</integer>
 		</dict>
-		<key>SwiftyJSON.xcscheme</key>
+		<key>SwiftyJSON-iOS.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
-			<key>orderHint</key>
-			<integer>9</integer>
+		</dict>
+		<key>SwiftyJSON-watchOS.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
 		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>0E934761E3E0F8BBE46B2C869CA7CDD6</key>
+		<key>173E4104E4F2CE5ECC896A154802C6D5</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>27B94E74A7E165D08C30F946DAB646D2</key>
+		<key>1815CD051085BB9E8999D4DA45153748</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>816AD2EC3D21E44432433F7DFBE3A50F</key>
+		<key>4D8199C20C1BE5F5BCDBC8F8CB4BF089</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>88E9EC28B8B46C3631E6B242B50F4442</key>
+		<key>5297E784A99069EAFDCB38F74693A39B</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>9EFE4C70245EE2857D336B8B9FA4E825</key>
+		<key>6FCE85672C882DE92A8E8C13691F3E58</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>A96338C3368A5164009827F91DAE9C79</key>
+		<key>A4B4707C453DF884DBF6F9F5766E0E75</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>C3F0E7343B73BFD448306B9E3BF7A125</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>E06663B0B6A5FD94D74DC4FAF9872941</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>EE176E7BEC8620E70D7692FAEB1543FA</key>
 		<dict>
 			<key>primary</key>
 			<true/>

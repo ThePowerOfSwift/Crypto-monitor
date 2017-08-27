@@ -27,7 +27,7 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate{
       //  let message = applicationContext["message"] as? String
       //  messageLabel.setText(message)
         print("data")
-
+/*
         NSKeyedUnarchiver.setClass(Ticker.self, forClassName: "Ticker")
         let data = applicationContext["data"] as? Data
         if let data = data {
@@ -35,6 +35,7 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate{
                 tableView(ticker: cacheTicker)
             }
         }
+ */
     }
 
     
@@ -63,12 +64,30 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate{
             watchSession!.delegate = self
             watchSession!.activate()
         }
+        let idArray = ["bitcoin", "ethereum", "bitcoin-cash"]
+        
+        NetworkRequest().getTickerID(idArray: idArray, completion: { (ticker : [Ticker]?, error : Error?) in
+            if error == nil {
+                if let ticker = ticker {
+                    
+                    DispatchQueue.main.async() {
+                        self.tableView(ticker: ticker)
+                    }
+                }
+            }
+            else{
+              //  self.showErrorSubview(error: error!)
+            }
+        })
+        
     }
     
     override func didDeactivate() {
         // This method is called when watch view controller is no longer visible
         super.didDeactivate()
     }
+    
+    
     
     func tableView(ticker: [Ticker])  {
         cryptocurrencyTable.setNumberOfRows(ticker.count, withRowType: "cell")
@@ -78,30 +97,5 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate{
         }
 
     }
-    
-    
-    
-    /*
-    func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: Error?) {
-        
-    }
-    func session(session: WCSession, didReceiveApplicationContext applicationContext: [String : AnyObject]) {
-        print("Received context")
-        print(applicationContext["FlightTime"])
-    }
-    */
-    /*
-    private func session(session: WCSession, didReceiveApplicationContext applicationContext: [String : AnyObject]) {
-        print("Received context")
-        print(applicationContext["data"])
-        
-        let data = applicationContext["data"]
-        
-        if let cacheTicker = NSKeyedUnarchiver.unarchiveObject(with: data as! Data) as? [Ticker] {
-            tableView(ticker: cacheTicker)
-        }
-        
-    }*/
-
 }
 
