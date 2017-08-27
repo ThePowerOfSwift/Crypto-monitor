@@ -8,11 +8,12 @@
 
 import UIKit
 import CryptocurrencyRequest
+import WatchConnectivity
 
 var openID = ""
 var getTickerID:[Ticker]?
 
-class CoinTableViewController: UITableViewController {
+class CoinTableViewController: UITableViewController, WCSessionDelegate {
     
     weak var selectTicker : Ticker?
     var currentIndexPath: NSIndexPath?
@@ -23,8 +24,13 @@ class CoinTableViewController: UITableViewController {
 
     var emptySubview:EmptySubview?
     
+    // Our WatchConnectivity Session for communicating with the watchOS app
+    var watchSession : WCSession?
+
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        
         
         NotificationCenter.default.addObserver(self, selector: #selector(applicationDidBecomeActiveNotification), name:NSNotification.Name.UIApplicationDidBecomeActive, object: nil)
         self.refreshControl?.addTarget(self, action: #selector(self.refresh), for: UIControlEvents.valueChanged)
@@ -42,6 +48,63 @@ class CoinTableViewController: UITableViewController {
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "Setting"), style: UIBarButtonItemStyle.plain, target: self, action: #selector(settingsShow))
         
         loadCache()
+        
+        //MARK: WCSession
+        if(WCSession.isSupported()){
+            watchSession = WCSession.default()
+            watchSession!.delegate = self
+            watchSession!.activate()
+        }
+    }
+    
+    /** Called when all delegate callbacks for the previously selected watch has occurred. The session can be re-activated for the now selected watch using activateSession. */
+    @available(iOS 9.3, *)
+    func sessionDidDeactivate(_ session: WCSession) {
+        
+    }
+    
+    /** Called when the session can no longer be used to modify or add any new transfers and, all interactive messages will be cancelled, but delegate callbacks for background transfers can still occur. This will happen when the selected watch is being changed. */
+    @available(iOS 9.3, *)
+    func sessionDidBecomeInactive(_ session: WCSession) {
+        
+    }
+    
+    /** Called when the session has completed activation. If session state is WCSessionActivationStateNotActivated there will be an error with more details. */
+    @available(iOS 9.3, *)
+    func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: Error?) {
+        
+    }
+    
+    func sendWatchMessage(ticher: [Ticker]) {
+        /*
+        do {
+         // let session = WCSession.default()
+            let context = ["message" : "Delayed"]
+            try watchSession?.updateApplicationContext(context)
+            
+        } catch let error as NSError {
+            print("Error: \(error.description)")
+        }
+        */
+        
+        do {
+           NSKeyedArchiver.setClassName("Ticker", for: Ticker.self)
+            let encodedData = NSKeyedArchiver.archivedData(withRootObject: ticher)
+            let context = ["data" : encodedData]
+            try watchSession?.updateApplicationContext(context)
+            
+        } catch let error as NSError {
+            print("Error: \(error.description)")
+        }
+ 
+        /*
+        if (WCSession.default().isReachable) {
+            
+            // this is a meaningless message, but it's enough for our purposes
+            let encodedData = NSKeyedArchiver.archivedData(withRootObject: ticher)
+            WCSession.default().sendMessageData(encodedData, replyHandler: nil)
+        }
+    */
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -87,6 +150,7 @@ class CoinTableViewController: UITableViewController {
     private func loadCache() {
         let userDefaults = UserDefaults(suiteName: "group.mialin.valentyn.crypto.monitor")
         if let decodedTicker = userDefaults?.data(forKey: "cryptocurrency"){
+            
             if let cacheTicker = NSKeyedUnarchiver.unarchiveObject(with: decodedTicker) as? [Ticker] {
                 getTickerID = cacheTicker
                 let userDefaults = UserDefaults(suiteName: "group.mialin.valentyn.crypto.monitor")
@@ -304,6 +368,8 @@ class CoinTableViewController: UITableViewController {
                         if let ticker = ticker {
                             getTickerID = ticker
                             SettingsUserDefaults().setUserDefaults(ticher: getTickerID!, idArray: idArray, lastUpdate: Date())
+                            
+                            self.sendWatchMessage(ticher: getTickerID!)
                             
                             DispatchQueue.main.async() {
                                 self.cryptocurrencyView()

@@ -10,12 +10,28 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Coin/CoinTableViewController.swift"
-            timestampString = "524703394.469329"
+            timestampString = "525488511.018897"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "262"
-            endingLineNumber = "262"
+            startingLineNumber = "326"
+            endingLineNumber = "326"
             landmarkName = "cryptocurrencyView()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Cryptocurrency monitor widget/TodayViewController.swift"
+            timestampString = "525490027.631737"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "90"
+            endingLineNumber = "90"
+            landmarkName = "widgetPerformUpdate(completionHandler:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

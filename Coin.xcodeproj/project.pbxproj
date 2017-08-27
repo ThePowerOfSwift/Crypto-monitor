@@ -16,6 +16,7 @@
 		FB39902A1F3CA92200A1EAC8 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = FB39902C1F3CA92200A1EAC8 /* InfoPlist.strings */; };
 		FB39902F1F3CA92200A1EAC8 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = FB3990311F3CA92200A1EAC8 /* InfoPlist.strings */; };
 		FB3990351F3CCBB400A1EAC8 /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FB3990371F3CCBB400A1EAC8 /* MainInterface.storyboard */; };
+		FB44ADCB1F52391D009DE5FC /* WatchConnectivity.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FB44ADCA1F52391D009DE5FC /* WatchConnectivity.framework */; };
 		FB466DDA1F2D479200D771C9 /* SettingTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB466DD91F2D479200D771C9 /* SettingTableViewController.swift */; };
 		FB4955241F2B627600169CB0 /* ErrorSubview.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB4955221F2B627600169CB0 /* ErrorSubview.swift */; };
 		FB5326CB1F254A9400D9C498 /* AddTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB5326CA1F254A9400D9C498 /* AddTableViewCell.swift */; };
@@ -37,6 +38,7 @@
 		FBB0097C1F4E3292000B1298 /* ExtensionDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBB0097B1F4E3292000B1298 /* ExtensionDelegate.swift */; };
 		FBB0097E1F4E3292000B1298 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FBB0097D1F4E3292000B1298 /* Assets.xcassets */; };
 		FBB009821F4E3292000B1298 /* Crypto monitor Watch.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = FBB009681F4E3292000B1298 /* Crypto monitor Watch.app */; };
+		FBB0098D1F4E37AF000B1298 /* cryptocurrencyRowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBB0098C1F4E37AF000B1298 /* cryptocurrencyRowController.swift */; };
 		FBB2CC9C1F155CF800D800FD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBB2CC9B1F155CF800D800FD /* AppDelegate.swift */; };
 		FBB2CCA11F155CF800D800FD /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FBB2CC9F1F155CF800D800FD /* Main.storyboard */; };
 		FBB2CCA31F155CF800D800FD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FBB2CCA21F155CF800D800FD /* Assets.xcassets */; };
@@ -150,6 +152,7 @@
 		FB3990341F3CBC8400A1EAC8 /* uk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = uk; path = uk.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		FB3990361F3CCBB400A1EAC8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainInterface.storyboard; sourceTree = "<group>"; };
 		FB39903B1F3CCBBC00A1EAC8 /* uk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = uk; path = uk.lproj/MainInterface.strings; sourceTree = "<group>"; };
+		FB44ADCA1F52391D009DE5FC /* WatchConnectivity.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WatchConnectivity.framework; path = Platforms/WatchOS.platform/Developer/SDKs/WatchOS3.2.sdk/System/Library/Frameworks/WatchConnectivity.framework; sourceTree = DEVELOPER_DIR; };
 		FB466DD91F2D479200D771C9 /* SettingTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingTableViewController.swift; sourceTree = "<group>"; };
 		FB4955221F2B627600169CB0 /* ErrorSubview.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ErrorSubview.swift; sourceTree = "<group>"; };
 		FB5326CA1F254A9400D9C498 /* AddTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddTableViewCell.swift; sourceTree = "<group>"; };
@@ -183,7 +186,7 @@
 		FBB0097B1F4E3292000B1298 /* ExtensionDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensionDelegate.swift; sourceTree = "<group>"; };
 		FBB0097D1F4E3292000B1298 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		FBB0097F1F4E3292000B1298 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		FBB0098B1F4E32B3000B1298 /* Crypto monitor Watch Extension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Crypto monitor Watch Extension.entitlements"; sourceTree = "<group>"; };
+		FBB0098C1F4E37AF000B1298 /* cryptocurrencyRowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = cryptocurrencyRowController.swift; sourceTree = "<group>"; };
 		FBB2CC981F155CF800D800FD /* Coin.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Coin.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FBB2CC9B1F155CF800D800FD /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		FBB2CCA01F155CF800D800FD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -225,6 +228,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FB44ADCB1F52391D009DE5FC /* WatchConnectivity.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -256,6 +260,7 @@
 		731467F8FA5309E32222B93E /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				FB44ADCA1F52391D009DE5FC /* WatchConnectivity.framework */,
 				FB0EB4791F30632A0008D8B2 /* Alamofire.framework */,
 				FCD523238B38757764B37DC3 /* Pods_Coin.framework */,
 				FB99B48B1F2FEF1F007C0235 /* NotificationCenter.framework */,
@@ -329,8 +334,8 @@
 		FBB009781F4E3292000B1298 /* Crypto monitor Watch Extension */ = {
 			isa = PBXGroup;
 			children = (
-				FBB0098B1F4E32B3000B1298 /* Crypto monitor Watch Extension.entitlements */,
 				FBB009791F4E3292000B1298 /* InterfaceController.swift */,
+				FBB0098C1F4E37AF000B1298 /* cryptocurrencyRowController.swift */,
 				FBB0097B1F4E3292000B1298 /* ExtensionDelegate.swift */,
 				FBB0097D1F4E3292000B1298 /* Assets.xcassets */,
 				FBB0097F1F4E3292000B1298 /* Info.plist */,
@@ -549,6 +554,11 @@
 						CreatedOnToolsVersion = 8.3.3;
 						DevelopmentTeam = M6RU8K5R5C;
 						ProvisioningStyle = Automatic;
+						SystemCapabilities = {
+							com.apple.ApplicationGroups.iOS = {
+								enabled = 0;
+							};
+						};
 					};
 					FBB009731F4E3292000B1298 = {
 						CreatedOnToolsVersion = 8.3.3;
@@ -556,7 +566,7 @@
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.ApplicationGroups.iOS = {
-								enabled = 1;
+								enabled = 0;
 							};
 						};
 					};
@@ -785,6 +795,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				FBB0097C1F4E3292000B1298 /* ExtensionDelegate.swift in Sources */,
+				FBB0098D1F4E37AF000B1298 /* cryptocurrencyRowController.swift in Sources */,
 				FBB0097A1F4E3292000B1298 /* InterfaceController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1027,7 +1038,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_COMPLICATION_NAME = Complication;
-				CODE_SIGN_ENTITLEMENTS = "Crypto monitor Watch Extension/Crypto monitor Watch Extension.entitlements";
 				DEVELOPMENT_TEAM = M6RU8K5R5C;
 				INFOPLIST_FILE = "Crypto monitor Watch Extension/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
@@ -1045,7 +1055,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_COMPLICATION_NAME = Complication;
-				CODE_SIGN_ENTITLEMENTS = "Crypto monitor Watch Extension/Crypto monitor Watch Extension.entitlements";
 				DEVELOPMENT_TEAM = M6RU8K5R5C;
 				INFOPLIST_FILE = "Crypto monitor Watch Extension/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
@@ -1260,6 +1269,7 @@
 				FBB009851F4E3292000B1298 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		FBB009871F4E3292000B1298 /* Build configuration list for PBXNativeTarget "Crypto monitor Watch" */ = {
 			isa = XCConfigurationList;
@@ -1268,6 +1278,7 @@
 				FBB009891F4E3292000B1298 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		FBB2CC931F155CF800D800FD /* Build configuration list for PBXProject "Coin" */ = {
 			isa = XCConfigurationList;

@@ -37,7 +37,7 @@ public class Chart {
     
 }
 
-
+@objc(Ticker)
 public class Ticker:NSObject, NSCoding{
     
     public var id:String
@@ -54,9 +54,7 @@ public class Ticker:NSObject, NSCoding{
     public var percent_change_24h:Float
     public var percent_change_7d:Float
     public var last_updated:NSDate
-    
-    
-    
+
     public init(id:String,
                 name:String,
                 symbol:String,
