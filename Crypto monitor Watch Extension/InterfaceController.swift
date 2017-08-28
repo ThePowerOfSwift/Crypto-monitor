@@ -17,27 +17,18 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate{
     var watchSession : WCSession?
     
     /** Called when the session has completed activation. If session state is WCSessionActivationStateNotActivated there will be an error with more details. */
-    @available(watchOS 2.2, *)
     func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: Error?) {
         
     }
-    
     /** Called on the delegate of the receiver. Will be called on startup if an applicationContext is available. */
     func session(_ session: WCSession, didReceiveApplicationContext applicationContext: [String : Any]){
-      //  let message = applicationContext["message"] as? String
-      //  messageLabel.setText(message)
         print("data")
-/*
-        NSKeyedUnarchiver.setClass(Ticker.self, forClassName: "Ticker")
-        let data = applicationContext["data"] as? Data
-        if let data = data {
-            if let cacheTicker = NSKeyedUnarchiver.unarchiveObject(with: data ) as? [Ticker] {
-                tableView(ticker: cacheTicker)
-            }
+        
+        let id = applicationContext["id"] as? [String]
+        if let id = id {
+            UserDefaults().set(id, forKey: "id")
         }
- */
     }
-
     
     func awakeWithContext(context: AnyObject?) {
         super.awake(withContext: context)
@@ -45,18 +36,11 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate{
         // Configure interface objects here.
     }
     
-    override func awake(withContext context: Any?) {
-        super.awake(withContext: context)
-        
-        // Configure interface objects here.
-           }
-    
     override func willActivate() {
         // This method is called when watch view controller is about to be visible to user
-        
         print("watc")
-        
-            super.willActivate()
+
+        super.willActivate()
         
         if(WCSession.isSupported()){
             watchSession = WCSession.default()
@@ -64,22 +48,7 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate{
             watchSession!.delegate = self
             watchSession!.activate()
         }
-        let idArray = ["bitcoin", "ethereum", "bitcoin-cash"]
-        
-        NetworkRequest().getTickerID(idArray: idArray, completion: { (ticker : [Ticker]?, error : Error?) in
-            if error == nil {
-                if let ticker = ticker {
-                    
-                    DispatchQueue.main.async() {
-                        self.tableView(ticker: ticker)
-                    }
-                }
-            }
-            else{
-              //  self.showErrorSubview(error: error!)
-            }
-        })
-        
+        loadCache()
     }
     
     override func didDeactivate() {
@@ -87,6 +56,37 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate{
         super.didDeactivate()
     }
     
+    private func loadCache() {
+        if let decodedTicker = UserDefaults().data(forKey: "cryptocurrency"){
+            if let cacheTicker = NSKeyedUnarchiver.unarchiveObject(with: decodedTicker) as? [Ticker] {
+                self.tableView(ticker: cacheTicker)
+                
+            }
+        }
+        if let lastUpdate = UserDefaults().object(forKey: "lastUpdate") as? Date {
+            if lastUpdate <= (Calendar.current.date(byAdding: .minute, value: -5, to: Date())! ){
+                load()
+            }
+        }
+    }
+    
+    private func load() {
+        if let idArray = UserDefaults().array(forKey: "id") as? [String] {
+            NetworkRequest().getTickerID(idArray: idArray, completion: { (ticker : [Ticker]?, error : Error?) in
+                if error == nil {
+                    if let ticker = ticker {
+                        self.setUserDefaults(ticher: ticker, idArray: idArray, lastUpdate: Date())
+                        DispatchQueue.main.async() {
+                            self.tableView(ticker: ticker)
+                        }
+                    }
+                }
+                else{
+                    //  self.showErrorSubview(error: error!)
+                }
+            })
+        }
+    }
     
     
     func tableView(ticker: [Ticker])  {
@@ -95,7 +95,16 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate{
             guard let controller = cryptocurrencyTable.rowController(at: index) as? cryptocurrencyRowController else { continue }
             controller.ticker = ticker[index]
         }
-
+    }
+    
+    //MARK: UserDefaults
+    private func setUserDefaults(ticher: [Ticker], idArray: [String], lastUpdate: Date) {
+        let encodedData = NSKeyedArchiver.archivedData(withRootObject: ticher)
+        let userDefaults = UserDefaults()
+        userDefaults.set(idArray, forKey: "id")
+        userDefaults.set(encodedData, forKey: "cryptocurrency")
+        userDefaults.set(lastUpdate, forKey: "lastUpdate")
+        userDefaults.synchronize()
     }
 }
 

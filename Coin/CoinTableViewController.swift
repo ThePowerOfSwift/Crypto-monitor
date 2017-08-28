@@ -75,36 +75,14 @@ class CoinTableViewController: UITableViewController, WCSessionDelegate {
         
     }
     
-    func sendWatchMessage(ticher: [Ticker]) {
-        /*
+    func sendWatchMessage(id: [String]) {
         do {
-         // let session = WCSession.default()
-            let context = ["message" : "Delayed"]
+            let context = ["id" : id]
             try watchSession?.updateApplicationContext(context)
             
         } catch let error as NSError {
             print("Error: \(error.description)")
         }
-        */
-        
-        do {
-           NSKeyedArchiver.setClassName("Ticker", for: Ticker.self)
-            let encodedData = NSKeyedArchiver.archivedData(withRootObject: ticher)
-            let context = ["data" : encodedData]
-            try watchSession?.updateApplicationContext(context)
-            
-        } catch let error as NSError {
-            print("Error: \(error.description)")
-        }
- 
-        /*
-        if (WCSession.default().isReachable) {
-            
-            // this is a meaningless message, but it's enough for our purposes
-            let encodedData = NSKeyedArchiver.archivedData(withRootObject: ticher)
-            WCSession.default().sendMessageData(encodedData, replyHandler: nil)
-        }
-    */
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -369,7 +347,7 @@ class CoinTableViewController: UITableViewController, WCSessionDelegate {
                             getTickerID = ticker
                             SettingsUserDefaults().setUserDefaults(ticher: getTickerID!, idArray: idArray, lastUpdate: Date())
                             
-                            self.sendWatchMessage(ticher: getTickerID!)
+                            self.sendWatchMessage(id: idArray)
                             
                             DispatchQueue.main.async() {
                                 self.cryptocurrencyView()
@@ -382,6 +360,11 @@ class CoinTableViewController: UITableViewController, WCSessionDelegate {
                 })
             }
         }
+    }
+    
+    func fetch(_ completion: () -> Void) {
+        loadTicker()
+        completion()
     }
     
     @objc private func edit(_ sender: Any) {

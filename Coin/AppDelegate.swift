@@ -18,6 +18,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         
+        UIApplication.shared.setMinimumBackgroundFetchInterval(UIApplicationBackgroundFetchIntervalMinimum)
+        
         let keyStore = NSUbiquitousKeyValueStore ()
         if !keyStore.bool(forKey: "launchedBefore"){
             
@@ -36,6 +38,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
         #endif
         return true
+    }
+    
+    // Support for background fetch
+    func application(_ application: UIApplication, performFetchWithCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
+        //as? CoinTableViewController
+        if let navigationController = window?.rootViewController as? UINavigationController {
+            let viewControllers = navigationController.viewControllers
+            
+            for viewController in viewControllers {
+                if let coinTableViewController = viewController as? CoinTableViewController {
+                    coinTableViewController.fetch {
+                        completionHandler(.newData)
+                    }
+                }
+            }
+        }
     }
     
     func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any] = [:]) -> Bool {

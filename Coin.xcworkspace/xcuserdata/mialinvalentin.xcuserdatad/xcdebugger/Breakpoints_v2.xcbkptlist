@@ -10,11 +10,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Coin/CoinTableViewController.swift"
-            timestampString = "525488511.018897"
+            timestampString = "525623714.93715"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "326"
-            endingLineNumber = "326"
+            startingLineNumber = "304"
+            endingLineNumber = "304"
             landmarkName = "cryptocurrencyView()"
             landmarkType = "7">
          </BreakpointContent>
