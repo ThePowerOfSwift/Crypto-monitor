@@ -23,6 +23,7 @@
 		FB5326CB1F254A9400D9C498 /* AddTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB5326CA1F254A9400D9C498 /* AddTableViewCell.swift */; };
 		FB565C4D1F42349C004EA42F /* ErrorSubview.xib in Resources */ = {isa = PBXBuildFile; fileRef = FB565C4F1F42349C004EA42F /* ErrorSubview.xib */; };
 		FB565C541F4235E8004EA42F /* LoadSubview.xib in Resources */ = {isa = PBXBuildFile; fileRef = FB565C561F4235E8004EA42F /* LoadSubview.xib */; };
+		FB5728FB1F54677800A304F7 /* WatchSessionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB5728FA1F54677800A304F7 /* WatchSessionManager.swift */; };
 		FB670CE61F16D900005761CF /* CryptocurrencyInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB670CE51F16D900005761CF /* CryptocurrencyInfoViewController.swift */; };
 		FB99B48C1F2FEF1F007C0235 /* NotificationCenter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FB99B48B1F2FEF1F007C0235 /* NotificationCenter.framework */; };
 		FB99B48F1F2FEF1F007C0235 /* TodayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB99B48E1F2FEF1F007C0235 /* TodayViewController.swift */; };
@@ -169,6 +170,7 @@
 		FB565C551F4235E8004EA42F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LoadSubview.xib; sourceTree = "<group>"; };
 		FB565C581F4235EB004EA42F /* uk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = uk; path = uk.lproj/LoadSubview.strings; sourceTree = "<group>"; };
 		FB565C5A1F4235EC004EA42F /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/LoadSubview.strings; sourceTree = "<group>"; };
+		FB5728FA1F54677800A304F7 /* WatchSessionManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WatchSessionManager.swift; sourceTree = "<group>"; };
 		FB670CE51F16D900005761CF /* CryptocurrencyInfoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CryptocurrencyInfoViewController.swift; sourceTree = "<group>"; };
 		FB9592531F20B8AB00F9F74B /* Coin.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Coin.entitlements; sourceTree = "<group>"; };
 		FB99B48A1F2FEF1F007C0235 /* Cryptocurrency monitor widget.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "Cryptocurrency monitor widget.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -352,8 +354,8 @@
 			isa = PBXGroup;
 			children = (
 				FBB009791F4E3292000B1298 /* InterfaceController.swift */,
-				FBD121231F52EB3A0079D15D /* NetworkRequest.swift */,
 				FBB0098C1F4E37AF000B1298 /* cryptocurrencyRowController.swift */,
+				FBD121231F52EB3A0079D15D /* NetworkRequest.swift */,
 				FBB0097B1F4E3292000B1298 /* ExtensionDelegate.swift */,
 				FBB0097D1F4E3292000B1298 /* Assets.xcassets */,
 				FBB0097F1F4E3292000B1298 /* Info.plist */,
@@ -394,6 +396,7 @@
 				FB3990271F3CA92100A1EAC8 /* InfoPlist.strings */,
 				FB9592531F20B8AB00F9F74B /* Coin.entitlements */,
 				FBB2CC9B1F155CF800D800FD /* AppDelegate.swift */,
+				FB5728FA1F54677800A304F7 /* WatchSessionManager.swift */,
 				FBA7760E1F2E928300122D83 /* Coin */,
 				FB565C461F421ADF004EA42F /* AddTable */,
 				FB670CE51F16D900005761CF /* CryptocurrencyInfoViewController.swift */,
@@ -886,6 +889,7 @@
 				FB4955241F2B627600169CB0 /* ErrorSubview.swift in Sources */,
 				FBD163EE1F2AA75F00F800E3 /* LoadSubview.swift in Sources */,
 				FBA7760D1F2E884D00122D83 /* CoinTableViewController.swift in Sources */,
+				FB5728FB1F54677800A304F7 /* WatchSessionManager.swift in Sources */,
 				FBB2CC9C1F155CF800D800FD /* AppDelegate.swift in Sources */,
 				FBE0F44C1F3D1E33008DF778 /* EmptySubview.swift in Sources */,
 			);

@@ -19,17 +19,50 @@ class cryptocurrencyRowController: NSObject {
         didSet {
             if let ticker = ticker {
                 
+                let userDefaults = UserDefaults()
+                
                 symbolLabel.setText(ticker.symbol)
                 percentChangeLabel.setText(String(ticker.percent_change_7d) + " %")
-                priceLabel.setText("$ " + String(ticker.price_usd))
                 
-                if ticker.percent_change_7d >= 0 {
-                    cellMainGroup.setBackgroundColor(UIColor(red:0.30, green:0.85, blue:0.39, alpha:1.0))
+                switch userDefaults.integer(forKey: "percentChange") {
+                case 0:
+                    percentChangeLabel.setText(String(ticker.percent_change_1h) + " %")
+                    backgroundColorView(percentChange: ticker.percent_change_1h)
+                case 1:
+                    percentChangeLabel.setText(String(ticker.percent_change_24h) + " %")
+                    backgroundColorView(percentChange: ticker.percent_change_24h)
+                case 2:
+                    percentChangeLabel.setText(String(ticker.percent_change_7d) + " %")
+                    backgroundColorView(percentChange: ticker.percent_change_7d)
+                default:
+                    break
                 }
-                else{
-                    cellMainGroup.setBackgroundColor( UIColor(red:1.00, green:0.23, blue:0.18, alpha:1.0))
+                
+                switch userDefaults.integer(forKey: "priceCurrency") {
+                case 0:
+                    let formatter = NumberFormatter()
+                    formatter.numberStyle = .currency
+                    formatter.maximumFractionDigits = 25
+                    formatter.locale = Locale(identifier: "en_US")
+                    priceLabel.setText(formatter.string(from: ticker.price_usd as NSNumber))
+                case 1:
+                    let formatter = NumberFormatter()
+                    formatter.numberStyle = .decimal
+                    formatter.maximumFractionDigits = 25
+                    priceLabel.setText("₿ " + formatter.string(from: ticker.price_btc as NSNumber)!)
+                default:
+                    break
                 }
             }
+        }
+    }
+    
+    private func backgroundColorView(percentChange: Float) {
+        if percentChange >= 0 {
+            cellMainGroup.setBackgroundColor(UIColor(red:0.30, green:0.85, blue:0.39, alpha:1.0))
+        }
+        else{
+            cellMainGroup.setBackgroundColor( UIColor(red:1.00, green:0.23, blue:0.18, alpha:1.0))
         }
     }
     

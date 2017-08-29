@@ -16,21 +16,23 @@
                     <items>
                         <table alignment="left" id="cRw-ST-yYB">
                             <items>
-                                <tableRow identifier="cell" id="Dxy-lO-hSd" customClass="cryptocurrencyRowController" customModule="Crypto_monitor_Watch_Extension">
-                                    <group key="rootItem" width="1" height="0.0" alignment="left" layout="vertical" id="5Oo-4d-oVr">
+                                <tableRow identifier="cell" selectable="NO" id="Dxy-lO-hSd" customClass="cryptocurrencyRowController" customModule="Crypto_monitor_Watch_Extension">
+                                    <group key="rootItem" width="1" height="0.0" alignment="left" animationDuration="1" layout="vertical" id="5Oo-4d-oVr">
                                         <items>
                                             <group width="1" alignment="left" id="Z6q-HE-K4z">
                                                 <items>
-                                                    <label alignment="left" text="BTC" id="zpa-yd-EjH">
+                                                    <label alignment="left" verticalAlignment="center" text="BTC" textAlignment="left" id="zpa-yd-EjH">
                                                         <fontDescription key="font" style="UICTFontTextStyleBody"/>
                                                     </label>
-                                                    <label alignment="right" text="-0.11%" id="qox-eI-jRS"/>
+                                                    <label alignment="right" verticalAlignment="center" text="-0.11%" id="qox-eI-jRS">
+                                                        <fontDescription key="font" style="UICTFontTextStyleCaption1"/>
+                                                    </label>
                                                 </items>
                                             </group>
                                             <group width="1" alignment="left" id="Fjb-2Y-DYt">
                                                 <items>
-                                                    <label alignment="left" text="$ 0.100545" id="svP-Rx-HGp">
-                                                        <fontDescription key="font" style="UICTFontTextStyleCaption2"/>
+                                                    <label alignment="left" verticalAlignment="center" text="$ 0.100545" id="svP-Rx-HGp">
+                                                        <fontDescription key="font" style="UICTFontTextStyleCaption1"/>
                                                     </label>
                                                 </items>
                                             </group>
@@ -46,9 +48,20 @@
                                 </tableRow>
                             </items>
                         </table>
+                        <group width="1" height="1" alignment="center" verticalAlignment="center" layout="vertical" id="1jt-M7-3Nc">
+                            <items>
+                                <label width="1" alignment="center" verticalAlignment="center" text="Add cryptocurrency" textAlignment="center" baselineAdjustment="alignCenters" numberOfLines="0" id="WcL-Ln-Nim">
+                                    <fontDescription key="font" style="UICTFontTextStyleCaption2"/>
+                                </label>
+                                <label width="1" alignment="center" verticalAlignment="center" alpha="0.75" text="You can add cryptocurrency from the &quot;Crypto monitor&quot; program on the iPhone." textAlignment="center" numberOfLines="0" id="hgi-x4-0sf">
+                                    <fontDescription key="font" style="UICTFontTextStyleCaption2"/>
+                                </label>
+                            </items>
+                        </group>
                     </items>
                     <connections>
                         <outlet property="cryptocurrencyTable" destination="cRw-ST-yYB" id="opW-Uy-to9"/>
+                        <outlet property="emptyGroup" destination="1jt-M7-3Nc" id="v6V-f8-Dnh"/>
                     </connections>
                 </controller>
             </objects>
