@@ -58,8 +58,6 @@ class NetworkRequest{
                       percent_change_7d: json["percent_change_7d"].floatValue,
                       last_updated: json["last_updated"].intValue)
     }
-    
-
 }
 
 

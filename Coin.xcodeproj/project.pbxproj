@@ -1116,6 +1116,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 7954251B2CCDC5019ECCBE17 /* Pods-Crypto monitor Watch Extension.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
 				ASSETCATALOG_COMPILER_COMPLICATION_NAME = Complication;
 				DEVELOPMENT_TEAM = M6RU8K5R5C;
 				INFOPLIST_FILE = "Crypto monitor Watch Extension/Info.plist";
@@ -1134,6 +1135,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 5171A35464851DF8D9CB7312 /* Pods-Crypto monitor Watch Extension.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
 				ASSETCATALOG_COMPILER_COMPLICATION_NAME = Complication;
 				DEVELOPMENT_TEAM = M6RU8K5R5C;
 				INFOPLIST_FILE = "Crypto monitor Watch Extension/Info.plist";
@@ -1151,7 +1153,7 @@
 		FBB009881F4E3292000B1298 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = M6RU8K5R5C;
 				IBSC_MODULE = Crypto_monitor_Watch_Extension;
@@ -1169,7 +1171,7 @@
 		FBB009891F4E3292000B1298 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = M6RU8K5R5C;
 				IBSC_MODULE = Crypto_monitor_Watch_Extension;
@@ -1283,7 +1285,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D2644E3DDE8034D62D53ACCA /* Pods-Coin.debug.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = Coin/Coin.entitlements;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -1304,7 +1306,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 5E0412321BFD16292136CF2A /* Pods-Coin.release.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = Coin/Coin.entitlements;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
