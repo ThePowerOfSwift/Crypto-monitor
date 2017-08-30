@@ -29,15 +29,13 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate{
         
         if let id = applicationContext["id"] as? [String] {
             
-            let userDefaultsIdArray = userDefaults.array(forKey: "id") as! [String]
+          //  let userDefaultsIdArray = userDefaults.array(forKey: "id") as! [String]
             
-            if userDefaultsIdArray != id {
-                userDefaults.removeObject(forKey: "cryptocurrency")
+           // if userDefaultsIdArray != id {
+            //    userDefaults.removeObject(forKey: "cryptocurrency")
                 userDefaults.set(id, forKey: "id")
-                userDefaults.synchronize()
-            }
-            
-            
+            //    userDefaults.synchronize()
+           // }
         }
         
         if let percentChange = applicationContext["percentChange"] as? Int {
@@ -56,6 +54,7 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate{
     func awakeWithContext(context: AnyObject?) {
         super.awake(withContext: context)
         
+               updateUserActivity("Valentyn.Mialin.crypto.monitor.Activity", userInfo: ["test" : "testString"], webpageURL: nil)
         // Configure interface objects here.
     }
     
@@ -63,6 +62,8 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate{
         // This method is called when watch view controller is about to be visible to user
         print("willActivate")
         super.willActivate()
+        
+ 
         
         if(WCSession.isSupported()){
             watchSession = WCSession.default()

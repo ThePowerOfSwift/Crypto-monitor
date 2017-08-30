@@ -97,6 +97,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
          */
         
     }
+    /*
+    private func application(application: UIApplication, continueUserActivity userActivity: NSUserActivity,
+                     restorationHandler: @escaping ([AnyObject]!) -> Void) -> Bool {
+        if let window = self.window, let rvc = window.rootViewController {
+            rvc.childViewControllers.first?.restoreUserActivityState(userActivity)
+        }
+        return true
+    }
+    */
+    
+    func application(_ application: UIApplication, continue userActivity: NSUserActivity, restorationHandler: @escaping ([Any]?) -> Void) -> Bool {
+        return true
+    }
+
 
 
     func applicationWillResignActive(_ application: UIApplication) {

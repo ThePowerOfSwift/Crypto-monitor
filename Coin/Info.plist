@@ -51,5 +51,11 @@
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
 	</array>
+	<key>NSUser</key>
+	<string></string>
+	<key>NSUserActivityTypes</key>
+	<array>
+		<string>Valentyn.Mialin.crypto.monitor.Activity</string>
+	</array>
 </dict>
 </plist>

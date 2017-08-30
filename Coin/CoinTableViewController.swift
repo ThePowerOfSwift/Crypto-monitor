@@ -83,9 +83,6 @@ class CoinTableViewController: UITableViewController {
             }
        }
                 WatchSessionManager.sharedManager.updateIdArray(id: idKeyStore!)
-            
-        
-
         print("iCloud key-value-store change detected")
     }
     
@@ -311,8 +308,7 @@ class CoinTableViewController: UITableViewController {
                             getTickerID = ticker
                             SettingsUserDefaults().setUserDefaults(ticher: getTickerID!, idArray: idArray, lastUpdate: Date())
                             
-                          //  self.sendWatchMessage(id: idArray)
-                            
+                          
                             WatchSessionManager.sharedManager.updateIdArray(id: idArray)
                             
                             DispatchQueue.main.async() {
