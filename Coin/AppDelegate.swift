@@ -97,7 +97,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
          */
         
     }
-    /*
+    
     private func application(application: UIApplication, continueUserActivity userActivity: NSUserActivity,
                      restorationHandler: @escaping ([AnyObject]!) -> Void) -> Bool {
         if let window = self.window, let rvc = window.rootViewController {
@@ -105,10 +105,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         return true
     }
-    */
-    
+  
+
     func application(_ application: UIApplication, continue userActivity: NSUserActivity, restorationHandler: @escaping ([Any]?) -> Void) -> Bool {
-        return true
+        return false
+    }
+    
+    func application(_ application: UIApplication,
+                     didFailToContinueUserActivityWithType userActivityType: String,
+                     error: Error) {
+        
+
+            let message = "The connection to your other device may have been interrupted. Please try again. \(error.localizedDescription)"
+            print(message)
+
     }
 
 

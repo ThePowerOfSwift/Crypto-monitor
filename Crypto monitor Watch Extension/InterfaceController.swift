@@ -29,13 +29,14 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate{
         
         if let id = applicationContext["id"] as? [String] {
             
-          //  let userDefaultsIdArray = userDefaults.array(forKey: "id") as! [String]
+            //  let userDefaultsIdArray = userDefaults.array(forKey: "id") as! [String]
             
-           // if userDefaultsIdArray != id {
-            //    userDefaults.removeObject(forKey: "cryptocurrency")
-                userDefaults.set(id, forKey: "id")
-            //    userDefaults.synchronize()
-           // }
+            // if userDefaultsIdArray != id {
+            userDefaults.removeObject(forKey: "cryptocurrency")
+            userDefaults.removeObject(forKey: "lastUpdate")
+            userDefaults.set(id, forKey: "id")
+            userDefaults.synchronize()
+            // }
         }
         
         if let percentChange = applicationContext["percentChange"] as? Int {
@@ -53,9 +54,8 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate{
     
     func awakeWithContext(context: AnyObject?) {
         super.awake(withContext: context)
-        
-               updateUserActivity("Valentyn.Mialin.crypto.monitor.Activity", userInfo: ["test" : "testString"], webpageURL: nil)
         // Configure interface objects here.
+        
     }
     
     override func willActivate() {
@@ -63,7 +63,8 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate{
         print("willActivate")
         super.willActivate()
         
- 
+        updateUserActivity("Valentyn.Mialin.crypto.monitor.Activity", userInfo: ["test" : "testString"], webpageURL: nil)
+     
         
         if(WCSession.isSupported()){
             watchSession = WCSession.default()
@@ -83,7 +84,6 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate{
         if let decodedTicker = UserDefaults().data(forKey: "cryptocurrency"){
             if let cacheTicker = NSKeyedUnarchiver.unarchiveObject(with: decodedTicker) as? [Ticker] {
                 self.tableView(ticker: cacheTicker)
-                
             }
         }
         
@@ -120,7 +120,7 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate{
         }
     }
     
-    func tableView(ticker: [Ticker])  {
+    private func tableView(ticker: [Ticker])  {
         if !ticker.isEmpty{
             cryptocurrencyTable.setHidden(false)
             emptyGroup.setHidden(true)

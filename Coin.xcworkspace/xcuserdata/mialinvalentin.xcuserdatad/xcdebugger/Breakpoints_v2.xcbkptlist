@@ -58,11 +58,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Crypto monitor Watch Extension/InterfaceController.swift"
-            timestampString = "525742026.44887"
+            timestampString = "525785855.168835"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "55"
-            endingLineNumber = "55"
+            startingLineNumber = "56"
+            endingLineNumber = "56"
             landmarkName = "awakeWithContext(context:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -70,75 +70,43 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Crypto monitor Watch Extension/InterfaceController.swift"
-            timestampString = "525742026.44887"
+            timestampString = "525817615.566234"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "75"
-            endingLineNumber = "75"
-            landmarkName = "InterfaceController"
-            landmarkType = "3">
+            startingLineNumber = "76"
+            endingLineNumber = "76"
+            landmarkName = "willActivate()"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Crypto monitor Watch Extension/InterfaceController.swift"
-            timestampString = "525742026.44887"
+            timestampString = "525817615.566234"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "93"
             endingLineNumber = "93"
             landmarkName = "loadCache()"
             landmarkType = "7">
-            <Locations>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "Crypto_monitor_Watch_Extension.InterfaceController.(load in _051BEBCD8D604E20E51FCAAEAE5B78DF) () -&gt; ()"
-                  moduleName = "Crypto monitor Watch Extension"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/mialinvalentin/Documents/Xcode/Coin/Crypto%20monitor%20Watch%20Extension/InterfaceController.swift"
-                  timestampString = "525725973.194403"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "92"
-                  endingLineNumber = "92"
-                  offsetFromSymbolStart = "21">
-               </Location>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "Crypto_monitor_Watch_Extension.InterfaceController.(load in _051BEBCD8D604E20E51FCAAEAE5B78DF) () -&gt; ()"
-                  moduleName = "Crypto monitor Watch Extension"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/mialinvalentin/Documents/Xcode/Coin/Crypto%20monitor%20Watch%20Extension/InterfaceController.swift"
-                  timestampString = "525725973.196148"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "92"
-                  endingLineNumber = "92"
-                  offsetFromSymbolStart = "355">
-               </Location>
-            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Crypto monitor Watch Extension/InterfaceController.swift"
-            timestampString = "525742026.44887"
+            timestampString = "525817615.566234"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "120"
@@ -150,11 +118,11 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Crypto monitor Watch Extension/InterfaceController.swift"
-            timestampString = "525742026.44887"
+            timestampString = "525817615.566234"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "96"
@@ -166,11 +134,11 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Crypto monitor Watch Extension/InterfaceController.swift"
-            timestampString = "525742026.44887"
+            timestampString = "525817615.566234"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "100"
@@ -182,7 +150,7 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Crypto monitor Watch Extension/InterfaceController.swift"
