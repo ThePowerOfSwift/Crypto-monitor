@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import AlamofireNetworkActivityIndicator
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -34,6 +35,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             keyStore.synchronize()
         }
         
+        // NetworkActivityIndicatorManager
+        NetworkActivityIndicatorManager.shared.isEnabled = true
         
         #if arch(i386) || arch(x86_64)
             if let documentsPath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first?.path {

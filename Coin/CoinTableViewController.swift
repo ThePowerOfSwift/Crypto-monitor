@@ -8,7 +8,7 @@
 
 import UIKit
 import CryptocurrencyRequest
-import WatchConnectivity
+
 
 var openID = ""
 var getTickerID:[Ticker]?
@@ -295,12 +295,7 @@ class CoinTableViewController: UITableViewController {
                 if getTickerID == nil {
                     showLoadSubview()
                 }
-                else{
-                    if  self.refreshControl?.isRefreshing == false {
-                        self.tableView.setContentOffset(CGPoint(x: 0, y: -self.refreshControl!.frame.size.height - self.topLayoutGuide.length), animated: true)
-                        self.refreshControl!.beginRefreshing()
-                    }
-                }
+
                 
                 AlamofireRequest().getTickerID(idArray: idArray, completion: { (ticker : [Ticker]?, error : Error?) in
                     if error == nil {

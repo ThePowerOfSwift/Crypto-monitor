@@ -10,6 +10,7 @@
 		04B9C53BE8656AD28A1B6FD8 /* Pods_Cryptocurrency_monitor_widget.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1B53037A98436C37114E5FBD /* Pods_Cryptocurrency_monitor_widget.framework */; };
 		1853CEF6208C355CD69D15AE /* Pods_Coin.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FCD523238B38757764B37DC3 /* Pods_Coin.framework */; };
 		7C0E811403C22CFE861428B3 /* Pods_CryptocurrencyRequest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F9241DFCEEB224CD89245A5F /* Pods_CryptocurrencyRequest.framework */; };
+		E97BCF871FF5CA9B479FB162 /* Pods_Crypto_monitor_Watch_Extension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 37C9CE1807457556D07D5F03 /* Pods_Crypto_monitor_Watch_Extension.framework */; };
 		FB0205091F45E7A0006F9F61 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = FB02050B1F45E7A0006F9F61 /* Localizable.strings */; };
 		FB0EB47B1F30648B0008D8B2 /* Pods_Coin.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FCD523238B38757764B37DC3 /* Pods_Coin.framework */; };
 		FB3990251F3CA92100A1EAC8 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = FB3990271F3CA92100A1EAC8 /* InfoPlist.strings */; };
@@ -251,6 +252,7 @@
 			files = (
 				FBFF9FF21F56FB2C001F573C /* SwiftyJSON.framework in Frameworks */,
 				FBFF9FF01F56FB26001F573C /* Alamofire.framework in Frameworks */,
+				E97BCF871FF5CA9B479FB162 /* Pods_Crypto_monitor_Watch_Extension.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -19,6 +19,11 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>AlamofireNetworkActivityIndicator.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>Charts.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -57,6 +62,11 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
+		<key>0E9B97D2ABBD903B3B57713E2A919815</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>173E4104E4F2CE5ECC896A154802C6D5</key>
 		<dict>
 			<key>primary</key>
@@ -72,12 +82,12 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>5297E784A99069EAFDCB38F74693A39B</key>
+		<key>6FCE85672C882DE92A8E8C13691F3E58</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>6FCE85672C882DE92A8E8C13691F3E58</key>
+		<key>77256DEFC18379936B7D0E03967EFBB6</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -92,7 +102,7 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>E06663B0B6A5FD94D74DC4FAF9872941</key>
+		<key>CB8F0D3767ED35BEC1A7C704D280CA1E</key>
 		<dict>
 			<key>primary</key>
 			<true/>
