@@ -115,7 +115,8 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate{
                 })
             }
             else{
-                tableView(ticker: [Ticker]())
+                cryptocurrencyTable.setHidden(true)
+                emptyGroup.setHidden(false)
             }
         }
     }
@@ -125,10 +126,19 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate{
             cryptocurrencyTable.setHidden(false)
             emptyGroup.setHidden(true)
             
-            cryptocurrencyTable.setNumberOfRows(ticker.count, withRowType: "cell")
-            for index in 0..<cryptocurrencyTable.numberOfRows {
-                guard let controller = cryptocurrencyTable.rowController(at: index) as? cryptocurrencyRowController else { continue }
-                controller.ticker = ticker[index]
+            if let idArray = UserDefaults().array(forKey: "id") as? [String] {
+                var tickerFilter = [Ticker]()
+                for id in idArray{
+                    if let json = ticker.filter({ $0.id == id}).first{
+                        tickerFilter.append(json)
+                    }
+                }
+                
+                cryptocurrencyTable.setNumberOfRows(tickerFilter.count, withRowType: "cell")
+                for index in 0..<cryptocurrencyTable.numberOfRows {
+                    guard let controller = cryptocurrencyTable.rowController(at: index) as? cryptocurrencyRowController else { continue }
+                    controller.ticker = tickerFilter[index]
+                }
             }
         }
         else{
