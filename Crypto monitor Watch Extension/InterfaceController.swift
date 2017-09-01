@@ -156,5 +156,25 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate{
         userDefaults.set(lastUpdate, forKey: "lastUpdate")
         userDefaults.synchronize()
     }
+    
+    //MARK: Actions
+    @IBAction func oneHourSelected() {
+        UserDefaults().set(0, forKey: "percentChange")
+        UserDefaults().synchronize()
+        loadCache()
+    }
+    
+    @IBAction func oneDaySelected() {
+        UserDefaults().set(1, forKey: "percentChange")
+        UserDefaults().synchronize()
+        loadCache()
+    }
+    
+    @IBAction func sevenDaySelected() {
+        UserDefaults().set(2, forKey: "percentChange")
+        UserDefaults().synchronize()
+        loadCache()
+    }
+    
 }
 

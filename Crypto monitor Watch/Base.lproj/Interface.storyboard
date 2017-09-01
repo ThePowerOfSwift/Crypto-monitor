@@ -59,6 +59,25 @@
                             </items>
                         </group>
                     </items>
+                    <menu key="menu" id="1uO-RV-Crp">
+                        <items>
+                            <menuItem title="1h" icon="info" id="oAR-VG-kYl">
+                                <connections>
+                                    <action selector="oneHourSelected" destination="AgC-eL-Hgc" id="QAL-MV-Ufq"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="24h" icon="accept" id="4Ma-F4-aID">
+                                <connections>
+                                    <action selector="oneDaySelected" destination="AgC-eL-Hgc" id="m81-bW-wyv"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="7d" icon="accept" id="KZT-QN-aW1">
+                                <connections>
+                                    <action selector="sevenDaySelected" destination="AgC-eL-Hgc" id="hPG-HV-DfS"/>
+                                </connections>
+                            </menuItem>
+                        </items>
+                    </menu>
                     <connections>
                         <outlet property="cryptocurrencyTable" destination="cRw-ST-yYB" id="opW-Uy-to9"/>
                         <outlet property="emptyGroup" destination="1jt-M7-3Nc" id="v6V-f8-Dnh"/>
