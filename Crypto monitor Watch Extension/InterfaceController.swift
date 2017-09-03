@@ -26,17 +26,11 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate{
         print("WCSession")
         
         let userDefaults = UserDefaults()
-        
         if let id = applicationContext["id"] as? [String] {
-            
-            //  let userDefaultsIdArray = userDefaults.array(forKey: "id") as! [String]
-            
-            // if userDefaultsIdArray != id {
             userDefaults.removeObject(forKey: "cryptocurrency")
             userDefaults.removeObject(forKey: "lastUpdate")
             userDefaults.set(id, forKey: "id")
             userDefaults.synchronize()
-            // }
         }
         
         if let percentChange = applicationContext["percentChange"] as? Int {
@@ -49,8 +43,24 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate{
         
         userDefaults.synchronize()
         load()
-
     }
+    
+    // Sender
+    private func updateApplicationContext() {
+        do {
+            let userDefaults = UserDefaults()
+            let percentChange = Int(userDefaults.integer(forKey: "percentChange"))
+            let priceCurrency = Int(userDefaults.integer(forKey: "priceCurrency"))
+            
+            let context = ["percentChange" : percentChange, "priceCurrency" : priceCurrency] as [String : Any]
+            try watchSession?.updateApplicationContext(context)
+            
+        } catch let error as NSError {
+            print("Error: \(error.description)")
+        }
+        
+    }
+    
     
     func awakeWithContext(context: AnyObject?) {
         super.awake(withContext: context)
@@ -65,7 +75,6 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate{
         
         updateUserActivity("Valentyn.Mialin.crypto.monitor.Activity", userInfo: ["test" : "testString"], webpageURL: nil)
      
-        
         if(WCSession.isSupported()){
             watchSession = WCSession.default()
             // Add self as a delegate of the session so we can handle messages
@@ -162,18 +171,21 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate{
         UserDefaults().set(0, forKey: "percentChange")
         UserDefaults().synchronize()
         loadCache()
+        updateApplicationContext()
     }
     
     @IBAction func oneDaySelected() {
         UserDefaults().set(1, forKey: "percentChange")
         UserDefaults().synchronize()
         loadCache()
+        updateApplicationContext()
     }
     
     @IBAction func sevenDaySelected() {
         UserDefaults().set(2, forKey: "percentChange")
         UserDefaults().synchronize()
         loadCache()
+        updateApplicationContext()
     }
     
 }

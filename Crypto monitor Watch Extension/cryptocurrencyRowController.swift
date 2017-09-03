@@ -22,7 +22,7 @@ class cryptocurrencyRowController: NSObject {
                 let userDefaults = UserDefaults()
                 
                 symbolLabel.setText(ticker.symbol)
-                percentChangeLabel.setText(String(ticker.percent_change_7d) + " %")
+            //    percentChangeLabel.setText(String(ticker.percent_change_7d) + " %")
                 
                 switch userDefaults.integer(forKey: "percentChange") {
                 case 0:
