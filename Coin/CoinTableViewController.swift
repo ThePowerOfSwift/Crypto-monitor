@@ -63,6 +63,7 @@ class CoinTableViewController: UITableViewController, WCSessionDelegate {
         updateApplicationContext(context: context)
     }
     
+    /*
     func updateSettings() {
         let keyStore = NSUbiquitousKeyValueStore ()
         let percentChange = Int(keyStore.longLong(forKey: "percentChange"))
@@ -71,6 +72,7 @@ class CoinTableViewController: UITableViewController, WCSessionDelegate {
         let context = ["percentChange" : percentChange, "priceCurrency" : priceCurrency] as [String : Any]
         updateApplicationContext(context: context)
     }
+    */
     
     // Receiver
     /** Called on the delegate of the receiver. Will be called on startup if an applicationContext is available. */
@@ -145,7 +147,6 @@ class CoinTableViewController: UITableViewController, WCSessionDelegate {
     }
     
     func ubiquitousKeyValueStoreDidChange(notification: NSNotification) {
-        
         let keyStore = NSUbiquitousKeyValueStore ()
         let idKeyStore = keyStore.array(forKey: "id") as? [String]
         let userDefaults = UserDefaults(suiteName: "group.mialin.valentyn.crypto.monitor")
@@ -154,10 +155,13 @@ class CoinTableViewController: UITableViewController, WCSessionDelegate {
         if idKeyStore != nil && idUserDefaults != nil {
             if idKeyStore! != idUserDefaults! {
                 loadTicker()
-                
             }
-       }
-                updateIdArray(id: idKeyStore!)
+            else{
+                loadCache()
+            }
+        }
+        
+        updateIdArray(id: idKeyStore!)
         print("iCloud key-value-store change detected")
     }
     
@@ -302,6 +306,7 @@ class CoinTableViewController: UITableViewController, WCSessionDelegate {
                     
                     // set UserDefaults
                     SettingsUserDefaults().setUserDefaults(ticher: getTickerID!, idArray: idArray, lastUpdate: nil)
+                  //  self.updateIdArray(id: idArray)
                 }
             }
             cryptocurrencyView()
@@ -330,6 +335,7 @@ class CoinTableViewController: UITableViewController, WCSessionDelegate {
                 
                 // set UserDefaults
                 SettingsUserDefaults().setUserDefaults(ticher: getTickerID!, idArray: idArray, lastUpdate: nil)
+               // self.updateIdArray(id: idArray)
             }
         }
     }
@@ -507,3 +513,4 @@ extension Array {
         insert(remove(at: from), at: to)
     }
 }
+

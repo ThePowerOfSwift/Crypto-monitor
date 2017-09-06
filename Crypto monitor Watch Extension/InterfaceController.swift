@@ -24,15 +24,7 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate{
     /** Called on the delegate of the receiver. Will be called on startup if an applicationContext is available. */
     func session(_ session: WCSession, didReceiveApplicationContext applicationContext: [String : Any]){
         print("WCSession")
-        
         let userDefaults = UserDefaults()
-        if let id = applicationContext["id"] as? [String] {
-            userDefaults.removeObject(forKey: "cryptocurrency")
-            userDefaults.removeObject(forKey: "lastUpdate")
-            userDefaults.set(id, forKey: "id")
-            userDefaults.synchronize()
-        }
-        
         if let percentChange = applicationContext["percentChange"] as? Int {
             userDefaults.set(percentChange, forKey: "percentChange")
         }
@@ -40,9 +32,27 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate{
         if let priceCurrency = applicationContext["priceCurrency"] as? Int {
             userDefaults.set(priceCurrency, forKey: "priceCurrency")
         }
-        
         userDefaults.synchronize()
-        load()
+        
+        if let id = applicationContext["id"] as? [String] {
+            if  let idUserDefaults = userDefaults.array(forKey: "id") as? [String] {
+                if id !=  idUserDefaults{
+                    userDefaults.removeObject(forKey: "cryptocurrency")
+                    userDefaults.removeObject(forKey: "lastUpdate")
+                    userDefaults.set(id, forKey: "id")
+                    userDefaults.synchronize()
+                    load()
+                }
+            }
+            else{
+                userDefaults.removeObject(forKey: "cryptocurrency")
+                userDefaults.removeObject(forKey: "lastUpdate")
+                userDefaults.set(id, forKey: "id")
+                userDefaults.synchronize()
+                load()
+            }
+        }
+        loadCache()
     }
     
     // Sender
@@ -54,14 +64,20 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate{
             
             let context = ["percentChange" : percentChange, "priceCurrency" : priceCurrency] as [String : Any]
             try watchSession?.updateApplicationContext(context)
+        
+            let complicationServer = CLKComplicationServer.sharedInstance()
+            
+            for complication in complicationServer.activeComplications! {
+                print("UPDATE sender")
+                complicationServer.reloadTimeline(for: complication)
+            }
             
         } catch let error as NSError {
             print("Error: \(error.description)")
         }
         
     }
-    
-    
+
     func awakeWithContext(context: AnyObject?) {
         super.awake(withContext: context)
         // Configure interface objects here.
@@ -95,7 +111,8 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate{
                 self.tableView(ticker: cacheTicker)
             }
         }
-        
+        load()
+        /*
         if let lastUpdate = UserDefaults().object(forKey: "lastUpdate") as? Date {
             if lastUpdate <= (Calendar.current.date(byAdding: .minute, value: -5, to: Date())! ){
                 load()
@@ -104,9 +121,10 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate{
         else{
             load()
         }
+        */
     }
     
-    private func load() {
+    func load() {
         if let idArray = UserDefaults().array(forKey: "id") as? [String] {
             if !idArray.isEmpty {
                 NetworkRequest().getTickerID(idArray: idArray, completion: { (ticker : [Ticker]?, error : Error?) in
@@ -115,11 +133,13 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate{
                             self.setUserDefaults(ticher: ticker, idArray: idArray, lastUpdate: Date())
                             DispatchQueue.main.async() {
                                 self.tableView(ticker: ticker)
+                                let complicationServer = CLKComplicationServer.sharedInstance()
+                                for complication in complicationServer.activeComplications! {
+                                    print("UPDATE 2")
+                                    complicationServer.reloadTimeline(for: complication)
+                                }
                             }
                         }
-                    }
-                    else{
-                        //  self.showErrorSubview(error: error!)
                     }
                 })
             }
@@ -128,8 +148,13 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate{
                 emptyGroup.setHidden(false)
             }
         }
+        WKExtension.shared().scheduleBackgroundRefresh(withPreferredDate: Date(timeIntervalSinceNow: 5 * 60), userInfo: nil) { (error: Error?) in
+            if let error = error {
+                print("Error occurred while scheduling background refresh: \(error.localizedDescription)")
+            }
+        }
     }
-    
+
     private func tableView(ticker: [Ticker])  {
         if !ticker.isEmpty{
             cryptocurrencyTable.setHidden(false)
@@ -154,6 +179,7 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate{
             cryptocurrencyTable.setHidden(true)
             emptyGroup.setHidden(false)
         }
+
     }
     
     //MARK: UserDefaults

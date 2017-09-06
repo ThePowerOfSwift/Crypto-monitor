@@ -299,6 +299,7 @@ public class SettingsUserDefaults{
         }
         userDefaults?.synchronize()
     }
+
 }
 
 

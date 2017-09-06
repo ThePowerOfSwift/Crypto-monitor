@@ -13,28 +13,27 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
     func getCurrentTimelineEntry(for complication: CLKComplication, withHandler handler: @escaping (CLKComplicationTimelineEntry?) -> Void) {
         if complication.family == .modularLarge {
             
-            NetworkRequest().getTickerID(idArray: ["bitcoin", "ethereum", "bitcoin-cash"], completion: { (ticker : [Ticker]?, error : Error?) in
-                if error == nil {
-                    if let ticker = ticker {
-                        
-                        DispatchQueue.main.async() {
-                            let entry = self.createTimeLineEntry(ticker: ticker)
-                            handler(entry)
-                        }
-                    }
+            if let decodedTicker = UserDefaults().data(forKey: "cryptocurrency"){
+                if let cacheTicker = NSKeyedUnarchiver.unarchiveObject(with: decodedTicker) as? [Ticker] {
+                   let entry = self.createTimeLineEntry(ticker: Array(cacheTicker.prefix(3)))
+                    handler(entry)
                 }
-            })
+            }
         }
         else {
             handler(nil)
         }
     }
+    
 
     func getSupportedTimeTravelDirections(for complication: CLKComplication, withHandler handler: @escaping (CLKComplicationTimeTravelDirections) -> Void) {
         handler([])
     }
-
-    
+/*
+    func getNextRequestedUpdateDate(handler: @escaping (Date?) -> Void) {
+        handler(Date(timeIntervalSinceNow: TimeInterval(10*60)))
+    }
+    */
     func getPlaceholderTemplate(for complication: CLKComplication, withHandler handler: @escaping (CLKComplicationTemplate?) -> Void) {
         let template = CLKComplicationTemplateModularLargeColumns()
         
@@ -42,9 +41,9 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
         template.row2Column1TextProvider = CLKSimpleTextProvider(text: "ETH")
         template.row3Column1TextProvider = CLKSimpleTextProvider(text: "BCH")
         
-        template.row1Column2TextProvider = CLKSimpleTextProvider(text: "$4627.65")
-        template.row2Column2TextProvider = CLKSimpleTextProvider(text: "$350.08")
-        template.row3Column2TextProvider = CLKSimpleTextProvider(text: "$580.29")
+        template.row1Column2TextProvider = CLKSimpleTextProvider(text: "$4627.99")
+        template.row2Column2TextProvider = CLKSimpleTextProvider(text: "$350.99")
+        template.row3Column2TextProvider = CLKSimpleTextProvider(text: "$580.99")
         
         template.row1ImageProvider = CLKImageProvider(onePieceImage: #imageLiteral(resourceName: "Down"))
         template.row1ImageProvider?.tintColor = .red
@@ -79,6 +78,10 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
         default:
             break
         }
+        
+        template.row1Column1TextProvider = CLKSimpleTextProvider(text: ticker[0].symbol)
+        template.row2Column1TextProvider = CLKSimpleTextProvider(text: ticker[1].symbol)
+        template.row3Column1TextProvider = CLKSimpleTextProvider(text: ticker[2].symbol)
  
         switch userDefaults.integer(forKey: "priceCurrency") {
         case 0:
@@ -102,15 +105,7 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
             break
         }
         
-        
-        template.row1Column1TextProvider = CLKSimpleTextProvider(text: ticker[0].symbol)
-        template.row2Column1TextProvider = CLKSimpleTextProvider(text: ticker[1].symbol)
-        template.row3Column1TextProvider = CLKSimpleTextProvider(text: ticker[2].symbol)
-        
 
-     
-
-        
         let entry = CLKComplicationTimelineEntry(date: Date(), complicationTemplate: template)
         return(entry)
     }
@@ -140,10 +135,6 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
         return(entry)
     }*/
     
-    /*
-    func getSupportedTimeTravelDirections(for complication: CLKComplication, withHandler handler: @escaping (CLKComplicationTimeTravelDirections) -> Void) {
-        handler([])
-    }
- */
+
 
 }
