@@ -63,17 +63,6 @@ class CoinTableViewController: UITableViewController, WCSessionDelegate {
         updateApplicationContext(context: context)
     }
     
-    /*
-    func updateSettings() {
-        let keyStore = NSUbiquitousKeyValueStore ()
-        let percentChange = Int(keyStore.longLong(forKey: "percentChange"))
-        let priceCurrency = Int(keyStore.longLong(forKey: "priceCurrency"))
-        
-        let context = ["percentChange" : percentChange, "priceCurrency" : priceCurrency] as [String : Any]
-        updateApplicationContext(context: context)
-    }
-    */
-    
     // Receiver
     /** Called on the delegate of the receiver. Will be called on startup if an applicationContext is available. */
     func session(_ session: WCSession, didReceiveApplicationContext applicationContext: [String : Any]){

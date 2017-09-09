@@ -10,12 +10,13 @@ import WatchKit
 import Foundation
 import WatchConnectivity
 
-class InterfaceController: WKInterfaceController, WCSessionDelegate{
+class InterfaceController: WKInterfaceController, WCSessionDelegate {
 
     @IBOutlet var cryptocurrencyTable: WKInterfaceTable!
     @IBOutlet var emptyGroup: WKInterfaceGroup!
     // Our WatchConnectivity Session for communicating with the iOS app
     var watchSession : WCSession?
+    
     
     /** Called when the session has completed activation. If session state is WCSessionActivationStateNotActivated there will be an error with more details. */
     func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: Error?) {
@@ -32,27 +33,15 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate{
         if let priceCurrency = applicationContext["priceCurrency"] as? Int {
             userDefaults.set(priceCurrency, forKey: "priceCurrency")
         }
-        userDefaults.synchronize()
         
         if let id = applicationContext["id"] as? [String] {
-            if  let idUserDefaults = userDefaults.array(forKey: "id") as? [String] {
-                if id !=  idUserDefaults{
-                    userDefaults.removeObject(forKey: "cryptocurrency")
-                    userDefaults.removeObject(forKey: "lastUpdate")
-                    userDefaults.set(id, forKey: "id")
-                    userDefaults.synchronize()
-                    load()
-                }
-            }
-            else{
-                userDefaults.removeObject(forKey: "cryptocurrency")
-                userDefaults.removeObject(forKey: "lastUpdate")
-                userDefaults.set(id, forKey: "id")
-                userDefaults.synchronize()
-                load()
-            }
+            userDefaults.removeObject(forKey: "cryptocurrency")
+            userDefaults.removeObject(forKey: "lastUpdate")
+            userDefaults.set(id, forKey: "id")
         }
-        loadCache()
+        userDefaults.synchronize()
+        
+        load()
     }
     
     // Sender
@@ -70,6 +59,7 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate{
             for complication in complicationServer.activeComplications! {
                 print("UPDATE sender")
                 complicationServer.reloadTimeline(for: complication)
+              //  complicationServer.extendTimeline(for: complication)
             }
             
         } catch let error as NSError {
@@ -80,24 +70,28 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate{
 
     func awakeWithContext(context: AnyObject?) {
         super.awake(withContext: context)
-        // Configure interface objects here.
-        
     }
     
     override func willActivate() {
         // This method is called when watch view controller is about to be visible to user
-        print("willActivate")
         super.willActivate()
         
-        updateUserActivity("Valentyn.Mialin.crypto.monitor.Activity", userInfo: ["test" : "testString"], webpageURL: nil)
-     
+        print("willActivate")
+        
+        if (WKExtension.shared().applicationState == .active) {
+            updateUserActivity("Valentyn.Mialin.crypto.monitor.Activity", userInfo: ["test" : "testString"], webpageURL: nil)
+            load()
+        }
+        else{
+            viewCache()
+        }
+        
         if(WCSession.isSupported()){
             watchSession = WCSession.default()
             // Add self as a delegate of the session so we can handle messages
             watchSession!.delegate = self
             watchSession!.activate()
         }
-        loadCache()
     }
     
     override func didDeactivate() {
@@ -105,54 +99,57 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate{
         super.didDeactivate()
     }
     
-    private func loadCache() {
+    private func viewCache() {
         if let decodedTicker = UserDefaults().data(forKey: "cryptocurrency"){
             if let cacheTicker = NSKeyedUnarchiver.unarchiveObject(with: decodedTicker) as? [Ticker] {
                 self.tableView(ticker: cacheTicker)
             }
         }
-        load()
-        /*
-        if let lastUpdate = UserDefaults().object(forKey: "lastUpdate") as? Date {
-            if lastUpdate <= (Calendar.current.date(byAdding: .minute, value: -5, to: Date())! ){
-                load()
-            }
-        }
-        else{
-            load()
-        }
-        */
     }
     
-    func load() {
+    private func load() {
         if let idArray = UserDefaults().array(forKey: "id") as? [String] {
             if !idArray.isEmpty {
                 NetworkRequest().getTickerID(idArray: idArray, completion: { (ticker : [Ticker]?, error : Error?) in
                     if error == nil {
                         if let ticker = ticker {
-                            self.setUserDefaults(ticher: ticker, idArray: idArray, lastUpdate: Date())
+                            print("ticker cout \(ticker.count)")
+                            self.setUserDefaults(ticher: ticker, lastUpdate: Date())
                             DispatchQueue.main.async() {
                                 self.tableView(ticker: ticker)
+                                print("UPDATE 2")
                                 let complicationServer = CLKComplicationServer.sharedInstance()
                                 for complication in complicationServer.activeComplications! {
-                                    print("UPDATE 2")
                                     complicationServer.reloadTimeline(for: complication)
+                                  //   complicationServer.extendTimeline(for: complication)
                                 }
                             }
                         }
                     }
                 })
             }
-            else{
+            else{/*
+                let userDefaults = UserDefaults()
+                userDefaults.removeObject(forKey: "cryptocurrency")
+                userDefaults.synchronize()
+                
+                let complicationServer = CLKComplicationServer.sharedInstance()
+                for complication in complicationServer.activeComplications! {
+                //    complicationServer.reloadTimeline(for: complication)
+                     complicationServer.extendTimeline(for: complication)
+                }
+                */
                 cryptocurrencyTable.setHidden(true)
                 emptyGroup.setHidden(false)
             }
+            WKExtension.shared().scheduleBackgroundRefresh(withPreferredDate: Date(timeIntervalSinceNow: timeIntervalRefresh), userInfo: nil) { (error: Error?) in
+                if let error = error {
+                    print("Error occurred while scheduling background refresh: \(error.localizedDescription)")
+                }
+            } 
         }
-        WKExtension.shared().scheduleBackgroundRefresh(withPreferredDate: Date(timeIntervalSinceNow: 5 * 60), userInfo: nil) { (error: Error?) in
-            if let error = error {
-                print("Error occurred while scheduling background refresh: \(error.localizedDescription)")
-            }
-        }
+
+
     }
 
     private func tableView(ticker: [Ticker])  {
@@ -183,10 +180,10 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate{
     }
     
     //MARK: UserDefaults
-    private func setUserDefaults(ticher: [Ticker], idArray: [String], lastUpdate: Date) {
+    private func setUserDefaults(ticher: [Ticker], lastUpdate: Date) {
         let encodedData = NSKeyedArchiver.archivedData(withRootObject: ticher)
         let userDefaults = UserDefaults()
-        userDefaults.set(idArray, forKey: "id")
+     //   userDefaults.set(idArray, forKey: "id")
         userDefaults.set(encodedData, forKey: "cryptocurrency")
         userDefaults.set(lastUpdate, forKey: "lastUpdate")
         userDefaults.synchronize()
@@ -196,21 +193,21 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate{
     @IBAction func oneHourSelected() {
         UserDefaults().set(0, forKey: "percentChange")
         UserDefaults().synchronize()
-        loadCache()
+        viewCache()
         updateApplicationContext()
     }
     
     @IBAction func oneDaySelected() {
         UserDefaults().set(1, forKey: "percentChange")
         UserDefaults().synchronize()
-        loadCache()
+        viewCache()
         updateApplicationContext()
     }
     
     @IBAction func sevenDaySelected() {
         UserDefaults().set(2, forKey: "percentChange")
         UserDefaults().synchronize()
-        loadCache()
+        viewCache()
         updateApplicationContext()
     }
     

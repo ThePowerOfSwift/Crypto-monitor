@@ -14,7 +14,7 @@ class cryptocurrencyRowController: NSObject {
     @IBOutlet var percentChangeLabel: WKInterfaceLabel!
     @IBOutlet var priceLabel: WKInterfaceLabel!
     @IBOutlet var cellMainGroup: WKInterfaceGroup!
-    
+
     var ticker:Ticker?{
         didSet {
             if let ticker = ticker {
@@ -22,7 +22,6 @@ class cryptocurrencyRowController: NSObject {
                 let userDefaults = UserDefaults()
                 
                 symbolLabel.setText(ticker.symbol)
-            //    percentChangeLabel.setText(String(ticker.percent_change_7d) + " %")
                 
                 switch userDefaults.integer(forKey: "percentChange") {
                 case 0:
