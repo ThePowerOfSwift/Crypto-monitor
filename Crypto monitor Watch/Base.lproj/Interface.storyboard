@@ -61,17 +61,17 @@
                     </items>
                     <menu key="menu" id="1uO-RV-Crp">
                         <items>
-                            <menuItem title="1h" icon="info" id="oAR-VG-kYl">
+                            <menuItem title="1h" icon="accept" id="oAR-VG-kYl">
                                 <connections>
                                     <action selector="oneHourSelected" destination="AgC-eL-Hgc" id="QAL-MV-Ufq"/>
                                 </connections>
                             </menuItem>
-                            <menuItem title="24h" icon="accept" id="4Ma-F4-aID">
+                            <menuItem title="24h" image="Calendar" id="4Ma-F4-aID">
                                 <connections>
                                     <action selector="oneDaySelected" destination="AgC-eL-Hgc" id="m81-bW-wyv"/>
                                 </connections>
                             </menuItem>
-                            <menuItem title="7d" icon="accept" id="KZT-QN-aW1">
+                            <menuItem title="7d" image="Calendar" id="KZT-QN-aW1">
                                 <connections>
                                     <action selector="sevenDaySelected" destination="AgC-eL-Hgc" id="hPG-HV-DfS"/>
                                 </connections>

@@ -56,7 +56,6 @@ class ExtensionDelegate: NSObject, WKExtensionDelegate {
                                             for complication in complicationServer.activeComplications! {
                                                 print("UPDATE backgroundTask")
                                                 complicationServer.reloadTimeline(for: complication)
-                                                //complicationServer.extendTimeline(for: complication)
                                             }
                                         }
                                     }

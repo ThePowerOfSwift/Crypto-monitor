@@ -14,7 +14,7 @@ class AddTableViewCell: UITableViewCell {
     @IBOutlet weak var cryptocurrencyNameLabel: UILabel!
     @IBOutlet weak var checkImageView: UIImageView!
     
-    
+    /*
     override func awakeFromNib() {
         super.awakeFromNib()
         
@@ -27,4 +27,5 @@ class AddTableViewCell: UITableViewCell {
         label.minimumScaleFactor = 0.5
         label.adjustsFontSizeToFitWidth = true
     }
+ */
 }

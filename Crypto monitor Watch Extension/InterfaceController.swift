@@ -40,7 +40,6 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate {
             userDefaults.set(id, forKey: "id")
         }
         userDefaults.synchronize()
-        
         load()
     }
     
@@ -59,7 +58,6 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate {
             for complication in complicationServer.activeComplications! {
                 print("UPDATE sender")
                 complicationServer.reloadTimeline(for: complication)
-              //  complicationServer.extendTimeline(for: complication)
             }
             
         } catch let error as NSError {
@@ -121,24 +119,17 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate {
                                 let complicationServer = CLKComplicationServer.sharedInstance()
                                 for complication in complicationServer.activeComplications! {
                                     complicationServer.reloadTimeline(for: complication)
-                                  //   complicationServer.extendTimeline(for: complication)
                                 }
                             }
                         }
                     }
                 })
             }
-            else{/*
-                let userDefaults = UserDefaults()
-                userDefaults.removeObject(forKey: "cryptocurrency")
-                userDefaults.synchronize()
-                
+            else{
                 let complicationServer = CLKComplicationServer.sharedInstance()
                 for complication in complicationServer.activeComplications! {
-                //    complicationServer.reloadTimeline(for: complication)
-                     complicationServer.extendTimeline(for: complication)
+                    complicationServer.reloadTimeline(for: complication)
                 }
-                */
                 cryptocurrencyTable.setHidden(true)
                 emptyGroup.setHidden(false)
             }
@@ -148,8 +139,6 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate {
                 }
             } 
         }
-
-
     }
 
     private func tableView(ticker: [Ticker])  {
@@ -183,7 +172,6 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate {
     private func setUserDefaults(ticher: [Ticker], lastUpdate: Date) {
         let encodedData = NSKeyedArchiver.archivedData(withRootObject: ticher)
         let userDefaults = UserDefaults()
-     //   userDefaults.set(idArray, forKey: "id")
         userDefaults.set(encodedData, forKey: "cryptocurrency")
         userDefaults.set(lastUpdate, forKey: "lastUpdate")
         userDefaults.synchronize()

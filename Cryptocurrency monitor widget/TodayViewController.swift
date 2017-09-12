@@ -15,33 +15,24 @@ class TodayViewController: UIViewController, UITableViewDataSource, UITableViewD
     
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var emptyButton: UIButton!
-
+    
     
     fileprivate var cryptocurrency = [Ticker]()
     fileprivate var cryptocurrencyCompact = [Ticker]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        print("viewDidLoad")
+        
         let keyStore = NSUbiquitousKeyValueStore()
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(
                                                 TodayViewController.ubiquitousKeyValueStoreDidChange),
                                                name: NSUbiquitousKeyValueStore.didChangeExternallyNotification,
                                                object: keyStore)
-        let userDefaults = UserDefaults(suiteName: "group.mialin.valentyn.crypto.monitor")
-        if let decoded = userDefaults?.data(forKey: "cryptocurrency")
-        {
-            if let cache = NSKeyedUnarchiver.unarchiveObject(with: decoded) as? [Ticker] {
-                cryptocurrencyView(ticker: cache)
-            }
-        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
-        print("viewWillAppear")
         
         let userDefaults = UserDefaults(suiteName: "group.mialin.valentyn.crypto.monitor")
         if let decoded = userDefaults?.data(forKey: "cryptocurrency")
@@ -59,9 +50,6 @@ class TodayViewController: UIViewController, UITableViewDataSource, UITableViewD
     }
     
     func widgetPerformUpdate(completionHandler: (@escaping (NCUpdateResult) -> Void)) {
-        
-          print("widgetPerformUpdate")
-        
         var idArray:[String]?
         
         let userDefaults = UserDefaults(suiteName: "group.mialin.valentyn.crypto.monitor")
@@ -76,8 +64,6 @@ class TodayViewController: UIViewController, UITableViewDataSource, UITableViewD
         }
         
         if let idArray = idArray {
-
-            
             AlamofireRequest().getTickerID(idArray: idArray, completion: { (ticker : [Ticker]?, error : Error?) in
                 if error == nil {
                     if let ticker = ticker {
@@ -98,8 +84,9 @@ class TodayViewController: UIViewController, UITableViewDataSource, UITableViewD
         }
     }
     
+    
     func cryptocurrencyView(ticker: [Ticker]) {
-
+        
         self.emptyButton.isHidden = !ticker.isEmpty
         self.cryptocurrency = ticker
         
@@ -109,7 +96,6 @@ class TodayViewController: UIViewController, UITableViewDataSource, UITableViewD
                 self.cryptocurrencyCompact.append(self.cryptocurrency[i])
             }
             self.extensionContext?.widgetLargestAvailableDisplayMode = .expanded
-          //  preferredContentSize = CGSize(width: 0.0, height: 44.0 * CGFloat(ticker.count))
         }
         else{
             self.cryptocurrencyCompact = ticker
@@ -117,7 +103,7 @@ class TodayViewController: UIViewController, UITableViewDataSource, UITableViewD
         }
         self.tableView.reloadData()
     }
-
+    
     func widgetActiveDisplayModeDidChange(_ activeDisplayMode: NCWidgetDisplayMode, withMaximumSize maxSize: CGSize) {
         if (activeDisplayMode == NCWidgetDisplayMode.compact) {
             UIView.animate(withDuration: 0.25, animations: { () -> Void in
@@ -133,7 +119,7 @@ class TodayViewController: UIViewController, UITableViewDataSource, UITableViewD
             })
         }
     }
-
+    
     // MARK: - TableView Data Source
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         var count = 0
@@ -167,7 +153,7 @@ class TodayViewController: UIViewController, UITableViewDataSource, UITableViewD
         cell.coinImageView.af_setImage(withURL: url)
         cell.coinNameLabel.text = cryptocurrencyShow[row].name
         
-        let keyStore = NSUbiquitousKeyValueStore ()       
+        let keyStore = NSUbiquitousKeyValueStore ()
         switch keyStore.longLong(forKey: "priceCurrency") {
         case 0:
             let formatter = NumberFormatter()
@@ -176,7 +162,7 @@ class TodayViewController: UIViewController, UITableViewDataSource, UITableViewD
             formatter.locale = Locale(identifier: "en_US")
             
             cell.priceCoinLabel.text = formatter.string(from: cryptocurrencyShow[row].price_usd as NSNumber)
-          
+            
         case 1:
             let formatter = NumberFormatter()
             formatter.numberStyle = .decimal
@@ -221,7 +207,7 @@ class TodayViewController: UIViewController, UITableViewDataSource, UITableViewD
             }
         })
     }
-
+    
     @IBAction func emptyButton(_ sender: Any) {
         let myAppUrl = URL(string: "cryptomonitor://?add")!
         extensionContext?.open(myAppUrl, completionHandler: { (success) in

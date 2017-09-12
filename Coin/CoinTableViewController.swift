@@ -25,6 +25,7 @@ class CoinTableViewController: UITableViewController, WCSessionDelegate {
     var loadSubview:LoadSubview?
     var emptySubview:EmptySubview?
     
+    //MARK:WCSession
     /** Called when all delegate callbacks for the previously selected watch has occurred. The session can be re-activated for the now selected watch using activateSession. */
     @available(iOS 9.3, *)
     func sessionDidDeactivate(_ session: WCSession) {
@@ -44,23 +45,18 @@ class CoinTableViewController: UITableViewController, WCSessionDelegate {
     }
     
     // Sender
-    private func updateApplicationContext(context: [String : Any]) {
+    private func updateApplicationContext(id: [String]) {
         do {
+            let keyStore = NSUbiquitousKeyValueStore ()
+            let percentChange = Int(keyStore.longLong(forKey: "percentChange"))
+            let priceCurrency = Int(keyStore.longLong(forKey: "priceCurrency"))
+            
+            let context = ["id" : id, "percentChange" : percentChange, "priceCurrency" : priceCurrency] as [String : Any]
             try watchSession?.updateApplicationContext(context)
             
         } catch let error as NSError {
             print("Error: \(error.description)")
         }
-        
-    }
-    
-    func updateIdArray(id: [String]) {
-        let keyStore = NSUbiquitousKeyValueStore ()
-        let percentChange = Int(keyStore.longLong(forKey: "percentChange"))
-        let priceCurrency = Int(keyStore.longLong(forKey: "priceCurrency"))
-        
-        let context = ["id" : id, "percentChange" : percentChange, "priceCurrency" : priceCurrency] as [String : Any]
-        updateApplicationContext(context: context)
     }
     
     // Receiver
@@ -83,10 +79,9 @@ class CoinTableViewController: UITableViewController, WCSessionDelegate {
         }
     }
 
-
+    //MARK:LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
-
         NotificationCenter.default.addObserver(self, selector: #selector(applicationDidBecomeActiveNotification), name:NSNotification.Name.UIApplicationDidBecomeActive, object: nil)
         self.refreshControl?.addTarget(self, action: #selector(self.refresh), for: UIControlEvents.valueChanged)
         
@@ -101,18 +96,15 @@ class CoinTableViewController: UITableViewController, WCSessionDelegate {
         self.navigationItem.rightBarButtonItem = editBarButton
         
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "Setting"), style: UIBarButtonItemStyle.plain, target: self, action: #selector(settingsShow))
-        
         loadCache()
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
-        if getTickerID == nil {
-            loadTicker()
-        }
-        else{
-            cryptocurrencyView()
-        }
+
+        loadCache()
+        loadTicker()
+        
         // Set up and activate your session early here!
         if(WCSession.isSupported()){
             watchSession = WCSession.default()
@@ -133,6 +125,7 @@ class CoinTableViewController: UITableViewController, WCSessionDelegate {
     func applicationDidBecomeActiveNotification(notification : NSNotification) {
         print("unlock")
         loadCache()
+        loadTicker()
     }
     
     func ubiquitousKeyValueStoreDidChange(notification: NSNotification) {
@@ -150,7 +143,9 @@ class CoinTableViewController: UITableViewController, WCSessionDelegate {
             }
         }
         
-        updateIdArray(id: idKeyStore!)
+        if idKeyStore != nil {
+            updateApplicationContext(id: idKeyStore!)
+        }
         print("iCloud key-value-store change detected")
     }
     
@@ -165,12 +160,7 @@ class CoinTableViewController: UITableViewController, WCSessionDelegate {
                     self.refreshControl?.attributedTitle = NSAttributedString(string: dateToString(date: lastUpdate))
                 }
                 tableView.reloadData()
-                
-                if let lastUpdate = userDefaults?.object(forKey: "lastUpdate") as? Date {
-                    if lastUpdate <= (userCalendar.date(byAdding: .minute, value: -5, to: Date())! ){
-                        loadTicker()
-                    }
-                }
+
             }
         }
     }
@@ -295,7 +285,6 @@ class CoinTableViewController: UITableViewController, WCSessionDelegate {
                     
                     // set UserDefaults
                     SettingsUserDefaults().setUserDefaults(ticher: getTickerID!, idArray: idArray, lastUpdate: nil)
-                  //  self.updateIdArray(id: idArray)
                 }
             }
             cryptocurrencyView()
@@ -324,7 +313,6 @@ class CoinTableViewController: UITableViewController, WCSessionDelegate {
                 
                 // set UserDefaults
                 SettingsUserDefaults().setUserDefaults(ticher: getTickerID!, idArray: idArray, lastUpdate: nil)
-               // self.updateIdArray(id: idArray)
             }
         }
     }
@@ -366,15 +354,12 @@ class CoinTableViewController: UITableViewController, WCSessionDelegate {
                     showLoadSubview()
                 }
 
-                
                 AlamofireRequest().getTickerID(idArray: idArray, completion: { (ticker : [Ticker]?, error : Error?) in
                     if error == nil {
                         if let ticker = ticker {
                             getTickerID = ticker
                             SettingsUserDefaults().setUserDefaults(ticher: getTickerID!, idArray: idArray, lastUpdate: Date())
-
-                            self.updateIdArray(id: idArray)
-                            
+                            self.updateApplicationContext(id: idArray)
                             DispatchQueue.main.async() {
                                 self.cryptocurrencyView()
                             }

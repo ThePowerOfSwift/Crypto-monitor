@@ -22,6 +22,7 @@
 		FB5326CB1F254A9400D9C498 /* AddTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB5326CA1F254A9400D9C498 /* AddTableViewCell.swift */; };
 		FB565C4D1F42349C004EA42F /* ErrorSubview.xib in Resources */ = {isa = PBXBuildFile; fileRef = FB565C4F1F42349C004EA42F /* ErrorSubview.xib */; };
 		FB565C541F4235E8004EA42F /* LoadSubview.xib in Resources */ = {isa = PBXBuildFile; fileRef = FB565C561F4235E8004EA42F /* LoadSubview.xib */; };
+		FB623FAF1F67464900C99460 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FB623FAE1F67464900C99460 /* Assets.xcassets */; };
 		FB670CE61F16D900005761CF /* CryptocurrencyInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB670CE51F16D900005761CF /* CryptocurrencyInfoViewController.swift */; };
 		FB99B48C1F2FEF1F007C0235 /* NotificationCenter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FB99B48B1F2FEF1F007C0235 /* NotificationCenter.framework */; };
 		FB99B48F1F2FEF1F007C0235 /* TodayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB99B48E1F2FEF1F007C0235 /* TodayViewController.swift */; };
@@ -36,7 +37,6 @@
 		FBB009751F4E3292000B1298 /* Crypto monitor Watch Extension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = FBB009741F4E3292000B1298 /* Crypto monitor Watch Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		FBB0097A1F4E3292000B1298 /* InterfaceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBB009791F4E3292000B1298 /* InterfaceController.swift */; };
 		FBB0097C1F4E3292000B1298 /* ExtensionDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBB0097B1F4E3292000B1298 /* ExtensionDelegate.swift */; };
-		FBB0097E1F4E3292000B1298 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FBB0097D1F4E3292000B1298 /* Assets.xcassets */; };
 		FBB009821F4E3292000B1298 /* Crypto monitor Watch.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = FBB009681F4E3292000B1298 /* Crypto monitor Watch.app */; };
 		FBB0098D1F4E37AF000B1298 /* cryptocurrencyRowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBB0098C1F4E37AF000B1298 /* cryptocurrencyRowController.swift */; };
 		FBB2CC9C1F155CF800D800FD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBB2CC9B1F155CF800D800FD /* AppDelegate.swift */; };
@@ -172,6 +172,7 @@
 		FB565C551F4235E8004EA42F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LoadSubview.xib; sourceTree = "<group>"; };
 		FB565C581F4235EB004EA42F /* uk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = uk; path = uk.lproj/LoadSubview.strings; sourceTree = "<group>"; };
 		FB565C5A1F4235EC004EA42F /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/LoadSubview.strings; sourceTree = "<group>"; };
+		FB623FAE1F67464900C99460 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		FB670CE51F16D900005761CF /* CryptocurrencyInfoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CryptocurrencyInfoViewController.swift; sourceTree = "<group>"; };
 		FB9592531F20B8AB00F9F74B /* Coin.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Coin.entitlements; sourceTree = "<group>"; };
 		FB99B48A1F2FEF1F007C0235 /* Cryptocurrency monitor widget.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "Cryptocurrency monitor widget.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -192,7 +193,6 @@
 		FBB009741F4E3292000B1298 /* Crypto monitor Watch Extension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "Crypto monitor Watch Extension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
 		FBB009791F4E3292000B1298 /* InterfaceController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InterfaceController.swift; sourceTree = "<group>"; };
 		FBB0097B1F4E3292000B1298 /* ExtensionDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensionDelegate.swift; sourceTree = "<group>"; };
-		FBB0097D1F4E3292000B1298 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		FBB0097F1F4E3292000B1298 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FBB0098C1F4E37AF000B1298 /* cryptocurrencyRowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = cryptocurrencyRowController.swift; sourceTree = "<group>"; };
 		FBB2CC981F155CF800D800FD /* Coin.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Coin.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -370,7 +370,7 @@
 				FBBF266D1F5AD2CD0050BED7 /* ComplicationController.swift */,
 				FBD121231F52EB3A0079D15D /* NetworkRequest.swift */,
 				FBB0097B1F4E3292000B1298 /* ExtensionDelegate.swift */,
-				FBB0097D1F4E3292000B1298 /* Assets.xcassets */,
+				FB623FAE1F67464900C99460 /* Assets.xcassets */,
 				FBB0097F1F4E3292000B1298 /* Info.plist */,
 			);
 			path = "Crypto monitor Watch Extension";
@@ -686,7 +686,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FBB0097E1F4E3292000B1298 /* Assets.xcassets in Resources */,
+				FB623FAF1F67464900C99460 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

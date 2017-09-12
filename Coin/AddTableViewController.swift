@@ -18,14 +18,7 @@ class AddTableViewController: UITableViewController {
     
     var ticker = [Ticker]()
     var tickerSearchResult  = [Ticker]()
-    /*
-    var imageDownloader = ImageDownloader(
-        configuration: ImageDownloader.defaultURLSessionConfiguration(),
-        downloadPrioritization: .fifo,
-        maximumActiveDownloads: 4,
-        imageCache: AutoPurgingImageCache(memoryCapacity: 2 * 1024 * 1024, preferredMemoryUsageAfterPurge: UInt64(0.5 * 1024 * 1024))
-    )
- */
+
     deinit {
         self.searchController.view.removeFromSuperview()
     }

@@ -36,10 +36,9 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
             handler(nil)
         }
     }
-    
 
     func getSupportedTimeTravelDirections(for complication: CLKComplication, withHandler handler: @escaping (CLKComplicationTimeTravelDirections) -> Void) {
-        handler([.backward])
+        handler([])
     }
 
     func getPlaceholderTemplate(for complication: CLKComplication, withHandler handler: @escaping (CLKComplicationTemplate?) -> Void) {
@@ -49,9 +48,9 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
         template.row2Column1TextProvider = CLKSimpleTextProvider(text: "ETH")
         template.row3Column1TextProvider = CLKSimpleTextProvider(text: "BCH")
         
-        template.row1Column2TextProvider = CLKSimpleTextProvider(text: "$4627.99")
-        template.row2Column2TextProvider = CLKSimpleTextProvider(text: "$350.99")
-        template.row3Column2TextProvider = CLKSimpleTextProvider(text: "$580.99")
+        template.row1Column2TextProvider = CLKSimpleTextProvider(text: "$ -")
+        template.row2Column2TextProvider = CLKSimpleTextProvider(text: "$ -")
+        template.row3Column2TextProvider = CLKSimpleTextProvider(text: "$ -")
         
         template.row1ImageProvider = CLKImageProvider(onePieceImage: #imageLiteral(resourceName: "Down"))
         template.row1ImageProvider?.tintColor = .red
@@ -183,8 +182,6 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
     }
     
 
-
-    
     private func colorImage(percentChange: Float) -> CLKImageProvider {
         if percentChange >= 0 {
             let imageProvider = CLKImageProvider(onePieceImage: #imageLiteral(resourceName: "Top"))
