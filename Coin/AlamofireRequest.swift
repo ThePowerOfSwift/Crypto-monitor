@@ -36,7 +36,7 @@ public class Chart {
     
 }
 
-@objc(Ticker)
+
 public class Ticker:NSObject, NSCoding{
     
     public var id:String

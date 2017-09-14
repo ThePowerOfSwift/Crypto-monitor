@@ -101,9 +101,6 @@ class CoinTableViewController: UITableViewController, WCSessionDelegate {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
-
-        loadCache()
-        loadTicker()
         
         // Set up and activate your session early here!
         if(WCSession.isSupported()){
@@ -111,6 +108,8 @@ class CoinTableViewController: UITableViewController, WCSessionDelegate {
             watchSession!.delegate = self
             watchSession!.activate()
         }
+        loadCache()
+        loadTicker()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -152,7 +151,6 @@ class CoinTableViewController: UITableViewController, WCSessionDelegate {
     func loadCache() {
         let userDefaults = UserDefaults(suiteName: "group.mialin.valentyn.crypto.monitor")
         if let decodedTicker = userDefaults?.data(forKey: "cryptocurrency"){
-            
             if let cacheTicker = NSKeyedUnarchiver.unarchiveObject(with: decodedTicker) as? [Ticker] {
                 getTickerID = cacheTicker
                 let userDefaults = UserDefaults(suiteName: "group.mialin.valentyn.crypto.monitor")

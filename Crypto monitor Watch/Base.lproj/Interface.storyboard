@@ -61,7 +61,7 @@
                     </items>
                     <menu key="menu" id="1uO-RV-Crp">
                         <items>
-                            <menuItem title="1h" icon="accept" id="oAR-VG-kYl">
+                            <menuItem title="1h" image="Calendar" id="oAR-VG-kYl">
                                 <connections>
                                     <action selector="oneHourSelected" destination="AgC-eL-Hgc" id="QAL-MV-Ufq"/>
                                 </connections>
