@@ -74,7 +74,7 @@ class ExtensionDelegate: NSObject, WKExtensionDelegate {
                 case let snapshotTask as WKSnapshotRefreshBackgroundTask:
 
                     print("snapshotTask \(Date())")
-                    snapshotTask.setTaskCompleted(restoredDefaultState: false, estimatedSnapshotExpiration: Date.distantFuture, userInfo: nil)
+                    snapshotTask.setTaskCompleted(restoredDefaultState: true, estimatedSnapshotExpiration: Date.distantFuture, userInfo: nil)
                     
                 case let connectivityTask as WKWatchConnectivityRefreshBackgroundTask:
                     // Be sure to complete the connectivity task once you’re done.
@@ -98,6 +98,4 @@ class ExtensionDelegate: NSObject, WKExtensionDelegate {
         userDefaults.set(lastUpdate, forKey: "lastUpdate")
         userDefaults.synchronize()
     }
- 
-
 }

@@ -77,7 +77,7 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate {
         print("willActivate")
         
         if (WKExtension.shared().applicationState == .active) {
-            updateUserActivity("Valentyn.Mialin.crypto.monitor.Activity", userInfo: ["test" : "testString"], webpageURL: nil)
+            updateUserActivity("Valentyn.Mialin.crypto.monitor.Activity", userInfo: ["" : ""], webpageURL: nil)
             load()
         }
         else{
