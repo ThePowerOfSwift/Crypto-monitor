@@ -43,8 +43,8 @@ public class Ticker:NSObject, NSCoding{
     public var name:String
     public var symbol:String
     public var rank:Int
-    public var price_usd:Float
-    public var price_btc:Float
+    public var price_usd:Double
+    public var price_btc:Double
     public var volume_usd_24h:Float
     public var market_cap_usd:Float
     public var available_supply:Float
@@ -58,8 +58,8 @@ public class Ticker:NSObject, NSCoding{
                 name:String,
                 symbol:String,
                 rank:Int,
-                price_usd:Float,
-                price_btc:Float,
+                price_usd:Double,
+                price_btc:Double,
                 volume_usd_24h:Float,
                 market_cap_usd:Float,
                 available_supply:Float,
@@ -90,8 +90,8 @@ public class Ticker:NSObject, NSCoding{
         self.name =  decoder.decodeObject(forKey: "name") as! String
         self.symbol = decoder.decodeObject(forKey: "symbol") as! String
         self.rank = Int(decoder.decodeInt64(forKey: "rank"))
-        self.price_usd = decoder.decodeFloat(forKey: "price_usd")
-        self.price_btc = decoder.decodeFloat(forKey: "price_btc")
+        self.price_usd = decoder.decodeDouble(forKey: "price_usd")
+        self.price_btc = decoder.decodeDouble(forKey: "price_btc")
         self.volume_usd_24h = decoder.decodeFloat(forKey: "volume_usd_24h")
         self.market_cap_usd = decoder.decodeFloat(forKey: "market_cap_usd")
         self.available_supply = decoder.decodeFloat(forKey: "available_supply")
@@ -183,8 +183,8 @@ public class AlamofireRequest {
                             name: json["name"].stringValue,
                             symbol: json["symbol"].stringValue,
                             rank: json["rank"].intValue,
-                            price_usd: json["price_usd"].floatValue,
-                            price_btc: json["price_btc"].floatValue,
+                            price_usd: json["price_usd"].doubleValue,
+                            price_btc: json["price_btc"].doubleValue,
                             volume_usd_24h: json["24h_volume_usd"].floatValue,
                             market_cap_usd: json["market_cap_usd"].floatValue,
                             available_supply: json["available_supply"].floatValue,

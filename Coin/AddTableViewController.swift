@@ -64,7 +64,7 @@ class AddTableViewController: UITableViewController {
         }
     }
     
-    func loadTicker() {
+    @objc func loadTicker() {
         self.tableView.setContentOffset(CGPoint(x: 0, y: -self.refreshControl!.frame.size.height - self.topLayoutGuide.length), animated: true)
         self.refreshControl!.beginRefreshing()
         
@@ -189,7 +189,7 @@ class AddTableViewController: UITableViewController {
         self.view.superview?.addSubview(errorSubview!)
     }
     
-    func reload(_ sender:UIButton) {
+    @objc func reload(_ sender:UIButton) {
         loadTicker()
     }
     

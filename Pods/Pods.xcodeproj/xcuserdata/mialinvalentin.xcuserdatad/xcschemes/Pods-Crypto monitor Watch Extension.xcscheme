@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "C3F0E7343B73BFD448306B9E3BF7A125"
+               BlueprintIdentifier = "A0A2D547FE30619A6BBDBCDB2A425EE0"
                BuildableName = "Pods_Crypto_monitor_Watch_Extension.framework"
                BlueprintName = "Pods-Crypto monitor Watch Extension"
                ReferencedContainer = "container:Pods.xcodeproj">
@@ -26,6 +26,7 @@
       buildConfiguration = "Debug"
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
+      language = ""
       shouldUseLaunchSchemeArgsEnv = "YES">
       <Testables>
       </Testables>
@@ -36,6 +37,7 @@
       buildConfiguration = "Debug"
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
+      language = ""
       launchStyle = "0"
       useCustomWorkingDirectory = "NO"
       ignoresPersistentStateOnLaunch = "NO"
@@ -45,7 +47,7 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "C3F0E7343B73BFD448306B9E3BF7A125"
+            BlueprintIdentifier = "A0A2D547FE30619A6BBDBCDB2A425EE0"
             BuildableName = "Pods_Crypto_monitor_Watch_Extension.framework"
             BlueprintName = "Pods-Crypto monitor Watch Extension"
             ReferencedContainer = "container:Pods.xcodeproj">

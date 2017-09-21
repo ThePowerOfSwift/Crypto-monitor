@@ -76,11 +76,26 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
                             
                             switch UserDefaults().integer(forKey: "percentChange") {
                             case 0:
-                                template.line2TextProvider = CLKSimpleTextProvider(text: String(cacheTicker[0].percent_change_1h) + "%")
+                                if let percent_change_1h = cacheTicker[0].percent_change_1h{
+                                    template.line2TextProvider = CLKSimpleTextProvider(text: percent_change_1h + "%")
+                                }
+                                else{
+                                    template.line2TextProvider = CLKSimpleTextProvider(text: "null")
+                                }
                             case 1:
-                                template.line2TextProvider = CLKSimpleTextProvider(text: String(cacheTicker[0].percent_change_24h) + "%")
+                                if let percent_change_24h = cacheTicker[0].percent_change_24h{
+                                    template.line2TextProvider = CLKSimpleTextProvider(text: percent_change_24h + "%")
+                                }
+                                else{
+                                    template.line2TextProvider = CLKSimpleTextProvider(text: "null")
+                                }
                             case 2:
-                                template.line2TextProvider = CLKSimpleTextProvider(text: String(cacheTicker[0].percent_change_7d) + "%")
+                                if let percent_change_7d = cacheTicker[0].percent_change_7d{
+                                    template.line2TextProvider = CLKSimpleTextProvider(text: percent_change_7d + "%")
+                                }
+                                else{
+                                    template.line2TextProvider = CLKSimpleTextProvider(text: "null")
+                                }
                             default:
                                 break
                             }
@@ -128,15 +143,12 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
                         let template = CLKComplicationTemplateUtilitarianLargeFlat()
                         
                         var priceString = String()
-                        var priceShortString = String()
                         
                         switch UserDefaults().integer(forKey: "priceCurrency") {
                         case 0:
-                            priceString = formatterUSD.string(from: cacheTicker[0].price_usd as NSNumber)!
-                            priceShortString = formatterShortUSD.string(from: cacheTicker[0].price_usd as NSNumber)!
+                            priceString = cacheTicker[0].price_usd
                         case 1:
-                            priceString = formatterBTC.string(from: cacheTicker[0].price_btc as NSNumber)!
-                            priceShortString = formatterShortBTC.string(from: cacheTicker[0].price_btc as NSNumber)!
+                            priceString = cacheTicker[0].price_btc
                         default:
                             break
                         }
@@ -144,14 +156,29 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
                         switch UserDefaults().integer(forKey: "percentChange") {
                         case 0:
                             template.imageProvider = colorImage(percentChange: cacheTicker[0].percent_change_1h)
-                            template.textProvider = CLKSimpleTextProvider(text: "\(cacheTicker[0].symbol) \(priceString) \(cacheTicker[0].percent_change_1h)%", shortText: "\(cacheTicker[0].symbol) \(priceShortString) \(cacheTicker[0].percent_change_1h)%")
-                            
+                            if let percent_change_1h = cacheTicker[0].percent_change_1h{
+                                template.textProvider = CLKSimpleTextProvider(text: "\(cacheTicker[0].symbol) \(priceString) \(percent_change_1h)%")
+                            }
+                            else{
+                                template.textProvider = CLKSimpleTextProvider(text: "\(cacheTicker[0].symbol) \(priceString) null")
+                            }
                         case 1:
                             template.imageProvider = colorImage(percentChange: cacheTicker[0].percent_change_24h)
-                            template.textProvider = CLKSimpleTextProvider(text: "\(cacheTicker[0].symbol) \(priceString) \(cacheTicker[0].percent_change_24h)%", shortText: "\(cacheTicker[0].symbol) \(priceShortString) \(cacheTicker[0].percent_change_24h)%")
+                            if let percent_change_24h = cacheTicker[0].percent_change_24h{
+                                template.textProvider = CLKSimpleTextProvider(text: "\(cacheTicker[0].symbol) \(priceString) \(percent_change_24h)%")
+                            }
+                            else{
+                                template.textProvider = CLKSimpleTextProvider(text: "\(cacheTicker[0].symbol) \(priceString) null")
+                            }
                         case 2:
                             template.imageProvider = colorImage(percentChange: cacheTicker[0].percent_change_7d)
-                            template.textProvider = CLKSimpleTextProvider(text: "\(cacheTicker[0].symbol) \(priceString) \(cacheTicker[0].percent_change_7d)%", shortText: "\(cacheTicker[0].symbol) \(priceShortString) \(cacheTicker[0].percent_change_7d)%")
+                            
+                            if let percent_change_7d = cacheTicker[0].percent_change_7d{
+                                template.textProvider = CLKSimpleTextProvider(text: "\(cacheTicker[0].symbol) \(priceString) \(percent_change_7d)%")
+                            }
+                            else{
+                                template.textProvider = CLKSimpleTextProvider(text: "\(cacheTicker[0].symbol) \(priceString) null")
+                            }
                         default:
                             break
                         }
@@ -278,13 +305,13 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
             
             
             if ticker.indices.contains(0) {
-                template.row1Column2TextProvider = CLKSimpleTextProvider(text: formatterUSD.string(from: ticker[0].price_usd as NSNumber)!)
+                template.row1Column2TextProvider = CLKSimpleTextProvider(text: ticker[0].price_usd)
             }
             else{
                 template.row1Column2TextProvider = CLKSimpleTextProvider(text:"")
             }
             if ticker.indices.contains(1) {
-                template.row2Column2TextProvider = CLKSimpleTextProvider(text: formatterUSD.string(from: ticker[1].price_usd as NSNumber)!)
+                template.row2Column2TextProvider = CLKSimpleTextProvider(text: ticker[1].price_usd)
             }
             else{
                 template.row2Column2TextProvider = CLKSimpleTextProvider(text:"")
@@ -298,14 +325,14 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
         case 1:
             
             if ticker.indices.contains(0) {
-                template.row1Column2TextProvider = CLKSimpleTextProvider(text: formatterBTC.string(from: ticker[0].price_btc as NSNumber)!)
+                template.row1Column2TextProvider = CLKSimpleTextProvider(text: ticker[0].price_btc)
             }
             else{
                 template.row1Column2TextProvider = CLKSimpleTextProvider(text:"")
             }
             
             if ticker.indices.contains(1) {
-                template.row2Column2TextProvider = CLKSimpleTextProvider(text: formatterBTC.string(from: ticker[1].price_btc as NSNumber)!)
+                template.row2Column2TextProvider = CLKSimpleTextProvider(text: ticker[1].price_btc)
             }
             else{
                 template.row2Column2TextProvider = CLKSimpleTextProvider(text:"")
@@ -327,17 +354,22 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
     }
     
 
-    private func colorImage(percentChange: Float) -> CLKImageProvider {
-        if percentChange >= 0 {
-            let imageProvider = CLKImageProvider(onePieceImage: #imageLiteral(resourceName: "Top"))
-            imageProvider.tintColor = .green
-            return imageProvider
+    private func colorImage(percentChange: String?) -> CLKImageProvider {
+        if let percentChange = percentChange {
+            if Float(percentChange)! >= 0 {
+                let imageProvider = CLKImageProvider(onePieceImage: #imageLiteral(resourceName: "Top"))
+                imageProvider.tintColor = .green
+                return imageProvider
+            }
+            else{
+                let imageProvider = CLKImageProvider(onePieceImage: #imageLiteral(resourceName: "Down"))
+                imageProvider.tintColor = .red
+                return imageProvider
+            }
         }
-        else{
-            let imageProvider = CLKImageProvider(onePieceImage: #imageLiteral(resourceName: "Down"))
-            imageProvider.tintColor = .red
-            return imageProvider
-        }
+        let imageProvider = CLKImageProvider(onePieceImage: #imageLiteral(resourceName: "Down"))
+        imageProvider.tintColor = .red
+        return imageProvider
     }
 }
 

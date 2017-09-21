@@ -104,7 +104,7 @@ class CoinTableViewController: UITableViewController, WCSessionDelegate {
         
         // Set up and activate your session early here!
         if(WCSession.isSupported()){
-            watchSession = WCSession.default()
+            watchSession = WCSession.default
             watchSession!.delegate = self
             watchSession!.activate()
         }
@@ -121,13 +121,13 @@ class CoinTableViewController: UITableViewController, WCSessionDelegate {
         }
     }
 
-    func applicationDidBecomeActiveNotification(notification : NSNotification) {
+    @objc func applicationDidBecomeActiveNotification(notification : NSNotification) {
         print("unlock")
         loadCache()
         loadTicker()
     }
     
-    func ubiquitousKeyValueStoreDidChange(notification: NSNotification) {
+    @objc func ubiquitousKeyValueStoreDidChange(notification: NSNotification) {
         let keyStore = NSUbiquitousKeyValueStore ()
         let idKeyStore = keyStore.array(forKey: "id") as? [String]
         let userDefaults = UserDefaults(suiteName: "group.mialin.valentyn.crypto.monitor")
@@ -188,15 +188,21 @@ class CoinTableViewController: UITableViewController, WCSessionDelegate {
             case 0:
                 let formatter = NumberFormatter()
                 formatter.numberStyle = .currency
+              //  formatter.minimumFractionDigits = 2
                 formatter.maximumFractionDigits = 25
                 formatter.locale = Locale(identifier: "en_US")
-                cell.priceCoinLabel.text = formatter.string(from: ticker[row].price_usd as NSNumber)
+                let uu = NSNumber(value: ticker[row].price_usd)
+                print(uu)
+                cell.priceCoinLabel.text = formatter.string(from: uu)!
             case 1:
                 let formatter = NumberFormatter()
-                formatter.numberStyle = .decimal
-                formatter.maximumFractionDigits = 25
+                formatter.numberStyle = .currency
+                formatter.currencySymbol = "₿"
+                formatter.locale = Locale.current
+                formatter.minimumFractionDigits = 0
+               formatter.maximumFractionDigits = 25
                 
-                cell.priceCoinLabel.text = "₿ " + formatter.string(from: ticker[row].price_btc as NSNumber)!
+                cell.priceCoinLabel.text = formatter.string(from: ticker[row].price_btc as NSNumber)!
             default:
                 break
             }
@@ -396,11 +402,11 @@ class CoinTableViewController: UITableViewController, WCSessionDelegate {
     }
     
     
-    func refresh(sender:AnyObject) {
+    @objc func refresh(sender:AnyObject) {
         loadTicker()
     }
     
-    func reload(_ sender:UIButton) {
+    @objc func reload(_ sender:UIButton) {
         loadTicker()
     }
     
@@ -464,11 +470,11 @@ class CoinTableViewController: UITableViewController, WCSessionDelegate {
     }
     
     
-    func settingsShow(_ sender:UIButton) {
+    @objc func settingsShow(_ sender:UIButton) {
         self.performSegue(withIdentifier: "settingSegue", sender: nil)
     }
     
-    func addShow(_ sender:UIButton) {
+    @objc func addShow(_ sender:UIButton) {
           self.performSegue(withIdentifier: "add", sender: nil)
     }
     

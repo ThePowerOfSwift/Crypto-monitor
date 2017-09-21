@@ -25,13 +25,28 @@ class cryptocurrencyRowController: NSObject {
                 
                 switch userDefaults.integer(forKey: "percentChange") {
                 case 0:
-                    percentChangeLabel.setText(String(ticker.percent_change_1h) + " %")
+                    if let percent_change_1h = ticker.percent_change_1h {
+                        percentChangeLabel.setText(percent_change_1h + " %")
+                    }
+                    else{
+                        percentChangeLabel.setText("null")
+                    }
                     backgroundColorView(percentChange: ticker.percent_change_1h)
                 case 1:
-                    percentChangeLabel.setText(String(ticker.percent_change_24h) + " %")
+                    if let percent_change_24h = ticker.percent_change_24h {
+                        percentChangeLabel.setText(percent_change_24h + " %")
+                    }
+                    else{
+                        percentChangeLabel.setText("null")
+                    }
                     backgroundColorView(percentChange: ticker.percent_change_24h)
                 case 2:
-                    percentChangeLabel.setText(String(ticker.percent_change_7d) + " %")
+                    if let percent_change_7d = ticker.percent_change_7d {
+                        percentChangeLabel.setText(percent_change_7d + " %")
+                    }
+                    else{
+                        percentChangeLabel.setText("null")
+                    }
                     backgroundColorView(percentChange: ticker.percent_change_7d)
                 default:
                     break
@@ -43,12 +58,13 @@ class cryptocurrencyRowController: NSObject {
                     formatter.numberStyle = .currency
                     formatter.maximumFractionDigits = 25
                     formatter.locale = Locale(identifier: "en_US")
-                    priceLabel.setText(formatter.string(from: ticker.price_usd as NSNumber))
+                    //priceLabel.setText(formatter.string(from: ticker.price_usd as NSNumber))
+                    priceLabel.setText("$" + ticker.price_usd)
                 case 1:
                     let formatter = NumberFormatter()
                     formatter.numberStyle = .decimal
                     formatter.maximumFractionDigits = 25
-                    priceLabel.setText("₿ " + formatter.string(from: ticker.price_btc as NSNumber)!)
+                    priceLabel.setText("₿" + ticker.price_btc)
                 default:
                     break
                 }
@@ -56,12 +72,17 @@ class cryptocurrencyRowController: NSObject {
         }
     }
     
-    private func backgroundColorView(percentChange: Float) {
-        if percentChange >= 0 {
-            cellMainGroup.setBackgroundColor(UIColor(red:0.02, green:0.87, blue:0.44, alpha:0.86))
+    private func backgroundColorView(percentChange: String?) {
+        if let percentChange = percentChange{
+            if Float(percentChange)! >= 0 {
+                cellMainGroup.setBackgroundColor(UIColor(red:0.02, green:0.87, blue:0.44, alpha:0.86))
+            }
+            else{
+                cellMainGroup.setBackgroundColor(UIColor(red:0.98, green:0.07, blue:0.31, alpha:0.83))
+            }
         }
         else{
-            cellMainGroup.setBackgroundColor(UIColor(red:0.98, green:0.07, blue:0.31, alpha:0.83))
+            cellMainGroup.setBackgroundColor(UIColor(red:1.00, green:0.90, blue:0.13, alpha:0.86))
         }
     }
     

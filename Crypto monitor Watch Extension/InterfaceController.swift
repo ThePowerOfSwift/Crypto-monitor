@@ -85,7 +85,7 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate {
         }
         
         if(WCSession.isSupported()){
-            watchSession = WCSession.default()
+            watchSession = WCSession.default
             // Add self as a delegate of the session so we can handle messages
             watchSession!.delegate = self
             watchSession!.activate()

@@ -8,8 +8,10 @@
 
 import UIKit
 import NotificationCenter
-import CryptocurrencyRequest
+
 import AlamofireImage
+import CryptocurrencyRequest
+
 
 class TodayViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, NCWidgetProviding {
     
@@ -44,7 +46,7 @@ class TodayViewController: UIViewController, UITableViewDataSource, UITableViewD
         }
     }
     
-    func ubiquitousKeyValueStoreDidChange(notification: NSNotification) {
+    @objc func ubiquitousKeyValueStoreDidChange(notification: NSNotification) {
         tableView.reloadData()
         print("iCloud key-value-store change detected")
     }

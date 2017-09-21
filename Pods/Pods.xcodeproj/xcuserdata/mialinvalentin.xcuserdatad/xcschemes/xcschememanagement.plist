@@ -4,12 +4,7 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
-		<key>Alamofire-iOS.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
-		<key>Alamofire-watchOS.xcscheme</key>
+		<key>Alamofire.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
@@ -20,11 +15,6 @@
 			<false/>
 		</dict>
 		<key>AlamofireNetworkActivityIndicator.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
-		<key>Charts.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
@@ -49,74 +39,13 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
-		<key>SwiftyJSON-iOS.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
-		<key>SwiftyJSON-watchOS.xcscheme</key>
+		<key>SwiftyJSON.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
 		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
-	<dict>
-		<key>0E9B97D2ABBD903B3B57713E2A919815</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>173E4104E4F2CE5ECC896A154802C6D5</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>1815CD051085BB9E8999D4DA45153748</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>4D8199C20C1BE5F5BCDBC8F8CB4BF089</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>6FCE85672C882DE92A8E8C13691F3E58</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>77256DEFC18379936B7D0E03967EFBB6</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>A4B4707C453DF884DBF6F9F5766E0E75</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>C3F0E7343B73BFD448306B9E3BF7A125</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>CB8F0D3767ED35BEC1A7C704D280CA1E</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>EE176E7BEC8620E70D7692FAEB1543FA</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>F307B842FF76B2DE6C55DB67C0885325</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-	</dict>
+	<dict/>
 </dict>
 </plist>

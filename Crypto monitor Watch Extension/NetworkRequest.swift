@@ -7,70 +7,74 @@
 //
 
 import Foundation
-import Alamofire
-import SwiftyJSON
 
 class NetworkRequest{
-    
-    public func getTickerID(idArray: [String], completion: @escaping  ([Ticker]?, Error?) -> ()) {
+
+    public func getTickerID(idArray: [String], completion: @escaping ([Ticker]?, Error?) -> Void) {
+        let endpoint = "https://api.coinmarketcap.com/v1/ticker/"
+        guard let url = URL(string: endpoint) else {
+            print("Error: cannot create URL")
+            let error = BackendError.urlError(reason: "Could not construct URL")
+            completion(nil, error)
+            return
+        }
+        let urlRequest = URLRequest(url: url)
+        let session = URLSession.shared
         
-        var tickerArray = [Ticker]()
-        var error:Error?
-        
-        
-        Alamofire.request("https://api.coinmarketcap.com/v1/ticker/").validate().responseJSON { response in
-            switch response.result {
-            case .success(let value):
-                print("Validation Successful")
-                
-                let json = JSON(value).arrayValue
-                var jsonIdArray = [JSON]()
-                
+        let task = session.dataTask(with: urlRequest) {
+            (data, response, error) in
+            guard let responseData = data else {
+                print("Error: did not receive data")
+                completion(nil, error)
+                return
+            }
+            guard error == nil else {
+                completion(nil, error)
+                return
+            }
+            
+            let decoder = JSONDecoder()
+            do {
+                var tickerFilterArray = [Ticker]()
+                let tickerDecodeArray = try decoder.decode([Ticker].self, from: responseData)
                 for id in idArray{
-                    if let json = json.filter({ $0["id"].stringValue == id}).first{
-                        jsonIdArray.append(json)
+                    if let json = tickerDecodeArray.filter({ $0.id == id}).first{
+                        tickerFilterArray.append(json)
                     }
                 }
-                
-                for item in jsonIdArray {
-                    tickerArray.append(self.jsonToTicker(json: item))
-                }
-            case .failure(let errorFailure):
-                error = errorFailure
+                completion(tickerFilterArray, nil)
+            } catch {
+                print("error trying to convert data to JSON")
+                print(error)
+                completion(nil, error)
             }
-            completion(tickerArray, error)
         }
-    }
-    
-    private func jsonToTicker(json: JSON) -> Ticker {
-        return Ticker(id: json["id"].stringValue,
-                      symbol: json["symbol"].stringValue,
-                      price_usd: json["price_usd"].floatValue,
-                      price_btc: json["price_btc"].floatValue,
-                      percent_change_1h: json["percent_change_1h"].floatValue,
-                      percent_change_24h: json["percent_change_24h"].floatValue,
-                      percent_change_7d: json["percent_change_7d"].floatValue)
+        task.resume()
     }
 }
 
+enum BackendError: Error {
+    case urlError(reason: String)
+    case objectSerialization(reason: String)
+}
 
-class Ticker: NSObject, NSCoding{
+class Ticker: NSObject, NSCoding, Codable{
     
     public var id:String
     public var symbol:String
-    public var price_usd:Float
-    public var price_btc:Float
-    public var percent_change_1h:Float
-    public var percent_change_24h:Float
-    public var percent_change_7d:Float
+    public var price_usd:String
+    public var price_btc:String
+    public var percent_change_1h:String?
+   public var percent_change_24h:String?
+    public var percent_change_7d:String?
     
     public init(id:String,
                 symbol:String,
-                price_usd:Float,
-                price_btc:Float,
-                percent_change_1h:Float,
-                percent_change_24h:Float,
-                percent_change_7d:Float){
+                price_usd:String,
+                price_btc:String,
+                percent_change_1h:String,
+                percent_change_24h:String,
+                percent_change_7d:String){
         
         self.id = id
         self.symbol = symbol
@@ -84,11 +88,11 @@ class Ticker: NSObject, NSCoding{
     required public init(coder decoder: NSCoder) {
         self.id =  decoder.decodeObject(forKey: "id") as! String
         self.symbol = decoder.decodeObject(forKey: "symbol") as! String
-        self.price_usd = decoder.decodeFloat(forKey: "price_usd")
-        self.price_btc = decoder.decodeFloat(forKey: "price_btc")
-        self.percent_change_1h = decoder.decodeFloat(forKey: "percent_change_1h")
-        self.percent_change_24h = decoder.decodeFloat(forKey: "percent_change_24h")
-        self.percent_change_7d = decoder.decodeFloat(forKey: "percent_change_7d")
+        self.price_usd = decoder.decodeObject(forKey: "price_usd") as! String
+        self.price_btc = decoder.decodeObject(forKey: "price_btc") as! String
+        self.percent_change_1h = decoder.decodeObject(forKey: "percent_change_1h") as? String
+        self.percent_change_24h = decoder.decodeObject(forKey: "percent_change_24h") as? String
+        self.percent_change_7d = decoder.decodeObject(forKey: "percent_change_7d") as? String
     }
     
     public func encode(with coder: NSCoder) {

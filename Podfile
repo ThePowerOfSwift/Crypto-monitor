@@ -2,21 +2,17 @@
 use_frameworks!
 
 target 'Coin' do
-	pod 'AlamofireImage', '~> 3.1'
-	pod 'Charts'
+	pod 'AlamofireImage'
 	pod 'AlamofireNetworkActivityIndicator', '~> 2.2'
 end
 
 target 'CryptocurrencyRequest' do
-	pod 'Alamofire', '~> 4.4'
-	pod 'SwiftyJSON', '~> 3.1'
+	pod 'Alamofire', '~> 4.5’
+	pod 'SwiftyJSON'
 end
 
 target 'Cryptocurrency monitor widget' do
-	pod 'AlamofireImage', '~> 3.1'
 end
 
 target 'Crypto monitor Watch Extension' do
-	pod 'Alamofire', '~> 4.4'
-	pod 'SwiftyJSON', '~> 3.1'
 end

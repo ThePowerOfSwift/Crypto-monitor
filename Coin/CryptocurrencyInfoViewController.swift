@@ -73,7 +73,7 @@ class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
         lineChartView.scaleYEnabled = false
         
         let font = UIFont.systemFont(ofSize: 10)
-        selectSegmentedControl.setTitleTextAttributes([NSFontAttributeName: font], for: .normal)
+        selectSegmentedControl.setTitleTextAttributes([NSAttributedStringKey.font: font], for: .normal)
         
         let keyStore = NSUbiquitousKeyValueStore ()
         selectSegmentedControl.selectedSegmentIndex = Int(keyStore.longLong(forKey: "typeChart"))
@@ -127,7 +127,7 @@ class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
     }
     
     //Unlock
-    func applicationDidBecomeActiveNotification(notification : NSNotification) {
+    @objc func applicationDidBecomeActiveNotification(notification : NSNotification) {
         loadCache()
     }
     
@@ -415,7 +415,7 @@ class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
         self.navigationItem.rightBarButtonItem = refreshBarButton
     }
     
-    func refresh() {
+    @objc func refresh() {
         let userDefaults = UserDefaults(suiteName: "group.mialin.valentyn.crypto.monitor")
         userDefaults?.set(userCalendar.date(byAdding: .minute, value: -5, to: Date())!, forKey: "lastUpdate")
         userDefaults?.synchronize()
@@ -462,7 +462,7 @@ class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
         label.adjustsFontSizeToFitWidth = true
     }
     
-    func reload(_ sender:UIButton) {
+    @objc func reload(_ sender:UIButton) {
         refresh()
     }
     
