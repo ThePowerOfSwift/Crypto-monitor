@@ -32,8 +32,6 @@ public class Chart {
         self.timestamp = timestamp
         self.item = value
     }
-    
-    
 }
 
 

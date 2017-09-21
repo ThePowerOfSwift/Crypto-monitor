@@ -179,22 +179,25 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate {
     
     //MARK: Actions
     @IBAction func oneHourSelected() {
-        UserDefaults().set(0, forKey: "percentChange")
-        UserDefaults().synchronize()
+        let userDefaults = UserDefaults()
+        userDefaults.set(0, forKey: "percentChange")
+        userDefaults.synchronize()
         viewCache()
         updateApplicationContext()
     }
     
     @IBAction func oneDaySelected() {
-        UserDefaults().set(1, forKey: "percentChange")
-        UserDefaults().synchronize()
+        let userDefaults = UserDefaults()
+        userDefaults.set(1, forKey: "percentChange")
+        userDefaults.synchronize()
         viewCache()
         updateApplicationContext()
     }
     
     @IBAction func sevenDaySelected() {
-        UserDefaults().set(2, forKey: "percentChange")
-        UserDefaults().synchronize()
+        let userDefaults = UserDefaults()
+        userDefaults.set(2, forKey: "percentChange")
+        userDefaults.synchronize()
         viewCache()
         updateApplicationContext()
     }

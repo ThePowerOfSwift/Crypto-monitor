@@ -11,47 +11,6 @@ import ClockKit
 
 class ComplicationController: NSObject, CLKComplicationDataSource {
     
-    private let dateFormatter: DateFormatter = {
-        let formatter = DateFormatter()
-        formatter.dateStyle = .none
-        formatter.timeStyle = .long
-        
-        return formatter
-    }()
-    
-    private let formatterUSD: NumberFormatter = {
-        let formatter = NumberFormatter()
-        formatter.numberStyle = .currency
-        formatter.maximumFractionDigits = 10
-        formatter.locale = Locale(identifier: "en_US")
-        
-        return formatter
-    }()
-    
-    private let formatterBTC: NumberFormatter = {
-        let formatter = NumberFormatter()
-        formatter.numberStyle = .decimal
-        formatter.maximumFractionDigits = 10
-        return formatter
-    }()
-    
-    private let formatterShortUSD: NumberFormatter = {
-        let formatter = NumberFormatter()
-        formatter.numberStyle = .currency
-        formatter.maximumFractionDigits = 5
-        formatter.locale = Locale(identifier: "en_US")
-        
-        return formatter
-    }()
-    
-    private let formatterShortBTC: NumberFormatter = {
-        let formatter = NumberFormatter()
-        formatter.numberStyle = .decimal
-        formatter.maximumFractionDigits = 5
-        return formatter
-    }()
-    
-    
     func getCurrentTimelineEntry(for complication: CLKComplication, withHandler handler: @escaping (CLKComplicationTimelineEntry?) -> Void) {
         
         switch complication.family {
@@ -317,7 +276,7 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
                 template.row2Column2TextProvider = CLKSimpleTextProvider(text:"")
             }
             if ticker.indices.contains(2) {
-                template.row3Column2TextProvider = CLKSimpleTextProvider(text: dateFormatter.string(from: Date()))
+                template.row3Column2TextProvider = CLKSimpleTextProvider(text: ticker[2].price_usd)
             }
             else{
                 template.row3Column2TextProvider = CLKSimpleTextProvider(text:"")
@@ -339,7 +298,7 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
             }
             
             if ticker.indices.contains(2) {
-                template.row3Column2TextProvider = CLKSimpleTextProvider(text: dateFormatter.string(from: Date()))
+                template.row3Column2TextProvider = CLKSimpleTextProvider(text: ticker[2].price_btc)
             }
             else{
                 template.row3Column2TextProvider = CLKSimpleTextProvider(text:"")

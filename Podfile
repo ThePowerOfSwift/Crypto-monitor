@@ -14,3 +14,4 @@ end
 target 'Cryptocurrency monitor widget' do
 	pod 'AlamofireImage'
 end
+
