@@ -192,46 +192,34 @@ class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
             if let tick = getTickerID!.first(where: {$0.id == openID}) {
                 ticker = tick
             }
-
             if let ticker = ticker {
                 
-                let formatter = NumberFormatter()
-                formatter.numberStyle = .decimal
-                formatter.maximumFractionDigits = 25
-                
-                let url = URL(string: "https://files.coinmarketcap.com/static/img/coins/64x64/\(ticker.id).png")!
-                imageView.af_setImage(withURL: url)
-                
+                if let id = ticker.id {
+                    let url = URL(string: "https://files.coinmarketcap.com/static/img/coins/64x64/\(id).png")!
+                    imageView.af_setImage(withURL: url)
+                }
+
                 navigationItem.title = ticker.symbol
-                
-                
+
                 nameLabel.text = ticker.name
-                
-                scaleFactor(label: dataCurrencyLabel)
-                dataCurrencyLabel.text = "\(formatter.string(from: ticker.price_usd as NSNumber)!) USD"
+                dataCurrencyLabel.text = ticker.price_usd! + "USD"
                 
                 // 1h
-                scaleFactor(label: oneHourChangeLabel)
-                oneHourChangeLabel.text = "\(ticker.percent_change_1h)%"
+                oneHourChangeLabel.text = ticker.percent_change_1h != nil ? ticker.percent_change_1h! + "%" : "null"
                 backgroundColorView(view: oneHourChangeView, percentChange: ticker.percent_change_1h)
                 // 24h
-                scaleFactor(label: dayChangeLabel)
-                dayChangeLabel.text = "\(ticker.percent_change_24h)%"
+                dayChangeLabel.text = ticker.percent_change_24h != nil ? ticker.percent_change_24h! + "%" : "null"
                 backgroundColorView(view: dayChangeView, percentChange: ticker.percent_change_24h)
                 // 7d
-                scaleFactor(label: weekChangeLabel)
-                weekChangeLabel.text = "\(ticker.percent_change_7d)%"
+                weekChangeLabel.text = ticker.percent_change_7d != nil ? ticker.percent_change_7d! + "%" : "null"
                 backgroundColorView(view: weekChangeView, percentChange: ticker.percent_change_7d)
                 
-                
-                dataSecondaryLabel.text = formatter.string(from: ticker.price_btc as NSNumber)! + " BTC"
-                rankLabel.text = String(ticker.rank)
-                
-                scaleFactor(label: marketcapLabel)
-                marketcapLabel.text = formatCurrency(value: ticker.market_cap_usd)
-                
-                scaleFactor(label: volumeLabel)
-                volumeLabel.text = formatCurrency(value: ticker.volume_usd_24h)
+                dataSecondaryLabel.text = ticker.price_btc! + " BTC"
+                rankLabel.text = ticker.rank
+
+                marketcapLabel.text = ticker.market_cap_usd != nil ? ticker.market_cap_usd! : "null"
+                volumeLabel.text = ticker.volume_usd_24h != nil ? ticker.volume_usd_24h! : "null"
+
             }
         }
         
@@ -244,12 +232,17 @@ class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
         }
     }
     
-    func backgroundColorView(view: UIView, percentChange: Float) {
-        if percentChange >= 0 {
-            view.backgroundColor = UIColor(red:0.30, green:0.85, blue:0.39, alpha:1.0)
+    func backgroundColorView(view: UIView, percentChange: String?) {
+        if let percentChange = percentChange{
+            if Float(percentChange)! >= 0 {
+                view.backgroundColor = UIColor(red:0.30, green:0.85, blue:0.39, alpha:1.0)
+            }
+            else{
+                view.backgroundColor = UIColor(red:1.00, green:0.23, blue:0.18, alpha:1.0)
+            }
         }
         else{
-            view.backgroundColor = UIColor(red:1.00, green:0.23, blue:0.18, alpha:1.0)
+            view.backgroundColor = UIColor(red:1.00, green:0.90, blue:0.13, alpha:1.0)
         }
     }
     
@@ -363,7 +356,7 @@ class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
             }
             
             for i in char {
-                yVals1.append(ChartDataEntry(x: Double(Int(i.timestamp / 1000)), y: i.item))
+                yVals1.append(ChartDataEntry(x: Double(Int(i.timestamp / 1000)), y: Double(i.item)))
             }
             
             
@@ -448,30 +441,13 @@ class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
         loadlineView()
     }
     
-    func formatCurrency(value: Float) -> String {
-        let formatter = NumberFormatter()
-        formatter.numberStyle = .currency
-        formatter.maximumFractionDigits = 25
-        formatter.locale = Locale(identifier: "en_US")
-        let result = formatter.string(from: value as NSNumber)
-        return result!
-    }
+
     
-    func scaleFactor(label: UILabel) {
-        label.minimumScaleFactor = 0.5
-        label.adjustsFontSizeToFitWidth = true
-    }
     
     @objc func reload(_ sender:UIButton) {
         refresh()
     }
     
-    /*
-    //MARK:LoadSubview
-    func showLoadSubview() {
-        self.loadSubview = LoadSubview(frame: CGRect(x: 0, y: 0, width: self.view.bounds.width, height: self.view.bounds.height ))
-        self.view.superview?.addSubview(self.loadSubview!)
-    }*/
     
     //MARK: ErrorSubview
     func showErrorSubview(error: Error, frame: CGRect) {

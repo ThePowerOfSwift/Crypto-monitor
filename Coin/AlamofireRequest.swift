@@ -10,7 +10,7 @@ import Foundation
 import Alamofire
 import SwiftyJSON
 
-public class CurrencyCharts {
+public class CurrencyCharts: Codable {
     public var market_cap_by_available_supply:[Chart]
     public var price_btc:[Chart]
     public var price_usd:[Chart]
@@ -24,7 +24,8 @@ public class CurrencyCharts {
     }
 }
 
-public class Chart {
+
+public class Chart: Codable {
     public var timestamp:Double
     public var item:Double
     
@@ -34,38 +35,34 @@ public class Chart {
     }
 }
 
-
-public class Ticker:NSObject, NSCoding{
+public class Ticker: NSObject, NSCoding, Codable{
     
-    public var id:String
-    public var name:String
-    public var symbol:String
-    public var rank:Int
-    public var price_usd:Double
-    public var price_btc:Double
-    public var volume_usd_24h:Float
-    public var market_cap_usd:Float
-    public var available_supply:Float
-    public var total_supply:Float
-    public var percent_change_1h:Float
-    public var percent_change_24h:Float
-    public var percent_change_7d:Float
-    public var last_updated:NSDate
+    public var id:String?
+    public var name:String?
+    public var symbol:String?
+    public var rank:String?
+    public var price_usd:String?
+    public var price_btc:String?
+    public var volume_usd_24h:String?
+    public var market_cap_usd:String?
+    public var available_supply:String?
+    public var total_supply:String?
+    public var percent_change_1h:String?
+    public var percent_change_24h:String?
+    public var percent_change_7d:String?
+ 
 
-    public init(id:String,
-                name:String,
-                symbol:String,
-                rank:Int,
-                price_usd:Double,
-                price_btc:Double,
-                volume_usd_24h:Float,
-                market_cap_usd:Float,
-                available_supply:Float,
-                total_supply:Float,
-                percent_change_1h:Float,
-                percent_change_24h:Float,
-                percent_change_7d:Float,
-                last_updated:Int){
+    public init(id:String?,
+                name:String?,
+                symbol:String?,
+                rank:String?,
+                price_usd:String?,
+                price_btc:String?,
+                volume_usd_24h:String?,
+                market_cap_usd:String?,
+                percent_change_1h:String?,
+                percent_change_24h:String?,
+                percent_change_7d:String?){
         
         self.id = id
         self.name = name
@@ -75,30 +72,23 @@ public class Ticker:NSObject, NSCoding{
         self.price_btc = price_btc
         self.volume_usd_24h = volume_usd_24h
         self.market_cap_usd = market_cap_usd
-        self.available_supply = available_supply
-        self.total_supply = total_supply
         self.percent_change_1h = percent_change_1h
         self.percent_change_24h = percent_change_24h
         self.percent_change_7d = percent_change_7d
-        self.last_updated = NSDate(timeIntervalSince1970: TimeInterval(last_updated))
     }
     
     required public init(coder decoder: NSCoder) {
-        self.id =  decoder.decodeObject(forKey: "id") as! String
-        self.name =  decoder.decodeObject(forKey: "name") as! String
-        self.symbol = decoder.decodeObject(forKey: "symbol") as! String
-        self.rank = Int(decoder.decodeInt64(forKey: "rank"))
-        self.price_usd = decoder.decodeDouble(forKey: "price_usd")
-        self.price_btc = decoder.decodeDouble(forKey: "price_btc")
-        self.volume_usd_24h = decoder.decodeFloat(forKey: "volume_usd_24h")
-        self.market_cap_usd = decoder.decodeFloat(forKey: "market_cap_usd")
-        self.available_supply = decoder.decodeFloat(forKey: "available_supply")
-        self.total_supply = decoder.decodeFloat(forKey: "total_supply")
-        self.percent_change_1h = decoder.decodeFloat(forKey: "percent_change_1h")
-        self.percent_change_24h = decoder.decodeFloat(forKey: "percent_change_24h")
-        self.percent_change_7d = decoder.decodeFloat(forKey: "percent_change_7d")
-        self.last_updated = decoder.decodeObject(forKey: "last_updated") as! NSDate
-        
+        self.id =  decoder.decodeObject(forKey: "id") as? String
+        self.name =  decoder.decodeObject(forKey: "name") as? String
+        self.symbol = decoder.decodeObject(forKey: "symbol") as? String
+        self.rank = decoder.decodeObject(forKey: "rank") as? String
+        self.price_usd = decoder.decodeObject(forKey: "price_usd") as? String
+        self.price_btc = decoder.decodeObject(forKey: "price_btc") as? String
+        self.volume_usd_24h = decoder.decodeObject(forKey: "volume_usd_24h") as? String
+        self.market_cap_usd = decoder.decodeObject(forKey: "market_cap_usd") as? String
+        self.percent_change_1h = decoder.decodeObject(forKey: "percent_change_1h") as? String
+        self.percent_change_24h = decoder.decodeObject(forKey: "percent_change_24h") as? String
+        self.percent_change_7d = decoder.decodeObject(forKey: "percent_change_7d") as? String
     }
     
     public func encode(with coder: NSCoder) {
@@ -110,42 +100,98 @@ public class Ticker:NSObject, NSCoding{
         coder.encode(price_btc, forKey: "price_btc")
         coder.encode(volume_usd_24h, forKey: "volume_usd_24h")
         coder.encode(market_cap_usd, forKey: "market_cap_usd")
-        coder.encode(available_supply, forKey: "available_supply")
-        coder.encode(total_supply, forKey: "total_supply")
         coder.encode(percent_change_1h, forKey: "percent_change_1h")
         coder.encode(percent_change_24h, forKey: "percent_change_24h")
         coder.encode(percent_change_7d, forKey: "percent_change_7d")
-        coder.encode(last_updated, forKey: "last_updated")
     }
     
 }
 
 public class AlamofireRequest {
-    
     public init() {}
-        public func getTicker(completion: @escaping  ([Ticker]?, Error?) -> ()) {
-        
-        var tickerArray = [Ticker]()
-        var error:Error?
-        
-        
-        Alamofire.request("https://api.coinmarketcap.com/v1/ticker/").validate().responseJSON { response in
+
+    public func getTicker(completion: @escaping  ([Ticker]?, Error?) -> ()) {
+        Alamofire.request("https://api.coinmarketcap.com/v1/ticker/").validate().responseData { response in
             switch response.result {
-            case .success(let value):
-                print("Validation Successful")
+            case .success(let responseData):
+                print("Validation Successful getTicker2")
                 
-                let json = JSON(value)
-                
-                for item in json.arrayValue {
-                    tickerArray.append(self.jsonToTicker(json: item))
+                let decoder = JSONDecoder()
+                do {
+                    let tickerDecodeArray = try decoder.decode([Ticker].self, from: responseData)
+                    completion(tickerDecodeArray, nil)
+                } catch {
+                    print("error trying to convert data to JSON")
+                    print(error)
+                    completion(nil, error)
                 }
-            case .failure(let errorFailure):
-                error = errorFailure
+            case .failure(let error):
+                completion(nil, error)
             }
-            completion(tickerArray, error)
         }
     }
- 
+    
+    public func getTickerID(idArray: [String], completion: @escaping  ([Ticker]?, Error?) -> ()) {
+        Alamofire.request("https://api.coinmarketcap.com/v1/ticker/").validate().responseData { response in
+            switch response.result {
+            case .success(let responseData):
+                print("Validation Successful getTickerID")
+                
+                let decoder = JSONDecoder()
+                do {
+                    var tickerFilterArray = [Ticker]()
+                    let tickerDecodeArray = try decoder.decode([Ticker].self, from: responseData)
+                    for id in idArray{
+                        if let json = tickerDecodeArray.filter({ $0.id == id}).first{
+                            tickerFilterArray.append(json)
+                        }
+                    }
+                    completion(tickerFilterArray, nil)
+                } catch {
+                    print("error trying to convert data to JSON")
+                    print(error)
+                    completion(nil, error)
+                }
+            case .failure(let error):
+                completion(nil, error)
+            }
+        }
+    }
+    /*
+    public func getCurrencyCharts(id: String, of: NSDate?, completion: @escaping  (CurrencyCharts?, Error?) -> ()) {
+
+        var url = "https://graphs.coinmarketcap.com/currencies/" + id + "/"
+        if let of = of {
+            url += String(Int(of.timeIntervalSince1970)) + "000/" + String(Int(NSDate().timeIntervalSince1970)) + "000/"
+        }
+        let configuration = URLSessionConfiguration.default
+        //  configuration.timeoutIntervalForRequest = 60
+        configuration.urlCache = nil
+        let  sessionManager = Alamofire.SessionManager(configuration: configuration)
+        
+        sessionManager.request(url).validate().responseData { response in
+            
+            switch response.result {
+            case .success(let responseData):
+                print("Validation Successful getCurrencyCharts")
+                
+                let decoder = JSONDecoder()
+                do {
+                    let tickerDecodeArray = try decoder.decode(CurrencyCharts2.self, from: responseData)
+                   // completion(tickerDecodeArray, nil)
+                } catch {
+                    print("error trying to convert data to JSON")
+                    print(error)
+                    completion(nil, error)
+                }
+            case .failure(let error):
+                completion(nil, error)
+            }
+            sessionManager.session.invalidateAndCancel()
+        }
+    }
+    */
+    /*
     public func getTickerID(idArray: [String], completion: @escaping  ([Ticker]?, Error?) -> ()) {
         
         var tickerArray = [Ticker]()
@@ -175,31 +221,28 @@ public class AlamofireRequest {
             completion(tickerArray, error)
         }
     }
+ 
     
     private func jsonToTicker(json: JSON) -> Ticker {
        return Ticker(id: json["id"].stringValue,
                             name: json["name"].stringValue,
                             symbol: json["symbol"].stringValue,
-                            rank: json["rank"].intValue,
-                            price_usd: json["price_usd"].doubleValue,
-                            price_btc: json["price_btc"].doubleValue,
-                            volume_usd_24h: json["24h_volume_usd"].floatValue,
-                            market_cap_usd: json["market_cap_usd"].floatValue,
-                            available_supply: json["available_supply"].floatValue,
-                            total_supply: json["total_supply"].floatValue,
-                            percent_change_1h: json["percent_change_1h"].floatValue,
-                            percent_change_24h: json["percent_change_24h"].floatValue,
-                            percent_change_7d: json["percent_change_7d"].floatValue,
-                            last_updated: json["last_updated"].intValue)
+                            rank: json["rank"].stringValue,
+                            price_usd: json["price_usd"].stringValue,
+                            price_btc: json["price_btc"].stringValue,
+                            volume_usd_24h: json["24h_volume_usd"].stringValue,
+                            market_cap_usd: json["market_cap_usd"].stringValue,
+                            percent_change_1h: json["percent_change_1h"].stringValue,
+                            percent_change_24h: json["percent_change_24h"].stringValue,
+                            percent_change_7d: json["percent_change_7d"].stringValue)
     }
+    */
     
+  
     public func getCurrencyCharts(id: String, of: NSDate?, completion: @escaping  (CurrencyCharts?, Error?) -> ()) {
         
         var currencyCharts:CurrencyCharts?
         var error:Error?
-        
-        
-        
         var url = "https://graphs.coinmarketcap.com/currencies/" + id + "/"
         
         if let of = of {
@@ -250,6 +293,7 @@ public class AlamofireRequest {
         }
         
     }
+
     
     public func getMinDateCharts(id: String, completion: @escaping  (Date?, Error?) -> ()) {
         

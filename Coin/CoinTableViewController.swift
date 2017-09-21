@@ -158,7 +158,6 @@ class CoinTableViewController: UITableViewController, WCSessionDelegate {
                     self.refreshControl?.attributedTitle = NSAttributedString(string: dateToString(date: lastUpdate))
                 }
                 tableView.reloadData()
-
             }
         }
     }
@@ -178,55 +177,53 @@ class CoinTableViewController: UITableViewController, WCSessionDelegate {
         let row = indexPath.row
         
         if let ticker = getTickerID {
-            let url = URL(string: "https://files.coinmarketcap.com/static/img/coins/32x32/\(String(describing: ticker[row].id)).png")!
-            cell.coinImageView.af_setImage(withURL: url)
+            if let id = ticker[row].id {
+                let url = URL(string: "https://files.coinmarketcap.com/static/img/coins/32x32/\(id).png")!
+                cell.coinImageView.af_setImage(withURL: url)
+            }
+
             cell.coinNameLabel.text = ticker[row].name
             
             let keyStore = NSUbiquitousKeyValueStore ()
             
             switch keyStore.longLong(forKey: "priceCurrency") {
             case 0:
-                let formatter = NumberFormatter()
-                formatter.numberStyle = .currency
-              //  formatter.minimumFractionDigits = 2
-                formatter.maximumFractionDigits = 25
-                formatter.locale = Locale(identifier: "en_US")
-                let uu = NSNumber(value: ticker[row].price_usd)
-                print(uu)
-                cell.priceCoinLabel.text = formatter.string(from: uu)!
+                cell.priceCoinLabel.text = ticker[row].price_usd
             case 1:
-                let formatter = NumberFormatter()
-                formatter.numberStyle = .currency
-                formatter.currencySymbol = "₿"
-                formatter.locale = Locale.current
-                formatter.minimumFractionDigits = 0
-               formatter.maximumFractionDigits = 25
-                
-                cell.priceCoinLabel.text = formatter.string(from: ticker[row].price_btc as NSNumber)!
+                cell.priceCoinLabel.text = ticker[row].price_btc
             default:
                 break
             }
             
-        var percentChange = Float()
-        
-        switch keyStore.longLong(forKey: "percentChange") {
-        case 0:
-            percentChange = ticker[row].percent_change_1h
-        case 1:
-            percentChange = ticker[row].percent_change_24h
-        case 2:
-            percentChange = ticker[row].percent_change_7d
-        default:
-            percentChange = ticker[row].percent_change_24h
-        }
-        
-        CryptocurrencyInfoViewController().backgroundColorView(view: cell.percentChangeView, percentChange: percentChange)
-        
-        cell.percentChangeLabel.text = String(percentChange) + " %"
+            var percentChange:String?
+            switch keyStore.longLong(forKey: "percentChange") {
+            case 0:
+                percentChange = ticker[row].percent_change_1h
+            case 1:
+                percentChange = ticker[row].percent_change_24h
+            case 2:
+                percentChange = ticker[row].percent_change_7d
+            default:
+                break
+            }
+            
+            if let percentChange = percentChange, let percent =  Float(percentChange) {
+                    if percent >= 0 {
+                        cell.percentChangeView.backgroundColor = UIColor(red:0.30, green:0.85, blue:0.39, alpha:1.0)
+                    }
+                    else{
+                        cell.percentChangeView.backgroundColor = UIColor(red:1.00, green:0.23, blue:0.18, alpha:1.0)
+                    }
+                    cell.percentChangeLabel.text = percentChange + " %"
+            }
+            else{
+                cell.percentChangeView.backgroundColor = UIColor(red:1.00, green:0.90, blue:0.13, alpha:1.0)
+                cell.percentChangeLabel.text = "null"
+            }
+            
         }
         return cell
     }
-    
     override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView?
     {
         let headerView = tableView.dequeueReusableCell(withIdentifier: "header") as! HeaderTableViewCell
@@ -271,7 +268,7 @@ class CoinTableViewController: UITableViewController, WCSessionDelegate {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath){
         if getTickerID != nil {
-            openID = getTickerID![indexPath.row].id
+            openID = getTickerID![indexPath.row].id!
         }
     }
 
@@ -279,7 +276,7 @@ class CoinTableViewController: UITableViewController, WCSessionDelegate {
         if editingStyle == .delete{
             let keyStore = NSUbiquitousKeyValueStore ()
             if var idArray = keyStore.array(forKey: "id") as? [String] {
-                if let index = idArray.index(of: getTickerID![indexPath.row].id){
+                if let index = idArray.index(of: getTickerID![indexPath.row].id!){
                     idArray.remove(at: index)
                     getTickerID!.remove(at: indexPath.row)
                     
@@ -306,9 +303,9 @@ class CoinTableViewController: UITableViewController, WCSessionDelegate {
         
         let keyStore = NSUbiquitousKeyValueStore ()
         if var idArray = keyStore.array(forKey: "id") as? [String] {
-            if let index = idArray.index(of: getTickerID![sourceIndexPath.row].id){
+            if let index = idArray.index(of: getTickerID![sourceIndexPath.row].id!){
                 idArray.remove(at: index)
-                idArray.insert(getTickerID![sourceIndexPath.row].id, at: destinationIndexPath.row)
+                idArray.insert(getTickerID![sourceIndexPath.row].id!, at: destinationIndexPath.row)
                 getTickerID!.rearrange(from: sourceIndexPath.row, to: destinationIndexPath.row)
                 
                 // set iCloud key-value

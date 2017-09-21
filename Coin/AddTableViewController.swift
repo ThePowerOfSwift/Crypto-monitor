@@ -107,8 +107,11 @@ class AddTableViewController: UITableViewController {
         }
         
         cell.cryptocurrencyImageView.image = nil
-        let url = URL(string: "https://files.coinmarketcap.com/static/img/coins/32x32/\(ticker.id).png")!
-        cell.cryptocurrencyImageView.af_setImage(withURL: url)
+        if let id = ticker.id {
+            let url = URL(string: "https://files.coinmarketcap.com/static/img/coins/32x32/\(id).png")!
+            cell.cryptocurrencyImageView.af_setImage(withURL: url)
+        }
+
         cell.cryptocurrencyNameLabel?.text = ticker.name
         
         if (getTickerID?.filter({ $0.id == ticker.id}).first) != nil{
@@ -135,8 +138,8 @@ class AddTableViewController: UITableViewController {
         let keyStore = NSUbiquitousKeyValueStore ()
         if var idArray = keyStore.array(forKey: "id") as? [String] {
             
-            if !idArray.contains(ticker.id){
-                idArray.append(ticker.id)
+            if !idArray.contains(ticker.id!){
+                idArray.append(ticker.id!)
                 
                 keyStore.set(idArray, forKey: "id")
                 keyStore.synchronize()
@@ -153,7 +156,7 @@ class AddTableViewController: UITableViewController {
                 _ = navigationController?.popViewController(animated: true)
             }
             else{ 
-                let messageString = ticker.name + NSLocalizedString(" has already been added to favorites.", comment: "Title message")
+                let messageString = ticker.name! + NSLocalizedString(" has already been added to favorites.", comment: "Title message")
                 
                 let alert = UIAlertController(title: NSLocalizedString("Added", comment: "Title alert"), message: messageString, preferredStyle: .alert)
                 alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler: nil))
@@ -194,7 +197,7 @@ class AddTableViewController: UITableViewController {
     }
     
     func filter(searchText: String)  {
-        tickerSearchResult = ticker.filter{$0.name.lowercased().contains(searchText.lowercased())}
+        tickerSearchResult = ticker.filter{($0.name?.lowercased().contains(searchText.lowercased()))!}
         tableView.reloadData()
     }
     

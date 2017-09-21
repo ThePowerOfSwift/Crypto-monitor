@@ -72,9 +72,9 @@ class Ticker: NSObject, NSCoding, Codable{
                 symbol:String,
                 price_usd:String,
                 price_btc:String,
-                percent_change_1h:String,
-                percent_change_24h:String,
-                percent_change_7d:String){
+                percent_change_1h:String?,
+                percent_change_24h:String?,
+                percent_change_7d:String?){
         
         self.id = id
         self.symbol = symbol
