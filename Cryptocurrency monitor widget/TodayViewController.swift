@@ -9,9 +9,9 @@
 import UIKit
 import NotificationCenter
 
-import AlamofireImage
-import CryptocurrencyRequest
 
+import CryptocurrencyRequest
+import AlamofireImage
 
 class TodayViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, NCWidgetProviding {
     

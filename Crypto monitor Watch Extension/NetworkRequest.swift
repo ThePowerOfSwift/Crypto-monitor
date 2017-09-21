@@ -9,7 +9,7 @@
 import Foundation
 
 class NetworkRequest{
-
+    
     public func getTickerID(idArray: [String], completion: @escaping ([Ticker]?, Error?) -> Void) {
         let endpoint = "https://api.coinmarketcap.com/v1/ticker/"
         guard let url = URL(string: endpoint) else {
@@ -65,7 +65,7 @@ class Ticker: NSObject, NSCoding, Codable{
     public var price_usd:String
     public var price_btc:String
     public var percent_change_1h:String?
-   public var percent_change_24h:String?
+    public var percent_change_24h:String?
     public var percent_change_7d:String?
     
     public init(id:String,

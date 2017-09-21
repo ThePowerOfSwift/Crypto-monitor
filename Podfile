@@ -12,7 +12,5 @@ target 'CryptocurrencyRequest' do
 end
 
 target 'Cryptocurrency monitor widget' do
-end
-
-target 'Crypto monitor Watch Extension' do
+	pod 'AlamofireImage'
 end
