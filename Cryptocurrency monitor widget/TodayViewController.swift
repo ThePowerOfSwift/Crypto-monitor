@@ -8,8 +8,6 @@
 
 import UIKit
 import NotificationCenter
-
-
 import CryptocurrencyRequest
 import AlamofireImage
 
@@ -21,6 +19,15 @@ class TodayViewController: UIViewController, UITableViewDataSource, UITableViewD
     
     fileprivate var cryptocurrency = [Ticker]()
     fileprivate var cryptocurrencyCompact = [Ticker]()
+    
+    let formatterCurrencyUSD: NumberFormatter = {
+        let formatterCurrencyUSD = NumberFormatter()
+        formatterCurrencyUSD.numberStyle = .currency
+        formatterCurrencyUSD.currencyCode = "USD"
+        formatterCurrencyUSD.maximumFractionDigits = 10
+        formatterCurrencyUSD.locale = Locale(identifier: "en_US")
+        return formatterCurrencyUSD
+    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -151,19 +158,18 @@ class TodayViewController: UIViewController, UITableViewDataSource, UITableViewD
         
         let row = indexPath.row
         
-        if let id = cryptocurrencyShow[row].id {
-            let url = URL(string: "https://files.coinmarketcap.com/static/img/coins/32x32/\(id).png")!
-            cell.coinImageView.af_setImage(withURL: url)
-        }
+        let url = URL(string: "https://files.coinmarketcap.com/static/img/coins/32x32/\(cryptocurrencyShow[row].id).png")!
+        cell.coinImageView.af_setImage(withURL: url)
 
-        cell.coinNameLabel.text = cryptocurrencyShow[row].name != nil ? cryptocurrencyShow[row].name! : "null"
+        cell.coinNameLabel.text = cryptocurrencyShow[row].name
         
         let keyStore = NSUbiquitousKeyValueStore ()
         switch keyStore.longLong(forKey: "priceCurrency") {
         case 0:
-            cell.priceCoinLabel.text = cryptocurrencyShow[row].price_usd != nil ?  "$ " + cryptocurrencyShow[row].price_usd! : "$ null"
+            let price_usd = Double(cryptocurrencyShow[row].price_usd)
+            cell.priceCoinLabel.text = formatterCurrencyUSD.string(from: NSNumber(value: price_usd!))
         case 1:
-            cell.priceCoinLabel.text = cryptocurrencyShow[row].price_btc != nil ?  "₿ " + cryptocurrencyShow[row].price_usd! : "₿ null"
+            cell.priceCoinLabel.text = "₿" + cryptocurrencyShow[row].price_btc
         default:
             break
         }
@@ -171,11 +177,11 @@ class TodayViewController: UIViewController, UITableViewDataSource, UITableViewD
         var percentChange:String?
         switch keyStore.longLong(forKey: "percentChange") {
         case 0:
-            percentChange = cryptocurrencyShow[row].percent_change_1h
+            percentChange = String(describing: cryptocurrencyShow[row].percent_change_1h)
         case 1:
-            percentChange = cryptocurrencyShow[row].percent_change_24h
+            percentChange = String(describing: cryptocurrencyShow[row].percent_change_24h)
         case 2:
-            percentChange = cryptocurrencyShow[row].percent_change_7d
+            percentChange = String(describing: cryptocurrencyShow[row].percent_change_7d)
         default:
             break
         }
@@ -190,7 +196,7 @@ class TodayViewController: UIViewController, UITableViewDataSource, UITableViewD
             cell.percentChangeLabel.text = percentChange + " %"
         }
         else{
-            cell.percentChangeView.backgroundColor = UIColor(red:1.00, green:0.90, blue:0.13, alpha:1.0)
+            cell.percentChangeView.backgroundColor = UIColor.orange
             cell.percentChangeLabel.text = "null"
         }
         return cell
@@ -200,14 +206,12 @@ class TodayViewController: UIViewController, UITableViewDataSource, UITableViewD
     {
         self.tableView.cellForRow(at: indexPath)?.isSelected = false
         
-        if let id = cryptocurrency[indexPath.row].id {
-            let myAppUrl = URL(string: "cryptomonitor://?id=\(id)")!
-            extensionContext?.open(myAppUrl, completionHandler: { (success) in
-                if (!success) {
-                    print("error: failed to open app from Today Extension")
-                }
-            })
-        }
+        let myAppUrl = URL(string: "cryptomonitor://?id=\(cryptocurrency[indexPath.row].id)")!
+        extensionContext?.open(myAppUrl, completionHandler: { (success) in
+            if (!success) {
+                print("error: failed to open app from Today Extension")
+            }
+        })
     }
     
     @IBAction func emptyButton(_ sender: Any) {

@@ -36,5 +36,4 @@ class SettingTableViewController: UITableViewController {
     @IBAction func coinMarketCapAction(_ sender: Any) {
         UIApplication.shared.open(URL(string: "https://coinmarketcap.com")!, options: [:], completionHandler: nil)
     }
-
 }

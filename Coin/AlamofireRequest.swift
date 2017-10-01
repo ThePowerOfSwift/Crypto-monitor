@@ -35,34 +35,73 @@ public class Chart: Codable {
     }
 }
 
-public class Ticker: NSObject, NSCoding, Codable{
-    
-    public var id:String?
-    public var name:String?
-    public var symbol:String?
-    public var rank:String?
-    public var price_usd:String?
-    public var price_btc:String?
-    public var volume_usd_24h:String?
-    public var market_cap_usd:String?
-    public var available_supply:String?
-    public var total_supply:String?
-    public var percent_change_1h:String?
-    public var percent_change_24h:String?
-    public var percent_change_7d:String?
- 
+public struct Ticker: Decodable {
+    public let id:String
+    public let name:String
+    public let symbol:String
+    public let rank:String
+    public let price_usd:String
+    public let price_btc:String
+    public let volume_usd_24h:String?
+    public let market_cap_usd:String?
+    public let percent_change_1h:String?
+    public let percent_change_24h:String?
+    public let percent_change_7d:String?
 
-    public init(id:String?,
-                name:String?,
-                symbol:String?,
-                rank:String?,
-                price_usd:String?,
-                price_btc:String?,
-                volume_usd_24h:String?,
-                market_cap_usd:String?,
-                percent_change_1h:String?,
-                percent_change_24h:String?,
-                percent_change_7d:String?){
+    enum CodingKeys: String, CodingKey {
+        case id
+        case name
+        case symbol
+        case rank
+        case price_usd
+        case price_btc
+        case volume_usd_24h = "24h_volume_usd"
+        case market_cap_usd
+        case percent_change_1h
+        case percent_change_24h
+        case percent_change_7d
+    }
+}
+
+extension Ticker {
+    public func encode() -> Data {
+        let data = NSMutableData()
+        let archiver = NSKeyedArchiver(forWritingWith: data)
+
+        archiver.encode(id, forKey: "id")
+        archiver.encode(name, forKey: "name")
+        archiver.encode(symbol, forKey: "symbol")
+        archiver.encode(rank, forKey: "rank")
+        archiver.encode(price_usd, forKey: "price_usd")
+        archiver.encode(price_btc, forKey: "price_btc")
+        archiver.encode(volume_usd_24h, forKey: "volume_usd_24h")
+        archiver.encode(market_cap_usd, forKey: "market_cap_usd")
+        archiver.encode(percent_change_1h, forKey: "percent_change_1h")
+        archiver.encode(percent_change_24h, forKey: "percent_change_24h")
+        archiver.encode(percent_change_7d, forKey: "percent_change_7d")
+        archiver.finishEncoding()
+        return data as Data
+        
+        
+    }
+    
+    public init?(data: Data) {
+        let unarchiver = NSKeyedUnarchiver(forReadingWith: data)
+        defer {
+            unarchiver.finishDecoding()
+        }
+        guard let id = unarchiver.decodeObject(forKey: "id") as? String else { return nil }
+        guard let name = unarchiver.decodeObject(forKey: "name") as? String else { return nil }
+        guard let symbol = unarchiver.decodeObject(forKey: "symbol") as? String else { return nil }
+        guard let rank = unarchiver.decodeObject(forKey: "rank") as? String else { return nil }
+        guard let price_usd = unarchiver.decodeObject(forKey: "price_usd") as? String else { return nil }
+        guard let price_btc = unarchiver.decodeObject(forKey: "price_btc") as? String else { return nil }
+        guard let volume_usd_24h = unarchiver.decodeObject(forKey: "volume_usd_24h") as? String else { return nil }
+        guard let market_cap_usd = unarchiver.decodeObject(forKey: "market_cap_usd") as? String else { return nil }
+        guard let percent_change_1h = unarchiver.decodeObject(forKey: "percent_change_1h") as? String else { return nil }
+        guard let percent_change_24h = unarchiver.decodeObject(forKey: "percent_change_24h") as? String else { return nil }
+        guard let percent_change_7d = unarchiver.decodeObject(forKey: "percent_change_7d") as? String else { return nil }
+        
         
         self.id = id
         self.name = name
@@ -75,36 +114,8 @@ public class Ticker: NSObject, NSCoding, Codable{
         self.percent_change_1h = percent_change_1h
         self.percent_change_24h = percent_change_24h
         self.percent_change_7d = percent_change_7d
+
     }
-    
-    required public init(coder decoder: NSCoder) {
-        self.id =  decoder.decodeObject(forKey: "id") as? String
-        self.name =  decoder.decodeObject(forKey: "name") as? String
-        self.symbol = decoder.decodeObject(forKey: "symbol") as? String
-        self.rank = decoder.decodeObject(forKey: "rank") as? String
-        self.price_usd = decoder.decodeObject(forKey: "price_usd") as? String
-        self.price_btc = decoder.decodeObject(forKey: "price_btc") as? String
-        self.volume_usd_24h = decoder.decodeObject(forKey: "volume_usd_24h") as? String
-        self.market_cap_usd = decoder.decodeObject(forKey: "market_cap_usd") as? String
-        self.percent_change_1h = decoder.decodeObject(forKey: "percent_change_1h") as? String
-        self.percent_change_24h = decoder.decodeObject(forKey: "percent_change_24h") as? String
-        self.percent_change_7d = decoder.decodeObject(forKey: "percent_change_7d") as? String
-    }
-    
-    public func encode(with coder: NSCoder) {
-        coder.encode(id, forKey: "id")
-        coder.encode(name, forKey: "name")
-        coder.encode(symbol, forKey: "symbol")
-        coder.encode(rank, forKey: "rank")
-        coder.encode(price_usd, forKey: "price_usd")
-        coder.encode(price_btc, forKey: "price_btc")
-        coder.encode(volume_usd_24h, forKey: "volume_usd_24h")
-        coder.encode(market_cap_usd, forKey: "market_cap_usd")
-        coder.encode(percent_change_1h, forKey: "percent_change_1h")
-        coder.encode(percent_change_24h, forKey: "percent_change_24h")
-        coder.encode(percent_change_7d, forKey: "percent_change_7d")
-    }
-    
 }
 
 public class AlamofireRequest {
@@ -157,88 +168,7 @@ public class AlamofireRequest {
             }
         }
     }
-    /*
-    public func getCurrencyCharts(id: String, of: NSDate?, completion: @escaping  (CurrencyCharts?, Error?) -> ()) {
 
-        var url = "https://graphs.coinmarketcap.com/currencies/" + id + "/"
-        if let of = of {
-            url += String(Int(of.timeIntervalSince1970)) + "000/" + String(Int(NSDate().timeIntervalSince1970)) + "000/"
-        }
-        let configuration = URLSessionConfiguration.default
-        //  configuration.timeoutIntervalForRequest = 60
-        configuration.urlCache = nil
-        let  sessionManager = Alamofire.SessionManager(configuration: configuration)
-        
-        sessionManager.request(url).validate().responseData { response in
-            
-            switch response.result {
-            case .success(let responseData):
-                print("Validation Successful getCurrencyCharts")
-                
-                let decoder = JSONDecoder()
-                do {
-                    let tickerDecodeArray = try decoder.decode(CurrencyCharts2.self, from: responseData)
-                   // completion(tickerDecodeArray, nil)
-                } catch {
-                    print("error trying to convert data to JSON")
-                    print(error)
-                    completion(nil, error)
-                }
-            case .failure(let error):
-                completion(nil, error)
-            }
-            sessionManager.session.invalidateAndCancel()
-        }
-    }
-    */
-    /*
-    public func getTickerID(idArray: [String], completion: @escaping  ([Ticker]?, Error?) -> ()) {
-        
-        var tickerArray = [Ticker]()
-        var error:Error?
-        
-        
-        Alamofire.request("https://api.coinmarketcap.com/v1/ticker/").validate().responseJSON { response in
-            switch response.result {
-            case .success(let value):
-                print("Validation Successful")
-                
-                let json = JSON(value).arrayValue
-                var jsonIdArray = [JSON]()
-                
-                for id in idArray{
-                    if let json = json.filter({ $0["id"].stringValue == id}).first{
-                        jsonIdArray.append(json)
-                    }
-                }
-                
-                for item in jsonIdArray {
-                        tickerArray.append(self.jsonToTicker(json: item))
-                }
-            case .failure(let errorFailure):
-                error = errorFailure
-            }
-            completion(tickerArray, error)
-        }
-    }
- 
-    
-    private func jsonToTicker(json: JSON) -> Ticker {
-       return Ticker(id: json["id"].stringValue,
-                            name: json["name"].stringValue,
-                            symbol: json["symbol"].stringValue,
-                            rank: json["rank"].stringValue,
-                            price_usd: json["price_usd"].stringValue,
-                            price_btc: json["price_btc"].stringValue,
-                            volume_usd_24h: json["24h_volume_usd"].stringValue,
-                            market_cap_usd: json["market_cap_usd"].stringValue,
-                            percent_change_1h: json["percent_change_1h"].stringValue,
-                            percent_change_24h: json["percent_change_24h"].stringValue,
-                            percent_change_7d: json["percent_change_7d"].stringValue)
-    }
-    */
-    
-  
     public func getCurrencyCharts(id: String, of: NSDate?, completion: @escaping  (CurrencyCharts?, Error?) -> ()) {
         
         var currencyCharts:CurrencyCharts?
@@ -332,10 +262,12 @@ public class SettingsUserDefaults{
     public init() {}
     
     public func setUserDefaults(ticher: [Ticker], idArray: [String], lastUpdate: Date?) {
-        let encodedData = NSKeyedArchiver.archivedData(withRootObject: ticher)
+
         let userDefaults = UserDefaults(suiteName: "group.mialin.valentyn.crypto.monitor")
         userDefaults?.set(idArray, forKey: "id")
-        userDefaults?.set(encodedData, forKey: "cryptocurrency")
+        
+        let tickersData = ticher.map { $0.encode() }
+        userDefaults?.set(tickersData, forKey: "tickers")
         if lastUpdate != nil{
             userDefaults?.set(lastUpdate, forKey: "lastUpdate")
         }

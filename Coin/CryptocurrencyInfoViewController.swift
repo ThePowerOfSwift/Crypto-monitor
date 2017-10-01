@@ -47,6 +47,15 @@ class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
     var currencyCharts: CurrencyCharts?
     let userCalendar = Calendar.current
     
+    let formatterCurrencyUSD: NumberFormatter = {
+        let formatterCurrencyUSD = NumberFormatter()
+        formatterCurrencyUSD.numberStyle = .currency
+        formatterCurrencyUSD.currencyCode = "USD"
+        formatterCurrencyUSD.maximumFractionDigits = 10
+        formatterCurrencyUSD.locale = Locale(identifier: "en_US")
+        return formatterCurrencyUSD
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -78,18 +87,11 @@ class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
         let keyStore = NSUbiquitousKeyValueStore ()
         selectSegmentedControl.selectedSegmentIndex = Int(keyStore.longLong(forKey: "typeChart"))
         zoomSegmentedControl.selectedSegmentIndex = Int(keyStore.longLong(forKey: "zoomChart"))
-        
-        loadCache()
-    }
-    
-    
-    override func viewWillAppear(_ animated: Bool) {
-        if getTickerID == nil {
-            refresh()
-        }
-        else{
-            viewCryptocurrencyInfo()
-        }
+        /*
+         if getTickerID == nil {
+         refresh()
+         }
+         */
         AlamofireRequest().getMinDateCharts(id: openID, completion: { (minDate: Date?, error : Error?) in
             if error == nil {
                 if let minDate = minDate{
@@ -126,26 +128,16 @@ class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
         })
     }
     
-    //Unlock
-    @objc func applicationDidBecomeActiveNotification(notification : NSNotification) {
-        loadCache()
+    
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        viewCryptocurrencyInfo()
     }
     
-    private func loadCache() {
-        let userDefaults = UserDefaults(suiteName: "group.mialin.valentyn.crypto.monitor")
-        if let decodedTicker = userDefaults?.data(forKey: "cryptocurrency"){
-            if let cacheTicker = NSKeyedUnarchiver.unarchiveObject(with: decodedTicker) as? [Ticker] {
-                if let lastUpdate = userDefaults?.object(forKey: "lastUpdate") as? Date {
-                    if lastUpdate <= (userCalendar.date(byAdding: .minute, value: -5, to: Date())! ){
-                        refresh()
-                    }
-                    else{
-                        getTickerID = cacheTicker
-                        viewCryptocurrencyInfo()
-                    }
-                }
-            }
-        }
+    //Unlock
+    @objc func applicationDidBecomeActiveNotification(notification : NSNotification) {
+        loadTicker()
     }
     
     func zoomSelectedSegment(index: Int){
@@ -163,7 +155,7 @@ class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
     
     func loadTicker() {
         startRefreshActivityIndicator()
-
+        
         let keyStore = NSUbiquitousKeyValueStore ()
         if  let idArray = keyStore.array(forKey: "id") as? [String] {
             AlamofireRequest().getTickerID(idArray: idArray, completion: { (ticker : [Ticker]?, error : Error?) in
@@ -184,7 +176,6 @@ class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
         }
     }
     
-    
     func viewCryptocurrencyInfo() {
         refreshBarButtonItem()
         
@@ -194,15 +185,13 @@ class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
             }
             if let ticker = ticker {
                 
-                if let id = ticker.id {
-                    let url = URL(string: "https://files.coinmarketcap.com/static/img/coins/64x64/\(id).png")!
-                    imageView.af_setImage(withURL: url)
-                }
-
+                let url = URL(string: "https://files.coinmarketcap.com/static/img/coins/64x64/\(ticker.id).png")!
+                imageView.af_setImage(withURL: url)
+                
                 navigationItem.title = ticker.symbol
-
                 nameLabel.text = ticker.name
-                dataCurrencyLabel.text = ticker.price_usd! + "USD"
+                let price_usd = Double(ticker.price_usd)
+                dataCurrencyLabel.text = formatterCurrencyUSD.string(from: NSNumber(value:price_usd!))
                 
                 // 1h
                 oneHourChangeLabel.text = ticker.percent_change_1h != nil ? ticker.percent_change_1h! + "%" : "null"
@@ -214,12 +203,11 @@ class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
                 weekChangeLabel.text = ticker.percent_change_7d != nil ? ticker.percent_change_7d! + "%" : "null"
                 backgroundColorView(view: weekChangeView, percentChange: ticker.percent_change_7d)
                 
-                dataSecondaryLabel.text = ticker.price_btc! + " BTC"
-                rankLabel.text = ticker.rank
-
-                marketcapLabel.text = ticker.market_cap_usd != nil ? ticker.market_cap_usd! : "null"
-                volumeLabel.text = ticker.volume_usd_24h != nil ? ticker.volume_usd_24h! : "null"
-
+                dataSecondaryLabel.text = "₿" + String(ticker.price_btc)
+                rankLabel.text = String(ticker.rank)
+                
+                marketcapLabel.text = ticker.market_cap_usd != nil ? formatterCurrencyUSD.string(from: NSNumber(value: Double(ticker.market_cap_usd!)!)) : "null"
+                volumeLabel.text = ticker.volume_usd_24h != nil ? formatterCurrencyUSD.string(from: NSNumber(value: Double(ticker.volume_usd_24h!)!)) : "null"
             }
         }
         
@@ -242,7 +230,7 @@ class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
             }
         }
         else{
-            view.backgroundColor = UIColor(red:1.00, green:0.90, blue:0.13, alpha:1.0)
+            view.backgroundColor = .orange
         }
     }
     
@@ -251,7 +239,6 @@ class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
         
         lineChartView.isHidden = true
         lineChartActivityIndicator.isHidden = false
-     //   LineChartErrorView.isHidden = true
         
         var of: NSDate?
         
@@ -328,17 +315,13 @@ class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
     }
     
     func lineView() {
-        
-
         lineChartView.isHidden = false
         lineChartActivityIndicator.isHidden = true
         LineChartErrorView.isHidden = true
         
         if let currencyCharts = self.currencyCharts {
-            
             // Creating an array of data entries
             var yVals1 = [ChartDataEntry]()
-            
             var char = [Chart]()
             
             switch selectSegmentedControl.selectedSegmentIndex {
@@ -359,8 +342,6 @@ class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
                 yVals1.append(ChartDataEntry(x: Double(Int(i.timestamp / 1000)), y: Double(i.item)))
             }
             
-            
-            
             // Create a data set with our array
             let set1 = LineChartDataSet(values: yVals1, label: nil)
             set1.drawValuesEnabled = false // Убрать надписи
@@ -369,21 +350,15 @@ class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
             set1.highlightEnabled = false
             
             if selectSegmentedControl.selectedSegmentIndex == 3 || selectSegmentedControl.selectedSegmentIndex == 0 {
-                // let gradientColors = [UIColor.black.cgColor, UIColor.clear.cgColor] as CFArray // Colors of the gradient
-                //   let colorLocations:[CGFloat] = [1.0, 0.0] // Positioning of the gradient
-                //   let gradient = CGGradient.init(colorsSpace: CGColorSpaceCreateDeviceRGB(), colors: gradientColors, locations: colorLocations) // Gradient Object
-                // set1.fill = Fill.fillWithLinearGradient(gradient!, angle: 90.0) // Set the Gradient
                 set1.fill = Fill.fillWithColor(.black)
                 set1.fillAlpha = 1.0
                 set1.drawFilledEnabled = true // Draw the Gradient
                 
                 lineChartView.animate(yAxisDuration: 2.0)
-
             }
             else{
                 lineChartView.animate(xAxisDuration: 2.0)
             }
-
             
             //3 - create an array to store our LineChartDataSets
             var dataSets : [LineChartDataSet] = [LineChartDataSet]()
@@ -393,14 +368,9 @@ class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
             let data: LineChartData = LineChartData(dataSets: dataSets)
             //  data.setValueTextColor(UIColor.white)
             
-            
-
-
-            
             //5 - finally set our data
             self.lineChartView.data = data
         }
-        
     }
     
     func refreshBarButtonItem(){
@@ -409,10 +379,6 @@ class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
     }
     
     @objc func refresh() {
-        let userDefaults = UserDefaults(suiteName: "group.mialin.valentyn.crypto.monitor")
-        userDefaults?.set(userCalendar.date(byAdding: .minute, value: -5, to: Date())!, forKey: "lastUpdate")
-        userDefaults?.synchronize()
-        
         loadTicker()
         loadlineView()
     }
@@ -424,8 +390,6 @@ class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
         self.navigationItem.rightBarButtonItem = refreshBarButton
         activityIndicator.startAnimating()
     }
-    
-
     
     @IBAction func selectIindexChanged(_ sender: UISegmentedControl) {
         let keyStore = NSUbiquitousKeyValueStore ()
@@ -441,13 +405,9 @@ class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
         loadlineView()
     }
     
-
-    
-    
     @objc func reload(_ sender:UIButton) {
         refresh()
     }
-    
     
     //MARK: ErrorSubview
     func showErrorSubview(error: Error, frame: CGRect) {
@@ -482,22 +442,16 @@ class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
         
         LineChartErrorLabel.text = error.localizedDescription
     }
-    
 }
+
 
 class ChartXAxisFormatter: NSObject {
     fileprivate var dateFormatter: DateFormatter?
-    //  fileprivate var referenceTimeInterval: TimeInterval?
-    
     convenience init(dateFormatter: DateFormatter) {
         self.init()
-        //   self.referenceTimeInterval = referenceTimeInterval
         self.dateFormatter = dateFormatter
     }
-    
-    
 }
-
 
 extension ChartXAxisFormatter: IAxisValueFormatter {
     
@@ -506,9 +460,7 @@ extension ChartXAxisFormatter: IAxisValueFormatter {
             else {
                 return ""
         }
-        
         let date = Date(timeIntervalSince1970: value )
         return dateFormatter.string(from: date)
     }
-    
 }

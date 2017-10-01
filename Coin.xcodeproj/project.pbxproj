@@ -659,7 +659,7 @@
 								enabled = 1;
 							};
 							com.apple.BackgroundModes = {
-								enabled = 1;
+								enabled = 0;
 							};
 							com.apple.Push = {
 								enabled = 0;
@@ -1062,7 +1062,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 16A7B4C6AC770891197F4647 /* Pods-Cryptocurrency monitor widget.debug.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CODE_SIGN_ENTITLEMENTS = "Cryptocurrency monitor widget/Cryptocurrency monitor widget.entitlements";
 				DEVELOPMENT_TEAM = M6RU8K5R5C;
@@ -1081,7 +1080,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 9320A7CF324B6EF07C919266 /* Pods-Cryptocurrency monitor widget.release.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CODE_SIGN_ENTITLEMENTS = "Cryptocurrency monitor widget/Cryptocurrency monitor widget.entitlements";
 				DEVELOPMENT_TEAM = M6RU8K5R5C;
@@ -1155,6 +1153,7 @@
 		FBB009841F4E3292000B1298 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_COMPLICATION_NAME = Complication;
 				DEVELOPMENT_TEAM = M6RU8K5R5C;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
@@ -1174,6 +1173,7 @@
 		FBB009851F4E3292000B1298 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_COMPLICATION_NAME = Complication;
 				DEVELOPMENT_TEAM = M6RU8K5R5C;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
@@ -1193,7 +1193,7 @@
 		FBB009881F4E3292000B1298 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = M6RU8K5R5C;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
@@ -1213,7 +1213,7 @@
 		FBB009891F4E3292000B1298 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = M6RU8K5R5C;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
@@ -1341,7 +1341,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D2644E3DDE8034D62D53ACCA /* Pods-Coin.debug.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = Coin/Coin.entitlements;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -1374,7 +1373,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 5E0412321BFD16292136CF2A /* Pods-Coin.release.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = Coin/Coin.entitlements;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";

@@ -14,6 +14,15 @@ class cryptocurrencyRowController: NSObject {
     @IBOutlet var percentChangeLabel: WKInterfaceLabel!
     @IBOutlet var priceLabel: WKInterfaceLabel!
     @IBOutlet var cellMainGroup: WKInterfaceGroup!
+    
+    let formatterCurrencyUSD: NumberFormatter = {
+        let formatterCurrencyUSD = NumberFormatter()
+        formatterCurrencyUSD.numberStyle = .currency
+        formatterCurrencyUSD.currencyCode = "USD"
+        formatterCurrencyUSD.maximumFractionDigits = 10
+        formatterCurrencyUSD.locale = Locale(identifier: "en_US")
+        return formatterCurrencyUSD
+    }()
 
     var ticker:Ticker?{
         didSet {
@@ -39,9 +48,9 @@ class cryptocurrencyRowController: NSObject {
 
                 switch userDefaults.integer(forKey: "priceCurrency") {
                 case 0:
-                    priceLabel.setText("$ " + ticker.price_usd)
+                    priceLabel.setText(formatterCurrencyUSD.string(from: NSNumber(value: Double(ticker.price_usd)!)))
                 case 1:
-                    priceLabel.setText("₿ " + ticker.price_btc)
+                    priceLabel.setText("₿" + ticker.price_btc)
                 default:
                     break
                 }
@@ -68,7 +77,7 @@ class cryptocurrencyRowController: NSObject {
             }
         }
         else{
-            cellMainGroup.setBackgroundColor(UIColor(red:1.00, green:0.90, blue:0.13, alpha:0.86))
+            cellMainGroup.setBackgroundColor(UIColor.orange)
         }
     }
     

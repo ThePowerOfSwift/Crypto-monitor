@@ -17,13 +17,22 @@ var watchSession : WCSession?
 
 class CoinTableViewController: UITableViewController, WCSessionDelegate {
     
-    weak var selectTicker : Ticker?
+    var selectTicker : Ticker?
     var currentIndexPath: NSIndexPath?
     let userCalendar = Calendar.current
     
     // Subview
     var loadSubview:LoadSubview?
     var emptySubview:EmptySubview?
+    
+    let formatterCurrencyUSD: NumberFormatter = {
+        let formatterCurrencyUSD = NumberFormatter()
+        formatterCurrencyUSD.numberStyle = .currency
+        formatterCurrencyUSD.currencyCode = "USD"
+        formatterCurrencyUSD.maximumFractionDigits = 10
+        formatterCurrencyUSD.locale = Locale(identifier: "en_US")
+        return formatterCurrencyUSD
+    }()
     
     //MARK:WCSession
     /** Called when all delegate callbacks for the previously selected watch has occurred. The session can be re-activated for the now selected watch using activateSession. */
@@ -94,13 +103,7 @@ class CoinTableViewController: UITableViewController, WCSessionDelegate {
         
         let editBarButton = UIBarButtonItem.init(barButtonSystemItem: .edit, target: self, action: #selector(edit))
         self.navigationItem.rightBarButtonItem = editBarButton
-        
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "Setting"), style: UIBarButtonItemStyle.plain, target: self, action: #selector(settingsShow))
-        loadCache()
-    }
-
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(true)
         
         // Set up and activate your session early here!
         if(WCSession.isSupported()){
@@ -111,6 +114,13 @@ class CoinTableViewController: UITableViewController, WCSessionDelegate {
         loadCache()
         loadTicker()
     }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+    //    loadCache()
+        cryptocurrencyView()
+    }
+
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(true)
@@ -124,7 +134,7 @@ class CoinTableViewController: UITableViewController, WCSessionDelegate {
     @objc func applicationDidBecomeActiveNotification(notification : NSNotification) {
         print("unlock")
         loadCache()
-        loadTicker()
+    //    loadTicker()
     }
     
     @objc func ubiquitousKeyValueStoreDidChange(notification: NSNotification) {
@@ -150,7 +160,7 @@ class CoinTableViewController: UITableViewController, WCSessionDelegate {
     
     func loadCache() {
         let userDefaults = UserDefaults(suiteName: "group.mialin.valentyn.crypto.monitor")
-        if let decodedTicker = userDefaults?.data(forKey: "cryptocurrency"){
+        if let decodedTicker = userDefaults?.data(forKey: "tickers"){
             if let cacheTicker = NSKeyedUnarchiver.unarchiveObject(with: decodedTicker) as? [Ticker] {
                 getTickerID = cacheTicker
                 let userDefaults = UserDefaults(suiteName: "group.mialin.valentyn.crypto.monitor")
@@ -177,20 +187,20 @@ class CoinTableViewController: UITableViewController, WCSessionDelegate {
         let row = indexPath.row
         
         if let ticker = getTickerID {
-            if let id = ticker[row].id {
-                let url = URL(string: "https://files.coinmarketcap.com/static/img/coins/32x32/\(id).png")!
-                cell.coinImageView.af_setImage(withURL: url)
-            }
+            
+            let url = URL(string: "https://files.coinmarketcap.com/static/img/coins/32x32/\(ticker[row].id).png")!
+            cell.coinImageView.af_setImage(withURL: url)
+            
 
             cell.coinNameLabel.text = ticker[row].name
-            
+
             let keyStore = NSUbiquitousKeyValueStore ()
-            
             switch keyStore.longLong(forKey: "priceCurrency") {
             case 0:
-                cell.priceCoinLabel.text = ticker[row].price_usd
+                let price_usd = Double(ticker[row].price_usd)
+                cell.priceCoinLabel.text = formatterCurrencyUSD.string(from: NSNumber(value: price_usd!))
             case 1:
-                cell.priceCoinLabel.text = ticker[row].price_btc
+                cell.priceCoinLabel.text = "₿" + String(ticker[row].price_btc)
             default:
                 break
             }
@@ -217,7 +227,7 @@ class CoinTableViewController: UITableViewController, WCSessionDelegate {
                     cell.percentChangeLabel.text = percentChange + " %"
             }
             else{
-                cell.percentChangeView.backgroundColor = UIColor(red:1.00, green:0.90, blue:0.13, alpha:1.0)
+                cell.percentChangeView.backgroundColor = UIColor.orange
                 cell.percentChangeLabel.text = "null"
             }
             
@@ -268,7 +278,7 @@ class CoinTableViewController: UITableViewController, WCSessionDelegate {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath){
         if getTickerID != nil {
-            openID = getTickerID![indexPath.row].id!
+            openID = getTickerID![indexPath.row].id
         }
     }
 
@@ -276,7 +286,7 @@ class CoinTableViewController: UITableViewController, WCSessionDelegate {
         if editingStyle == .delete{
             let keyStore = NSUbiquitousKeyValueStore ()
             if var idArray = keyStore.array(forKey: "id") as? [String] {
-                if let index = idArray.index(of: getTickerID![indexPath.row].id!){
+                if let index = idArray.index(of: getTickerID![indexPath.row].id){
                     idArray.remove(at: index)
                     getTickerID!.remove(at: indexPath.row)
                     
@@ -303,9 +313,9 @@ class CoinTableViewController: UITableViewController, WCSessionDelegate {
         
         let keyStore = NSUbiquitousKeyValueStore ()
         if var idArray = keyStore.array(forKey: "id") as? [String] {
-            if let index = idArray.index(of: getTickerID![sourceIndexPath.row].id!){
+            if let index = idArray.index(of: getTickerID![sourceIndexPath.row].id){
                 idArray.remove(at: index)
-                idArray.insert(getTickerID![sourceIndexPath.row].id!, at: destinationIndexPath.row)
+                idArray.insert(getTickerID![sourceIndexPath.row].id, at: destinationIndexPath.row)
                 getTickerID!.rearrange(from: sourceIndexPath.row, to: destinationIndexPath.row)
                 
                 // set iCloud key-value
@@ -321,24 +331,26 @@ class CoinTableViewController: UITableViewController, WCSessionDelegate {
     private func cryptocurrencyView() {
         self.refreshControl?.endRefreshing()
         
-        if getTickerID!.isEmpty {
-            self.showEmptySubview()
-        }
-        else{
-            if let subviews = self.view.superview?.subviews {
-                for view in subviews{
-                    if (view is LoadSubview || view is ErrorSubview || view is EmptySubview) {
-                        view.removeFromSuperview()
+        if getTickerID != nil {
+            if getTickerID!.isEmpty {
+                self.showEmptySubview()
+            }
+            else{
+                if let subviews = self.view.superview?.subviews {
+                    for view in subviews{
+                        if (view is LoadSubview || view is ErrorSubview || view is EmptySubview) {
+                            view.removeFromSuperview()
+                        }
                     }
                 }
             }
+            
+            let userDefaults = UserDefaults(suiteName: "group.mialin.valentyn.crypto.monitor")
+            if let lastUpdate = userDefaults?.object(forKey: "lastUpdate") as? NSDate {
+                self.refreshControl?.attributedTitle = NSAttributedString(string: dateToString(date: lastUpdate))
+            }
+            tableView.reloadData()
         }
-
-        let userDefaults = UserDefaults(suiteName: "group.mialin.valentyn.crypto.monitor")
-        if let lastUpdate = userDefaults?.object(forKey: "lastUpdate") as? NSDate {
-            self.refreshControl?.attributedTitle = NSAttributedString(string: dateToString(date: lastUpdate))
-        }
-        tableView.reloadData()
     }
     
     private func loadTicker() {
