@@ -81,8 +81,6 @@ extension Ticker {
         archiver.encode(percent_change_7d, forKey: "percent_change_7d")
         archiver.finishEncoding()
         return data as Data
-        
-        
     }
     
     public init?(data: Data) {
@@ -101,7 +99,6 @@ extension Ticker {
         guard let percent_change_1h = unarchiver.decodeObject(forKey: "percent_change_1h") as? String else { return nil }
         guard let percent_change_24h = unarchiver.decodeObject(forKey: "percent_change_24h") as? String else { return nil }
         guard let percent_change_7d = unarchiver.decodeObject(forKey: "percent_change_7d") as? String else { return nil }
-        
         
         self.id = id
         self.name = name

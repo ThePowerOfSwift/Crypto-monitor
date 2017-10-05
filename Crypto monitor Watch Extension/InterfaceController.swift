@@ -98,10 +98,9 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate {
     }
     
     private func viewCache() {
-        if let decodedTicker = UserDefaults().data(forKey: "cryptocurrency"){
-            if let cacheTicker = NSKeyedUnarchiver.unarchiveObject(with: decodedTicker) as? [Ticker] {
-                self.tableView(ticker: cacheTicker)
-            }
+        if let decodedTicker = UserDefaults().object(forKey: "tickers") as? [Data] {
+            let cacheTicker = decodedTicker.map { Ticker(data: $0)! }
+            self.tableView(ticker: cacheTicker)
         }
     }
     
@@ -170,9 +169,10 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate {
     
     //MARK: UserDefaults
     private func setUserDefaults(ticher: [Ticker], lastUpdate: Date) {
-        let encodedData = NSKeyedArchiver.archivedData(withRootObject: ticher)
+
         let userDefaults = UserDefaults()
-        userDefaults.set(encodedData, forKey: "cryptocurrency")
+        let tickersData = ticher.map { $0.encode() }
+        userDefaults.set(tickersData, forKey: "tickers")
         userDefaults.set(lastUpdate, forKey: "lastUpdate")
         userDefaults.synchronize()
     }

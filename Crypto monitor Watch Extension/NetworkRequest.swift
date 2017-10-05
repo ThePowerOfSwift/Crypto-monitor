@@ -58,50 +58,52 @@ enum BackendError: Error {
     case objectSerialization(reason: String)
 }
 
-class Ticker: NSObject, NSCoding, Codable{
+public struct Ticker: Decodable {
+    public let id:String
+    public let symbol:String
+    public let price_usd:String
+    public let price_btc:String
+    public let percent_change_1h:String?
+    public let percent_change_24h:String?
+    public let percent_change_7d:String?
     
-    public var id:String
-    public var symbol:String
-    public var price_usd:String
-    public var price_btc:String
-    public var percent_change_1h:String?
-    public var percent_change_24h:String?
-    public var percent_change_7d:String?
-    
-    public init(id:String,
-                symbol:String,
-                price_usd:String,
-                price_btc:String,
-                percent_change_1h:String?,
-                percent_change_24h:String?,
-                percent_change_7d:String?){
+}
+
+extension Ticker {
+    public func encode() -> Data {
+        let data = NSMutableData()
+        let archiver = NSKeyedArchiver(forWritingWith: data)
         
-        self.id = id
-        self.symbol = symbol
-        self.price_usd = price_usd
-        self.price_btc = price_btc
-        self.percent_change_1h = percent_change_1h
-        self.percent_change_24h = percent_change_24h
-        self.percent_change_7d = percent_change_7d
+        archiver.encode(id, forKey: "id")
+        archiver.encode(symbol, forKey: "symbol")
+        archiver.encode(price_usd, forKey: "price_usd")
+        archiver.encode(price_btc, forKey: "price_btc")
+        archiver.encode(percent_change_1h, forKey: "percent_change_1h")
+        archiver.encode(percent_change_24h, forKey: "percent_change_24h")
+        archiver.encode(percent_change_7d, forKey: "percent_change_7d")
+        archiver.finishEncoding()
+        return data as Data
     }
-    
-    required public init(coder decoder: NSCoder) {
-        self.id =  decoder.decodeObject(forKey: "id") as! String
-        self.symbol = decoder.decodeObject(forKey: "symbol") as! String
-        self.price_usd = decoder.decodeObject(forKey: "price_usd") as! String
-        self.price_btc = decoder.decodeObject(forKey: "price_btc") as! String
-        self.percent_change_1h = decoder.decodeObject(forKey: "percent_change_1h") as? String
-        self.percent_change_24h = decoder.decodeObject(forKey: "percent_change_24h") as? String
-        self.percent_change_7d = decoder.decodeObject(forKey: "percent_change_7d") as? String
-    }
-    
-    public func encode(with coder: NSCoder) {
-        coder.encode(id, forKey: "id")
-        coder.encode(symbol, forKey: "symbol")
-        coder.encode(price_usd, forKey: "price_usd")
-        coder.encode(price_btc, forKey: "price_btc")
-        coder.encode(percent_change_1h, forKey: "percent_change_1h")
-        coder.encode(percent_change_24h, forKey: "percent_change_24h")
-        coder.encode(percent_change_7d, forKey: "percent_change_7d")
-    }
+        public init?(data: Data) {
+            let unarchiver = NSKeyedUnarchiver(forReadingWith: data)
+            defer {
+                unarchiver.finishDecoding()
+            }
+            guard let id = unarchiver.decodeObject(forKey: "id") as? String else { return nil }
+            guard let symbol = unarchiver.decodeObject(forKey: "symbol") as? String else { return nil }
+            guard let price_usd = unarchiver.decodeObject(forKey: "price_usd") as? String else { return nil }
+            guard let price_btc = unarchiver.decodeObject(forKey: "price_btc") as? String else { return nil }
+            guard let percent_change_1h = unarchiver.decodeObject(forKey: "percent_change_1h") as? String else { return nil }
+            guard let percent_change_24h = unarchiver.decodeObject(forKey: "percent_change_24h") as? String else { return nil }
+            guard let percent_change_7d = unarchiver.decodeObject(forKey: "percent_change_7d") as? String else { return nil }
+            
+            
+            self.id = id
+            self.symbol = symbol
+            self.price_usd = price_usd
+            self.price_btc = price_btc
+            self.percent_change_1h = percent_change_1h
+            self.percent_change_24h = percent_change_24h
+            self.percent_change_7d = percent_change_7d
+        }
 }

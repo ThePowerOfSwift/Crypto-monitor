@@ -12,6 +12,9 @@
 		FB39902A1F3CA92200A1EAC8 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = FB39902C1F3CA92200A1EAC8 /* InfoPlist.strings */; };
 		FB39902F1F3CA92200A1EAC8 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = FB3990311F3CA92200A1EAC8 /* InfoPlist.strings */; };
 		FB3990351F3CCBB400A1EAC8 /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FB3990371F3CCBB400A1EAC8 /* MainInterface.storyboard */; };
+		FB3C8C931F864FC400E5CBC2 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = FB3C8C951F864FC400E5CBC2 /* InfoPlist.strings */; };
+		FB3C8C981F864FC400E5CBC2 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = FB3C8C9A1F864FC400E5CBC2 /* InfoPlist.strings */; };
+		FB3C8C9E1F864FC500E5CBC2 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = FB3C8CA01F864FC500E5CBC2 /* Localizable.strings */; };
 		FB466DDA1F2D479200D771C9 /* SettingTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB466DD91F2D479200D771C9 /* SettingTableViewController.swift */; };
 		FB4955241F2B627600169CB0 /* ErrorSubview.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB4955221F2B627600169CB0 /* ErrorSubview.swift */; };
 		FB5326CB1F254A9400D9C498 /* AddTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB5326CA1F254A9400D9C498 /* AddTableViewCell.swift */; };
@@ -192,6 +195,14 @@
 		FB3990341F3CBC8400A1EAC8 /* uk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = uk; path = uk.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		FB3990361F3CCBB400A1EAC8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainInterface.storyboard; sourceTree = "<group>"; };
 		FB39903B1F3CCBBC00A1EAC8 /* uk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = uk; path = uk.lproj/MainInterface.strings; sourceTree = "<group>"; };
+		FB3C8C941F864FC400E5CBC2 /* uk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = uk; path = uk.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		FB3C8C991F864FC400E5CBC2 /* uk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = uk; path = uk.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		FB3C8C9B1F864FC500E5CBC2 /* uk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = uk; path = uk.lproj/Interface.strings; sourceTree = "<group>"; };
+		FB3C8C9F1F864FC500E5CBC2 /* uk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = uk; path = uk.lproj/Localizable.strings; sourceTree = "<group>"; };
+		FB3C8CA11F864FD600E5CBC2 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		FB3C8CA21F864FD600E5CBC2 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		FB3C8CA31F864FD700E5CBC2 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Interface.strings; sourceTree = "<group>"; };
+		FB3C8CA41F864FD700E5CBC2 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
 		FB466DD91F2D479200D771C9 /* SettingTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingTableViewController.swift; sourceTree = "<group>"; };
 		FB4955221F2B627600169CB0 /* ErrorSubview.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ErrorSubview.swift; sourceTree = "<group>"; };
 		FB5326CA1F254A9400D9C498 /* AddTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddTableViewCell.swift; sourceTree = "<group>"; };
@@ -389,6 +400,7 @@
 		FBB009691F4E3292000B1298 /* Crypto monitor Watch */ = {
 			isa = PBXGroup;
 			children = (
+				FB3C8C9A1F864FC400E5CBC2 /* InfoPlist.strings */,
 				FBB0096A1F4E3292000B1298 /* Interface.storyboard */,
 				FBB0096D1F4E3292000B1298 /* Assets.xcassets */,
 				FBB0096F1F4E3292000B1298 /* Info.plist */,
@@ -399,6 +411,8 @@
 		FBB009781F4E3292000B1298 /* Crypto monitor Watch Extension */ = {
 			isa = PBXGroup;
 			children = (
+				FB3C8CA01F864FC500E5CBC2 /* Localizable.strings */,
+				FB3C8C951F864FC400E5CBC2 /* InfoPlist.strings */,
 				FBB009791F4E3292000B1298 /* InterfaceController.swift */,
 				FBB0098C1F4E37AF000B1298 /* cryptocurrencyRowController.swift */,
 				FBBF266D1F5AD2CD0050BED7 /* ComplicationController.swift */,
@@ -741,6 +755,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				FBB0096E1F4E3292000B1298 /* Assets.xcassets in Resources */,
+				FB3C8C981F864FC400E5CBC2 /* InfoPlist.strings in Resources */,
 				FBB0096C1F4E3292000B1298 /* Interface.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -750,6 +765,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				FB623FAF1F67464900C99460 /* Assets.xcassets in Resources */,
+				FB3C8C9E1F864FC500E5CBC2 /* Localizable.strings in Resources */,
+				FB3C8C931F864FC400E5CBC2 /* InfoPlist.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1007,6 +1024,33 @@
 			name = MainInterface.storyboard;
 			sourceTree = "<group>";
 		};
+		FB3C8C951F864FC400E5CBC2 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				FB3C8C941F864FC400E5CBC2 /* uk */,
+				FB3C8CA11F864FD600E5CBC2 /* ru */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		FB3C8C9A1F864FC400E5CBC2 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				FB3C8C991F864FC400E5CBC2 /* uk */,
+				FB3C8CA21F864FD600E5CBC2 /* ru */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		FB3C8CA01F864FC500E5CBC2 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				FB3C8C9F1F864FC500E5CBC2 /* uk */,
+				FB3C8CA41F864FD700E5CBC2 /* ru */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
 		FB565C4F1F42349C004EA42F /* ErrorSubview.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -1021,6 +1065,8 @@
 			isa = PBXVariantGroup;
 			children = (
 				FBB0096B1F4E3292000B1298 /* Base */,
+				FB3C8C9B1F864FC500E5CBC2 /* uk */,
+				FB3C8CA31F864FD700E5CBC2 /* ru */,
 			);
 			name = Interface.storyboard;
 			sourceTree = "<group>";

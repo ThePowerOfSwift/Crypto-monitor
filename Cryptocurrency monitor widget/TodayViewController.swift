@@ -44,13 +44,11 @@ class TodayViewController: UIViewController, UITableViewDataSource, UITableViewD
         super.viewWillAppear(animated)
         
         let userDefaults = UserDefaults(suiteName: "group.mialin.valentyn.crypto.monitor")
-        if let decoded = userDefaults?.data(forKey: "cryptocurrency")
-        {
-            if let cache = NSKeyedUnarchiver.unarchiveObject(with: decoded) as? [Ticker] {
-                cryptocurrencyView(ticker: cache)
+        if let decodedTicker = userDefaults?.object(forKey: "tickers") as? [Data] {
+            let cacheTicker = decodedTicker.map { Ticker(data: $0)! }
+                cryptocurrencyView(ticker: cacheTicker)
                 tableView.reloadData()
             }
-        }
     }
     
     @objc func ubiquitousKeyValueStoreDidChange(notification: NSNotification) {
@@ -177,17 +175,17 @@ class TodayViewController: UIViewController, UITableViewDataSource, UITableViewD
         var percentChange:String?
         switch keyStore.longLong(forKey: "percentChange") {
         case 0:
-            percentChange = String(describing: cryptocurrencyShow[row].percent_change_1h)
+            percentChange = cryptocurrencyShow[row].percent_change_1h
         case 1:
-            percentChange = String(describing: cryptocurrencyShow[row].percent_change_24h)
+            percentChange = cryptocurrencyShow[row].percent_change_24h
         case 2:
-            percentChange = String(describing: cryptocurrencyShow[row].percent_change_7d)
+            percentChange = cryptocurrencyShow[row].percent_change_7d
         default:
             break
         }
         
-        if let percentChange = percentChange {
-            if Float(percentChange)! >= 0 {
+        if let percentChange = percentChange, let percent =  Float(percentChange) {
+            if percent >= 0 {
                 cell.percentChangeView.backgroundColor = UIColor(red:0.30, green:0.85, blue:0.39, alpha:1.0)
             }
             else{

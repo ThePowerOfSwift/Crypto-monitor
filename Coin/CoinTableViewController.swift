@@ -160,17 +160,18 @@ class CoinTableViewController: UITableViewController, WCSessionDelegate {
     
     func loadCache() {
         let userDefaults = UserDefaults(suiteName: "group.mialin.valentyn.crypto.monitor")
-        if let decodedTicker = userDefaults?.data(forKey: "tickers"){
-            if let cacheTicker = NSKeyedUnarchiver.unarchiveObject(with: decodedTicker) as? [Ticker] {
-                getTickerID = cacheTicker
-                let userDefaults = UserDefaults(suiteName: "group.mialin.valentyn.crypto.monitor")
-                if let lastUpdate = userDefaults?.object(forKey: "lastUpdate") as? NSDate {
-                    self.refreshControl?.attributedTitle = NSAttributedString(string: dateToString(date: lastUpdate))
-                }
-                tableView.reloadData()
+        if let decodedTicker = userDefaults?.object(forKey: "tickers") as? [Data] {
+            print(decodedTicker.count)
+            let cacheTicker = decodedTicker.map { Ticker(data: $0)! }
+            getTickerID = cacheTicker
+            //   let userDefaults = UserDefaults(suiteName: "group.mialin.valentyn.crypto.monitor")
+            if let lastUpdate = userDefaults?.object(forKey: "lastUpdate") as? NSDate {
+                self.refreshControl?.attributedTitle = NSAttributedString(string: dateToString(date: lastUpdate))
             }
+            tableView.reloadData()
         }
     }
+
     
     // MARK: - Table view data source
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
