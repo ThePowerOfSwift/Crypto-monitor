@@ -25,12 +25,11 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
         case .modularLarge:
             if let decodedTicker = UserDefaults().object(forKey: "tickers") as? [Data] {
                 let cacheTicker = decodedTicker.map { Ticker(data: $0)! }
-                print("ComplicationController \(cacheTicker.count)")
-                let entry = self.createTimeLineEntry(ticker: Array(cacheTicker.prefix(3)))
-                handler(entry)
-            }
-            else{
-                handler(nil)
+                if !cacheTicker.isEmpty {
+                    print("ComplicationController \(cacheTicker.count)")
+                    let entry = self.createTimeLineEntry(ticker: Array(cacheTicker.prefix(3)))
+                    handler(entry)
+                }
             }
         case .modularSmall:
             if let decodedTicker = UserDefaults().object(forKey: "tickers") as? [Data] {

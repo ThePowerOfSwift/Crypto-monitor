@@ -27,7 +27,6 @@ class cryptocurrencyRowController: NSObject {
     var ticker:Ticker?{
         didSet {
             if let ticker = ticker {
-                
                 let userDefaults = UserDefaults()
                 
                 symbolLabel.setText(ticker.symbol)

@@ -117,7 +117,6 @@ class CoinTableViewController: UITableViewController, WCSessionDelegate {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
-    //    loadCache()
         cryptocurrencyView()
     }
 
@@ -134,7 +133,7 @@ class CoinTableViewController: UITableViewController, WCSessionDelegate {
     @objc func applicationDidBecomeActiveNotification(notification : NSNotification) {
         print("unlock")
         loadCache()
-    //    loadTicker()
+        loadTicker()
     }
     
     @objc func ubiquitousKeyValueStoreDidChange(notification: NSNotification) {
@@ -295,6 +294,7 @@ class CoinTableViewController: UITableViewController, WCSessionDelegate {
                     keyStore.set(idArray, forKey: "id")
                     keyStore.synchronize()
                     
+                    updateApplicationContext(id: idArray)
                     // set UserDefaults
                     SettingsUserDefaults().setUserDefaults(ticher: getTickerID!, idArray: idArray, lastUpdate: nil)
                 }
@@ -302,6 +302,8 @@ class CoinTableViewController: UITableViewController, WCSessionDelegate {
             cryptocurrencyView()
         }
     }
+    
+    
  
     override func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCellEditingStyle {
         if (self.tableView.isEditing) {
@@ -323,6 +325,7 @@ class CoinTableViewController: UITableViewController, WCSessionDelegate {
                 keyStore.set(idArray, forKey: "id")
                 keyStore.synchronize()
                 
+                updateApplicationContext(id: idArray)
                 // set UserDefaults
                 SettingsUserDefaults().setUserDefaults(ticher: getTickerID!, idArray: idArray, lastUpdate: nil)
             }

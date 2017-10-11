@@ -24,7 +24,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let keyStore = NSUbiquitousKeyValueStore ()
         if !keyStore.bool(forKey: "launchedBefore"){
             
-            keyStore.set(["bitcoin", "ethereum", "bitcoin-cash", "ripple", "iota", "litecoin", "nem", "neo", "dash", "ethereum-classic"], forKey: "id")
+            keyStore.set(["bitcoin", "ethereum", "ripple", "bitcoin-cash", "litecoin", "dash", "nem", "neo", "monero", "iota"], forKey: "id")
             keyStore.set(1, forKey: "percentChange")
             keyStore.set(1, forKey: "typeChart")
             keyStore.set(1, forKey: "zoomChart")
@@ -34,31 +34,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         // NetworkActivityIndicatorManager
         NetworkActivityIndicatorManager.shared.isEnabled = true
-        
-        #if arch(i386) || arch(x86_64)
-            if let documentsPath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first?.path {
-                print("Documents Directory: \(documentsPath)")
-            }
-        #endif
         return true
     }
-    /*
-    // Support for background fetch
-    func application(_ application: UIApplication, performFetchWithCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
-        //as? CoinTableViewController
-        if let navigationController = window?.rootViewController as? UINavigationController {
-            let viewControllers = navigationController.viewControllers
-            
-            for viewController in viewControllers {
-                if let coinTableViewController = viewController as? CoinTableViewController {
-                    coinTableViewController.fetch {
-                        completionHandler(.newData)
-                    }
-                }
-            }
-        }
-    }
-    */
+
     func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any] = [:]) -> Bool {
         // When you type customSchemeExample://red in the search bar in Safari
         

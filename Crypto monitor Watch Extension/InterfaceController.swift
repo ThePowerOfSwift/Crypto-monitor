@@ -35,7 +35,7 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate {
         }
         
         if let id = applicationContext["id"] as? [String] {
-            userDefaults.removeObject(forKey: "cryptocurrency")
+            userDefaults.removeObject(forKey: "tickers")
             userDefaults.removeObject(forKey: "lastUpdate")
             userDefaults.set(id, forKey: "id")
         }
@@ -110,33 +110,33 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate {
                 NetworkRequest().getTickerID(idArray: idArray, completion: { (ticker : [Ticker]?, error : Error?) in
                     if error == nil {
                         if let ticker = ticker {
-                            print("ticker cout \(ticker.count)")
                             self.setUserDefaults(ticher: ticker, lastUpdate: Date())
                             DispatchQueue.main.async() {
                                 self.tableView(ticker: ticker)
-                                print("UPDATE 2")
-                                let complicationServer = CLKComplicationServer.sharedInstance()
-                                for complication in complicationServer.activeComplications! {
-                                    complicationServer.reloadTimeline(for: complication)
-                                }
+                                self.reloadTimeline()
                             }
                         }
                     }
                 })
             }
             else{
-                let complicationServer = CLKComplicationServer.sharedInstance()
-                for complication in complicationServer.activeComplications! {
-                    complicationServer.reloadTimeline(for: complication)
-                }
+                self.setUserDefaults(ticher: nil, lastUpdate: Date())
+                reloadTimeline()
                 cryptocurrencyTable.setHidden(true)
                 emptyGroup.setHidden(false)
             }
-            WKExtension.shared().scheduleBackgroundRefresh(withPreferredDate: Date(timeIntervalSinceNow: timeIntervalRefresh), userInfo: nil) { (error: Error?) in
-                if let error = error {
-                    print("Error occurred while scheduling background refresh: \(error.localizedDescription)")
-                }
-            } 
+        }
+        WKExtension.shared().scheduleBackgroundRefresh(withPreferredDate: Date(timeIntervalSinceNow: timeIntervalRefresh), userInfo: nil) { (error: Error?) in
+            if let error = error {
+                print("Error occurred while scheduling background refresh: \(error.localizedDescription)")
+            }
+        }
+    }
+    
+    private func reloadTimeline(){
+        let complicationServer = CLKComplicationServer.sharedInstance()
+        for complication in complicationServer.activeComplications! {
+            complicationServer.reloadTimeline(for: complication)
         }
     }
 
@@ -164,15 +164,19 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate {
             cryptocurrencyTable.setHidden(true)
             emptyGroup.setHidden(false)
         }
-
     }
     
     //MARK: UserDefaults
-    private func setUserDefaults(ticher: [Ticker], lastUpdate: Date) {
+    private func setUserDefaults(ticher: [Ticker]?, lastUpdate: Date) {
 
         let userDefaults = UserDefaults()
-        let tickersData = ticher.map { $0.encode() }
-        userDefaults.set(tickersData, forKey: "tickers")
+        if let ticher = ticher {
+            let tickersData = ticher.map { $0.encode() }
+            userDefaults.set(tickersData, forKey: "tickers")
+        }
+        else{
+            userDefaults.removeObject(forKey: "tickers")
+        }
         userDefaults.set(lastUpdate, forKey: "lastUpdate")
         userDefaults.synchronize()
     }
