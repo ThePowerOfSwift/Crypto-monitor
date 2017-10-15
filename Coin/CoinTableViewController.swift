@@ -29,9 +29,18 @@ class CoinTableViewController: UITableViewController, WCSessionDelegate {
         let formatterCurrencyUSD = NumberFormatter()
         formatterCurrencyUSD.numberStyle = .currency
         formatterCurrencyUSD.currencyCode = "USD"
-        formatterCurrencyUSD.maximumFractionDigits = 10
+        formatterCurrencyUSD.maximumFractionDigits = 4
         formatterCurrencyUSD.locale = Locale(identifier: "en_US")
         return formatterCurrencyUSD
+    }()
+    
+    let formatterCurrencyEUR: NumberFormatter = {
+        let formatterCurrencyEUR = NumberFormatter()
+        formatterCurrencyEUR.numberStyle = .currency
+        formatterCurrencyEUR.currencyCode = "EUR"
+        formatterCurrencyEUR.maximumFractionDigits = 4
+        formatterCurrencyEUR.locale = Locale(identifier: "en_US")
+        return formatterCurrencyEUR
     }()
     
     //MARK:WCSession
@@ -150,20 +159,16 @@ class CoinTableViewController: UITableViewController, WCSessionDelegate {
                 loadCache()
             }
         }
-        
-        if idKeyStore != nil {
-            updateApplicationContext(id: idKeyStore!)
+        if let idKeyStore = idKeyStore {
+            updateApplicationContext(id: idKeyStore)
         }
         print("iCloud key-value-store change detected")
     }
     
     func loadCache() {
-        let userDefaults = UserDefaults(suiteName: "group.mialin.valentyn.crypto.monitor")
-        if let decodedTicker = userDefaults?.object(forKey: "tickers") as? [Data] {
-            print(decodedTicker.count)
-            let cacheTicker = decodedTicker.map { Ticker(data: $0)! }
+        if let cacheTicker = SettingsUserDefaults().loadcacheTicker() {
             getTickerID = cacheTicker
-            //   let userDefaults = UserDefaults(suiteName: "group.mialin.valentyn.crypto.monitor")
+            let userDefaults = UserDefaults(suiteName: "group.mialin.valentyn.crypto.monitor")
             if let lastUpdate = userDefaults?.object(forKey: "lastUpdate") as? NSDate {
                 self.refreshControl?.attributedTitle = NSAttributedString(string: dateToString(date: lastUpdate))
             }
@@ -201,6 +206,10 @@ class CoinTableViewController: UITableViewController, WCSessionDelegate {
                 cell.priceCoinLabel.text = formatterCurrencyUSD.string(from: NSNumber(value: price_usd!))
             case 1:
                 cell.priceCoinLabel.text = "₿" + String(ticker[row].price_btc)
+            case 2:
+                if let price_eur = ticker[row].price_eur {
+                    cell.priceCoinLabel.text = formatterCurrencyEUR.string(from: NSNumber(value: Double(price_eur)!))
+                }
             default:
                 break
             }
@@ -256,6 +265,8 @@ class CoinTableViewController: UITableViewController, WCSessionDelegate {
             headerView.priceLabel.text = "Price (USD)"
         case 1:
             headerView.priceLabel.text = "Price (BTC)"
+        case 2:
+            headerView.priceLabel.text = "Price (EUR)"
         default:
             headerView.priceLabel.text = "-"
         }

@@ -47,7 +47,10 @@ public struct Ticker: Decodable {
     public let percent_change_1h:String?
     public let percent_change_24h:String?
     public let percent_change_7d:String?
-
+    public let price_eur:String?
+    public let volume_eur_24h:String?
+    public let market_cap_eur:String?
+    
     enum CodingKeys: String, CodingKey {
         case id
         case name
@@ -60,6 +63,9 @@ public struct Ticker: Decodable {
         case percent_change_1h
         case percent_change_24h
         case percent_change_7d
+        case price_eur
+        case volume_eur_24h = "24h_volume_eur"
+        case market_cap_eur = "market_cap_eur"
     }
 }
 
@@ -79,6 +85,9 @@ extension Ticker {
         archiver.encode(percent_change_1h, forKey: "percent_change_1h")
         archiver.encode(percent_change_24h, forKey: "percent_change_24h")
         archiver.encode(percent_change_7d, forKey: "percent_change_7d")
+        archiver.encode(price_eur, forKey: "price_eur")
+        archiver.encode(volume_eur_24h, forKey: "volume_eur_24h")
+        archiver.encode(market_cap_eur, forKey: "market_cap_eur")
         archiver.finishEncoding()
         return data as Data
     }
@@ -99,6 +108,9 @@ extension Ticker {
         guard let percent_change_1h = unarchiver.decodeObject(forKey: "percent_change_1h") as? String else { return nil }
         guard let percent_change_24h = unarchiver.decodeObject(forKey: "percent_change_24h") as? String else { return nil }
         guard let percent_change_7d = unarchiver.decodeObject(forKey: "percent_change_7d") as? String else { return nil }
+        guard let price_eur = unarchiver.decodeObject(forKey: "price_eur") as? String else { return nil }
+        guard let volume_eur_24h = unarchiver.decodeObject(forKey: "volume_eur_24h") as? String else { return nil }
+        guard let market_cap_eur = unarchiver.decodeObject(forKey: "market_cap_eur") as? String else { return nil }
         
         self.id = id
         self.name = name
@@ -111,6 +123,9 @@ extension Ticker {
         self.percent_change_1h = percent_change_1h
         self.percent_change_24h = percent_change_24h
         self.percent_change_7d = percent_change_7d
+        self.price_eur = price_eur
+        self.volume_eur_24h = volume_eur_24h
+        self.market_cap_eur = market_cap_eur
 
     }
 }
@@ -119,7 +134,7 @@ public class AlamofireRequest {
     public init() {}
 
     public func getTicker(completion: @escaping  ([Ticker]?, Error?) -> ()) {
-        Alamofire.request("https://api.coinmarketcap.com/v1/ticker/").validate().responseData { response in
+        Alamofire.request("https://api.coinmarketcap.com/v1/ticker/?convert=EUR").validate().responseData { response in
             switch response.result {
             case .success(let responseData):
                 print("Validation Successful getTicker2")
@@ -140,7 +155,7 @@ public class AlamofireRequest {
     }
     
     public func getTickerID(idArray: [String], completion: @escaping  ([Ticker]?, Error?) -> ()) {
-        Alamofire.request("https://api.coinmarketcap.com/v1/ticker/").validate().responseData { response in
+        Alamofire.request("https://api.coinmarketcap.com/v1/ticker/?convert=EUR").validate().responseData { response in
             switch response.result {
             case .success(let responseData):
                 print("Validation Successful getTickerID")
@@ -270,6 +285,16 @@ public class SettingsUserDefaults{
         }
         userDefaults?.synchronize()
     }
+    
+    public func loadcacheTicker() -> ([Ticker]?){
+        let userDefaults = UserDefaults(suiteName: "group.mialin.valentyn.crypto.monitor")
+        var cacheTicker:[Ticker]?
+        if let decodedTicker = userDefaults?.object(forKey: "tickers") as? [Data] {
+            cacheTicker = decodedTicker.map { Ticker(data: $0) } as? [Ticker]
+        }
+        return cacheTicker
+    }
+    
 
 }
 

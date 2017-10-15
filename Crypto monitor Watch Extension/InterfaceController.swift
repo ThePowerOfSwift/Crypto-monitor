@@ -98,8 +98,7 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate {
     }
     
     private func viewCache() {
-        if let decodedTicker = UserDefaults().object(forKey: "tickers") as? [Data] {
-            let cacheTicker = decodedTicker.map { Ticker(data: $0)! }
+         if let cacheTicker = CacheTicker().loadcacheTicker() {
             self.tableView(ticker: cacheTicker)
         }
     }
@@ -110,7 +109,7 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate {
                 NetworkRequest().getTickerID(idArray: idArray, completion: { (ticker : [Ticker]?, error : Error?) in
                     if error == nil {
                         if let ticker = ticker {
-                            self.setUserDefaults(ticher: ticker, lastUpdate: Date())
+                            CacheTicker().setUserDefaults(ticher: ticker, lastUpdate: Date())
                             DispatchQueue.main.async() {
                                 self.tableView(ticker: ticker)
                                 self.reloadTimeline()
@@ -120,7 +119,7 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate {
                 })
             }
             else{
-                self.setUserDefaults(ticher: nil, lastUpdate: Date())
+                CacheTicker().setUserDefaults(ticher: nil, lastUpdate: Date())
                 reloadTimeline()
                 cryptocurrencyTable.setHidden(true)
                 emptyGroup.setHidden(false)
@@ -135,11 +134,13 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate {
     
     private func reloadTimeline(){
         let complicationServer = CLKComplicationServer.sharedInstance()
-        for complication in complicationServer.activeComplications! {
-            complicationServer.reloadTimeline(for: complication)
+        if complicationServer.activeComplications != nil {
+            for complication in complicationServer.activeComplications! {
+                complicationServer.reloadTimeline(for: complication)
+            }
         }
     }
-
+    
     private func tableView(ticker: [Ticker])  {
         if !ticker.isEmpty{
             cryptocurrencyTable.setHidden(false)
@@ -166,20 +167,7 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate {
         }
     }
     
-    //MARK: UserDefaults
-    private func setUserDefaults(ticher: [Ticker]?, lastUpdate: Date) {
 
-        let userDefaults = UserDefaults()
-        if let ticher = ticher {
-            let tickersData = ticher.map { $0.encode() }
-            userDefaults.set(tickersData, forKey: "tickers")
-        }
-        else{
-            userDefaults.removeObject(forKey: "tickers")
-        }
-        userDefaults.set(lastUpdate, forKey: "lastUpdate")
-        userDefaults.synchronize()
-    }
     
     //MARK: Actions
     @IBAction func oneHourSelected() {

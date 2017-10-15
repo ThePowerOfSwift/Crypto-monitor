@@ -11,7 +11,7 @@ import Foundation
 class NetworkRequest{
     
     public func getTickerID(idArray: [String], completion: @escaping ([Ticker]?, Error?) -> Void) {
-        let endpoint = "https://api.coinmarketcap.com/v1/ticker/"
+        let endpoint = "https://api.coinmarketcap.com/v1/ticker/?convert=EUR"
         guard let url = URL(string: endpoint) else {
             print("Error: cannot create URL")
             let error = BackendError.urlError(reason: "Could not construct URL")
@@ -66,7 +66,7 @@ public struct Ticker: Decodable {
     public let percent_change_1h:String?
     public let percent_change_24h:String?
     public let percent_change_7d:String?
-    
+    public let price_eur:String?
 }
 
 extension Ticker {
@@ -81,6 +81,7 @@ extension Ticker {
         archiver.encode(percent_change_1h, forKey: "percent_change_1h")
         archiver.encode(percent_change_24h, forKey: "percent_change_24h")
         archiver.encode(percent_change_7d, forKey: "percent_change_7d")
+        archiver.encode(price_eur, forKey: "price_eur")
         archiver.finishEncoding()
         return data as Data
     }
@@ -96,7 +97,7 @@ extension Ticker {
             guard let percent_change_1h = unarchiver.decodeObject(forKey: "percent_change_1h") as? String else { return nil }
             guard let percent_change_24h = unarchiver.decodeObject(forKey: "percent_change_24h") as? String else { return nil }
             guard let percent_change_7d = unarchiver.decodeObject(forKey: "percent_change_7d") as? String else { return nil }
-            
+            guard let price_eur = unarchiver.decodeObject(forKey: "price_eur") as? String else { return nil }
             
             self.id = id
             self.symbol = symbol
@@ -105,5 +106,6 @@ extension Ticker {
             self.percent_change_1h = percent_change_1h
             self.percent_change_24h = percent_change_24h
             self.percent_change_7d = percent_change_7d
+            self.price_eur = price_eur
         }
 }

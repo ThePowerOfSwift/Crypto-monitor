@@ -8,6 +8,23 @@
 
 import WatchKit
 
+let formatterCurrencyUSD: NumberFormatter = {
+    let formatterCurrencyUSD = NumberFormatter()
+    formatterCurrencyUSD.numberStyle = .currency
+    formatterCurrencyUSD.currencyCode = "USD"
+    formatterCurrencyUSD.maximumFractionDigits = 8
+    formatterCurrencyUSD.locale = Locale(identifier: "en_US")
+    return formatterCurrencyUSD
+}()
+let formatterCurrencyEUR: NumberFormatter = {
+    let formatterCurrencyEUR = NumberFormatter()
+    formatterCurrencyEUR.numberStyle = .currency
+    formatterCurrencyEUR.currencyCode = "EUR"
+    formatterCurrencyEUR.maximumFractionDigits = 8
+    formatterCurrencyEUR.locale = Locale(identifier: "en_US")
+    return formatterCurrencyEUR
+}()
+
 class cryptocurrencyRowController: NSObject {
     
     @IBOutlet var symbolLabel: WKInterfaceLabel!
@@ -15,14 +32,7 @@ class cryptocurrencyRowController: NSObject {
     @IBOutlet var priceLabel: WKInterfaceLabel!
     @IBOutlet var cellMainGroup: WKInterfaceGroup!
     
-    let formatterCurrencyUSD: NumberFormatter = {
-        let formatterCurrencyUSD = NumberFormatter()
-        formatterCurrencyUSD.numberStyle = .currency
-        formatterCurrencyUSD.currencyCode = "USD"
-        formatterCurrencyUSD.maximumFractionDigits = 10
-        formatterCurrencyUSD.locale = Locale(identifier: "en_US")
-        return formatterCurrencyUSD
-    }()
+
 
     var ticker:Ticker?{
         didSet {
@@ -50,6 +60,10 @@ class cryptocurrencyRowController: NSObject {
                     priceLabel.setText(formatterCurrencyUSD.string(from: NSNumber(value: Double(ticker.price_usd)!)))
                 case 1:
                     priceLabel.setText("₿" + ticker.price_btc)
+                case 2:
+                    if let price_eur = ticker.price_eur {
+                        priceLabel.setText(formatterCurrencyEUR.string(from: NSNumber(value: Double(price_eur)!)))
+                    }
                 default:
                     break
                 }

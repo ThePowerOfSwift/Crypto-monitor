@@ -23,7 +23,7 @@ class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
     
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var nameLabel: UILabel!
-    @IBOutlet weak var dataCurrencyLabel: UILabel!
+    @IBOutlet weak var priceUsdLabel: UILabel!
     
     
     @IBOutlet weak var oneHourChangeView: UIView!
@@ -33,8 +33,8 @@ class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
     @IBOutlet weak var weekChangeView: UIView!
     @IBOutlet weak var weekChangeLabel: UILabel!
     
-    
-    @IBOutlet weak var dataSecondaryLabel: UILabel!
+    @IBOutlet weak var priceEurLabel: UILabel!
+    @IBOutlet weak var priceBtcLabel: UILabel!
     @IBOutlet weak var rankLabel: UILabel!
     @IBOutlet weak var marketcapLabel: UILabel!
     @IBOutlet weak var volumeLabel: UILabel!
@@ -54,6 +54,15 @@ class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
         formatterCurrencyUSD.maximumFractionDigits = 10
         formatterCurrencyUSD.locale = Locale(identifier: "en_US")
         return formatterCurrencyUSD
+    }()
+    
+    let formatterCurrencyEUR: NumberFormatter = {
+        let formatterCurrencyEUR = NumberFormatter()
+        formatterCurrencyEUR.numberStyle = .currency
+        formatterCurrencyEUR.currencyCode = "EUR"
+        formatterCurrencyEUR.maximumFractionDigits = 10
+        formatterCurrencyEUR.locale = Locale(identifier: "en_US")
+        return formatterCurrencyEUR
     }()
     
     override func viewDidLoad() {
@@ -190,8 +199,12 @@ class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
                 
                 navigationItem.title = ticker.symbol
                 nameLabel.text = ticker.name
-                let price_usd = Double(ticker.price_usd)
-                dataCurrencyLabel.text = formatterCurrencyUSD.string(from: NSNumber(value:price_usd!))
+                let priceUSD = Double(ticker.price_usd)
+                priceUsdLabel.text = formatterCurrencyUSD.string(from: NSNumber(value:priceUSD!))
+                if let priceEUR = ticker.price_eur {
+                    priceEurLabel.text = formatterCurrencyEUR.string(from: NSNumber(value: Double(priceEUR)!))
+                }
+                priceBtcLabel.text = "₿" + String(ticker.price_btc)
                 
                 // 1h
                 oneHourChangeLabel.text = ticker.percent_change_1h != nil ? ticker.percent_change_1h! + "%" : "null"
@@ -202,12 +215,20 @@ class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
                 // 7d
                 weekChangeLabel.text = ticker.percent_change_7d != nil ? ticker.percent_change_7d! + "%" : "null"
                 backgroundColorView(view: weekChangeView, percentChange: ticker.percent_change_7d)
-                
-                dataSecondaryLabel.text = "₿" + String(ticker.price_btc)
+
                 rankLabel.text = String(ticker.rank)
                 
-                marketcapLabel.text = ticker.market_cap_usd != nil ? formatterCurrencyUSD.string(from: NSNumber(value: Double(ticker.market_cap_usd!)!)) : "null"
-                volumeLabel.text = ticker.volume_usd_24h != nil ? formatterCurrencyUSD.string(from: NSNumber(value: Double(ticker.volume_usd_24h!)!)) : "null"
+                let keyStore = NSUbiquitousKeyValueStore ()
+                switch keyStore.longLong(forKey: "priceCurrency") {
+                case 2:
+                    marketcapLabel.text = ticker.market_cap_eur != nil ? formatterCurrencyEUR.string(from: NSNumber(value: Double(ticker.market_cap_eur!)!)) : "null"
+                    volumeLabel.text = ticker.volume_eur_24h != nil ? formatterCurrencyEUR.string(from: NSNumber(value: Double(ticker.volume_eur_24h!)!)) : "null"
+                default:
+                    marketcapLabel.text = ticker.market_cap_usd != nil ? formatterCurrencyUSD.string(from: NSNumber(value: Double(ticker.market_cap_usd!)!)) : "null"
+                    volumeLabel.text = ticker.volume_usd_24h != nil ? formatterCurrencyUSD.string(from: NSNumber(value: Double(ticker.volume_usd_24h!)!)) : "null"
+                }
+                
+
             }
         }
         

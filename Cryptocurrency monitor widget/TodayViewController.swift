@@ -24,10 +24,20 @@ class TodayViewController: UIViewController, UITableViewDataSource, UITableViewD
         let formatterCurrencyUSD = NumberFormatter()
         formatterCurrencyUSD.numberStyle = .currency
         formatterCurrencyUSD.currencyCode = "USD"
-        formatterCurrencyUSD.maximumFractionDigits = 10
+        formatterCurrencyUSD.maximumFractionDigits = 4
         formatterCurrencyUSD.locale = Locale(identifier: "en_US")
         return formatterCurrencyUSD
     }()
+    
+    let formatterCurrencyEUR: NumberFormatter = {
+        let formatterCurrencyEUR = NumberFormatter()
+        formatterCurrencyEUR.numberStyle = .currency
+        formatterCurrencyEUR.currencyCode = "EUR"
+        formatterCurrencyEUR.maximumFractionDigits = 4
+        formatterCurrencyEUR.locale = Locale(identifier: "en_US")
+        return formatterCurrencyEUR
+    }()
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -42,13 +52,10 @@ class TodayViewController: UIViewController, UITableViewDataSource, UITableViewD
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
-        let userDefaults = UserDefaults(suiteName: "group.mialin.valentyn.crypto.monitor")
-        if let decodedTicker = userDefaults?.object(forKey: "tickers") as? [Data] {
-            let cacheTicker = decodedTicker.map { Ticker(data: $0)! }
-                cryptocurrencyView(ticker: cacheTicker)
-                tableView.reloadData()
-            }
+        if let cacheTicker = SettingsUserDefaults().loadcacheTicker() {
+            cryptocurrencyView(ticker: cacheTicker)
+          //  tableView.reloadData()
+        }
     }
     
     @objc func ubiquitousKeyValueStoreDidChange(notification: NSNotification) {
@@ -117,13 +124,18 @@ class TodayViewController: UIViewController, UITableViewDataSource, UITableViewD
                 self.preferredContentSize = maxSize
                 self.tableView.reloadData()
             }, completion: nil)
-            
         }
         else {
             UIView.animate(withDuration: 0.25, animations: { () -> Void in
-                self.preferredContentSize = CGSize(width: 0.0, height: 44.0 * CGFloat(self.cryptocurrency.count))
+                if let cacheTicker = SettingsUserDefaults().loadcacheTicker() {
+                    self.preferredContentSize = CGSize(width: 0.0, height: 44.0 * CGFloat(cacheTicker.count))
+                }
+                else{
+                    self.preferredContentSize = maxSize
+                }
+
                 self.tableView.reloadData()
-            })
+            }, completion: nil)
         }
     }
     
@@ -168,6 +180,10 @@ class TodayViewController: UIViewController, UITableViewDataSource, UITableViewD
             cell.priceCoinLabel.text = formatterCurrencyUSD.string(from: NSNumber(value: price_usd!))
         case 1:
             cell.priceCoinLabel.text = "₿" + cryptocurrencyShow[row].price_btc
+        case 2:
+            if let price_eur = cryptocurrencyShow[row].price_eur {
+                cell.priceCoinLabel.text = formatterCurrencyEUR.string(from: NSNumber(value: Double(price_eur)!))
+            }
         default:
             break
         }
