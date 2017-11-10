@@ -10,15 +10,35 @@ import WatchKit
 import ClockKit
 
 class ComplicationController: NSObject, CLKComplicationDataSource {
+   
+    let formatterCurrencyUSD: NumberFormatter = {
+        let formatterCurrencyUSD = NumberFormatter()
+        formatterCurrencyUSD.numberStyle = .currency
+        formatterCurrencyUSD.currencyCode = "USD"
+        formatterCurrencyUSD.maximumFractionDigits = 4
+        formatterCurrencyUSD.locale = Locale(identifier: "en_US")
+        return formatterCurrencyUSD
+    }()
+    let formatterCurrencyEUR: NumberFormatter = {
+        let formatterCurrencyEUR = NumberFormatter()
+        formatterCurrencyEUR.numberStyle = .currency
+        formatterCurrencyEUR.currencyCode = "EUR"
+        formatterCurrencyEUR.maximumFractionDigits = 4
+        formatterCurrencyEUR.locale = Locale(identifier: "en_US")
+        return formatterCurrencyEUR
+    }()
     
     func getCurrentTimelineEntry(for complication: CLKComplication, withHandler handler: @escaping (CLKComplicationTimelineEntry?) -> Void) {
         
+
         if let cacheTicker = CacheTicker().loadcacheTicker() {
+         //   print("loadcacheTicker \(CacheTicker().loadcacheTicker()) ")
             switch complication.family {
             case .modularLarge:
                 if !cacheTicker.isEmpty {
                     print("ComplicationController \(cacheTicker.count)")
-                    let entry = self.createTimeLineEntry(ticker: Array(cacheTicker.prefix(3)))
+                    
+                    let entry = self.createModularLarge(ticker: Array(cacheTicker.prefix(3)))
                     handler(entry)
                 }
             case .modularSmall:
@@ -91,9 +111,26 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
                         
                         switch UserDefaults().integer(forKey: "priceCurrency") {
                         case 0:
-                            priceString = formatterCurrencyUSD.string(from: NSNumber(value: Double(cacheTicker[0].price_usd)!))!
+                            if let price_usd = cacheTicker[0].price_usd {
+                            priceString = formatterCurrencyUSD.string(from: NSNumber(value: Double(price_usd)!))!
+                            }
+                            else{
+                                priceString = "null"
+                            }
                         case 1:
-                            priceString = "₿" +  cacheTicker[0].price_btc
+                            if let price_btc = cacheTicker[0].price_btc {
+                                priceString = "₿" + price_btc
+                            }
+                            else{
+                                priceString = "null"
+                            }
+                        case 2:
+                            if let price_eur = cacheTicker[0].price_eur {
+                                priceString = formatterCurrencyEUR.string(from: NSNumber(value: Double(price_eur)!))!
+                            }
+                            else{
+                                priceString = "null"
+                            }
                         default:
                             break
                         }
@@ -164,7 +201,7 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
         }
     }
     
-    func createTimeLineEntry(ticker : [Ticker]) -> CLKComplicationTimelineEntry {
+    func createModularLarge(ticker : [Ticker]) -> CLKComplicationTimelineEntry {
         let template = CLKComplicationTemplateModularLargeColumns()
         let userDefaults = UserDefaults()
         
@@ -227,40 +264,70 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
         switch userDefaults.integer(forKey: "priceCurrency") {
         case 0:
             if ticker.indices.contains(0) {
-                template.row1Column2TextProvider = CLKSimpleTextProvider(text: formatterCurrencyUSD.string(from: NSNumber(value: Double(ticker[0].price_usd)!))!)
+                if let price_usd = ticker[0].price_usd{
+                    template.row1Column2TextProvider = CLKSimpleTextProvider(text: formatterCurrencyUSD.string(from: NSNumber(value: Double(price_usd)!))!)
+                }
+                else{
+                    template.row1Column2TextProvider = CLKSimpleTextProvider(text: "null")
+                }
             }
             else{
                 template.row1Column2TextProvider = CLKSimpleTextProvider(text:"")
             }
             if ticker.indices.contains(1) {
-                template.row2Column2TextProvider = CLKSimpleTextProvider(text: formatterCurrencyUSD.string(from: NSNumber(value: Double(ticker[1].price_usd)!))!)
+                if let price_usd = ticker[1].price_usd{
+                    template.row2Column2TextProvider = CLKSimpleTextProvider(text: formatterCurrencyUSD.string(from: NSNumber(value: Double(price_usd)!))!)
+                }
+                else{
+                    template.row2Column2TextProvider = CLKSimpleTextProvider(text: "null")
+                }
             }
             else{
                 template.row2Column2TextProvider = CLKSimpleTextProvider(text:"")
             }
             if ticker.indices.contains(2) {
-                template.row3Column2TextProvider = CLKSimpleTextProvider(text: formatterCurrencyUSD.string(from: NSNumber(value: Double(ticker[2].price_usd)!))!)
+                if let price_usd = ticker[2].price_usd{
+                    template.row3Column2TextProvider = CLKSimpleTextProvider(text: formatterCurrencyUSD.string(from: NSNumber(value: Double(price_usd)!))!)
+                }
+                else{
+                    template.row3Column2TextProvider = CLKSimpleTextProvider(text: "null")
+                }
             }
             else{
                 template.row3Column2TextProvider = CLKSimpleTextProvider(text:"")
             }
         case 1:
             if ticker.indices.contains(0) {
-                template.row1Column2TextProvider = CLKSimpleTextProvider(text: "₿" + ticker[0].price_btc)
+                if let price_btc = ticker[0].price_btc {
+                    template.row1Column2TextProvider = CLKSimpleTextProvider(text: "₿" + price_btc)
+                }
+                else{
+                    template.row1Column2TextProvider = CLKSimpleTextProvider(text: "null")
+                }
             }
             else{
                 template.row1Column2TextProvider = CLKSimpleTextProvider(text:"")
             }
             
             if ticker.indices.contains(1) {
-                template.row2Column2TextProvider = CLKSimpleTextProvider(text: "₿" + ticker[1].price_btc)
+                if let price_btc = ticker[1].price_btc {
+                    template.row2Column2TextProvider = CLKSimpleTextProvider(text: "₿" + price_btc)
+                }
+                else{
+                    template.row2Column2TextProvider = CLKSimpleTextProvider(text: "null")
+                }
             }
             else{
                 template.row2Column2TextProvider = CLKSimpleTextProvider(text:"")
             }
             
             if ticker.indices.contains(2) {
-                template.row3Column2TextProvider = CLKSimpleTextProvider(text: "₿" + ticker[2].price_btc)
+                if let price_btc = ticker[2].price_btc {
+                    template.row3Column2TextProvider = CLKSimpleTextProvider(text: "₿" + price_btc)
+                }
+                else{
+                    template.row3Column2TextProvider = CLKSimpleTextProvider(text: "null")
+                }
             }
             else{
                 template.row3Column2TextProvider = CLKSimpleTextProvider(text:"")
@@ -270,6 +337,9 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
                 if let price_eur = ticker[0].price_eur {
                     template.row1Column2TextProvider = CLKSimpleTextProvider(text: formatterCurrencyEUR.string(from: NSNumber(value: Double(price_eur)!))!)
                 }
+                else{
+                    template.row1Column2TextProvider = CLKSimpleTextProvider(text: "null")
+                }
             }
             else{
                 template.row1Column2TextProvider = CLKSimpleTextProvider(text:"")
@@ -277,6 +347,9 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
             if ticker.indices.contains(1) {
                 if let price_eur = ticker[1].price_eur {
                     template.row2Column2TextProvider = CLKSimpleTextProvider(text: formatterCurrencyEUR.string(from: NSNumber(value: Double(price_eur)!))!)
+                }
+                else{
+                    template.row2Column2TextProvider = CLKSimpleTextProvider(text: "null")
                 }
             }
             else{
@@ -286,6 +359,9 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
                 if let price_eur = ticker[2].price_eur {
                     template.row3Column2TextProvider = CLKSimpleTextProvider(text: formatterCurrencyEUR.string(from: NSNumber(value: Double(price_eur)!))!)
                 }
+                else{
+                    template.row3Column2TextProvider = CLKSimpleTextProvider(text: "null")
+                }
             }
             else{
                 template.row3Column2TextProvider = CLKSimpleTextProvider(text:"")
@@ -293,7 +369,6 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
         default:
             break
         }
-        
         
         let entry = CLKComplicationTimelineEntry(date: Date(), complicationTemplate: template)
         return(entry)

@@ -46,6 +46,7 @@ class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
     var errorSubview:ErrorSubview?
     var currencyCharts: CurrencyCharts?
     let userCalendar = Calendar.current
+    var minDate: Date?
     
     let formatterCurrencyUSD: NumberFormatter = {
         let formatterCurrencyUSD = NumberFormatter()
@@ -96,14 +97,11 @@ class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
         let keyStore = NSUbiquitousKeyValueStore ()
         selectSegmentedControl.selectedSegmentIndex = Int(keyStore.longLong(forKey: "typeChart"))
         zoomSegmentedControl.selectedSegmentIndex = Int(keyStore.longLong(forKey: "zoomChart"))
-        /*
-         if getTickerID == nil {
-         refresh()
-         }
-         */
+        
         AlamofireRequest().getMinDateCharts(id: openID, completion: { (minDate: Date?, error : Error?) in
             if error == nil {
                 if let minDate = minDate{
+                    self.minDate = minDate
                     // 1 weak
                     if  minDate >=  self.userCalendar.date(byAdding: .weekOfYear, value: -1, to: Date())! {
                         self.zoomSelectedSegment(index: 1)
@@ -131,13 +129,11 @@ class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
             }
             else{
                 DispatchQueue.main.async() {
-                    self.lineChartErrorView(error: error!)
+                    self.lineChartErrorView(error: error!.localizedDescription)
                 }
             }
         })
     }
-    
-    
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
@@ -166,69 +162,83 @@ class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
         startRefreshActivityIndicator()
         
         let keyStore = NSUbiquitousKeyValueStore ()
-        if  let idArray = keyStore.array(forKey: "id") as? [String] {
-            AlamofireRequest().getTickerID(idArray: idArray, completion: { (ticker : [Ticker]?, error : Error?) in
-                if error == nil {
-                    if let ticker = ticker {
-                        
-                        getTickerID = ticker
-                        SettingsUserDefaults().setUserDefaults(ticher: getTickerID!, idArray: idArray, lastUpdate: Date())
-                        DispatchQueue.main.async() {
-                            self.viewCryptocurrencyInfo()
-                        }
-                    }
+        guard let idArray = keyStore.array(forKey: "id") as? [String] else { return }
+        AlamofireRequest().getTickerID(idArray: idArray, completion: { (ticker : [Ticker]?, error : Error?) in
+            guard error == nil else {
+                self.showErrorSubview(error: error!, frame: CGRect(x: 0, y: 0, width: self.view.bounds.width, height: self.view.bounds.height))
+                return
+            }
+            
+            if let ticker = ticker {
+                getTickerID = ticker
+                SettingsUserDefaults().setUserDefaults(ticher: getTickerID!, idArray: idArray, lastUpdate: Date())
+                DispatchQueue.main.async() {
+                    self.viewCryptocurrencyInfo()
                 }
-                else{
-                    self.showErrorSubview(error: error!, frame: CGRect(x: 0, y: 0, width: self.view.bounds.width, height: self.view.bounds.height))
-                }
-            })
-        }
+            }
+        })
+        
     }
     
     func viewCryptocurrencyInfo() {
         refreshBarButtonItem()
         
-        if getTickerID != nil {
-            if let tick = getTickerID!.first(where: {$0.id == openID}) {
-                ticker = tick
+        guard getTickerID != nil else { return }
+        
+        if let tick = getTickerID!.first(where: {$0.id == openID}) {
+            ticker = tick
+        }
+        if let ticker = ticker {
+            
+            let url = URL(string: "https://files.coinmarketcap.com/static/img/coins/64x64/\(ticker.id).png")!
+            imageView.af_setImage(withURL: url)
+            
+            navigationItem.title = ticker.symbol
+            nameLabel.text = ticker.name
+            
+            if let price_usd = ticker.price_usd {
+                priceUsdLabel.text = formatterCurrencyUSD.string(from: NSNumber(value: Double(price_usd)!))
             }
-            if let ticker = ticker {
-                
-                let url = URL(string: "https://files.coinmarketcap.com/static/img/coins/64x64/\(ticker.id).png")!
-                imageView.af_setImage(withURL: url)
-                
-                navigationItem.title = ticker.symbol
-                nameLabel.text = ticker.name
-                let priceUSD = Double(ticker.price_usd)
-                priceUsdLabel.text = formatterCurrencyUSD.string(from: NSNumber(value:priceUSD!))
-                if let priceEUR = ticker.price_eur {
-                    priceEurLabel.text = formatterCurrencyEUR.string(from: NSNumber(value: Double(priceEUR)!))
-                }
-                priceBtcLabel.text = "₿" + String(ticker.price_btc)
-                
-                // 1h
-                oneHourChangeLabel.text = ticker.percent_change_1h != nil ? ticker.percent_change_1h! + "%" : "null"
-                backgroundColorView(view: oneHourChangeView, percentChange: ticker.percent_change_1h)
-                // 24h
-                dayChangeLabel.text = ticker.percent_change_24h != nil ? ticker.percent_change_24h! + "%" : "null"
-                backgroundColorView(view: dayChangeView, percentChange: ticker.percent_change_24h)
-                // 7d
-                weekChangeLabel.text = ticker.percent_change_7d != nil ? ticker.percent_change_7d! + "%" : "null"
-                backgroundColorView(view: weekChangeView, percentChange: ticker.percent_change_7d)
-
-                rankLabel.text = String(ticker.rank)
-                
-                let keyStore = NSUbiquitousKeyValueStore ()
-                switch keyStore.longLong(forKey: "priceCurrency") {
-                case 2:
-                    marketcapLabel.text = ticker.market_cap_eur != nil ? formatterCurrencyEUR.string(from: NSNumber(value: Double(ticker.market_cap_eur!)!)) : "null"
-                    volumeLabel.text = ticker.volume_eur_24h != nil ? formatterCurrencyEUR.string(from: NSNumber(value: Double(ticker.volume_eur_24h!)!)) : "null"
-                default:
-                    marketcapLabel.text = ticker.market_cap_usd != nil ? formatterCurrencyUSD.string(from: NSNumber(value: Double(ticker.market_cap_usd!)!)) : "null"
-                    volumeLabel.text = ticker.volume_usd_24h != nil ? formatterCurrencyUSD.string(from: NSNumber(value: Double(ticker.volume_usd_24h!)!)) : "null"
-                }
-                
-
+            else{
+                priceUsdLabel.text = "null"
+            }
+            if let priceEUR = ticker.price_eur {
+                priceEurLabel.text = formatterCurrencyEUR.string(from: NSNumber(value: Double(priceEUR)!))
+            }
+            else{
+                priceEurLabel.text =  "null"
+            }
+            
+            if let price_btc = ticker.price_btc {
+                priceBtcLabel.text = "₿" + price_btc
+            }
+            else{
+                priceBtcLabel.text =  "null"
+            }
+            
+    
+            
+            // 1h
+            oneHourChangeLabel.text = ticker.percent_change_1h != nil ? ticker.percent_change_1h! + "%" : "null"
+            backgroundColorView(view: oneHourChangeView, percentChange: ticker.percent_change_1h)
+            // 24h
+            dayChangeLabel.text = ticker.percent_change_24h != nil ? ticker.percent_change_24h! + "%" : "null"
+            backgroundColorView(view: dayChangeView, percentChange: ticker.percent_change_24h)
+            // 7d
+            weekChangeLabel.text = ticker.percent_change_7d != nil ? ticker.percent_change_7d! + "%" : "null"
+            backgroundColorView(view: weekChangeView, percentChange: ticker.percent_change_7d)
+            
+            rankLabel.text = String(ticker.rank)
+            
+            let keyStore = NSUbiquitousKeyValueStore ()
+            switch keyStore.longLong(forKey: "priceCurrency") {
+            
+            case 2:
+                marketcapLabel.text = ticker.market_cap_eur != nil ? formatterCurrencyEUR.string(from: NSNumber(value: Double(ticker.market_cap_eur!)!)) : "null"
+                volumeLabel.text = ticker.volume_eur_24h != nil ? formatterCurrencyEUR.string(from: NSNumber(value: Double(ticker.volume_eur_24h!)!)) : "null"
+            default:
+                marketcapLabel.text = ticker.market_cap_usd != nil ? formatterCurrencyUSD.string(from: NSNumber(value: Double(ticker.market_cap_usd!)!)) : "null"
+                volumeLabel.text = ticker.volume_usd_24h != nil ? formatterCurrencyUSD.string(from: NSNumber(value: Double(ticker.volume_usd_24h!)!)) : "null"
             }
         }
         
@@ -258,6 +268,8 @@ class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
     
     func loadlineView() {
         
+        guard self.minDate != nil else {self.lineView();  return }
+
         lineChartView.isHidden = true
         lineChartActivityIndicator.isHidden = false
         
@@ -329,10 +341,11 @@ class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
             }
             else{
                 DispatchQueue.main.async() {
-                    self.lineChartErrorView(error: error!)
+                    self.lineChartErrorView(error: error!.localizedDescription)
                 }
             }
         })
+            
     }
     
     func lineView() {
@@ -457,11 +470,11 @@ class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
         self.view.superview?.addSubview(self.errorSubview!)
     }
     
-    func lineChartErrorView(error: Error) {
+    func lineChartErrorView(error: String) {
         self.LineChartErrorView.isHidden = false
         refreshBarButtonItem()
         
-        LineChartErrorLabel.text = error.localizedDescription
+        LineChartErrorLabel.text = error
     }
 }
 

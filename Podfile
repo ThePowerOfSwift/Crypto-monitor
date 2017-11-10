@@ -4,6 +4,7 @@ use_frameworks!
 target 'Coin' do
 	pod 'AlamofireImage'
 	pod 'AlamofireNetworkActivityIndicator', '~> 2.2'
+    pod 'Charts', '~> 3.0.4’
 end
 
 target 'CryptocurrencyRequest' do

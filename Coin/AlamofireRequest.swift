@@ -40,8 +40,8 @@ public struct Ticker: Decodable {
     public let name:String
     public let symbol:String
     public let rank:String
-    public let price_usd:String
-    public let price_btc:String
+    public let price_usd:String?
+    public let price_btc:String?
     public let volume_usd_24h:String?
     public let market_cap_usd:String?
     public let percent_change_1h:String?
@@ -134,7 +134,7 @@ public class AlamofireRequest {
     public init() {}
 
     public func getTicker(completion: @escaping  ([Ticker]?, Error?) -> ()) {
-        Alamofire.request("https://api.coinmarketcap.com/v1/ticker/?convert=EUR").validate().responseData { response in
+        Alamofire.request("https://api.coinmarketcap.com/v1/ticker/?convert=EUR&limit=0").validate().responseData { response in
             switch response.result {
             case .success(let responseData):
                 print("Validation Successful getTicker2")
@@ -155,7 +155,7 @@ public class AlamofireRequest {
     }
     
     public func getTickerID(idArray: [String], completion: @escaping  ([Ticker]?, Error?) -> ()) {
-        Alamofire.request("https://api.coinmarketcap.com/v1/ticker/?convert=EUR").validate().responseData { response in
+        Alamofire.request("https://api.coinmarketcap.com/v1/ticker/?convert=EUR&limit=0").validate().responseData { response in
             switch response.result {
             case .success(let responseData):
                 print("Validation Successful getTickerID")
@@ -257,8 +257,12 @@ public class AlamofireRequest {
                 
                 let json = JSON(value)
                 
-                let timestamp = json["price_usd"].arrayValue[0][0].doubleValue
-                minDate = NSDate(timeIntervalSince1970: TimeInterval(timestamp / 1000)) as Date?
+                let timestamp = json["price_usd"].arrayValue
+                
+                if !timestamp.isEmpty {
+                    minDate = NSDate(timeIntervalSince1970: TimeInterval(timestamp[0][0].doubleValue / 1000)) as Date?
+                }
+    
             case .failure(let errorFailure):
                 error = errorFailure
             }

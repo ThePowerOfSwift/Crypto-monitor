@@ -76,19 +76,20 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate {
         
         print("willActivate")
         
-        if (WKExtension.shared().applicationState == .active) {
-            updateUserActivity("Valentyn.Mialin.crypto.monitor.Activity", userInfo: ["" : ""], webpageURL: nil)
-            load()
-        }
-        else{
-            viewCache()
-        }
-        
         if(WCSession.isSupported()){
             watchSession = WCSession.default
             // Add self as a delegate of the session so we can handle messages
             watchSession!.delegate = self
             watchSession!.activate()
+        }
+        
+        if (WKExtension.shared().applicationState == .active) {
+            viewCache()
+            updateUserActivity("Valentyn.Mialin.crypto.monitor.Activity", userInfo: ["" : ""], webpageURL: nil)
+            load()
+        }
+        else{
+            viewCache()
         }
     }
     
@@ -109,9 +110,9 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate {
                 NetworkRequest().getTickerID(idArray: idArray, completion: { (ticker : [Ticker]?, error : Error?) in
                     if error == nil {
                         if let ticker = ticker {
-                            CacheTicker().setUserDefaults(ticher: ticker, lastUpdate: Date())
                             DispatchQueue.main.async() {
                                 self.tableView(ticker: ticker)
+                                CacheTicker().setUserDefaults(ticher: ticker)
                                 self.reloadTimeline()
                             }
                         }
@@ -119,7 +120,7 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate {
                 })
             }
             else{
-                CacheTicker().setUserDefaults(ticher: nil, lastUpdate: Date())
+                CacheTicker().setUserDefaults(ticher: nil)
                 reloadTimeline()
                 cryptocurrencyTable.setHidden(true)
                 emptyGroup.setHidden(false)

@@ -62,7 +62,7 @@ class CoinTableViewController: UITableViewController, WCSessionDelegate {
         
     }
     
-    // Sender
+    // Sender Watch
     private func updateApplicationContext(id: [String]) {
         do {
             let keyStore = NSUbiquitousKeyValueStore ()
@@ -126,6 +126,12 @@ class CoinTableViewController: UITableViewController, WCSessionDelegate {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
+        
+        let keyStore = NSUbiquitousKeyValueStore ()
+        let idKeyStore = keyStore.array(forKey: "id") as? [String]
+        if let idKeyStore = idKeyStore {
+            updateApplicationContext(id: idKeyStore)
+        }
         cryptocurrencyView()
     }
 
@@ -202,13 +208,26 @@ class CoinTableViewController: UITableViewController, WCSessionDelegate {
             let keyStore = NSUbiquitousKeyValueStore ()
             switch keyStore.longLong(forKey: "priceCurrency") {
             case 0:
-                let price_usd = Double(ticker[row].price_usd)
-                cell.priceCoinLabel.text = formatterCurrencyUSD.string(from: NSNumber(value: price_usd!))
+                if let price_usd = ticker[row].price_usd {
+                    cell.priceCoinLabel.text = formatterCurrencyUSD.string(from: NSNumber(value: Double(price_usd)!))
+                }
+                else{
+                    cell.priceCoinLabel.text = "null"
+                }
             case 1:
-                cell.priceCoinLabel.text = "₿" + String(ticker[row].price_btc)
+                if let price_btc = ticker[row].price_btc {
+                    cell.priceCoinLabel.text = "₿" + price_btc
+                }
+                else{
+                    cell.priceCoinLabel.text = "null"
+                }
+                
             case 2:
                 if let price_eur = ticker[row].price_eur {
                     cell.priceCoinLabel.text = formatterCurrencyEUR.string(from: NSNumber(value: Double(price_eur)!))
+                }
+                else{
+                    cell.priceCoinLabel.text = "null"
                 }
             default:
                 break
@@ -346,58 +365,58 @@ class CoinTableViewController: UITableViewController, WCSessionDelegate {
     private func cryptocurrencyView() {
         self.refreshControl?.endRefreshing()
         
-        if getTickerID != nil {
-            if getTickerID!.isEmpty {
-                self.showEmptySubview()
-            }
-            else{
-                if let subviews = self.view.superview?.subviews {
-                    for view in subviews{
-                        if (view is LoadSubview || view is ErrorSubview || view is EmptySubview) {
-                            view.removeFromSuperview()
-                        }
+        guard getTickerID != nil else { return }
+        
+        if getTickerID!.isEmpty {
+            self.showEmptySubview()
+        }
+        else{
+            if let subviews = self.view.superview?.subviews {
+                for view in subviews{
+                    if (view is LoadSubview || view is ErrorSubview || view is EmptySubview) {
+                        view.removeFromSuperview()
                     }
                 }
             }
-            
-            let userDefaults = UserDefaults(suiteName: "group.mialin.valentyn.crypto.monitor")
-            if let lastUpdate = userDefaults?.object(forKey: "lastUpdate") as? NSDate {
-                self.refreshControl?.attributedTitle = NSAttributedString(string: dateToString(date: lastUpdate))
-            }
-            tableView.reloadData()
         }
+        
+        let userDefaults = UserDefaults(suiteName: "group.mialin.valentyn.crypto.monitor")
+        if let lastUpdate = userDefaults?.object(forKey: "lastUpdate") as? NSDate {
+            self.refreshControl?.attributedTitle = NSAttributedString(string: dateToString(date: lastUpdate))
+        }
+        tableView.reloadData()
     }
     
     private func loadTicker() {
         let keyStore = NSUbiquitousKeyValueStore ()
-        if let idArray = keyStore.array(forKey: "id") as? [String] {
-            if idArray.isEmpty {
-                getTickerID = [Ticker]()
-                SettingsUserDefaults().setUserDefaults(ticher: [Ticker](), idArray: idArray, lastUpdate: nil)
-                showEmptySubview()
+        guard let idArray = keyStore.array(forKey: "id") as? [String] else { return }
+        
+        if idArray.isEmpty {
+            getTickerID = [Ticker]()
+            SettingsUserDefaults().setUserDefaults(ticher: [Ticker](), idArray: idArray, lastUpdate: nil)
+            showEmptySubview()
+        }
+        else{
+            // Какой вид загрузки отображать
+            if getTickerID == nil {
+                showLoadSubview()
             }
-            else{
-                // Какой вид загрузки отображать
-                if getTickerID == nil {
-                    showLoadSubview()
-                }
-
-                AlamofireRequest().getTickerID(idArray: idArray, completion: { (ticker : [Ticker]?, error : Error?) in
-                    if error == nil {
-                        if let ticker = ticker {
-                            getTickerID = ticker
-                            SettingsUserDefaults().setUserDefaults(ticher: getTickerID!, idArray: idArray, lastUpdate: Date())
-                            self.updateApplicationContext(id: idArray)
-                            DispatchQueue.main.async() {
-                                self.cryptocurrencyView()
-                            }
+            
+            AlamofireRequest().getTickerID(idArray: idArray, completion: { (ticker : [Ticker]?, error : Error?) in
+                if error == nil {
+                    if let ticker = ticker {
+                        getTickerID = ticker
+                        SettingsUserDefaults().setUserDefaults(ticher: getTickerID!, idArray: idArray, lastUpdate: Date())
+                        self.updateApplicationContext(id: idArray)
+                        DispatchQueue.main.async() {
+                            self.cryptocurrencyView()
                         }
                     }
-                    else{
-                        self.showErrorSubview(error: error!)
-                    }
-                })
-            }
+                }
+                else{
+                    self.showErrorSubview(error: error!)
+                }
+            })
         }
     }
     

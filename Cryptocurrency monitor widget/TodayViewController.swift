@@ -164,8 +164,7 @@ class TodayViewController: UIViewController, UITableViewDataSource, UITableViewD
         else{
             cryptocurrencyShow = cryptocurrency
         }
-        
-        
+
         let row = indexPath.row
         
         let url = URL(string: "https://files.coinmarketcap.com/static/img/coins/32x32/\(cryptocurrencyShow[row].id).png")!
@@ -176,13 +175,26 @@ class TodayViewController: UIViewController, UITableViewDataSource, UITableViewD
         let keyStore = NSUbiquitousKeyValueStore ()
         switch keyStore.longLong(forKey: "priceCurrency") {
         case 0:
-            let price_usd = Double(cryptocurrencyShow[row].price_usd)
-            cell.priceCoinLabel.text = formatterCurrencyUSD.string(from: NSNumber(value: price_usd!))
+            if let price_usd = cryptocurrencyShow[row].price_usd {
+                cell.priceCoinLabel.text = formatterCurrencyUSD.string(from: NSNumber(value: Double(price_usd)!))
+            }
+            else{
+                cell.priceCoinLabel.text = "null"
+            }
         case 1:
-            cell.priceCoinLabel.text = "₿" + cryptocurrencyShow[row].price_btc
+            if let price_btc = cryptocurrencyShow[row].price_btc {
+                cell.priceCoinLabel.text = "₿" + price_btc
+            }
+            else{
+                cell.priceCoinLabel.text = "null"
+            }
+            
         case 2:
             if let price_eur = cryptocurrencyShow[row].price_eur {
                 cell.priceCoinLabel.text = formatterCurrencyEUR.string(from: NSNumber(value: Double(price_eur)!))
+            }
+            else{
+                cell.priceCoinLabel.text = "null"
             }
         default:
             break

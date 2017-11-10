@@ -17,17 +17,19 @@ class CacheTicker {
         return cacheTicker
     }
     
-    public func setUserDefaults(ticher: [Ticker]?, lastUpdate: Date) {
+    public func setUserDefaults(ticher: [Ticker]?) {
         
         let userDefaults = UserDefaults()
         if let ticher = ticher {
             let tickersData = ticher.map { $0.encode() }
             userDefaults.set(tickersData, forKey: "tickers")
         }
+            /*
         else{
             userDefaults.removeObject(forKey: "tickers")
         }
-        userDefaults.set(lastUpdate, forKey: "lastUpdate")
+ */
+     //   userDefaults.set(lastUpdate, forKey: "lastUpdate")
         userDefaults.synchronize()
     }
 }

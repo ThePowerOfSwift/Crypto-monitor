@@ -11,7 +11,7 @@ import Foundation
 class NetworkRequest{
     
     public func getTickerID(idArray: [String], completion: @escaping ([Ticker]?, Error?) -> Void) {
-        let endpoint = "https://api.coinmarketcap.com/v1/ticker/?convert=EUR"
+        let endpoint = "https://api.coinmarketcap.com/v1/ticker/?convert=EUR&limit=0"
         guard let url = URL(string: endpoint) else {
             print("Error: cannot create URL")
             let error = BackendError.urlError(reason: "Could not construct URL")
@@ -61,8 +61,8 @@ enum BackendError: Error {
 public struct Ticker: Decodable {
     public let id:String
     public let symbol:String
-    public let price_usd:String
-    public let price_btc:String
+    public let price_usd:String?
+    public let price_btc:String?
     public let percent_change_1h:String?
     public let percent_change_24h:String?
     public let percent_change_7d:String?
