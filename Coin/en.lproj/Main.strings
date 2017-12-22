@@ -56,7 +56,7 @@
 /* Class = "UILabel"; text = "Price"; ObjectID = "U2u-l5-f1g"; */
 "U2u-l5-f1g.text" = "Price";
 
-/* Class = "UIButton"; normalTitle = "Buy / Sell Instantly"; ObjectID = "WVM-8J-Hzj"; */
+/* Class = "UIButton"; normalTitle = "Buy / Sell Instantly"; ObjectID = "WVM-8J-Hzj"; Note = "changelly"; */
 "WVM-8J-Hzj.normalTitle" = "Buy / Sell Instantly";
 
 /* Class = "UISegmentedControl"; Y3q-Wh-tVv.segmentTitles[0] = "Market Cap"; ObjectID = "Y3q-Wh-tVv"; */
@@ -95,10 +95,10 @@
 /* Class = "UILabel"; text = "-21.5%"; ObjectID = "tLa-nc-r5Z"; */
 "tLa-nc-r5Z.text" = "-21.5%";
 
-/* Class = "UITableViewSection"; headerTitle = "Price"; ObjectID = "tyt-ZY-uLd"; */
+/* Class = "UITableViewSection"; headerTitle = "Price"; ObjectID = "tyt-ZY-uLd"; Note = "Настройки выбор валюты"; */
 "tyt-ZY-uLd.headerTitle" = "Price";
 
-/* Class = "UITableViewSection"; headerTitle = "Rate change period"; ObjectID = "uMW-aC-8Ll"; */
+/* Class = "UITableViewSection"; headerTitle = "Rate change period"; ObjectID = "uMW-aC-8Ll"; Note = "Настройки выбор периода"; */
 "uMW-aC-8Ll.headerTitle" = "Rate change period";
 
 /* Class = "UILabel"; text = "24h"; ObjectID = "wmA-fS-34Y"; */
@@ -125,7 +125,7 @@
 /* Class = "UISegmentedControl"; xtc-uj-B2T.segmentTitles[6] = "ALL"; ObjectID = "xtc-uj-B2T"; */
 "xtc-uj-B2T.segmentTitles[6]" = "ALL";
 
-/* Class = "UITableViewSection"; headerTitle = "Data source"; ObjectID = "yeO-1L-1gs"; */
+/* Class = "UITableViewSection"; headerTitle = "Data source"; ObjectID = "yeO-1L-1gs"; Note = "Настройки источник данных "; */
 "yeO-1L-1gs.headerTitle" = "Data source";
 
 /* Class = "UILabel"; text = "23307.19"; ObjectID = "zSM-yy-AP4"; */

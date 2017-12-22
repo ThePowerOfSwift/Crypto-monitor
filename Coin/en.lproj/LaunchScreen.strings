@@ -5,5 +5,5 @@
 /* Class = "UILabel"; text = "Crypto monitor"; ObjectID = "Aex-QJ-Pcm"; */
 "Aex-QJ-Pcm.text" = "Crypto monitor";
 
-/* Class = "UILabel"; text = "Data source"; ObjectID = "WBh-Vh-YCG"; */
+/* Class = "UILabel"; text = "Data source"; ObjectID = "WBh-Vh-YCG"; Note = "LaunchScreen"; */
 "WBh-Vh-YCG.text" = "Data source";
