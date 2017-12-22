@@ -96,7 +96,7 @@ class CoinTableViewController: UITableViewController, WCSessionDelegate {
             self.loadCache()
         }
     }
-    
+
     //MARK:LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -123,7 +123,7 @@ class CoinTableViewController: UITableViewController, WCSessionDelegate {
         loadCache()
         loadTicker()
     }
-    
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         
@@ -134,7 +134,7 @@ class CoinTableViewController: UITableViewController, WCSessionDelegate {
         }
         cryptocurrencyView()
     }
-    
+
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(true)
@@ -144,7 +144,7 @@ class CoinTableViewController: UITableViewController, WCSessionDelegate {
             }
         }
     }
-    
+
     @objc func applicationDidBecomeActiveNotification(notification : NSNotification) {
         print("unlock")
         loadCache()
@@ -173,7 +173,6 @@ class CoinTableViewController: UITableViewController, WCSessionDelegate {
     
     func loadCache() {
         if let cacheTicker = SettingsUserDefaults().loadcacheTicker() {
-            print("load cache \(cacheTicker.count)")
             getTickerID = cacheTicker
             let userDefaults = UserDefaults(suiteName: "group.mialin.valentyn.crypto.monitor")
             if let lastUpdate = userDefaults?.object(forKey: "lastUpdate") as? NSDate {
@@ -182,7 +181,7 @@ class CoinTableViewController: UITableViewController, WCSessionDelegate {
             tableView.reloadData()
         }
     }
-    
+
     
     // MARK: - Table view data source
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -203,9 +202,9 @@ class CoinTableViewController: UITableViewController, WCSessionDelegate {
             let url = URL(string: "https://files.coinmarketcap.com/static/img/coins/32x32/\(ticker[row].id).png")!
             cell.coinImageView.af_setImage(withURL: url)
             
-            
+
             cell.coinNameLabel.text = ticker[row].name
-            
+
             let keyStore = NSUbiquitousKeyValueStore ()
             switch keyStore.longLong(forKey: "priceCurrency") {
             case 0:
@@ -247,13 +246,13 @@ class CoinTableViewController: UITableViewController, WCSessionDelegate {
             }
             
             if let percentChange = percentChange, let percent =  Float(percentChange) {
-                if percent >= 0 {
-                    cell.percentChangeView.backgroundColor = UIColor(red:0.30, green:0.85, blue:0.39, alpha:1.0)
-                }
-                else{
-                    cell.percentChangeView.backgroundColor = UIColor(red:1.00, green:0.23, blue:0.18, alpha:1.0)
-                }
-                cell.percentChangeLabel.text = percentChange + " %"
+                    if percent >= 0 {
+                        cell.percentChangeView.backgroundColor = UIColor(red:0.30, green:0.85, blue:0.39, alpha:1.0)
+                    }
+                    else{
+                        cell.percentChangeView.backgroundColor = UIColor(red:1.00, green:0.23, blue:0.18, alpha:1.0)
+                    }
+                    cell.percentChangeLabel.text = percentChange + " %"
             }
             else{
                 cell.percentChangeView.backgroundColor = UIColor.orange
@@ -312,7 +311,7 @@ class CoinTableViewController: UITableViewController, WCSessionDelegate {
             openID = getTickerID![indexPath.row].id
         }
     }
-    
+
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete{
             let keyStore = NSUbiquitousKeyValueStore ()
@@ -335,14 +334,14 @@ class CoinTableViewController: UITableViewController, WCSessionDelegate {
     }
     
     
-    
+ 
     override func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCellEditingStyle {
         if (self.tableView.isEditing) {
             return UITableViewCellEditingStyle.delete
         }
         return UITableViewCellEditingStyle.none
     }
-    
+ 
     override func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
         
         let keyStore = NSUbiquitousKeyValueStore ()
@@ -367,7 +366,6 @@ class CoinTableViewController: UITableViewController, WCSessionDelegate {
         self.refreshControl?.endRefreshing()
         
         guard getTickerID != nil else { return }
-        
         
         if getTickerID!.isEmpty {
             self.showEmptySubview()

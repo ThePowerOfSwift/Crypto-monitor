@@ -1,1 +1,6 @@
-/* No Localized Strings */
+/* Class = "WKInterfaceLabel"; text = "Add cryptocurrency"; ObjectID = "WcL-Ln-Nim"; */
+"WcL-Ln-Nim.text" = "Добавьте криптовалюты";
+
+/* Class = "WKInterfaceLabel"; text = "You can add cryptocurrency from the \"Crypto monitor\" program on the iPhone."; ObjectID = "hgi-x4-0sf"; */
+"hgi-x4-0sf.text" = "Вы можете добавить криптовалюты из программы «Crypto monitor» на iPhone.";
+

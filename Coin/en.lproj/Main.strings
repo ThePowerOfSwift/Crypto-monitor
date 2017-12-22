@@ -1,0 +1,132 @@
+
+/* Class = "UILabel"; text = "Error string"; ObjectID = "085-95-SRE"; */
+"085-95-SRE.text" = "Error string";
+
+/* Class = "UIBarButtonItem"; title = " "; ObjectID = "2wB-Tb-5JM"; */
+"2wB-Tb-5JM.title" = " ";
+
+/* Class = "UILabel"; text = "Name"; ObjectID = "335-6U-RLa"; */
+"335-6U-RLa.text" = "Name";
+
+/* Class = "UILabel"; text = "Name"; ObjectID = "3pI-hc-AXM"; */
+"3pI-hc-AXM.text" = "Name";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "6ND-cA-2mb"; */
+"6ND-cA-2mb.text" = "Label";
+
+/* Class = "UILabel"; text = "₿"; ObjectID = "8Nk-dX-NRl"; */
+"8Nk-dX-NRl.text" = "₿";
+
+/* Class = "UILabel"; text = "VOLUME (24H) "; ObjectID = "9P0-Kf-92n"; */
+"9P0-Kf-92n.text" = "VOLUME (24H) ";
+
+/* Class = "UISegmentedControl"; AUk-9u-q0O.segmentTitles[0] = "USD"; ObjectID = "AUk-9u-q0O"; */
+"AUk-9u-q0O.segmentTitles[0]" = "USD";
+
+/* Class = "UISegmentedControl"; AUk-9u-q0O.segmentTitles[1] = "BTC"; ObjectID = "AUk-9u-q0O"; */
+"AUk-9u-q0O.segmentTitles[1]" = "BTC";
+
+/* Class = "UISegmentedControl"; AUk-9u-q0O.segmentTitles[2] = "EUR"; ObjectID = "AUk-9u-q0O"; */
+"AUk-9u-q0O.segmentTitles[2]" = "EUR";
+
+/* Class = "UIButton"; normalTitle = "CoinMarketCap"; ObjectID = "E8q-si-UcI"; */
+"E8q-si-UcI.normalTitle" = "CoinMarketCap";
+
+/* Class = "UISegmentedControl"; EKk-hl-QzT.segmentTitles[0] = "1h"; ObjectID = "EKk-hl-QzT"; */
+"EKk-hl-QzT.segmentTitles[0]" = "1h";
+
+/* Class = "UISegmentedControl"; EKk-hl-QzT.segmentTitles[1] = "24h"; ObjectID = "EKk-hl-QzT"; */
+"EKk-hl-QzT.segmentTitles[1]" = "24h";
+
+/* Class = "UISegmentedControl"; EKk-hl-QzT.segmentTitles[2] = "7d"; ObjectID = "EKk-hl-QzT"; */
+"EKk-hl-QzT.segmentTitles[2]" = "7d";
+
+/* Class = "UILabel"; text = "24h"; ObjectID = "FBj-3W-hNJ"; */
+"FBj-3W-hNJ.text" = "24h";
+
+/* Class = "UILabel"; text = "7d"; ObjectID = "Fm0-dh-sZO"; */
+"Fm0-dh-sZO.text" = "7d";
+
+/* Class = "UILabel"; text = "-"; ObjectID = "HzE-Tk-7no"; */
+"HzE-Tk-7no.text" = "-";
+
+/* Class = "UILabel"; text = "€"; ObjectID = "TDq-tP-BrO"; */
+"TDq-tP-BrO.text" = "€";
+
+/* Class = "UILabel"; text = "Price"; ObjectID = "U2u-l5-f1g"; */
+"U2u-l5-f1g.text" = "Price";
+
+/* Class = "UIButton"; normalTitle = "Buy / Sell Instantly"; ObjectID = "WVM-8J-Hzj"; */
+"WVM-8J-Hzj.normalTitle" = "Buy / Sell Instantly";
+
+/* Class = "UISegmentedControl"; Y3q-Wh-tVv.segmentTitles[0] = "Market Cap"; ObjectID = "Y3q-Wh-tVv"; */
+"Y3q-Wh-tVv.segmentTitles[0]" = "Market Cap";
+
+/* Class = "UISegmentedControl"; Y3q-Wh-tVv.segmentTitles[1] = "Price (USD)"; ObjectID = "Y3q-Wh-tVv"; */
+"Y3q-Wh-tVv.segmentTitles[1]" = "Price (USD)";
+
+/* Class = "UISegmentedControl"; Y3q-Wh-tVv.segmentTitles[2] = "Price (BTC)"; ObjectID = "Y3q-Wh-tVv"; */
+"Y3q-Wh-tVv.segmentTitles[2]" = "Price (BTC)";
+
+/* Class = "UISegmentedControl"; Y3q-Wh-tVv.segmentTitles[3] = "24h Vol"; ObjectID = "Y3q-Wh-tVv"; */
+"Y3q-Wh-tVv.segmentTitles[3]" = "24h Vol";
+
+/* Class = "UINavigationItem"; title = "Settings"; ObjectID = "a5a-yk-s2O"; */
+"a5a-yk-s2O.title" = "Settings";
+
+/* Class = "UINavigationItem"; title = "Add"; ObjectID = "fra-i8-hjZ"; */
+"fra-i8-hjZ.title" = "Add";
+
+/* Class = "UILabel"; text = "MARKET CAP"; ObjectID = "gMI-Ox-j4O"; */
+"gMI-Ox-j4O.text" = "MARKET CAP";
+
+/* Class = "UILabel"; text = "RANK"; ObjectID = "hTZ-ur-F3M"; */
+"hTZ-ur-F3M.text" = "RANK";
+
+/* Class = "UILabel"; text = "1h"; ObjectID = "hqn-dg-kiF"; */
+"hqn-dg-kiF.text" = "1h";
+
+/* Class = "UINavigationItem"; title = "Crypto monitor"; ObjectID = "obh-JI-x0P"; */
+"obh-JI-x0P.title" = "Crypto monitor";
+
+/* Class = "UILabel"; text = "$"; ObjectID = "tIF-uW-0Bc"; */
+"tIF-uW-0Bc.text" = "$";
+
+/* Class = "UILabel"; text = "-21.5%"; ObjectID = "tLa-nc-r5Z"; */
+"tLa-nc-r5Z.text" = "-21.5%";
+
+/* Class = "UITableViewSection"; headerTitle = "Price"; ObjectID = "tyt-ZY-uLd"; */
+"tyt-ZY-uLd.headerTitle" = "Price";
+
+/* Class = "UITableViewSection"; headerTitle = "Rate change period"; ObjectID = "uMW-aC-8Ll"; */
+"uMW-aC-8Ll.headerTitle" = "Rate change period";
+
+/* Class = "UILabel"; text = "24h"; ObjectID = "wmA-fS-34Y"; */
+"wmA-fS-34Y.text" = "24h";
+
+/* Class = "UISegmentedControl"; xtc-uj-B2T.segmentTitles[0] = "1d"; ObjectID = "xtc-uj-B2T"; */
+"xtc-uj-B2T.segmentTitles[0]" = "1d";
+
+/* Class = "UISegmentedControl"; xtc-uj-B2T.segmentTitles[1] = "7d"; ObjectID = "xtc-uj-B2T"; */
+"xtc-uj-B2T.segmentTitles[1]" = "7d";
+
+/* Class = "UISegmentedControl"; xtc-uj-B2T.segmentTitles[2] = "1m"; ObjectID = "xtc-uj-B2T"; */
+"xtc-uj-B2T.segmentTitles[2]" = "1m";
+
+/* Class = "UISegmentedControl"; xtc-uj-B2T.segmentTitles[3] = "3m"; ObjectID = "xtc-uj-B2T"; */
+"xtc-uj-B2T.segmentTitles[3]" = "3m";
+
+/* Class = "UISegmentedControl"; xtc-uj-B2T.segmentTitles[4] = "1y"; ObjectID = "xtc-uj-B2T"; */
+"xtc-uj-B2T.segmentTitles[4]" = "1y";
+
+/* Class = "UISegmentedControl"; xtc-uj-B2T.segmentTitles[5] = "YTD"; ObjectID = "xtc-uj-B2T"; */
+"xtc-uj-B2T.segmentTitles[5]" = "YTD";
+
+/* Class = "UISegmentedControl"; xtc-uj-B2T.segmentTitles[6] = "ALL"; ObjectID = "xtc-uj-B2T"; */
+"xtc-uj-B2T.segmentTitles[6]" = "ALL";
+
+/* Class = "UITableViewSection"; headerTitle = "Data source"; ObjectID = "yeO-1L-1gs"; */
+"yeO-1L-1gs.headerTitle" = "Data source";
+
+/* Class = "UILabel"; text = "23307.19"; ObjectID = "zSM-yy-AP4"; */
+"zSM-yy-AP4.text" = "23307.19";

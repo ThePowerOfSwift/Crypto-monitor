@@ -1,0 +1,9 @@
+
+/* Class = "UILabel"; text = "No cryptocurrencies"; ObjectID = "LuI-kP-EpJ"; */
+"LuI-kP-EpJ.text" = "No cryptocurrencies";
+
+/* Class = "UIButton"; normalTitle = "Add"; ObjectID = "Zgl-Zx-Fmf"; */
+"Zgl-Zx-Fmf.normalTitle" = "Add";
+
+/* Class = "UILabel"; text = "Add cryptocurrencies for tracking"; ObjectID = "kCV-Yn-bmp"; */
+"kCV-Yn-bmp.text" = "Add cryptocurrencies for tracking";

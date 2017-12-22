@@ -1,15 +1,21 @@
+/* Class = "UIButton"; normalTitle = "Buy / Sell Instantly"; ObjectID = "WVM-8J-Hzj"; Note = "changelly"; */
+"WVM-8J-Hzj.normalTitle" = "Купуйте / продавайте миттєво";
+
 /* Class = "UINavigationItem"; title = "Settings"; ObjectID = "a5a-yk-s2O"; */
 "a5a-yk-s2O.title" = "Налаштування";
 
 /* Class = "UINavigationItem"; title = "Add"; ObjectID = "fra-i8-hjZ"; */
 "fra-i8-hjZ.title" = "Додати";
 
-/* Class = "UITableViewSection"; headerTitle = "Price"; ObjectID = "tyt-ZY-uLd"; */
+/* Class = "UITableViewSection"; headerTitle = "Price"; ObjectID = "tyt-ZY-uLd"; Note = "Настройки выбор валюты"; */
 "tyt-ZY-uLd.headerTitle" = "Ціна";
 
-/* Class = "UITableViewSection"; headerTitle = "Rate change period"; ObjectID = "uMW-aC-8Ll"; */
+/* Class = "UITableViewSection"; headerTitle = "Rate change period"; ObjectID = "uMW-aC-8Ll"; Note = "Настройки выбор периода"; */
 "uMW-aC-8Ll.headerTitle" = "Період зміни курсу";
 
-/* Class = "UITableViewSection"; headerTitle = "Data source"; ObjectID = "yeO-1L-1gs"; */
+/* Class = "UISegmentedControl"; xtc-uj-B2T.segmentTitles[3] = "3m"; ObjectID = "xtc-uj-B2T"; */
+"xtc-uj-B2T.segmentTitles[3]" = "";
+
+/* Class = "UITableViewSection"; headerTitle = "Data source"; ObjectID = "yeO-1L-1gs"; Note = "Настройки источник данных "; */
 "yeO-1L-1gs.headerTitle" = "Джерело даних";
 

@@ -1,0 +1,27 @@
+
+/* Class = "WKInterfaceMenuItem"; title = "24h"; ObjectID = "4Ma-F4-aID"; */
+"4Ma-F4-aID.title" = "24h";
+
+/* Class = "WKInterfaceController"; title = "Crypto monitor"; ObjectID = "AgC-eL-Hgc"; */
+"AgC-eL-Hgc.title" = "Crypto monitor";
+
+/* Class = "WKInterfaceMenuItem"; title = "7d"; ObjectID = "KZT-QN-aW1"; */
+"KZT-QN-aW1.title" = "7d";
+
+/* Class = "WKInterfaceLabel"; text = "Add cryptocurrency"; ObjectID = "WcL-Ln-Nim"; */
+"WcL-Ln-Nim.text" = "Add cryptocurrency";
+
+/* Class = "WKInterfaceLabel"; text = "You can add cryptocurrency from the \"Crypto monitor\" program on the iPhone."; ObjectID = "hgi-x4-0sf"; */
+"hgi-x4-0sf.text" = "You can add cryptocurrency from the \"Crypto monitor\" program on the iPhone.";
+
+/* Class = "WKInterfaceMenuItem"; title = "1h"; ObjectID = "oAR-VG-kYl"; */
+"oAR-VG-kYl.title" = "1h";
+
+/* Class = "WKInterfaceLabel"; text = "-0.11%"; ObjectID = "qox-eI-jRS"; */
+"qox-eI-jRS.text" = "-0.11%";
+
+/* Class = "WKInterfaceLabel"; text = "$ 0.100545"; ObjectID = "svP-Rx-HGp"; */
+"svP-Rx-HGp.text" = "$ 0.100545";
+
+/* Class = "WKInterfaceLabel"; text = "BTC"; ObjectID = "zpa-yd-EjH"; */
+"zpa-yd-EjH.text" = "BTC";
