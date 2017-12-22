@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder.WatchKit.Storyboard" version="3.0" toolsVersion="13529" targetRuntime="watchKit" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="AgC-eL-Hgc">
+    <device id="watch38" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="watchOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13527"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBWatchKitPlugin" version="13507"/>
+    </dependencies>
+    <scenes>
+        <!--Crypto monitor-->
+        <scene sceneID="aou-V4-d1y">
+            <objects>
+                <controller title="Crypto monitor" id="AgC-eL-Hgc" customClass="InterfaceController" customModule="Crypto_monitor_Watch" customModuleProvider="target">
+                    <items>
+                        <table alignment="left" id="cRw-ST-yYB">
+                            <items>
+                                <tableRow identifier="cell" selectable="NO" id="Dxy-lO-hSd" customClass="cryptocurrencyRowController" customModule="Crypto_monitor_Watch_Extension">
+                                    <group key="rootItem" width="1" height="0.0" alignment="left" animationDuration="1" layout="vertical" id="5Oo-4d-oVr">
+                                        <items>
+                                            <group width="1" alignment="left" id="Z6q-HE-K4z">
+                                                <items>
+                                                    <label alignment="left" verticalAlignment="center" text="BTC" textAlignment="left" id="zpa-yd-EjH">
+                                                        <fontDescription key="font" style="UICTFontTextStyleBody"/>
+                                                    </label>
+                                                    <label alignment="right" verticalAlignment="center" text="-0.11%" id="qox-eI-jRS">
+                                                        <fontDescription key="font" style="UICTFontTextStyleCaption1"/>
+                                                    </label>
+                                                </items>
+                                            </group>
+                                            <group width="1" alignment="left" id="Fjb-2Y-DYt">
+                                                <items>
+                                                    <label alignment="left" verticalAlignment="center" text="$ 0.100545" id="svP-Rx-HGp">
+                                                        <fontDescription key="font" style="UICTFontTextStyleCaption1"/>
+                                                    </label>
+                                                </items>
+                                            </group>
+                                        </items>
+                                        <color key="backgroundColor" red="0.059401609003543854" green="0.17083513736724854" blue="0.076506011188030243" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    </group>
+                                    <connections>
+                                        <outlet property="cellMainGroup" destination="5Oo-4d-oVr" id="QS0-dh-PHf"/>
+                                        <outlet property="percentChangeLabel" destination="qox-eI-jRS" id="jsD-bb-2EE"/>
+                                        <outlet property="priceLabel" destination="svP-Rx-HGp" id="TFH-Ew-xBa"/>
+                                        <outlet property="symbolLabel" destination="zpa-yd-EjH" id="kRx-eK-92g"/>
+                                    </connections>
+                                </tableRow>
+                            </items>
+                        </table>
+                        <group width="1" height="1" alignment="center" verticalAlignment="center" layout="vertical" id="1jt-M7-3Nc">
+                            <items>
+                                <label width="1" alignment="center" verticalAlignment="center" text="Add cryptocurrency" textAlignment="center" baselineAdjustment="alignCenters" numberOfLines="0" id="WcL-Ln-Nim">
+                                    <fontDescription key="font" style="UICTFontTextStyleCaption2"/>
+                                </label>
+                                <label width="1" alignment="center" verticalAlignment="center" alpha="0.75" text="You can add cryptocurrency from the &quot;Crypto monitor&quot; program on the iPhone." textAlignment="center" numberOfLines="0" id="hgi-x4-0sf">
+                                    <fontDescription key="font" style="UICTFontTextStyleCaption2"/>
+                                </label>
+                            </items>
+                        </group>
+                    </items>
+                    <menu key="menu" id="1uO-RV-Crp">
+                        <items>
+                            <menuItem title="1h" image="Calendar" id="oAR-VG-kYl">
+                                <connections>
+                                    <action selector="oneHourSelected" destination="AgC-eL-Hgc" id="QAL-MV-Ufq"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="24h" image="Calendar" id="4Ma-F4-aID">
+                                <connections>
+                                    <action selector="oneDaySelected" destination="AgC-eL-Hgc" id="m81-bW-wyv"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="7d" image="Calendar" id="KZT-QN-aW1">
+                                <connections>
+                                    <action selector="sevenDaySelected" destination="AgC-eL-Hgc" id="hPG-HV-DfS"/>
+                                </connections>
+                            </menuItem>
+                        </items>
+                    </menu>
+                    <connections>
+                        <outlet property="cryptocurrencyTable" destination="cRw-ST-yYB" id="opW-Uy-to9"/>
+                        <outlet property="emptyGroup" destination="1jt-M7-3Nc" id="v6V-f8-Dnh"/>
+                    </connections>
+                </controller>
+            </objects>
+            <point key="canvasLocation" x="-26" y="79"/>
+        </scene>
+    </scenes>
+</document>
