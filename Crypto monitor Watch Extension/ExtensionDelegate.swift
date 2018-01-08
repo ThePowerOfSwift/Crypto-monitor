@@ -8,15 +8,16 @@
 
 import WatchKit
 
-let timeIntervalRefresh = TimeInterval(15 * 60)
+let timeIntervalRefresh = TimeInterval(30 * 60)
 
-class ExtensionDelegate: NSObject, WKExtensionDelegate {
+class ExtensionDelegate: NSObject, WKExtensionDelegate, URLSessionDownloadDelegate, URLSessionDelegate {
+
     
     
+    var savedTask:WKRefreshBackgroundTask?
     
     func applicationDidFinishLaunching() {
         // Perform any final initialization of your application.
-        
         WKExtension.shared().scheduleBackgroundRefresh(withPreferredDate: Date(timeIntervalSinceNow: timeIntervalRefresh), userInfo: nil) { (error: Error?) in
             if let error = error {
                 print("Error occurred while scheduling background refresh: \(error.localizedDescription)")
@@ -33,69 +34,105 @@ class ExtensionDelegate: NSObject, WKExtensionDelegate {
         // Use this method to pause ongoing tasks, disable timers, etc.
     }
     
-    func handle(_ backgroundTasks: Set<WKRefreshBackgroundTask>) {
-        // Sent when the system needs to launch the application in the background to process tasks. Tasks arrive in a set, so loop through and process each one.
-        for task : WKRefreshBackgroundTask in backgroundTasks {
-            print("received background task: ", task)
-            // only handle these while running in the background
-            if (WKExtension.shared().applicationState == .background) {
-                // Use a switch statement to check the task type
-                switch task {
-                case let backgroundTask as WKApplicationRefreshBackgroundTask:
-                    // Be sure to complete the background task once you’re done.
-                    print("backgroundTask \(Date())")
-                    
-                    if let idArray = UserDefaults().array(forKey: "id") as? [String] {
-                        if !idArray.isEmpty {
-                            NetworkRequest().getTickerID(idArray: idArray, completion: { (ticker : [Ticker]?, error : Error?) in
-                                if error == nil {
-                                    if let ticker = ticker {
-                                        self.setUserDefaults(ticher: ticker, idArray: idArray, lastUpdate: Date())
-                                        DispatchQueue.main.async() {
-                                            let complicationServer = CLKComplicationServer.sharedInstance()
-                                            for complication in complicationServer.activeComplications! {
-                                                print("UPDATE backgroundTask")
-                                                complicationServer.reloadTimeline(for: complication)
-                                            }
-                                        }
-                                    }
-                                }
-                            })
+    // delegate methods
+    
+    func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didFinishDownloadingTo location: URL) {
+        print(location)
+        
+        guard let httpResponse = downloadTask.response as? HTTPURLResponse,
+            (200...299).contains(httpResponse.statusCode) else {
+                print ("server error")
+                return
+        }
+        
+        do {
+            let data = try Data(contentsOf: location)
+            if let idArray = UserDefaults().array(forKey: "id") as? [String], !idArray.isEmpty {
+                let decoder = JSONDecoder()
+                do {
+                    let tickerDecodeArray = try decoder.decode([Ticker].self, from: data)
+                    var tickerFilterArray = [Ticker]()
+                    for id in idArray{
+                        if let json = tickerDecodeArray.filter({ $0.id == id}).first{
+                            tickerFilterArray.append(json)
                         }
                     }
                     
-                    WKExtension.shared().scheduleBackgroundRefresh(withPreferredDate: Date(timeIntervalSinceNow: timeIntervalRefresh), userInfo: nil) { (error: Error?) in
-                        if let error = error {
-                            print("Error occurred while scheduling background refresh: \(error.localizedDescription)")
-                        }
+                    print("tickerFilterArray: \(tickerFilterArray)")
+                    CacheTicker().setUserDefaults(ticher: tickerFilterArray)
+                    DispatchQueue.main.async {
+                        let complicationServer = CLKComplicationServer.sharedInstance()
+                        complicationServer.activeComplications?.forEach(complicationServer.reloadTimeline)
                     }
                     
-                    backgroundTask.setTaskCompleted()
-                case let snapshotTask as WKSnapshotRefreshBackgroundTask:
-
-                    print("snapshotTask \(Date())")
-                    snapshotTask.setTaskCompleted(restoredDefaultState: true, estimatedSnapshotExpiration: Date.distantFuture, userInfo: nil)
+                    self.savedTask?.setTaskCompletedWithSnapshot(true)
                     
-                case let connectivityTask as WKWatchConnectivityRefreshBackgroundTask:
-                    // Be sure to complete the connectivity task once you’re done.
-                    connectivityTask.setTaskCompleted()
-                case let urlSessionTask as WKURLSessionRefreshBackgroundTask:
-                    // Be sure to complete the URL session task once you’re done.
-                    urlSessionTask.setTaskCompleted()
-                default:
-                    // make sure to complete unhandled task types
-                    task.setTaskCompleted()
+                } catch {
+                    print("error trying to convert data to JSON")
+                    print(error)
                 }
             }
         }
+        catch{
+            print("error read file")
+        }
     }
+    
 
-    func setUserDefaults(ticher: [Ticker], idArray: [String], lastUpdate: Date) {
-        let encodedData = NSKeyedArchiver.archivedData(withRootObject: ticher)
-        let userDefaults = UserDefaults()
-        userDefaults.set(idArray, forKey: "id")
-        userDefaults.set(encodedData, forKey: "cryptocurrency")
-        userDefaults.set(lastUpdate, forKey: "lastUpdate")
-        userDefaults.synchronize()
+    
+    func urlSession(_ session: URLSession, task: URLSessionTask, didCompleteWithError error: Error?) {
+        DispatchQueue.main.async {
+            if let error = error {
+                print("Error: \(error)")
+            }
+        }
+    }
+    
+    func handle(_ backgroundTasks: Set<WKRefreshBackgroundTask>) {
+        // Sent when the system needs to launch the application in the background to process tasks. Tasks arrive in a set, so loop through and process each one.
+        for task in backgroundTasks {
+            // Use a switch statement to check the task type
+            
+            switch task {
+            case let backgroundTask as WKApplicationRefreshBackgroundTask:
+                // Be sure to complete the background task once you’re done.
+                print("backgroundTask \(Date())")
+                
+                let config = URLSessionConfiguration.background(withIdentifier: "asdfghjkl")
+                
+                config.waitsForConnectivity = true
+                config.sessionSendsLaunchEvents = true
+                let session = URLSession(configuration: config, delegate: self, delegateQueue: nil)
+                
+                let task = session.downloadTask(with: URL(string: "https://api.coinmarketcap.com/v1/ticker/?convert=EUR&limit=0")!)
+                task.resume()
+                
+                WKExtension.shared().scheduleBackgroundRefresh(withPreferredDate: Date(timeIntervalSinceNow: timeIntervalRefresh), userInfo: nil) { (error: Error?) in
+                    if let error = error {
+                        print("Error occurred while scheduling background refresh: \(error.localizedDescription)")
+                    }
+                }
+                self.savedTask = backgroundTask
+              //  backgroundTask.setTaskCompletedWithSnapshot(false)
+            case let snapshotTask as WKSnapshotRefreshBackgroundTask:
+                print("snapshotTask \(Date())")
+                snapshotTask.setTaskCompleted(restoredDefaultState: true, estimatedSnapshotExpiration: Date.distantFuture, userInfo: nil)
+                
+            case let connectivityTask as WKWatchConnectivityRefreshBackgroundTask:
+                // Be sure to complete the connectivity task once you’re done.
+                connectivityTask.setTaskCompletedWithSnapshot(false)
+            case let urlSessionTask as WKURLSessionRefreshBackgroundTask:
+                // Be sure to complete the URL session task once you’re done.
+                
+                print("WKURLSessionRefreshBackgroundTask \(Date())")
+                urlSessionTask.setTaskCompletedWithSnapshot(true)
+            default:
+                // make sure to complete unhandled task types
+                task.setTaskCompletedWithSnapshot(false)
+            }
+        }
     }
 }
+
+
+

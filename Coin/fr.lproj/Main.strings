@@ -1,18 +1,18 @@
 /* Class = "UIButton"; normalTitle = "Buy / Sell Instantly"; ObjectID = "WVM-8J-Hzj"; Note = "changelly"; */
-"WVM-8J-Hzj.normalTitle" = "Sofort kaufen / verkaufen";
+"WVM-8J-Hzj.normalTitle" = "Acheter / Vendre instantanément";
 
 /* Class = "UINavigationItem"; title = "Settings"; ObjectID = "a5a-yk-s2O"; */
-"a5a-yk-s2O.title" = "Einstellungen";
+"a5a-yk-s2O.title" = "Paramètres";
 
 /* Class = "UINavigationItem"; title = "Add"; ObjectID = "fra-i8-hjZ"; */
-"fra-i8-hjZ.title" = "Hinzufügen";
+"fra-i8-hjZ.title" = "Ajouter";
 
 /* Class = "UITableViewSection"; headerTitle = "Price"; ObjectID = "tyt-ZY-uLd"; Note = "Настройки выбор валюты"; */
-"tyt-ZY-uLd.headerTitle" = "Preis";
+"tyt-ZY-uLd.headerTitle" = "Prix";
 
 /* Class = "UITableViewSection"; headerTitle = "Rate change period"; ObjectID = "uMW-aC-8Ll"; Note = "Настройки выбор периода"; */
-"uMW-aC-8Ll.headerTitle" = "Rate Änderungszeitraum";
+"uMW-aC-8Ll.headerTitle" = "Période de changement de taux";
 
 /* Class = "UITableViewSection"; headerTitle = "Data source"; ObjectID = "yeO-1L-1gs"; Note = "Настройки источник данных "; */
-"yeO-1L-1gs.headerTitle" = "Datenquelle";
+"yeO-1L-1gs.headerTitle" = "La source de données";
 

@@ -204,6 +204,20 @@
 		FB0B34E91FED3EB200D21F8F /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/ErrorSubview.strings; sourceTree = "<group>"; };
 		FB0B34EA1FED3EB300D21F8F /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		FB0B34EB1FED3EB300D21F8F /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		FB0B34EC1FED406400D21F8F /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/LoadSubview.strings; sourceTree = "<group>"; };
+		FB0B34ED1FED406400D21F8F /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/ErrorSubview.strings; sourceTree = "<group>"; };
+		FB0B34EE1FED406400D21F8F /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Main.strings; sourceTree = "<group>"; };
+		FB0B34EF1FED406400D21F8F /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
+		FB0B34F01FED406400D21F8F /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/MainInterface.strings; sourceTree = "<group>"; };
+		FB0B34F11FED406500D21F8F /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Interface.strings; sourceTree = "<group>"; };
+		FB0B34F21FED406500D21F8F /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
+		FB0B34F31FED406500D21F8F /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		FB0B34F41FED406500D21F8F /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
+		FB0B34F51FED56D400D21F8F /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		FB0B34F61FED56D400D21F8F /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		FB0B34F71FED56D500D21F8F /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/EmptySubview.strings; sourceTree = "<group>"; };
+		FB0B34F81FED56D500D21F8F /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		FB0B34F91FED56D500D21F8F /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		FB1033391FB2682A00B3A956 /* Charts.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Charts.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FB10333B1FB26A9100B3A956 /* Charts.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Charts.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FB2585D11F8FE1DA00B164FC /* AlamofireImage.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = AlamofireImage.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -677,6 +691,9 @@
 							com.apple.ApplicationGroups.iOS = {
 								enabled = 0;
 							};
+							com.apple.BackgroundModes.watchos.extension = {
+								enabled = 0;
+							};
 							com.apple.iCloud = {
 								enabled = 0;
 							};
@@ -712,6 +729,7 @@
 				Base,
 				de,
 				en,
+				fr,
 			);
 			mainGroup = FBB2CC8F1F155CF800D800FD;
 			productRefGroup = FBB2CC991F155CF800D800FD /* Products */;
@@ -977,6 +995,7 @@
 				FB2F88DE1FEC0268003B62CF /* uk */,
 				FB0B34D01FED39F500D21F8F /* de */,
 				FB0B34DC1FED3AE800D21F8F /* en */,
+				FB0B34EE1FED406400D21F8F /* fr */,
 			);
 			name = Main.storyboard;
 			sourceTree = "<group>";
@@ -989,6 +1008,7 @@
 				FB2F88DF1FEC0268003B62CF /* uk */,
 				FB0B34D11FED39F500D21F8F /* de */,
 				FB0B34DD1FED3AE800D21F8F /* en */,
+				FB0B34EF1FED406400D21F8F /* fr */,
 			);
 			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
@@ -1001,6 +1021,7 @@
 				FB2F88DC1FEC0267003B62CF /* uk */,
 				FB0B34CF1FED39F500D21F8F /* de */,
 				FB0B34DA1FED3AE700D21F8F /* en */,
+				FB0B34F71FED56D500D21F8F /* fr */,
 			);
 			name = EmptySubview.xib;
 			sourceTree = "<group>";
@@ -1013,6 +1034,7 @@
 				FB2F88DD1FEC0267003B62CF /* uk */,
 				FB0B34DB1FED3AE800D21F8F /* en */,
 				FB0B34E91FED3EB200D21F8F /* de */,
+				FB0B34ED1FED406400D21F8F /* fr */,
 			);
 			name = ErrorSubview.xib;
 			sourceTree = "<group>";
@@ -1025,6 +1047,7 @@
 				FB2F88E11FEC0268003B62CF /* uk */,
 				FB0B34D31FED39F500D21F8F /* de */,
 				FB0B34DF1FED3AE800D21F8F /* en */,
+				FB0B34F11FED406500D21F8F /* fr */,
 			);
 			name = Interface.storyboard;
 			sourceTree = "<group>";
@@ -1037,6 +1060,7 @@
 				FB2F88E01FEC0268003B62CF /* uk */,
 				FB0B34D21FED39F500D21F8F /* de */,
 				FB0B34DE1FED3AE800D21F8F /* en */,
+				FB0B34F01FED406400D21F8F /* fr */,
 			);
 			name = MainInterface.storyboard;
 			sourceTree = "<group>";
@@ -1049,6 +1073,7 @@
 				FB2F88DB1FEC0267003B62CF /* uk */,
 				FB0B34CE1FED39F500D21F8F /* de */,
 				FB0B34D91FED3AE700D21F8F /* en */,
+				FB0B34EC1FED406400D21F8F /* fr */,
 			);
 			name = LoadSubview.xib;
 			sourceTree = "<group>";
@@ -1060,6 +1085,7 @@
 				FB0B34C71FED34D600D21F8F /* uk */,
 				FB0B34E61FED3AE900D21F8F /* en */,
 				FB0B34E71FED3EB100D21F8F /* de */,
+				FB0B34F51FED56D400D21F8F /* fr */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
@@ -1071,6 +1097,7 @@
 				FB0B34C81FED34D600D21F8F /* uk */,
 				FB0B34E31FED3AE900D21F8F /* en */,
 				FB0B34E81FED3EB200D21F8F /* de */,
+				FB0B34F61FED56D400D21F8F /* fr */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
@@ -1083,6 +1110,7 @@
 				FB0B34D61FED39F600D21F8F /* de */,
 				FB0B34D81FED3AA500D21F8F /* Base */,
 				FB0B34E51FED3AE900D21F8F /* en */,
+				FB0B34F41FED406500D21F8F /* fr */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
@@ -1094,6 +1122,7 @@
 				FB0B34C91FED34D700D21F8F /* uk */,
 				FB0B34D51FED39F600D21F8F /* de */,
 				FB0B34E11FED3AE800D21F8F /* en */,
+				FB0B34F31FED406500D21F8F /* fr */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
@@ -1106,6 +1135,7 @@
 				FB0B34D41FED39F600D21F8F /* de */,
 				FB0B34D71FED3A6B00D21F8F /* Base */,
 				FB0B34E01FED3AE800D21F8F /* en */,
+				FB0B34F21FED406500D21F8F /* fr */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
@@ -1117,6 +1147,7 @@
 				FB0B34CB1FED34D700D21F8F /* uk */,
 				FB0B34E21FED3AE800D21F8F /* en */,
 				FB0B34EA1FED3EB300D21F8F /* de */,
+				FB0B34F81FED56D500D21F8F /* fr */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
@@ -1128,6 +1159,7 @@
 				FB0B34CD1FED34D800D21F8F /* uk */,
 				FB0B34E41FED3AE900D21F8F /* en */,
 				FB0B34EB1FED3EB300D21F8F /* de */,
+				FB0B34F91FED56D500D21F8F /* fr */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
@@ -1243,7 +1275,7 @@
 				SWIFT_SWIFT3_OBJC_INFERENCE = Off;
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = 4;
-				WATCHOS_DEPLOYMENT_TARGET = 3.2;
+				WATCHOS_DEPLOYMENT_TARGET = 4.0;
 			};
 			name = Debug;
 		};
@@ -1263,7 +1295,7 @@
 				SWIFT_SWIFT3_OBJC_INFERENCE = Off;
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = 4;
-				WATCHOS_DEPLOYMENT_TARGET = 3.2;
+				WATCHOS_DEPLOYMENT_TARGET = 4.0;
 			};
 			name = Release;
 		};
@@ -1283,7 +1315,7 @@
 				SWIFT_SWIFT3_OBJC_INFERENCE = On;
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = 4;
-				WATCHOS_DEPLOYMENT_TARGET = 3.2;
+				WATCHOS_DEPLOYMENT_TARGET = 4.0;
 			};
 			name = Debug;
 		};
@@ -1303,7 +1335,7 @@
 				SWIFT_SWIFT3_OBJC_INFERENCE = On;
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = 4;
-				WATCHOS_DEPLOYMENT_TARGET = 3.2;
+				WATCHOS_DEPLOYMENT_TARGET = 4.0;
 			};
 			name = Release;
 		};

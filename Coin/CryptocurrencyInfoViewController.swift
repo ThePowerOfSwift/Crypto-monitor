@@ -196,12 +196,7 @@ class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
             ticker = tick
         }
         if let ticker = ticker {
-            
-   
 
-            
-           //  self.navigationItem.titleView = UIImageView(image: imageView.image)
-            
             Alamofire.request("https://files.coinmarketcap.com/static/img/coins/64x64/\(ticker.id).png").responseImage { response in
                 if let image = response.result.value {
                     self.navigationItem.titleView = UIImageView(image: image)

@@ -24,12 +24,10 @@ class CacheTicker {
             let tickersData = ticher.map { $0.encode() }
             userDefaults.set(tickersData, forKey: "tickers")
         }
-            /*
         else{
             userDefaults.removeObject(forKey: "tickers")
         }
- */
-     //   userDefaults.set(lastUpdate, forKey: "lastUpdate")
+        
         userDefaults.synchronize()
     }
 }

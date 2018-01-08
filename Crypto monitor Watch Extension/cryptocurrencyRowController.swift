@@ -17,81 +17,15 @@ class cryptocurrencyRowController: NSObject {
     @IBOutlet var priceLabel: WKInterfaceLabel!
     @IBOutlet var cellMainGroup: WKInterfaceGroup!
     
-    let formatterCurrencyUSD: NumberFormatter = {
-        let formatterCurrencyUSD = NumberFormatter()
-        formatterCurrencyUSD.numberStyle = .currency
-        formatterCurrencyUSD.currencyCode = "USD"
-        formatterCurrencyUSD.maximumFractionDigits = 8
-        formatterCurrencyUSD.locale = Locale(identifier: "en_US")
-        return formatterCurrencyUSD
-    }()
-    let formatterCurrencyEUR: NumberFormatter = {
-        let formatterCurrencyEUR = NumberFormatter()
-        formatterCurrencyEUR.numberStyle = .currency
-        formatterCurrencyEUR.currencyCode = "EUR"
-        formatterCurrencyEUR.maximumFractionDigits = 8
-        formatterCurrencyEUR.locale = Locale(identifier: "en_US")
-        return formatterCurrencyEUR
-    }()
-    
-
-
     var ticker:Ticker?{
         didSet {
             if let ticker = ticker {
-                let userDefaults = UserDefaults()
-                
                 symbolLabel.setText(ticker.symbol)
-                
-                switch userDefaults.integer(forKey: "percentChange") {
-                case 0:
-                    percentChangeLabelSetText(percentChange: ticker.percent_change_1h)
-                    backgroundColorView(percentChange: ticker.percent_change_1h)
-                case 1:
-                    percentChangeLabelSetText(percentChange: ticker.percent_change_24h)
-                    backgroundColorView(percentChange: ticker.percent_change_24h)
-                case 2:
-                    percentChangeLabelSetText(percentChange: ticker.percent_change_7d)
-                    backgroundColorView(percentChange: ticker.percent_change_7d)
-                default:
-                    break
-                }
-
-                switch userDefaults.integer(forKey: "priceCurrency") {
-                case 0:
-                    if let price_usd = ticker.price_usd {
-                        priceLabel.setText(formatterCurrencyUSD.string(from: NSNumber(value: Double(price_usd)!)))
-                    }
-                    else{
-                        priceLabel.setText("null")
-                    }
-                case 1:
-                    if let price_btc = ticker.price_btc {
-                        priceLabel.setText("₿" + price_btc)
-                    }
-                    else{
-                        priceLabel.setText("null")
-                    }
-                case 2:
-                    if let price_eur = ticker.price_eur {
-                        priceLabel.setText(formatterCurrencyEUR.string(from: NSNumber(value: Double(price_eur)!)))
-                    }
-                    else{
-                        priceLabel.setText("null")
-                    }
-                default:
-                    break
-                }
+                priceLabel.setText(ticker.priceCurrencyCurrent(maximumFractionDigits: 8))
+                let percentChange = ticker.percentChangeCurrent()
+                percentChangeLabel.setText(percentChange + " %")
+                backgroundColorView(percentChange: percentChange)
             }
-        }
-    }
-    
-    private  func percentChangeLabelSetText(percentChange:String?) {
-        if let percentChange = percentChange {
-            percentChangeLabel.setText(percentChange + " %")
-        }
-        else{
-            percentChangeLabel.setText("null")
         }
     }
     
@@ -108,6 +42,5 @@ class cryptocurrencyRowController: NSObject {
             cellMainGroup.setBackgroundColor(UIColor.orange)
         }
     }
-    
 }
 

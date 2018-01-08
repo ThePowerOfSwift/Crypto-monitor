@@ -70,7 +70,7 @@
       <RemoteRunnable
          runnableDebuggingMode = "2"
          BundleIdentifier = "com.apple.Carousel"
-         RemotePath = "/Coin">
+         RemotePath = "/Crypto monitor">
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "FBB009671F4E3292000B1298"

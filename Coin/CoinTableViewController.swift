@@ -25,23 +25,6 @@ class CoinTableViewController: UITableViewController, WCSessionDelegate {
     var loadSubview:LoadSubview?
     var emptySubview:EmptySubview?
     
-    let formatterCurrencyUSD: NumberFormatter = {
-        let formatterCurrencyUSD = NumberFormatter()
-        formatterCurrencyUSD.numberStyle = .currency
-        formatterCurrencyUSD.currencyCode = "USD"
-        formatterCurrencyUSD.maximumFractionDigits = 4
-        formatterCurrencyUSD.locale = Locale(identifier: "en_US")
-        return formatterCurrencyUSD
-    }()
-    
-    let formatterCurrencyEUR: NumberFormatter = {
-        let formatterCurrencyEUR = NumberFormatter()
-        formatterCurrencyEUR.numberStyle = .currency
-        formatterCurrencyEUR.currencyCode = "EUR"
-        formatterCurrencyEUR.maximumFractionDigits = 4
-        formatterCurrencyEUR.locale = Locale(identifier: "en_US")
-        return formatterCurrencyEUR
-    }()
     
     //MARK:WCSession
     /** Called when all delegate callbacks for the previously selected watch has occurred. The session can be re-activated for the now selected watch using activateSession. */
@@ -173,7 +156,6 @@ class CoinTableViewController: UITableViewController, WCSessionDelegate {
     
     func loadCache() {
         if let cacheTicker = SettingsUserDefaults().loadcacheTicker() {
-            print("load cache \(cacheTicker.count)")
             getTickerID = cacheTicker
             let userDefaults = UserDefaults(suiteName: "group.mialin.valentyn.crypto.monitor")
             if let lastUpdate = userDefaults?.object(forKey: "lastUpdate") as? NSDate {
@@ -206,60 +188,21 @@ class CoinTableViewController: UITableViewController, WCSessionDelegate {
             
             cell.coinNameLabel.text = ticker[row].name
             
-            let keyStore = NSUbiquitousKeyValueStore ()
-            switch keyStore.longLong(forKey: "priceCurrency") {
-            case 0:
-                if let price_usd = ticker[row].price_usd {
-                    cell.priceCoinLabel.text = formatterCurrencyUSD.string(from: NSNumber(value: Double(price_usd)!))
-                }
-                else{
-                    cell.priceCoinLabel.text = "null"
-                }
-            case 1:
-                if let price_btc = ticker[row].price_btc {
-                    cell.priceCoinLabel.text = "₿" + price_btc
-                }
-                else{
-                    cell.priceCoinLabel.text = "null"
-                }
-                
-            case 2:
-                if let price_eur = ticker[row].price_eur {
-                    cell.priceCoinLabel.text = formatterCurrencyEUR.string(from: NSNumber(value: Double(price_eur)!))
-                }
-                else{
-                    cell.priceCoinLabel.text = "null"
-                }
-            default:
-                break
-            }
-            
-            var percentChange:String?
-            switch keyStore.longLong(forKey: "percentChange") {
-            case 0:
-                percentChange = ticker[row].percent_change_1h
-            case 1:
-                percentChange = ticker[row].percent_change_24h
-            case 2:
-                percentChange = ticker[row].percent_change_7d
-            default:
-                break
-            }
-            
-            if let percentChange = percentChange, let percent =  Float(percentChange) {
+            cell.priceCoinLabel.text = ticker[row].priceCurrencyCurrent(maximumFractionDigits: 8)
+
+            let percentChange = ticker[row].percentChangeCurrent()
+            cell.percentChangeLabel.text = percentChange + " %"
+            if let percent = Float(percentChange) {
                 if percent >= 0 {
                     cell.percentChangeView.backgroundColor = UIColor(red:0.30, green:0.85, blue:0.39, alpha:1.0)
                 }
                 else{
                     cell.percentChangeView.backgroundColor = UIColor(red:1.00, green:0.23, blue:0.18, alpha:1.0)
                 }
-                cell.percentChangeLabel.text = percentChange + " %"
             }
             else{
                 cell.percentChangeView.backgroundColor = UIColor.orange
-                cell.percentChangeLabel.text = "null"
             }
-            
         }
         return cell
     }
@@ -345,7 +288,7 @@ class CoinTableViewController: UITableViewController, WCSessionDelegate {
     
     override func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
         
-        let keyStore = NSUbiquitousKeyValueStore ()
+        let keyStore = NSUbiquitousKeyValueStore()
         if var idArray = keyStore.array(forKey: "id") as? [String] {
             if let index = idArray.index(of: getTickerID![sourceIndexPath.row].id){
                 idArray.remove(at: index)

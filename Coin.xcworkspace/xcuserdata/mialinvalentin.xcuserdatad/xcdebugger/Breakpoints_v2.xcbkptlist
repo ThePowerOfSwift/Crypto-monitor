@@ -22,32 +22,16 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Crypto monitor Watch Extension/ComplicationController.swift"
-            timestampString = "531938363.181313"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "187"
-            endingLineNumber = "187"
-            landmarkName = "getLocalizableSampleTemplate(for:withHandler:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Coin/AlamofireRequest.swift"
-            timestampString = "535476556.186347"
+            timestampString = "536275385.032052"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "282"
-            endingLineNumber = "282"
-            landmarkName = "setUserDefaults(ticher:idArray:lastUpdate:)"
+            startingLineNumber = "343"
+            endingLineNumber = "343"
+            landmarkName = "getCurrencyCharts(id:of:completion:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -58,7 +42,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Coin/CryptocurrencyInfoViewController.swift"
-            timestampString = "535474391.277649"
+            timestampString = "536275385.032121"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "191"
@@ -74,12 +58,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Coin/AlamofireRequest.swift"
-            timestampString = "535476556.186466"
+            timestampString = "536275385.032175"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "295"
-            endingLineNumber = "295"
-            landmarkName = "loadcacheTicker()"
+            startingLineNumber = "356"
+            endingLineNumber = "356"
+            landmarkName = "getCurrencyCharts(id:of:completion:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -90,12 +74,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Coin/AlamofireRequest.swift"
-            timestampString = "535476556.186527"
+            timestampString = "536275385.032228"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "283"
-            endingLineNumber = "283"
-            landmarkName = "setUserDefaults(ticher:idArray:lastUpdate:)"
+            startingLineNumber = "344"
+            endingLineNumber = "344"
+            landmarkName = "getCurrencyCharts(id:of:completion:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

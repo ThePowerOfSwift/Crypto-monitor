@@ -51,12 +51,7 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate {
             let context = ["percentChange" : percentChange, "priceCurrency" : priceCurrency] as [String : Any]
             try watchSession?.updateApplicationContext(context)
         
-            let complicationServer = CLKComplicationServer.sharedInstance()
-            
-            for complication in complicationServer.activeComplications! {
-                print("UPDATE sender")
-                complicationServer.reloadTimeline(for: complication)
-            }
+            reloadTimeline()
             
         } catch let error as NSError {
             print("Error: \(error.description)")
@@ -104,15 +99,16 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate {
     }
     
     private func load() {
+        print("load")
         if let idArray = UserDefaults().array(forKey: "id") as? [String] {
             if !idArray.isEmpty {
                 NetworkRequest().getTickerID(idArray: idArray, completion: { (ticker : [Ticker]?, error : Error?) in
                     if error == nil {
                         if let ticker = ticker {
+                            CacheTicker().setUserDefaults(ticher: ticker)
+                            self.reloadTimeline()
                             DispatchQueue.main.async() {
                                 self.tableView(ticker: ticker)
-                                CacheTicker().setUserDefaults(ticher: ticker)
-                                self.reloadTimeline()
                             }
                         }
                     }
@@ -134,11 +130,7 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate {
     
     private func reloadTimeline(){
         let complicationServer = CLKComplicationServer.sharedInstance()
-        if complicationServer.activeComplications != nil {
-            for complication in complicationServer.activeComplications! {
-                complicationServer.reloadTimeline(for: complication)
-            }
-        }
+        complicationServer.activeComplications?.forEach(complicationServer.reloadTimeline)
     }
     
     private func tableView(ticker: [Ticker])  {

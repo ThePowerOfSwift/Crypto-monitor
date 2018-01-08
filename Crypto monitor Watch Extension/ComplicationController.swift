@@ -10,179 +10,152 @@ import WatchKit
 import ClockKit
 
 class ComplicationController: NSObject, CLKComplicationDataSource {
-   
-    let formatterCurrencyUSD: NumberFormatter = {
-        let formatterCurrencyUSD = NumberFormatter()
-        formatterCurrencyUSD.numberStyle = .currency
-        formatterCurrencyUSD.currencyCode = "USD"
-        formatterCurrencyUSD.maximumFractionDigits = 4
-        formatterCurrencyUSD.locale = Locale(identifier: "en_US")
-        return formatterCurrencyUSD
-    }()
-    let formatterCurrencyEUR: NumberFormatter = {
-        let formatterCurrencyEUR = NumberFormatter()
-        formatterCurrencyEUR.numberStyle = .currency
-        formatterCurrencyEUR.currencyCode = "EUR"
-        formatterCurrencyEUR.maximumFractionDigits = 4
-        formatterCurrencyEUR.locale = Locale(identifier: "en_US")
-        return formatterCurrencyEUR
-    }()
-    
-    func getCurrentTimelineEntry(for complication: CLKComplication, withHandler handler: @escaping (CLKComplicationTimelineEntry?) -> Void) {
-        
 
-        if let cacheTicker = CacheTicker().loadcacheTicker() {
-         //   print("loadcacheTicker \(CacheTicker().loadcacheTicker()) ")
-            switch complication.family {
-            case .modularLarge:
-                if !cacheTicker.isEmpty {
-                    print("ComplicationController \(cacheTicker.count)")
-                    
-                    let entry = self.createModularLarge(ticker: Array(cacheTicker.prefix(3)))
-                    handler(entry)
-                }
-            case .modularSmall:
-                    if !cacheTicker.isEmpty{
-                        if cacheTicker.indices.contains(0) {
-                            let template = CLKComplicationTemplateModularSmallStackText()
-                            template.line1TextProvider = CLKSimpleTextProvider(text: cacheTicker[0].symbol)
-                            
-                            switch UserDefaults().integer(forKey: "percentChange") {
-                            case 0:
-                                if let percent_change_1h = cacheTicker[0].percent_change_1h{
-                                    template.line2TextProvider = CLKSimpleTextProvider(text: percent_change_1h + "%")
-                                }
-                                else{
-                                    template.line2TextProvider = CLKSimpleTextProvider(text: "null")
-                                }
-                            case 1:
-                                if let percent_change_24h = cacheTicker[0].percent_change_24h{
-                                    template.line2TextProvider = CLKSimpleTextProvider(text: percent_change_24h + "%")
-                                }
-                                else{
-                                    template.line2TextProvider = CLKSimpleTextProvider(text: "null")
-                                }
-                            case 2:
-                                if let percent_change_7d = cacheTicker[0].percent_change_7d{
-                                    template.line2TextProvider = CLKSimpleTextProvider(text: percent_change_7d + "%")
-                                }
-                                else{
-                                    template.line2TextProvider = CLKSimpleTextProvider(text: "null")
-                                }
-                            default:
-                                break
-                            }
-                            
-                            let entry = CLKComplicationTimelineEntry(date: Date(), complicationTemplate: template)
-                            handler(entry)
-                        }
-                    else{
-                        let template = CLKComplicationTemplateModularSmallStackImage()
-                        template.line1ImageProvider = CLKImageProvider(onePieceImage: #imageLiteral(resourceName: "Stock"))
-                        template.line2TextProvider = CLKSimpleTextProvider(text: NSLocalizedString("No", comment: "Нет"))
-                        let entry = CLKComplicationTimelineEntry(date: Date(), complicationTemplate: template)
-                        handler(entry)
-                    }
-                }
-            case .utilitarianSmall:
-                    if cacheTicker.indices.contains(0) {
-                        let template = CLKComplicationTemplateUtilitarianSmallFlat()
-                        
-                        switch UserDefaults().integer(forKey: "percentChange") {
-                        case 0:
-                            template.imageProvider = colorImage(percentChange: cacheTicker[0].percent_change_1h)
-                        case 1:
-                            template.imageProvider = colorImage(percentChange: cacheTicker[0].percent_change_24h)
-                        case 2:
-                            template.imageProvider = colorImage(percentChange: cacheTicker[0].percent_change_7d)
-                        default:
-                            break
-                        }
-                        template.textProvider = CLKSimpleTextProvider(text: cacheTicker[0].symbol)
-                        
-                        let entry = CLKComplicationTimelineEntry(date: Date(), complicationTemplate: template)
-                        handler(entry)
-                    }
-            case .utilitarianLarge:
-                    if cacheTicker.indices.contains(0) {
-                        let template = CLKComplicationTemplateUtilitarianLargeFlat()
-                        
-                        var priceString = String()
-                        
-                        switch UserDefaults().integer(forKey: "priceCurrency") {
-                        case 0:
-                            if let price_usd = cacheTicker[0].price_usd {
-                            priceString = formatterCurrencyUSD.string(from: NSNumber(value: Double(price_usd)!))!
-                            }
-                            else{
-                                priceString = "null"
-                            }
-                        case 1:
-                            if let price_btc = cacheTicker[0].price_btc {
-                                priceString = "₿" + price_btc
-                            }
-                            else{
-                                priceString = "null"
-                            }
-                        case 2:
-                            if let price_eur = cacheTicker[0].price_eur {
-                                priceString = formatterCurrencyEUR.string(from: NSNumber(value: Double(price_eur)!))!
-                            }
-                            else{
-                                priceString = "null"
-                            }
-                        default:
-                            break
-                        }
-                        
-                        switch UserDefaults().integer(forKey: "percentChange") {
-                        case 0:
-                            template.imageProvider = colorImage(percentChange: cacheTicker[0].percent_change_1h)
-                            if let percent_change_1h = cacheTicker[0].percent_change_1h{
-                                template.textProvider = CLKSimpleTextProvider(text: "\(cacheTicker[0].symbol) \(priceString) \(percent_change_1h)%")
-                            }
-                            else{
-                                template.textProvider = CLKSimpleTextProvider(text: "\(cacheTicker[0].symbol) null")
-                            }
-                        case 1:
-                            template.imageProvider = colorImage(percentChange: cacheTicker[0].percent_change_24h)
-                            if let percent_change_24h = cacheTicker[0].percent_change_24h{
-                                template.textProvider = CLKSimpleTextProvider(text: "\(cacheTicker[0].symbol) \(priceString) \(percent_change_24h)%")
-                            }
-                            else{
-                                template.textProvider = CLKSimpleTextProvider(text: "\(cacheTicker[0].symbol) null")
-                            }
-                        case 2:
-                            template.imageProvider = colorImage(percentChange: cacheTicker[0].percent_change_7d)
-                            
-                            if let percent_change_7d = cacheTicker[0].percent_change_7d{
-                                template.textProvider = CLKSimpleTextProvider(text: "\(cacheTicker[0].symbol) \(priceString) \(percent_change_7d)%")
-                            }
-                            else{
-                                template.textProvider = CLKSimpleTextProvider(text: "\(cacheTicker[0].symbol) null")
-                            }
-                        default:
-                            break
-                        }
-                        
-                        let entry = CLKComplicationTimelineEntry(date: Date(), complicationTemplate: template)
-                        handler(entry)
-                    }
-            default:
-                handler(nil)
-            }
-        }
-        
-    }
-    
+    // MARK: - Timeline Configuration
     func getSupportedTimeTravelDirections(for complication: CLKComplication, withHandler handler: @escaping (CLKComplicationTimeTravelDirections) -> Void) {
         handler([])
     }
     
+    func getCurrentTimelineEntry(for complication: CLKComplication, withHandler handler: @escaping (CLKComplicationTimelineEntry?) -> Void) {
+        
+        if let tickers = CacheTicker().loadcacheTicker(), tickers.indices.contains(0) {
+            switch complication.family {
+            case .modularLarge:
+                let template = CLKComplicationTemplateModularLargeColumns()
+                
+                if tickers.indices.contains(0) {
+                    template.row1ImageProvider = colorImage(percentChange: tickers[0].percentChangeCurrent())
+                    template.row1Column1TextProvider = CLKSimpleTextProvider(text: tickers[0].symbol)
+                    template.row1Column2TextProvider =  CLKSimpleTextProvider(text: tickers[0].priceCurrencyCurrent(maximumFractionDigits: 4))
+                }
+                else{
+                    template.row1Column1TextProvider = CLKSimpleTextProvider(text:"")
+                    template.row1Column2TextProvider = CLKSimpleTextProvider(text:"")
+                }
+                
+                if tickers.indices.contains(1) {
+                    template.row2ImageProvider = colorImage(percentChange: tickers[1].percentChangeCurrent())
+                    template.row2Column1TextProvider = CLKSimpleTextProvider(text: tickers[1].symbol)
+                    template.row2Column2TextProvider =  CLKSimpleTextProvider(text: tickers[1].priceCurrencyCurrent(maximumFractionDigits: 4))
+                }
+                else{
+                    template.row2Column1TextProvider = CLKSimpleTextProvider(text:"")
+                    template.row2Column2TextProvider = CLKSimpleTextProvider(text:"")
+                }
+                
+                if tickers.indices.contains(2) {
+                    template.row3ImageProvider = colorImage(percentChange: tickers[2].percentChangeCurrent())
+                    template.row3Column1TextProvider = CLKSimpleTextProvider(text: tickers[2].symbol)
+                  //  template.row3Column2TextProvider =  CLKSimpleTextProvider(text: tickers[2].priceCurrencyCurrent(maximumFractionDigits: 4))
+                    
+                    let dateFormatter : DateFormatter = DateFormatter()
+                    dateFormatter.dateFormat = "HH:mm:ss"
+                    let date = Date()
+                    let dateString = dateFormatter.string(from: date)
+                    template.row3Column2TextProvider =  CLKSimpleTextProvider(text: dateString)
+                }
+                else{
+                    template.row3Column1TextProvider = CLKSimpleTextProvider(text:"")
+                    template.row3Column2TextProvider = CLKSimpleTextProvider(text:"")
+                }
+                
+                let entry = CLKComplicationTimelineEntry(date: Date(), complicationTemplate: template)
+                handler(entry)
+                
+            case .modularSmall:
+                
+                if tickers.indices.contains(0) {
+                    let template = CLKComplicationTemplateModularSmallStackText()
+                    template.line1TextProvider = CLKSimpleTextProvider(text: tickers[0].symbol)
+                    template.line2TextProvider = CLKSimpleTextProvider(text: tickers[0].percentChangeCurrent())
+                    handler(CLKComplicationTimelineEntry(date: Date(), complicationTemplate: template))
+                }
+                else{
+                    let template = CLKComplicationTemplateModularSmallStackImage()
+                    template.line1ImageProvider = CLKImageProvider(onePieceImage: #imageLiteral(resourceName: "Stock"))
+                    template.line2TextProvider = CLKSimpleTextProvider(text: NSLocalizedString("No", comment: "Нет"))
+                    handler(CLKComplicationTimelineEntry(date: Date(), complicationTemplate: template))
+                }
+                
+            case .utilitarianSmall:
+                let template = CLKComplicationTemplateUtilitarianSmallFlat()
+                template.imageProvider = colorImage(percentChange: tickers[0].percentChangeCurrent())
+                template.textProvider = CLKSimpleTextProvider(text: tickers[0].symbol)
+                
+                handler(CLKComplicationTimelineEntry(date: Date(), complicationTemplate: template))
+            case .utilitarianLarge:
+                let template = CLKComplicationTemplateUtilitarianLargeFlat()
+                
+                let priceString = tickers[0].priceCurrencyCurrent(maximumFractionDigits: 4)
+                let percentChange = tickers[0].percentChangeCurrent()
+                
+                template.imageProvider = colorImage(percentChange: tickers[0].percentChangeCurrent())
+                template.textProvider = CLKSimpleTextProvider(text: "\(tickers[0].symbol) \(priceString) \(percentChange)%")
+                
+                handler(CLKComplicationTimelineEntry(date: Date(), complicationTemplate: template))
+            case .extraLarge:
+                let template = CLKComplicationTemplateExtraLargeStackText()
+                
+                template.line1TextProvider = CLKSimpleTextProvider(text: tickers[0].symbol)
+                template.line2TextProvider = CLKSimpleTextProvider(text: tickers[0].percentChangeCurrent() + "%")
+
+                handler(CLKComplicationTimelineEntry(date: Date(), complicationTemplate: template))
+            default:
+                handler(nil)
+            }
+        }
+        else{
+            switch complication.family {
+            case .modularLarge:
+                let template = CLKComplicationTemplateModularLargeTallBody()
+                
+                template.headerTextProvider = CLKSimpleTextProvider(text: "Crypto monitor")
+                template.bodyTextProvider = CLKSimpleTextProvider(text: "")
+                
+                handler(CLKComplicationTimelineEntry(date: Date(), complicationTemplate: template))
+            case .modularSmall:
+                let template = CLKComplicationTemplateModularSmallStackImage()
+                template.line1ImageProvider = CLKImageProvider(onePieceImage: #imageLiteral(resourceName: "Stock"))
+                template.line2TextProvider = CLKSimpleTextProvider(text: NSLocalizedString("No", comment: "Нет"))
+                handler(CLKComplicationTimelineEntry(date: Date(), complicationTemplate: template))
+            case .utilitarianSmall:
+                let template = CLKComplicationTemplateUtilitarianSmallFlat()
+                template.textProvider = CLKSimpleTextProvider(text: NSLocalizedString("No", comment: "Нет"))
+                handler(CLKComplicationTimelineEntry(date: Date(), complicationTemplate: template))
+            case .utilitarianLarge:
+                let template = CLKComplicationTemplateUtilitarianLargeFlat()
+                template.textProvider = CLKSimpleTextProvider(text: NSLocalizedString("No cryptocurrencies", comment: ""))
+                handler(CLKComplicationTimelineEntry(date: Date(), complicationTemplate: template))
+            case .extraLarge:
+                let template = CLKComplicationTemplateExtraLargeStackImage()
+                template.line1ImageProvider = CLKImageProvider(onePieceImage: #imageLiteral(resourceName: "Stock"))
+                template.line2TextProvider = CLKSimpleTextProvider(text: NSLocalizedString("No", comment: "Нет"))
+                handler(CLKComplicationTimelineEntry(date: Date(), complicationTemplate: template))
+            default:
+                handler(nil)
+            }
+        }
+    }
+    
+    
     func getLocalizableSampleTemplate(for complication: CLKComplication, withHandler handler: @escaping (CLKComplicationTemplate?) -> Void) {
         switch complication.family {
         case .modularLarge:
-            handler(nil) 
+            let template = CLKComplicationTemplateModularLargeColumns()
+            
+            template.row1ImageProvider = CLKImageProvider(onePieceImage: #imageLiteral(resourceName: "Down"))
+            template.row1Column1TextProvider = CLKSimpleTextProvider(text:"BTC")
+            template.row1Column2TextProvider = CLKSimpleTextProvider(text:"$14,330.30")
+            
+            template.row2ImageProvider = CLKImageProvider(onePieceImage: #imageLiteral(resourceName: "Top"))
+            template.row2Column1TextProvider = CLKSimpleTextProvider(text:"XRP")
+            template.row2Column2TextProvider = CLKSimpleTextProvider(text:"$1.3364")
+            
+            template.row3ImageProvider = CLKImageProvider(onePieceImage: #imageLiteral(resourceName: "Down"))
+            template.row3Column1TextProvider = CLKSimpleTextProvider(text:"ETH")
+            template.row3Column2TextProvider = CLKSimpleTextProvider(text:"$711.706")
+            
+            handler(template)
         case .modularSmall:
             let template = CLKComplicationTemplateModularSmallStackImage()
             template.line1ImageProvider = CLKImageProvider(onePieceImage: #imageLiteral(resourceName: "Stock"))
@@ -196,186 +169,17 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
             let template = CLKComplicationTemplateUtilitarianLargeFlat()
             template.textProvider = CLKSimpleTextProvider(text: NSLocalizedString("No cryptocurrencies", comment: ""))
             handler(template)
+        case .extraLarge:
+            let template = CLKComplicationTemplateExtraLargeStackImage()
+            template.line1ImageProvider = CLKImageProvider(onePieceImage: #imageLiteral(resourceName: "Stock"))
+            template.line2TextProvider = CLKSimpleTextProvider(text: NSLocalizedString("No", comment: "Нет"))
+            handler(template)
         default:
             handler(nil)
         }
     }
     
-    func createModularLarge(ticker : [Ticker]) -> CLKComplicationTimelineEntry {
-        let template = CLKComplicationTemplateModularLargeColumns()
-        let userDefaults = UserDefaults()
-        
-        do {
-            switch userDefaults.integer(forKey: "percentChange") {
-            case 0:
-                if ticker.indices.contains(0) {
-                    template.row1ImageProvider = colorImage(percentChange: ticker[0].percent_change_1h)
-                }
-                if ticker.indices.contains(1) {
-                    template.row2ImageProvider = colorImage(percentChange: ticker[1].percent_change_1h)
-                }
-                if ticker.indices.contains(2) {
-                    template.row3ImageProvider = colorImage(percentChange: ticker[2].percent_change_1h)
-                }
-            case 1:
-                if ticker.indices.contains(0) {
-                    template.row1ImageProvider = colorImage(percentChange: ticker[0].percent_change_24h)
-                }
-                if ticker.indices.contains(1) {
-                    template.row2ImageProvider = colorImage(percentChange: ticker[1].percent_change_24h)
-                }
-                if ticker.indices.contains(2) {
-                    template.row3ImageProvider = colorImage(percentChange: ticker[2].percent_change_24h)
-                }
-            case 2:
-                if ticker.indices.contains(0) {
-                    template.row1ImageProvider = colorImage(percentChange: ticker[0].percent_change_7d)
-                }
-                if ticker.indices.contains(1) {
-                    template.row2ImageProvider = colorImage(percentChange: ticker[1].percent_change_7d)
-                }
-                if ticker.indices.contains(2) {
-                    template.row3ImageProvider = colorImage(percentChange: ticker[2].percent_change_7d)
-                }
-            default:
-                break
-            }
-        }
-        
-        if ticker.indices.contains(0) {
-            template.row1Column1TextProvider = CLKSimpleTextProvider(text: ticker[0].symbol)
-        }
-        else{
-            template.row1Column1TextProvider = CLKSimpleTextProvider(text:"")
-        }
-        if ticker.indices.contains(1) {
-            template.row2Column1TextProvider = CLKSimpleTextProvider(text: ticker[1].symbol)
-        }
-        else{
-            template.row2Column1TextProvider = CLKSimpleTextProvider(text:"")
-        }
-        if ticker.indices.contains(2) {
-            template.row3Column1TextProvider = CLKSimpleTextProvider(text: ticker[2].symbol)
-        }
-        else{
-            template.row3Column1TextProvider = CLKSimpleTextProvider(text:"")
-        }
-        
-        switch userDefaults.integer(forKey: "priceCurrency") {
-        case 0:
-            if ticker.indices.contains(0) {
-                if let price_usd = ticker[0].price_usd{
-                    template.row1Column2TextProvider = CLKSimpleTextProvider(text: formatterCurrencyUSD.string(from: NSNumber(value: Double(price_usd)!))!)
-                }
-                else{
-                    template.row1Column2TextProvider = CLKSimpleTextProvider(text: "null")
-                }
-            }
-            else{
-                template.row1Column2TextProvider = CLKSimpleTextProvider(text:"")
-            }
-            if ticker.indices.contains(1) {
-                if let price_usd = ticker[1].price_usd{
-                    template.row2Column2TextProvider = CLKSimpleTextProvider(text: formatterCurrencyUSD.string(from: NSNumber(value: Double(price_usd)!))!)
-                }
-                else{
-                    template.row2Column2TextProvider = CLKSimpleTextProvider(text: "null")
-                }
-            }
-            else{
-                template.row2Column2TextProvider = CLKSimpleTextProvider(text:"")
-            }
-            if ticker.indices.contains(2) {
-                if let price_usd = ticker[2].price_usd{
-                    template.row3Column2TextProvider = CLKSimpleTextProvider(text: formatterCurrencyUSD.string(from: NSNumber(value: Double(price_usd)!))!)
-                }
-                else{
-                    template.row3Column2TextProvider = CLKSimpleTextProvider(text: "null")
-                }
-            }
-            else{
-                template.row3Column2TextProvider = CLKSimpleTextProvider(text:"")
-            }
-        case 1:
-            if ticker.indices.contains(0) {
-                if let price_btc = ticker[0].price_btc {
-                    template.row1Column2TextProvider = CLKSimpleTextProvider(text: "₿" + price_btc)
-                }
-                else{
-                    template.row1Column2TextProvider = CLKSimpleTextProvider(text: "null")
-                }
-            }
-            else{
-                template.row1Column2TextProvider = CLKSimpleTextProvider(text:"")
-            }
-            
-            if ticker.indices.contains(1) {
-                if let price_btc = ticker[1].price_btc {
-                    template.row2Column2TextProvider = CLKSimpleTextProvider(text: "₿" + price_btc)
-                }
-                else{
-                    template.row2Column2TextProvider = CLKSimpleTextProvider(text: "null")
-                }
-            }
-            else{
-                template.row2Column2TextProvider = CLKSimpleTextProvider(text:"")
-            }
-            
-            if ticker.indices.contains(2) {
-                if let price_btc = ticker[2].price_btc {
-                    template.row3Column2TextProvider = CLKSimpleTextProvider(text: "₿" + price_btc)
-                }
-                else{
-                    template.row3Column2TextProvider = CLKSimpleTextProvider(text: "null")
-                }
-            }
-            else{
-                template.row3Column2TextProvider = CLKSimpleTextProvider(text:"")
-            }
-        case 2:
-            if ticker.indices.contains(0) {
-                if let price_eur = ticker[0].price_eur {
-                    template.row1Column2TextProvider = CLKSimpleTextProvider(text: formatterCurrencyEUR.string(from: NSNumber(value: Double(price_eur)!))!)
-                }
-                else{
-                    template.row1Column2TextProvider = CLKSimpleTextProvider(text: "null")
-                }
-            }
-            else{
-                template.row1Column2TextProvider = CLKSimpleTextProvider(text:"")
-            }
-            if ticker.indices.contains(1) {
-                if let price_eur = ticker[1].price_eur {
-                    template.row2Column2TextProvider = CLKSimpleTextProvider(text: formatterCurrencyEUR.string(from: NSNumber(value: Double(price_eur)!))!)
-                }
-                else{
-                    template.row2Column2TextProvider = CLKSimpleTextProvider(text: "null")
-                }
-            }
-            else{
-                template.row2Column2TextProvider = CLKSimpleTextProvider(text:"")
-            }
-            if ticker.indices.contains(2) {
-                if let price_eur = ticker[2].price_eur {
-                    template.row3Column2TextProvider = CLKSimpleTextProvider(text: formatterCurrencyEUR.string(from: NSNumber(value: Double(price_eur)!))!)
-                }
-                else{
-                    template.row3Column2TextProvider = CLKSimpleTextProvider(text: "null")
-                }
-            }
-            else{
-                template.row3Column2TextProvider = CLKSimpleTextProvider(text:"")
-            }
-        default:
-            break
-        }
-        
-        let entry = CLKComplicationTimelineEntry(date: Date(), complicationTemplate: template)
-        return(entry)
-    }
-    
-    
-    private func colorImage(percentChange: String?) -> CLKImageProvider {
+     func colorImage(percentChange: String?) -> CLKImageProvider {
         if let percentChange = percentChange {
             if Float(percentChange)! >= 0 {
                 let imageProvider = CLKImageProvider(onePieceImage: #imageLiteral(resourceName: "Top"))

@@ -10,6 +10,23 @@ import Foundation
 import Alamofire
 import SwiftyJSON
 
+let formatterCurrencyUSD: NumberFormatter = {
+    let formatterCurrencyUSD = NumberFormatter()
+    formatterCurrencyUSD.numberStyle = .currency
+    formatterCurrencyUSD.currencyCode = "USD"
+    formatterCurrencyUSD.maximumFractionDigits = 4
+    formatterCurrencyUSD.locale = Locale(identifier: "en_US")
+    return formatterCurrencyUSD
+}()
+let formatterCurrencyEUR: NumberFormatter = {
+    let formatterCurrencyEUR = NumberFormatter()
+    formatterCurrencyEUR.numberStyle = .currency
+    formatterCurrencyEUR.currencyCode = "EUR"
+    formatterCurrencyEUR.maximumFractionDigits = 4
+    formatterCurrencyEUR.locale = Locale(identifier: "en_US")
+    return formatterCurrencyEUR
+}()
+
 public class CurrencyCharts: Codable {
     public var market_cap_by_available_supply:[Chart]
     public var price_btc:[Chart]
@@ -66,6 +83,50 @@ public struct Ticker: Decodable {
         case price_eur
         case volume_eur_24h = "24h_volume_eur"
         case market_cap_eur = "market_cap_eur"
+    }
+    
+    public func priceCurrencyCurrent(maximumFractionDigits: Int) -> String {
+        var priceCurrency = "null"
+        switch NSUbiquitousKeyValueStore().longLong(forKey: "priceCurrency") {
+        case 0:
+            if let priceUsd = price_usd, let priceUsdDouble = Double(priceUsd) {
+                formatterCurrencyUSD.maximumFractionDigits = maximumFractionDigits
+                priceCurrency = formatterCurrencyUSD.string(from: NSNumber(value: priceUsdDouble))!
+            }
+        case 1:
+            if let priceBtc = price_btc {
+                priceCurrency = "₿" + priceBtc
+            }
+        case 2:
+            if let priceEur = price_eur, let priceEurDouble = Double(priceEur) {
+                formatterCurrencyEUR.maximumFractionDigits = maximumFractionDigits
+                priceCurrency = formatterCurrencyEUR.string(from: NSNumber(value: priceEurDouble))!
+            }
+        default:
+            break
+        }
+        return priceCurrency
+    }
+    
+    public func percentChangeCurrent() -> String {
+        var percentChange:String?
+        switch NSUbiquitousKeyValueStore().longLong(forKey: "percentChange") {
+        case 0:
+            percentChange = percent_change_1h
+        case 1:
+            percentChange = percent_change_24h
+        case 2:
+            percentChange = percent_change_7d
+        default:
+            break
+        }
+        
+        if let percentChange = percentChange {
+            return percentChange
+        }
+        else{
+            return "null"
+        }
     }
 }
 
