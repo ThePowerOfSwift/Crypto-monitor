@@ -48,26 +48,7 @@ class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
     var currencyCharts: CurrencyCharts?
     let userCalendar = Calendar.current
     var minDate: Date?
-    
 
-    let formatterCurrencyUSD: NumberFormatter = {
-        let formatterCurrencyUSD = NumberFormatter()
-        formatterCurrencyUSD.numberStyle = .currency
-        formatterCurrencyUSD.currencyCode = "USD"
-        formatterCurrencyUSD.maximumFractionDigits = 10
-        formatterCurrencyUSD.locale = Locale(identifier: "en_US")
-        return formatterCurrencyUSD
-    }()
-    
-    let formatterCurrencyEUR: NumberFormatter = {
-        let formatterCurrencyEUR = NumberFormatter()
-        formatterCurrencyEUR.numberStyle = .currency
-        formatterCurrencyEUR.currencyCode = "EUR"
-        formatterCurrencyEUR.maximumFractionDigits = 10
-        formatterCurrencyEUR.locale = Locale(identifier: "en_US")
-        return formatterCurrencyEUR
-    }()
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         NotificationCenter.default.addObserver(self, selector: #selector(applicationDidBecomeActiveNotification), name:NSNotification.Name.UIApplicationDidBecomeActive, object: nil)
@@ -106,7 +87,7 @@ class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
         view.af_setImage(withURL: url) { (responce) in
             self.navigationItem.titleView = view
         }
-
+        
         AlamofireRequest().getMinDateCharts(id: openID, completion: { (minDate: Date?, error : Error?) in
             if error == nil {
                 if let minDate = minDate{
@@ -146,8 +127,6 @@ class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
-        
-        print("viewWillAppear")
         viewCryptocurrencyInfo()
         loadTicker()
         loadlineView()
@@ -222,15 +201,14 @@ class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
             
             rankLabel.text = String(ticker.rank)
             
-            let keyStore = NSUbiquitousKeyValueStore ()
+            let keyStore = NSUbiquitousKeyValueStore()
             switch keyStore.longLong(forKey: "priceCurrency") {
-            
             case 2:
-                marketcapLabel.text = ticker.market_cap_eur != nil ? formatterCurrencyEUR.string(from: NSNumber(value: Double(ticker.market_cap_eur!)!)) : "null"
-                volumeLabel.text = ticker.volume_eur_24h != nil ? formatterCurrencyEUR.string(from: NSNumber(value: Double(ticker.volume_eur_24h!)!)) : "null"
+                marketcapLabel.text = ticker.marketCapToString(currency: .EUR, maximumFractionDigits: 10)
+                volumeLabel.text = ticker.volumeToString(currency: .EUR, maximumFractionDigits: 10)
             default:
-                marketcapLabel.text = ticker.market_cap_usd != nil ? formatterCurrencyUSD.string(from: NSNumber(value: Double(ticker.market_cap_usd!)!)) : "null"
-                volumeLabel.text = ticker.volume_usd_24h != nil ? formatterCurrencyUSD.string(from: NSNumber(value: Double(ticker.volume_usd_24h!)!)) : "null"
+                marketcapLabel.text = ticker.marketCapToString(currency: .USD, maximumFractionDigits: 10)
+                volumeLabel.text = ticker.volumeToString(currency: .USD, maximumFractionDigits: 10)
             }
         }
         
@@ -453,7 +431,6 @@ class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
     
     //MARK: ErrorSubview
     func showErrorSubview(error: Error, frame: CGRect) {
-        
         refreshBarButtonItem()
         
         self.errorSubview = ErrorSubview(frame: frame)

@@ -67,20 +67,25 @@ public struct Ticker: Decodable {
         case volume_eur_24h = "24h_volume_eur"
         case market_cap_eur = "market_cap_eur"
     }
+
+    public enum currency:String {
+        case USD = "USD"
+        case BTC = "BTC"
+        case EUR = "EUR"
+    }
     
-    let formatterCurrency: NumberFormatter = {
+    func formatterCurrency(currency: currency, maximumFractionDigits: Int) -> NumberFormatter {
         let formatterCurrency = NumberFormatter()
         formatterCurrency.numberStyle = .currency
+        formatterCurrency.currencyCode = currency.rawValue
         formatterCurrency.locale = Locale(identifier: "en_US")
+        formatterCurrency.maximumFractionDigits = maximumFractionDigits
         return formatterCurrency
-    }()
-    
+    }
+
     public func priceUsdToString(maximumFractionDigits: Int) -> String {
         if let priceUsd = price_usd, let priceUsdDouble = Double(priceUsd) {
-            let formatterCurrencyUSD = formatterCurrency
-            formatterCurrencyUSD.currencyCode = "USD"
-            formatterCurrencyUSD.maximumFractionDigits = maximumFractionDigits
-            
+            let formatterCurrencyUSD = formatterCurrency(currency: .USD, maximumFractionDigits: maximumFractionDigits)
             return formatterCurrencyUSD.string(from: NSNumber(value: priceUsdDouble))!
         }
         else{
@@ -90,10 +95,7 @@ public struct Ticker: Decodable {
     
     public func priceEurToString(maximumFractionDigits: Int) -> String {
         if let priceEur = price_eur, let priceEurDouble = Double(priceEur) {
-            let formatterCurrencyEUR = formatterCurrency
-            formatterCurrencyEUR.currencyCode = "EUR"
-            formatterCurrencyEUR.maximumFractionDigits = maximumFractionDigits
-            
+            let formatterCurrencyEUR = formatterCurrency(currency: .EUR, maximumFractionDigits: maximumFractionDigits)
             return formatterCurrencyEUR.string(from: NSNumber(value: priceEurDouble))!
         }
         else{
@@ -104,7 +106,44 @@ public struct Ticker: Decodable {
     public func priceBtcToString() -> String {
         return price_btc != nil ? "₿" + price_btc! : "null"
     }
+
+    public func marketCapToString(currency: currency, maximumFractionDigits: Int) -> String {
+        var marketCap: String?
+        switch currency {
+        case .USD:
+            marketCap = market_cap_usd
+        case .EUR:
+            marketCap = market_cap_eur
+        default:
+            break
+        }
+        if let marketCap = marketCap, let marketCapDouble = Double(marketCap) {
+            let formatterCurrency = self.formatterCurrency(currency: currency, maximumFractionDigits: maximumFractionDigits)
+            return formatterCurrency.string(from: NSNumber(value: marketCapDouble))!
+        }
+        else{
+            return "null"
+        }
+    }
     
+    public func volumeToString(currency: currency, maximumFractionDigits: Int) -> String {
+        var volume: String?
+        switch currency {
+        case .USD:
+            volume = volume_usd_24h
+        case .EUR:
+            volume = volume_eur_24h
+        default:
+            break
+        }
+        if let volume = volume, let volumeDouble = Double(volume) {
+            let formatterCurrency = self.formatterCurrency(currency: currency, maximumFractionDigits: maximumFractionDigits)
+            return formatterCurrency.string(from: NSNumber(value: volumeDouble))!
+        }
+        else{
+            return "null"
+        }
+    }
     
     public func priceCurrencyCurrent(maximumFractionDigits: Int) -> String {
         switch NSUbiquitousKeyValueStore().longLong(forKey: "priceCurrency") {
