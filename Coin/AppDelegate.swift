@@ -68,12 +68,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         (self.window?.rootViewController as! UINavigationController).popToRootViewController(animated: false)
         self.window?.rootViewController?.dismiss(animated: false, completion: nil)
         (self.window?.rootViewController as! UINavigationController).pushViewController(detailController, animated: false)
-        
-        /*   if let AddTableViewController = storyboard?.instantiateViewController(withIdentifier: "AddTableViewControllerID"){
-         self.navigationController?.pushViewController(AddTableViewController, animated: false)
-         }
-         */
-        
+
     }
     
     private func application(application: UIApplication, continueUserActivity userActivity: NSUserActivity,

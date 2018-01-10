@@ -19,7 +19,7 @@ class NetworkRequest{
             return
         }
         let urlRequest = URLRequest(url: url)
-        let session = URLSession.shared
+        let session = URLSession(configuration: URLSessionConfiguration.ephemeral)
         
         let task = session.dataTask(with: urlRequest) {
             (data, response, error) in
@@ -58,9 +58,6 @@ enum BackendError: Error {
     case urlError(reason: String)
     case objectSerialization(reason: String)
 }
-
-
-
 
 public struct Ticker: Decodable {
     public let id:String
@@ -129,8 +126,6 @@ public struct Ticker: Decodable {
             return "null"
         }
     }
-    
-
 }
 
 extension Ticker {

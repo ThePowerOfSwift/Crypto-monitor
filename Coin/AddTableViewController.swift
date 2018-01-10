@@ -32,6 +32,8 @@ class AddTableViewController: UITableViewController {
         searchController.dimsBackgroundDuringPresentation = false
         tableView.tableHeaderView = searchController.searchBar
         
+        searchController.searchBar.keyboardType = .asciiCapable
+        
         // Setting refresh control
         self.refreshControl?.addTarget(self, action: #selector(loadTicker), for: UIControlEvents.valueChanged)
         
@@ -108,7 +110,7 @@ class AddTableViewController: UITableViewController {
         
         cell.cryptocurrencyImageView.image = nil
         
-        let url = URL(string: "https://files.coinmarketcap.com/static/img/coins/32x32/\(ticker.id).png")!
+        let url = URL(string: "https://files.coinmarketcap.com/static/img/coins/64x64/\(ticker.id).png")!
         cell.cryptocurrencyImageView.af_setImage(withURL: url)
 
         cell.cryptocurrencyNameLabel?.text = ticker.name + " (\(ticker.symbol))"

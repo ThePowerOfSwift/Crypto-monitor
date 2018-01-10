@@ -49,6 +49,7 @@ class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
     let userCalendar = Calendar.current
     var minDate: Date?
     
+
     let formatterCurrencyUSD: NumberFormatter = {
         let formatterCurrencyUSD = NumberFormatter()
         formatterCurrencyUSD.numberStyle = .currency
@@ -69,7 +70,6 @@ class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         NotificationCenter.default.addObserver(self, selector: #selector(applicationDidBecomeActiveNotification), name:NSNotification.Name.UIApplicationDidBecomeActive, object: nil)
 
         // percent change view
@@ -90,16 +90,23 @@ class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
         lineChartView.legend.enabled = false
         lineChartView.scaleYEnabled = false
         
-        let font = UIFont.systemFont(ofSize: 10)
-        selectSegmentedControl.setTitleTextAttributes([NSAttributedStringKey.font: font], for: .normal)
+      //  let font = UIFont.systemFont(ofSize: 10)
+       // selectSegmentedControl.setTitleTextAttributes([NSAttributedStringKey.font: font], for: .normal)
         
         let keyStore = NSUbiquitousKeyValueStore ()
         selectSegmentedControl.selectedSegmentIndex = Int(keyStore.longLong(forKey: "typeChart"))
         zoomSegmentedControl.selectedSegmentIndex = Int(keyStore.longLong(forKey: "zoomChart"))
         
-         paymentButton.imageView?.contentMode = .scaleAspectFit
-         paymentButton.setImage(#imageLiteral(resourceName: "changellyLogo"), for: .normal)
- 
+        paymentButton.imageView?.contentMode = .scaleAspectFit
+        paymentButton.setImage(#imageLiteral(resourceName: "changellyLogo"), for: .normal)
+        
+        // title image
+        let view = UIImageView()
+        let url = URL(string: "https://files.coinmarketcap.com/static/img/coins/64x64/\(openID).png")!
+        view.af_setImage(withURL: url) { (responce) in
+            self.navigationItem.titleView = view
+        }
+
         AlamofireRequest().getMinDateCharts(id: openID, completion: { (minDate: Date?, error : Error?) in
             if error == nil {
                 if let minDate = minDate{
@@ -136,9 +143,11 @@ class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
             }
         })
     }
-    
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
+        
+        print("viewWillAppear")
         viewCryptocurrencyInfo()
         loadTicker()
         loadlineView()
@@ -168,7 +177,7 @@ class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
     func loadTicker() {
         startRefreshActivityIndicator()
         
-        let keyStore = NSUbiquitousKeyValueStore ()
+        let keyStore = NSUbiquitousKeyValueStore()
         guard let idArray = keyStore.array(forKey: "id") as? [String] else { return }
         AlamofireRequest().getTickerID(idArray: idArray, completion: { (ticker : [Ticker]?, error : Error?) in
             guard error == nil else {
@@ -183,48 +192,22 @@ class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
                 }
             }
         })
-        
     }
     
     func viewCryptocurrencyInfo() {
         refreshBarButtonItem()
 
-       guard let tickerArray = SettingsUserDefaults().loadcacheTicker() else { return }
-
+        guard let tickerArray = SettingsUserDefaults().loadcacheTicker() else { return }
         
         if let tick = tickerArray.first(where: {$0.id == openID}) {
             ticker = tick
         }
         if let ticker = ticker {
-
-            Alamofire.request("https://files.coinmarketcap.com/static/img/coins/64x64/\(ticker.id).png").responseImage { response in
-                if let image = response.result.value {
-                    self.navigationItem.titleView = UIImageView(image: image)
-                }
-            }
-
             nameLabel.text = ticker.name + " (\(ticker.symbol))"
             
-            if let price_usd = ticker.price_usd {
-                priceUsdLabel.text = formatterCurrencyUSD.string(from: NSNumber(value: Double(price_usd)!))
-            }
-            else{
-                priceUsdLabel.text = "null"
-            }
-            if let priceEUR = ticker.price_eur {
-                priceEurLabel.text = formatterCurrencyEUR.string(from: NSNumber(value: Double(priceEUR)!))
-            }
-            else{
-                priceEurLabel.text =  "null"
-            }
-            
-            if let price_btc = ticker.price_btc {
-                priceBtcLabel.text = "₿" + price_btc
-            }
-            else{
-                priceBtcLabel.text =  "null"
-            }
-            
+            priceUsdLabel.text = ticker.priceUsdToString(maximumFractionDigits: 10)
+            priceEurLabel.text = ticker.priceEurToString(maximumFractionDigits: 10)
+            priceBtcLabel.text = ticker.priceBtcToString()
     
             
             // 1h

@@ -10,7 +10,7 @@ import WatchKit
 import ClockKit
 
 class ComplicationController: NSObject, CLKComplicationDataSource {
-
+    
     // MARK: - Timeline Configuration
     func getSupportedTimeTravelDirections(for complication: CLKComplication, withHandler handler: @escaping (CLKComplicationTimeTravelDirections) -> Void) {
         handler([])
@@ -46,13 +46,7 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
                 if tickers.indices.contains(2) {
                     template.row3ImageProvider = colorImage(percentChange: tickers[2].percentChangeCurrent())
                     template.row3Column1TextProvider = CLKSimpleTextProvider(text: tickers[2].symbol)
-                  //  template.row3Column2TextProvider =  CLKSimpleTextProvider(text: tickers[2].priceCurrencyCurrent(maximumFractionDigits: 4))
-                    
-                    let dateFormatter : DateFormatter = DateFormatter()
-                    dateFormatter.dateFormat = "HH:mm:ss"
-                    let date = Date()
-                    let dateString = dateFormatter.string(from: date)
-                    template.row3Column2TextProvider =  CLKSimpleTextProvider(text: dateString)
+                    template.row3Column2TextProvider =  CLKSimpleTextProvider(text: tickers[2].priceCurrencyCurrent(maximumFractionDigits: 4))
                 }
                 else{
                     template.row3Column1TextProvider = CLKSimpleTextProvider(text:"")
@@ -80,9 +74,17 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
             case .utilitarianSmall:
                 let template = CLKComplicationTemplateUtilitarianSmallFlat()
                 template.imageProvider = colorImage(percentChange: tickers[0].percentChangeCurrent())
+                template.textProvider = CLKSimpleTextProvider(text: "\(tickers[0].symbol) \(tickers[0].percentChangeCurrent())")
+                
+                handler(CLKComplicationTimelineEntry(date: Date(), complicationTemplate: template))
+                
+            case .utilitarianSmallFlat:
+                let template = CLKComplicationTemplateUtilitarianSmallFlat()
+                template.imageProvider = colorImage(percentChange: tickers[0].percentChangeCurrent())
                 template.textProvider = CLKSimpleTextProvider(text: tickers[0].symbol)
                 
                 handler(CLKComplicationTimelineEntry(date: Date(), complicationTemplate: template))
+                
             case .utilitarianLarge:
                 let template = CLKComplicationTemplateUtilitarianLargeFlat()
                 
@@ -98,7 +100,7 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
                 
                 template.line1TextProvider = CLKSimpleTextProvider(text: tickers[0].symbol)
                 template.line2TextProvider = CLKSimpleTextProvider(text: tickers[0].percentChangeCurrent() + "%")
-
+                
                 handler(CLKComplicationTimelineEntry(date: Date(), complicationTemplate: template))
             default:
                 handler(nil)
@@ -108,17 +110,15 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
             switch complication.family {
             case .modularLarge:
                 let template = CLKComplicationTemplateModularLargeTallBody()
-                
                 template.headerTextProvider = CLKSimpleTextProvider(text: "Crypto monitor")
                 template.bodyTextProvider = CLKSimpleTextProvider(text: "")
-                
                 handler(CLKComplicationTimelineEntry(date: Date(), complicationTemplate: template))
             case .modularSmall:
                 let template = CLKComplicationTemplateModularSmallStackImage()
                 template.line1ImageProvider = CLKImageProvider(onePieceImage: #imageLiteral(resourceName: "Stock"))
                 template.line2TextProvider = CLKSimpleTextProvider(text: NSLocalizedString("No", comment: "Нет"))
                 handler(CLKComplicationTimelineEntry(date: Date(), complicationTemplate: template))
-            case .utilitarianSmall:
+            case .utilitarianSmall, .utilitarianSmallFlat:
                 let template = CLKComplicationTemplateUtilitarianSmallFlat()
                 template.textProvider = CLKSimpleTextProvider(text: NSLocalizedString("No", comment: "Нет"))
                 handler(CLKComplicationTimelineEntry(date: Date(), complicationTemplate: template))
@@ -157,29 +157,36 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
             
             handler(template)
         case .modularSmall:
-            let template = CLKComplicationTemplateModularSmallStackImage()
-            template.line1ImageProvider = CLKImageProvider(onePieceImage: #imageLiteral(resourceName: "Stock"))
-            template.line2TextProvider = CLKSimpleTextProvider(text: NSLocalizedString("No", comment: "Нет"))
+            let template = CLKComplicationTemplateModularSmallStackText()
+            template.line1TextProvider = CLKSimpleTextProvider(text: "BTC")
+            template.line2TextProvider = CLKSimpleTextProvider(text: "-5.7")
             handler(template)
         case .utilitarianSmall:
             let template = CLKComplicationTemplateUtilitarianSmallFlat()
-            template.textProvider = CLKSimpleTextProvider(text: NSLocalizedString("No", comment: "Нет"))
+            template.imageProvider = CLKImageProvider(onePieceImage: #imageLiteral(resourceName: "Down"))
+            template.textProvider = CLKSimpleTextProvider(text: "BTC -5.7")
+            handler(template)
+        case .utilitarianSmallFlat:
+            let template = CLKComplicationTemplateUtilitarianSmallFlat()
+            template.imageProvider = CLKImageProvider(onePieceImage: #imageLiteral(resourceName: "Down"))
+            template.textProvider = CLKSimpleTextProvider(text: "BTC -5.7")
             handler(template)
         case .utilitarianLarge:
             let template = CLKComplicationTemplateUtilitarianLargeFlat()
-            template.textProvider = CLKSimpleTextProvider(text: NSLocalizedString("No cryptocurrencies", comment: ""))
+            template.imageProvider = CLKImageProvider(onePieceImage: #imageLiteral(resourceName: "Down"))
+            template.textProvider = CLKSimpleTextProvider(text: "BTC $14,172.80 -5.7%")
             handler(template)
         case .extraLarge:
-            let template = CLKComplicationTemplateExtraLargeStackImage()
-            template.line1ImageProvider = CLKImageProvider(onePieceImage: #imageLiteral(resourceName: "Stock"))
-            template.line2TextProvider = CLKSimpleTextProvider(text: NSLocalizedString("No", comment: "Нет"))
+            let template = CLKComplicationTemplateExtraLargeStackText()
+            template.line1TextProvider = CLKSimpleTextProvider(text: "BTC")
+            template.line2TextProvider = CLKSimpleTextProvider(text: "-5.7%")
             handler(template)
         default:
             handler(nil)
         }
     }
     
-     func colorImage(percentChange: String?) -> CLKImageProvider {
+    func colorImage(percentChange: String?) -> CLKImageProvider {
         if let percentChange = percentChange {
             if Float(percentChange)! >= 0 {
                 let imageProvider = CLKImageProvider(onePieceImage: #imageLiteral(resourceName: "Top"))

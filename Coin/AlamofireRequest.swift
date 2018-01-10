@@ -10,23 +10,6 @@ import Foundation
 import Alamofire
 import SwiftyJSON
 
-let formatterCurrencyUSD: NumberFormatter = {
-    let formatterCurrencyUSD = NumberFormatter()
-    formatterCurrencyUSD.numberStyle = .currency
-    formatterCurrencyUSD.currencyCode = "USD"
-    formatterCurrencyUSD.maximumFractionDigits = 4
-    formatterCurrencyUSD.locale = Locale(identifier: "en_US")
-    return formatterCurrencyUSD
-}()
-let formatterCurrencyEUR: NumberFormatter = {
-    let formatterCurrencyEUR = NumberFormatter()
-    formatterCurrencyEUR.numberStyle = .currency
-    formatterCurrencyEUR.currencyCode = "EUR"
-    formatterCurrencyEUR.maximumFractionDigits = 4
-    formatterCurrencyEUR.locale = Locale(identifier: "en_US")
-    return formatterCurrencyEUR
-}()
-
 public class CurrencyCharts: Codable {
     public var market_cap_by_available_supply:[Chart]
     public var price_btc:[Chart]
@@ -85,27 +68,56 @@ public struct Ticker: Decodable {
         case market_cap_eur = "market_cap_eur"
     }
     
+    let formatterCurrency: NumberFormatter = {
+        let formatterCurrency = NumberFormatter()
+        formatterCurrency.numberStyle = .currency
+        formatterCurrency.locale = Locale(identifier: "en_US")
+        return formatterCurrency
+    }()
+    
+    public func priceUsdToString(maximumFractionDigits: Int) -> String {
+        if let priceUsd = price_usd, let priceUsdDouble = Double(priceUsd) {
+            let formatterCurrencyUSD = formatterCurrency
+            formatterCurrencyUSD.currencyCode = "USD"
+            formatterCurrencyUSD.maximumFractionDigits = maximumFractionDigits
+            
+            return formatterCurrencyUSD.string(from: NSNumber(value: priceUsdDouble))!
+        }
+        else{
+            return "null"
+        }
+    }
+    
+    public func priceEurToString(maximumFractionDigits: Int) -> String {
+        if let priceEur = price_eur, let priceEurDouble = Double(priceEur) {
+            let formatterCurrencyEUR = formatterCurrency
+            formatterCurrencyEUR.currencyCode = "EUR"
+            formatterCurrencyEUR.maximumFractionDigits = maximumFractionDigits
+            
+            return formatterCurrencyEUR.string(from: NSNumber(value: priceEurDouble))!
+        }
+        else{
+            return "null"
+        }
+    }
+    
+    public func priceBtcToString() -> String {
+        return price_btc != nil ? "₿" + price_btc! : "null"
+    }
+    
+    
     public func priceCurrencyCurrent(maximumFractionDigits: Int) -> String {
-        var priceCurrency = "null"
         switch NSUbiquitousKeyValueStore().longLong(forKey: "priceCurrency") {
         case 0:
-            if let priceUsd = price_usd, let priceUsdDouble = Double(priceUsd) {
-                formatterCurrencyUSD.maximumFractionDigits = maximumFractionDigits
-                priceCurrency = formatterCurrencyUSD.string(from: NSNumber(value: priceUsdDouble))!
-            }
+            return priceUsdToString(maximumFractionDigits: maximumFractionDigits)
         case 1:
-            if let priceBtc = price_btc {
-                priceCurrency = "₿" + priceBtc
-            }
+            return priceBtcToString()
         case 2:
-            if let priceEur = price_eur, let priceEurDouble = Double(priceEur) {
-                formatterCurrencyEUR.maximumFractionDigits = maximumFractionDigits
-                priceCurrency = formatterCurrencyEUR.string(from: NSNumber(value: priceEurDouble))!
-            }
+            return priceEurToString(maximumFractionDigits: maximumFractionDigits)
         default:
             break
         }
-        return priceCurrency
+        return "null"
     }
     
     public func percentChangeCurrent() -> String {

@@ -11,8 +11,6 @@ import WatchKit
 let timeIntervalRefresh = TimeInterval(30 * 60)
 
 class ExtensionDelegate: NSObject, WKExtensionDelegate, URLSessionDownloadDelegate, URLSessionDelegate {
-
-    
     
     var savedTask:WKRefreshBackgroundTask?
     
@@ -32,60 +30,6 @@ class ExtensionDelegate: NSObject, WKExtensionDelegate, URLSessionDownloadDelega
     func applicationWillResignActive() {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
         // Use this method to pause ongoing tasks, disable timers, etc.
-    }
-    
-    // delegate methods
-    
-    func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didFinishDownloadingTo location: URL) {
-        print(location)
-        
-        guard let httpResponse = downloadTask.response as? HTTPURLResponse,
-            (200...299).contains(httpResponse.statusCode) else {
-                print ("server error")
-                return
-        }
-        
-        do {
-            let data = try Data(contentsOf: location)
-            if let idArray = UserDefaults().array(forKey: "id") as? [String], !idArray.isEmpty {
-                let decoder = JSONDecoder()
-                do {
-                    let tickerDecodeArray = try decoder.decode([Ticker].self, from: data)
-                    var tickerFilterArray = [Ticker]()
-                    for id in idArray{
-                        if let json = tickerDecodeArray.filter({ $0.id == id}).first{
-                            tickerFilterArray.append(json)
-                        }
-                    }
-                    
-                    print("tickerFilterArray: \(tickerFilterArray)")
-                    CacheTicker().setUserDefaults(ticher: tickerFilterArray)
-                    DispatchQueue.main.async {
-                        let complicationServer = CLKComplicationServer.sharedInstance()
-                        complicationServer.activeComplications?.forEach(complicationServer.reloadTimeline)
-                    }
-                    
-                    self.savedTask?.setTaskCompletedWithSnapshot(true)
-                    
-                } catch {
-                    print("error trying to convert data to JSON")
-                    print(error)
-                }
-            }
-        }
-        catch{
-            print("error read file")
-        }
-    }
-    
-
-    
-    func urlSession(_ session: URLSession, task: URLSessionTask, didCompleteWithError error: Error?) {
-        DispatchQueue.main.async {
-            if let error = error {
-                print("Error: \(error)")
-            }
-        }
     }
     
     func handle(_ backgroundTasks: Set<WKRefreshBackgroundTask>) {
@@ -113,7 +57,7 @@ class ExtensionDelegate: NSObject, WKExtensionDelegate, URLSessionDownloadDelega
                     }
                 }
                 self.savedTask = backgroundTask
-              //  backgroundTask.setTaskCompletedWithSnapshot(false)
+            //  backgroundTask.setTaskCompletedWithSnapshot(false)
             case let snapshotTask as WKSnapshotRefreshBackgroundTask:
                 print("snapshotTask \(Date())")
                 snapshotTask.setTaskCompleted(restoredDefaultState: true, estimatedSnapshotExpiration: Date.distantFuture, userInfo: nil)
@@ -132,6 +76,59 @@ class ExtensionDelegate: NSObject, WKExtensionDelegate, URLSessionDownloadDelega
             }
         }
     }
+    
+    //MARK: Delegate methods
+    
+    func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didFinishDownloadingTo location: URL) {
+        guard let httpResponse = downloadTask.response as? HTTPURLResponse,
+            (200...299).contains(httpResponse.statusCode) else {
+                print ("server error")
+                return
+        }
+        
+        do {
+            let data = try Data(contentsOf: location)
+            if let idArray = UserDefaults().array(forKey: "id") as? [String], !idArray.isEmpty {
+                let decoder = JSONDecoder()
+                do {
+                    let tickerDecodeArray = try decoder.decode([Ticker].self, from: data)
+                    var tickerFilterArray = [Ticker]()
+                    for id in idArray{
+                        if let json = tickerDecodeArray.filter({ $0.id == id}).first{
+                            tickerFilterArray.append(json)
+                        }
+                    }
+                    
+                    CacheTicker().setUserDefaults(ticher: tickerFilterArray)
+                    DispatchQueue.main.async {
+                        let complicationServer = CLKComplicationServer.sharedInstance()
+                        complicationServer.activeComplications?.forEach(complicationServer.reloadTimeline)
+                    }
+                    
+                    self.savedTask?.setTaskCompletedWithSnapshot(true)
+                    
+                } catch {
+                    print("error trying to convert data to JSON")
+                    print(error)
+                }
+            }
+        }
+        catch{
+            print("error read file")
+        }
+    }
+    
+    
+    
+    func urlSession(_ session: URLSession, task: URLSessionTask, didCompleteWithError error: Error?) {
+        DispatchQueue.main.async {
+            if let error = error {
+                print("Error: \(error)")
+            }
+        }
+    }
+    
+    
 }
 
 
