@@ -145,14 +145,26 @@ public struct Ticker: Decodable {
         }
     }
     
-    public func priceCurrencyCurrent(maximumFractionDigits: Int) -> String {
+    public func priceCurrency() -> String {
         switch NSUbiquitousKeyValueStore().longLong(forKey: "priceCurrency") {
         case 0:
-            return priceUsdToString(maximumFractionDigits: maximumFractionDigits)
+            guard let priceUsd = price_usd, let priceUsdInt = Double(priceUsd) else { return "null" }
+            if priceUsdInt > 0.0001 {
+                return priceUsdToString(maximumFractionDigits: 4)
+            }
+            else{
+                return priceUsdToString(maximumFractionDigits: 8)
+            }
         case 1:
             return priceBtcToString()
         case 2:
-            return priceEurToString(maximumFractionDigits: maximumFractionDigits)
+            guard let priceEur = price_eur, let priceEurDouble = Double(priceEur) else { return "null" }
+            if priceEurDouble > 0.0001 {
+                return priceEurToString(maximumFractionDigits: 4)
+            }
+            else{
+                return priceEurToString(maximumFractionDigits: 8)
+            }
         default:
             break
         }

@@ -185,7 +185,8 @@ class CoinTableViewController: UITableViewController, WCSessionDelegate {
             let url = URL(string: "https://files.coinmarketcap.com/static/img/coins/64x64/\(ticker[row].id).png")!
             cell.coinImageView.af_setImage(withURL: url)
             cell.coinNameLabel.text = ticker[row].name
-            cell.priceCoinLabel.text = ticker[row].priceCurrencyCurrent(maximumFractionDigits: 8)
+            
+            cell.priceCoinLabel.text = ticker[row].priceCurrency()
 
             let percentChange = ticker[row].percentChangeCurrent()
             cell.percentChangeLabel.text = percentChange + " %"

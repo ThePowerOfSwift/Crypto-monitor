@@ -169,7 +169,7 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
         case .utilitarianSmallFlat:
             let template = CLKComplicationTemplateUtilitarianSmallFlat()
             template.imageProvider = CLKImageProvider(onePieceImage: #imageLiteral(resourceName: "Down"))
-            template.textProvider = CLKSimpleTextProvider(text: "BTC -5.7")
+            template.textProvider = CLKSimpleTextProvider(text: "BTC")
             handler(template)
         case .utilitarianLarge:
             let template = CLKComplicationTemplateUtilitarianLargeFlat()
