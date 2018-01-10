@@ -314,12 +314,19 @@ public class AlamofireRequest {
         if let of = of {
             url += String(Int(of.timeIntervalSince1970)) + "000/" + String(Int(NSDate().timeIntervalSince1970)) + "000/"
         }
-        let configuration = URLSessionConfiguration.default
-        //  configuration.timeoutIntervalForRequest = 60
-        configuration.urlCache = nil
-        let  sessionManager = Alamofire.SessionManager(configuration: configuration)
+    
+        //Cancel a request Alamofire
+        Alamofire.SessionManager.default.session.getTasksWithCompletionHandler { dataTasks, _, _ in
+            dataTasks.forEach
+                {
+                    if ($0.originalRequest?.url?.absoluteString.range(of: "https://graphs.coinmarketcap.com/currencies/" + id + "/") != nil)
+                    {
+                        $0.cancel()
+                    }
+            }
+        }
         
-        sessionManager.request(url).validate().responseJSON { response in
+        Alamofire.SessionManager.default.request(url).validate().responseJSON { response in
             
             switch response.result {
             case .success(let value):
@@ -354,8 +361,6 @@ public class AlamofireRequest {
                 error = errorFailure
             }
             completion(currencyCharts, error)
-            
-            sessionManager.session.invalidateAndCancel()
         }
         
     }

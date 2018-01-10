@@ -311,8 +311,10 @@ class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
                 }
             }
             else{
-                DispatchQueue.main.async() {
-                    self.lineChartErrorView(error: error!.localizedDescription)
+                if (error! as NSError).code != -999 {
+                    DispatchQueue.main.async() {
+                        self.lineChartErrorView(error: error!.localizedDescription)
+                    }
                 }
             }
         })
