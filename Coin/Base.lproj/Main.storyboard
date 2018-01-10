@@ -638,7 +638,7 @@
                                     <constraint firstItem="085-95-SRE" firstAttribute="top" secondItem="N96-TH-4vF" secondAttribute="bottom" constant="0.5" id="tOm-xj-gW8"/>
                                 </constraints>
                             </view>
-                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="xtc-uj-B2T">
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="fill" contentVerticalAlignment="fill" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="xtc-uj-B2T">
                                 <rect key="frame" x="16" y="532" width="288" height="29"/>
                                 <segments>
                                     <segment title="1d"/>
