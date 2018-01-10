@@ -182,7 +182,7 @@ class CoinTableViewController: UITableViewController, WCSessionDelegate {
         
         if let ticker = getTickerID {
             
-            let url = URL(string: "https://files.coinmarketcap.com/static/img/coins/64x64/\(ticker[row].id).png")!
+            let url = URL(string: "https://files.coinmarketcap.com/static/img/coins/32x32/\(ticker[row].id).png")!
             cell.coinImageView.af_setImage(withURL: url)
             cell.coinNameLabel.text = ticker[row].name
             

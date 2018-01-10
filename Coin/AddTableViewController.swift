@@ -110,7 +110,7 @@ class AddTableViewController: UITableViewController {
         
         cell.cryptocurrencyImageView.image = nil
         
-        let url = URL(string: "https://files.coinmarketcap.com/static/img/coins/64x64/\(ticker.id).png")!
+        let url = URL(string: "https://files.coinmarketcap.com/static/img/coins/32x32/\(ticker.id).png")!
         cell.cryptocurrencyImageView.af_setImage(withURL: url)
 
         cell.cryptocurrencyNameLabel?.text = ticker.name + " (\(ticker.symbol))"

@@ -82,8 +82,9 @@ class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
         paymentButton.setImage(#imageLiteral(resourceName: "changellyLogo"), for: .normal)
         
         // title image
-        let view = UIImageView()
-        let url = URL(string: "https://files.coinmarketcap.com/static/img/coins/64x64/\(openID).png")!
+        let view = UIImageView(frame: CGRect(x: 0, y: 0, width: 32, height: 32))
+        view.contentMode = .scaleAspectFit
+        let url = URL(string: "https://files.coinmarketcap.com/static/img/coins/32x32/\(openID).png")!
         view.af_setImage(withURL: url) { (responce) in
             self.navigationItem.titleView = view
         }

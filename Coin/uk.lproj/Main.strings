@@ -13,9 +13,6 @@
 /* Class = "UITableViewSection"; headerTitle = "Rate change period"; ObjectID = "uMW-aC-8Ll"; Note = "Настройки выбор периода"; */
 "uMW-aC-8Ll.headerTitle" = "Період зміни курсу";
 
-/* Class = "UISegmentedControl"; xtc-uj-B2T.segmentTitles[3] = "3m"; ObjectID = "xtc-uj-B2T"; */
-"xtc-uj-B2T.segmentTitles[3]" = "";
-
 /* Class = "UITableViewSection"; headerTitle = "Data source"; ObjectID = "yeO-1L-1gs"; Note = "Настройки источник данных "; */
 "yeO-1L-1gs.headerTitle" = "Джерело даних";
 
