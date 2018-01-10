@@ -4,3 +4,6 @@
 /* Title alert */
 "Added" = "Ajoutée";
 
+/* lineChartView noDataText */
+"No data load" = "Aucune charge de données";
+

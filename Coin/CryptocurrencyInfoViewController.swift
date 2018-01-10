@@ -65,14 +65,11 @@ class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
         lineChartView.delegate = self
         lineChartView.chartDescription?.enabled = false
         lineChartView.gridBackgroundColor = UIColor.darkGray
-        lineChartView.noDataText = "No data load"
+        lineChartView.noDataText = NSLocalizedString("No data load", comment: "lineChartView noDataText")
         
         lineChartView.leftAxis.enabled = false
         lineChartView.legend.enabled = false
         lineChartView.scaleYEnabled = false
-        
-      //  let font = UIFont.systemFont(ofSize: 10)
-       // selectSegmentedControl.setTitleTextAttributes([NSAttributedStringKey.font: font], for: .normal)
         
         let keyStore = NSUbiquitousKeyValueStore ()
         selectSegmentedControl.selectedSegmentIndex = Int(keyStore.longLong(forKey: "typeChart"))

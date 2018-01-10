@@ -4,3 +4,6 @@
 /* Title alert */
 "Added" = "Додано";
 
+/* lineChartView noDataText */
+"No data load" = "Немає завантажених даних";
+

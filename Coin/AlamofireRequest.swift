@@ -396,7 +396,6 @@ public class AlamofireRequest {
                 error = errorFailure
             }
             completion(minDate , error)
-            
             sessionManager.session.invalidateAndCancel()
         }
     }
