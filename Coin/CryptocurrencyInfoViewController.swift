@@ -8,7 +8,7 @@
 
 import UIKit
 import Charts
-import CryptocurrencyRequest
+import CryptoCurrency
 import AlamofireImage
 import Alamofire
 
@@ -86,7 +86,7 @@ class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
             self.navigationItem.titleView = view
         }
         
-        AlamofireRequest().getMinDateCharts(id: openID, completion: { (minDate: Date?, error : Error?) in
+        ChartRequest().getMinDateCharts(id: openID, completion: { (minDate: Date?, error : Error?) in
             if error == nil {
                 if let minDate = minDate{
                     self.minDate = minDate
@@ -156,19 +156,21 @@ class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
         
         let keyStore = NSUbiquitousKeyValueStore()
         guard let idArray = keyStore.array(forKey: "id") as? [String] else { return }
-        AlamofireRequest().getTickerID(idArray: idArray, completion: { (ticker : [Ticker]?, error : Error?) in
-            guard error == nil else {
-                self.showErrorSubview(error: error!, frame: CGRect(x: 0, y: 0, width: self.view.bounds.width, height: self.view.bounds.height))
-                return
-            }
-            
-            if let ticker = ticker {
-                SettingsUserDefaults().setUserDefaults(ticher: ticker, idArray: idArray, lastUpdate: Date())
+        
+        CryptoCurrencyKit.fetchTickers(convert: .eur, idArray: idArray, limit: 0) { (response) in
+            switch response {
+            case .success(let tickers):
+                getTickerID = tickers
+                SettingsUserDefaults().setUserDefaults(ticher: getTickerID!, idArray: idArray, lastUpdate: Date())
                 DispatchQueue.main.async() {
                     self.viewCryptocurrencyInfo()
                 }
+                print("success")
+            case .failure(let error):
+                self.showErrorSubview(error: error, frame: CGRect(x: 0, y: 0, width: self.view.bounds.width, height: self.view.bounds.height))
+                print("failure")
             }
-        })
+        }
     }
     
     func viewCryptocurrencyInfo() {
@@ -188,25 +190,25 @@ class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
     
             
             // 1h
-            oneHourChangeLabel.text = ticker.percent_change_1h != nil ? ticker.percent_change_1h! + "%" : "null"
-            backgroundColorView(view: oneHourChangeView, percentChange: ticker.percent_change_1h)
+            oneHourChangeLabel.text = ticker.percentChange1h != nil ? "\(ticker.percentChange1h!)%" : "null"
+            backgroundColorView(view: oneHourChangeView, percentChange: ticker.percentChange1h)
             // 24h
-            dayChangeLabel.text = ticker.percent_change_24h != nil ? ticker.percent_change_24h! + "%" : "null"
-            backgroundColorView(view: dayChangeView, percentChange: ticker.percent_change_24h)
+            dayChangeLabel.text = ticker.percentChange24h != nil ? "\(ticker.percentChange24h!)%" : "null"
+            backgroundColorView(view: dayChangeView, percentChange: ticker.percentChange24h)
             // 7d
-            weekChangeLabel.text = ticker.percent_change_7d != nil ? ticker.percent_change_7d! + "%" : "null"
-            backgroundColorView(view: weekChangeView, percentChange: ticker.percent_change_7d)
+            weekChangeLabel.text = ticker.percentChange7d != nil ? "\(ticker.percentChange7d!)%" : "null"
+            backgroundColorView(view: weekChangeView, percentChange: ticker.percentChange7d)
             
             rankLabel.text = String(ticker.rank)
             
             let keyStore = NSUbiquitousKeyValueStore()
             switch keyStore.longLong(forKey: "priceCurrency") {
             case 2:
-                marketcapLabel.text = ticker.marketCapToString(currency: .EUR, maximumFractionDigits: 10)
-                volumeLabel.text = ticker.volumeToString(currency: .EUR, maximumFractionDigits: 10)
+                marketcapLabel.text = ticker.marketCapToString(for: .eur, maximumFractionDigits: 10)
+                volumeLabel.text = ticker.volumeToString(for: .eur, maximumFractionDigits: 10)
             default:
-                marketcapLabel.text = ticker.marketCapToString(currency: .USD, maximumFractionDigits: 10)
-                volumeLabel.text = ticker.volumeToString(currency: .USD, maximumFractionDigits: 10)
+                marketcapLabel.text = ticker.marketCapToString(for: .usd, maximumFractionDigits: 10)
+                volumeLabel.text = ticker.volumeToString(for: .usd, maximumFractionDigits: 10)
             }
         }
         
@@ -219,9 +221,9 @@ class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
         }
     }
     
-    func backgroundColorView(view: UIView, percentChange: String?) {
+    func backgroundColorView(view: UIView, percentChange: Double?) {
         if let percentChange = percentChange{
-            if Float(percentChange)! >= 0 {
+            if percentChange >= 0 {
                 view.backgroundColor = UIColor(red:0.30, green:0.85, blue:0.39, alpha:1.0)
             }
             else{
@@ -297,7 +299,7 @@ class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
         // Set the x values date formatter
         xAxis.valueFormatter = ChartXAxisFormatter(dateFormatter: dateFormatter)
         
-        AlamofireRequest().getCurrencyCharts(id: openID, of: of, completion: { (currencyCharts: CurrencyCharts?, error: Error?) in
+        ChartRequest().getCurrencyCharts(id: openID, of: of, completion: { (currencyCharts: CurrencyCharts?, error: Error?) in
             if error == nil {
                 if let currencyCharts = currencyCharts {
                     self.currencyCharts = currencyCharts

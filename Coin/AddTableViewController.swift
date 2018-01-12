@@ -7,8 +7,8 @@
 //
 
 import UIKit
-import CryptocurrencyRequest
 import AlamofireImage
+import CryptoCurrency
 
 var getTickerAll = [Ticker]()
 
@@ -70,6 +70,23 @@ class AddTableViewController: UITableViewController {
         self.tableView.setContentOffset(CGPoint(x: 0, y: -self.refreshControl!.frame.size.height - self.topLayoutGuide.length), animated: true)
         self.refreshControl!.beginRefreshing()
         
+        CryptoCurrencyKit.fetchTickers(convert: .jpy, idArray: nil, limit: 0) { (response) in
+            switch response {
+            case .success(let tickers):
+                getTickerAll = tickers
+                self.ticker = tickers
+                
+                DispatchQueue.main.async() {
+                    self.cryptocurrencyView()
+                }
+                print("success")
+            case .failure(let error):
+                print("failure")
+                self.showErrorSubview(error: error)
+            }
+        }
+        
+        /*
         AlamofireRequest().getTicker(completion: { (ticker : [Ticker]?, error : Error?) in
             if error == nil {
                 if let ticker = ticker {
@@ -85,7 +102,7 @@ class AddTableViewController: UITableViewController {
             else{
                 self.showErrorSubview(error: error!)
             }
-        })
+        })*/
     }
     
     // MARK: - Table view data source

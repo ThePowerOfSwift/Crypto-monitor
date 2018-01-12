@@ -5,6 +5,7 @@ target 'Coin' do
 	pod 'AlamofireImage'
 	pod 'AlamofireNetworkActivityIndicator', '~> 2.2'
     pod 'Charts', '~> 3.0.4’
+    pod 'SwiftyJSON'
 end
 
 target 'CryptocurrencyRequest' do

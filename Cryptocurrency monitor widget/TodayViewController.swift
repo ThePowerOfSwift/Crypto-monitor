@@ -8,7 +8,7 @@
 
 import UIKit
 import NotificationCenter
-import CryptocurrencyRequest
+import CryptoCurrency
 import AlamofireImage
 
 class TodayViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, NCWidgetProviding {
@@ -54,20 +54,20 @@ class TodayViewController: UIViewController, UITableViewDataSource, UITableViewD
         }
         
         if let idArray = idArray {
-            AlamofireRequest().getTickerID(idArray: idArray, completion: { (ticker : [Ticker]?, error : Error?) in
-                if error == nil {
-                    if let ticker = ticker {
-                        SettingsUserDefaults().setUserDefaults(ticher: ticker, idArray: idArray, lastUpdate: Date())
-                        DispatchQueue.main.async() {
-                            self.cryptocurrencyView(ticker: ticker)
-                        }
+            CryptoCurrencyKit.fetchTickers(convert: .jpy, idArray: idArray, limit: 0) { (response) in
+                switch response {
+                case .success(let tickers):
+                    SettingsUserDefaults().setUserDefaults(ticher: tickers, idArray: idArray, lastUpdate: Date())
+                    DispatchQueue.main.async() {
+                        self.cryptocurrencyView(ticker: tickers)
                     }
                     completionHandler(NCUpdateResult.newData)
-                }
-                else{
+                    print("success")
+                case .failure:
                     completionHandler(NCUpdateResult.failed)
+                    print("failure")
                 }
-            })
+            }
         }
         else{
             self.emptyButton.isHidden = false

@@ -11,6 +11,7 @@ import WatchKit
 class CacheTicker {
     public func loadcacheTicker() -> ([Ticker]?){
         var cacheTicker:[Ticker]?
+
         if let decodedTicker = UserDefaults().object(forKey: "tickers") as? [Data] {
             cacheTicker = decodedTicker.map { Ticker(data: $0) } as? [Ticker]
         }
@@ -31,3 +32,4 @@ class CacheTicker {
         userDefaults.synchronize()
     }
 }
+

@@ -8,17 +8,48 @@
 
 import UIKit
 
-class SettingTableViewController: UITableViewController {
-    
+import StoreKit
+
+class SettingTableViewController: UITableViewController, SKProductsRequestDelegate, SKPaymentTransactionObserver {
+
      @IBOutlet weak var percentChangeSegmentedControl: UISegmentedControl!
      @IBOutlet weak var priceCurrencySegmentedControl: UISegmentedControl!
-
+    
+    let developerSupportId = "mialin.Coin.BuyMeCoffee"
+    var productsRequest = SKProductsRequest()
     override func viewDidLoad() {
         super.viewDidLoad()
         
         let keyStore = NSUbiquitousKeyValueStore ()
         percentChangeSegmentedControl.selectedSegmentIndex = Int(keyStore.longLong(forKey: "percentChange"))
         priceCurrencySegmentedControl.selectedSegmentIndex = Int(keyStore.longLong(forKey: "priceCurrency"))
+        
+        // Put here your IAP Products ID's
+        let productIdentifiers = NSSet(objects:developerSupportId)
+        
+        productsRequest = SKProductsRequest(productIdentifiers: productIdentifiers as! Set<String>)
+        productsRequest.delegate = self
+        productsRequest.start()   
+    }
+    
+    func paymentQueue(_ queue: SKPaymentQueue, updatedTransactions transactions: [SKPaymentTransaction]) {
+        for transaction in transactions {
+            print(transaction.transactionState)
+        }
+    }
+    
+    func productsRequest(_ request: SKProductsRequest, didReceive response: SKProductsResponse) {
+        let products = response.products
+        print("Loaded list of products...")
+        
+        for p in products {
+            print("Found product: \(p.productIdentifier) \(p.localizedTitle) \(p.price.floatValue)")
+        }
+    }
+    
+    public func request(_ request: SKRequest, didFailWithError error: Error) {
+        print("Failed to load list of products.")
+        print("Error: \(error.localizedDescription)")
     }
     
     @IBAction func percentIindexChanged(_ sender: UISegmentedControl) {
@@ -36,4 +67,10 @@ class SettingTableViewController: UITableViewController {
     @IBAction func coinMarketCapAction(_ sender: Any) {
         UIApplication.shared.open(URL(string: "https://coinmarketcap.com")!, options: [:], completionHandler: nil)
     }
+    
+    @IBAction func developerSupportAction(_ sender: UIButton) {
+
+        
+    }
+    
 }

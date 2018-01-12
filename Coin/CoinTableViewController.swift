@@ -7,9 +7,8 @@
 //
 
 import UIKit
-import CryptocurrencyRequest
 import WatchConnectivity
-
+import CryptoCurrency
 
 var openID = ""
 var getTickerID:[Ticker]?
@@ -116,6 +115,8 @@ class CoinTableViewController: UITableViewController, WCSessionDelegate {
             updateApplicationContext(id: idKeyStore)
         }
         cryptocurrencyView()
+        
+        print(CryptoCurrencyKit.Money.allRawValues)
     }
     
     
@@ -331,6 +332,9 @@ class CoinTableViewController: UITableViewController, WCSessionDelegate {
     }
     
     private func loadTicker() {
+        
+
+        
         let keyStore = NSUbiquitousKeyValueStore ()
         guard let idArray = keyStore.array(forKey: "id") as? [String] else { return }
         
@@ -345,21 +349,21 @@ class CoinTableViewController: UITableViewController, WCSessionDelegate {
                 showLoadSubview()
             }
             
-            AlamofireRequest().getTickerID(idArray: idArray, completion: { (ticker : [Ticker]?, error : Error?) in
-                if error == nil {
-                    if let ticker = ticker {
-                        getTickerID = ticker
-                        SettingsUserDefaults().setUserDefaults(ticher: getTickerID!, idArray: idArray, lastUpdate: Date())
-                        self.updateApplicationContext(id: idArray)
-                        DispatchQueue.main.async() {
-                            self.cryptocurrencyView()
-                        }
+            CryptoCurrencyKit.fetchTickers(convert: .eur, idArray: idArray, limit: 0) { (response) in
+                switch response {
+                case .success(let tickers):
+                    getTickerID = tickers
+                    SettingsUserDefaults().setUserDefaults(ticher: getTickerID!, idArray: idArray, lastUpdate: Date())
+                    self.updateApplicationContext(id: idArray)
+                    DispatchQueue.main.async() {
+                        self.cryptocurrencyView()
                     }
+                    print("success")
+                case .failure(let error):
+                    self.showErrorSubview(error: error)
+                    print("failure")
                 }
-                else{
-                    self.showErrorSubview(error: error!)
-                }
-            })
+            }
         }
     }
     
