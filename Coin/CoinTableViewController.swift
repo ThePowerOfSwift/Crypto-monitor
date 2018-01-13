@@ -108,24 +108,25 @@ class CoinTableViewController: UITableViewController, WCSessionDelegate {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
-        
-        let keyStore = NSUbiquitousKeyValueStore ()
-        let idKeyStore = keyStore.array(forKey: "id") as? [String]
-        if let idKeyStore = idKeyStore {
-            updateApplicationContext(id: idKeyStore)
-        }
-        cryptocurrencyView()
-        loadTicker()
-
     }
     
-    
+
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(true)
         if getTickerID != nil {
             if getTickerID!.isEmpty {
                 self.showEmptySubview()
             }
+        }
+        
+        DispatchQueue.main.async() {
+            let keyStore = NSUbiquitousKeyValueStore ()
+            let idKeyStore = keyStore.array(forKey: "id") as? [String]
+            if let idKeyStore = idKeyStore {
+                self.updateApplicationContext(id: idKeyStore)
+            }
+            self.cryptocurrencyView()
+            self.loadTicker()
         }
     }
     

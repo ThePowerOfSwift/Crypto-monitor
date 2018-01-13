@@ -122,10 +122,14 @@ class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
             }
         })
     }
-
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         viewCryptocurrencyInfo()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(true)
         loadTicker()
         loadlineView()
     }
@@ -157,7 +161,7 @@ class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
         let keyStore = NSUbiquitousKeyValueStore()
         guard let idArray = keyStore.array(forKey: "id") as? [String] else { return }
         
-        CryptoCurrencyKit.fetchTickers(convert: .eur, idArray: idArray, limit: 0) { (response) in
+        CryptoCurrencyKit.fetchTickers(convert: SettingsUserDefaults().getCurrentCurrency(), idArray: idArray, limit: 0) { (response) in
             switch response {
             case .success(let tickers):
                 getTickerID = tickers

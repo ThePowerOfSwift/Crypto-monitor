@@ -104,7 +104,25 @@ extension CryptoCurrencyKit {
          */
         
     
-        
+        public var flag: String {
+            switch self {
+            case .usd:
+                return "🇺🇸" //💵
+            case .eur:
+                return "🇪🇺" //💶
+            case .btc:
+                return "₿"
+            case .gbp:
+                return "🇬🇧"
+            case .jpy:
+                return "🇯🇵"
+            case .cny:
+                return "🇨🇳"
+            case .hkd:
+                return "🇭🇰"
+            }
+        }
+    
         
         /*
          public var symbol: String {
