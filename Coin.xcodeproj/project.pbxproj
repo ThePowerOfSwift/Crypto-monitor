@@ -42,6 +42,8 @@
 		FBA28AC020095910009EDB84 /* AlamofireImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FBA28AC120095910009EDB84 /* AlamofireImage.framework */; };
 		FBA28ACA200959BC009EDB84 /* Charts.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB20D0E42009551D0007305C /* Charts.swift */; };
 		FBA28ACB20095A6D009EDB84 /* SwiftyJSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FBA28ACC20095A6D009EDB84 /* SwiftyJSON.framework */; };
+		FBA28ACE20097AA6009EDB84 /* CurrentCurrencyTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBA28ACD20097AA6009EDB84 /* CurrentCurrencyTableViewController.swift */; };
+		FBA28AD020097C31009EDB84 /* CurrentCurrencyTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBA28ACF20097C31009EDB84 /* CurrentCurrencyTableViewCell.swift */; };
 		FBB0096E1F4E3292000B1298 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FBB0096D1F4E3292000B1298 /* Assets.xcassets */; };
 		FBB009751F4E3292000B1298 /* Crypto monitor Watch Extension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = FBB009741F4E3292000B1298 /* Crypto monitor Watch Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		FBB0097A1F4E3292000B1298 /* InterfaceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBB009791F4E3292000B1298 /* InterfaceController.swift */; };
@@ -301,6 +303,8 @@
 		FBA28AC720095939009EDB84 /* SwiftyJSON.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SwiftyJSON.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FBA28AC92009593C009EDB84 /* Alamofire.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Alamofire.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FBA28ACC20095A6D009EDB84 /* SwiftyJSON.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SwiftyJSON.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		FBA28ACD20097AA6009EDB84 /* CurrentCurrencyTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentCurrencyTableViewController.swift; sourceTree = "<group>"; };
+		FBA28ACF20097C31009EDB84 /* CurrentCurrencyTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentCurrencyTableViewCell.swift; sourceTree = "<group>"; };
 		FBB009681F4E3292000B1298 /* Crypto monitor Watch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Crypto monitor Watch.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		FBB0096D1F4E3292000B1298 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		FBB0096F1F4E3292000B1298 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -477,6 +481,15 @@
 			path = ..;
 			sourceTree = "<group>";
 		};
+		FBA28AD120097C38009EDB84 /* CurrentCurrency */ = {
+			isa = PBXGroup;
+			children = (
+				FBA28ACD20097AA6009EDB84 /* CurrentCurrencyTableViewController.swift */,
+				FBA28ACF20097C31009EDB84 /* CurrentCurrencyTableViewCell.swift */,
+			);
+			name = CurrentCurrency;
+			sourceTree = "<group>";
+		};
 		FBB009691F4E3292000B1298 /* Crypto monitor Watch */ = {
 			isa = PBXGroup;
 			children = (
@@ -542,6 +555,7 @@
 				FB9CC16C1FEAB57000DDEA92 /* Coin */,
 				FB670CE51F16D900005761CF /* CryptocurrencyInfoViewController.swift */,
 				FB466DD91F2D479200D771C9 /* SettingTableViewController.swift */,
+				FBA28AD120097C38009EDB84 /* CurrentCurrency */,
 				FB20D0E42009551D0007305C /* Charts.swift */,
 				FB565C461F421ADF004EA42F /* AddTable */,
 				FBD6A3031F73C60B0063FD62 /* LoadSubview */,
@@ -1009,10 +1023,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FBA28ACE20097AA6009EDB84 /* CurrentCurrencyTableViewController.swift in Sources */,
 				FB2F88A81FEBFB28003B62CF /* CoinTableViewController.swift in Sources */,
 				FBA28ACA200959BC009EDB84 /* Charts.swift in Sources */,
 				FB466DDA1F2D479200D771C9 /* SettingTableViewController.swift in Sources */,
 				FBD5ABE51F214CFA003A3AAC /* AddTableViewController.swift in Sources */,
+				FBA28AD020097C31009EDB84 /* CurrentCurrencyTableViewCell.swift in Sources */,
 				FB670CE61F16D900005761CF /* CryptocurrencyInfoViewController.swift in Sources */,
 				FB5326CB1F254A9400D9C498 /* AddTableViewCell.swift in Sources */,
 				FB2F88AA1FEBFB30003B62CF /* TableViewCell.swift in Sources */,

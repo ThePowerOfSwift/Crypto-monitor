@@ -7,16 +7,18 @@
 //
 
 import UIKit
-
+import CryptoCurrency
 import StoreKit
 
 class SettingTableViewController: UITableViewController, SKProductsRequestDelegate, SKPaymentTransactionObserver {
-
-     @IBOutlet weak var percentChangeSegmentedControl: UISegmentedControl!
-     @IBOutlet weak var priceCurrencySegmentedControl: UISegmentedControl!
+    
+    @IBOutlet weak var percentChangeSegmentedControl: UISegmentedControl!
+    @IBOutlet weak var priceCurrencySegmentedControl: UISegmentedControl!
+    @IBOutlet weak var symbol: UILabel!
     
     let developerSupportId = "mialin.Coin.BuyMeCoffee"
     var productsRequest = SKProductsRequest()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -30,6 +32,10 @@ class SettingTableViewController: UITableViewController, SKProductsRequestDelega
         productsRequest = SKProductsRequest(productIdentifiers: productIdentifiers as! Set<String>)
         productsRequest.delegate = self
         productsRequest.start()   
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        symbol.text = SettingsUserDefaults().getCurrentCurrency().rawValue
     }
     
     func paymentQueue(_ queue: SKPaymentQueue, updatedTransactions transactions: [SKPaymentTransaction]) {

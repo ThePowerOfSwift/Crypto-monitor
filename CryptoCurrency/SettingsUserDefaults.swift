@@ -55,5 +55,20 @@ public class SettingsUserDefaults{
         return cacheTicker
     }
     
+    public func setCurrentCurrency(money: CryptoCurrencyKit.Money) {
+        let userDefaults = UserDefaults(suiteName: "group.mialin.valentyn.crypto.monitor")
+        userDefaults?.set(money.rawValue, forKey: "CurrentCurrency")
+        userDefaults?.synchronize()
+    }
+    
+    public func getCurrentCurrency() ->  CryptoCurrencyKit.Money {
+        let userDefaults = UserDefaults(suiteName: "group.mialin.valentyn.crypto.monitor")
+        
+        guard let currentCurrencyString = userDefaults?.string(forKey: "CurrentCurrency") else { return CryptoCurrencyKit.Money.usd }
+        guard let currentCurrency = CryptoCurrencyKit.Money(rawValue: currentCurrencyString) else { return CryptoCurrencyKit.Money.usd }
+        
+        return currentCurrency
+    }
+    
     
 }
