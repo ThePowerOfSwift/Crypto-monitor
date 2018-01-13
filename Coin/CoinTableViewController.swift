@@ -115,8 +115,7 @@ class CoinTableViewController: UITableViewController, WCSessionDelegate {
             updateApplicationContext(id: idKeyStore)
         }
         cryptocurrencyView()
-        
-        print(CryptoCurrencyKit.Money.allRawValues)
+
     }
     
     
@@ -140,7 +139,7 @@ class CoinTableViewController: UITableViewController, WCSessionDelegate {
         let idKeyStore = keyStore.array(forKey: "id") as? [String]
         let userDefaults = UserDefaults(suiteName: "group.mialin.valentyn.crypto.monitor")
         let idUserDefaults = userDefaults?.array(forKey: "id") as? [String]
-        
+        /*
         if idKeyStore != nil && idUserDefaults != nil {
             if idKeyStore! != idUserDefaults! {
                 loadTicker()
@@ -149,6 +148,7 @@ class CoinTableViewController: UITableViewController, WCSessionDelegate {
                 loadCache()
             }
         }
+        */
         if let idKeyStore = idKeyStore {
             updateApplicationContext(id: idKeyStore)
         }
@@ -349,7 +349,7 @@ class CoinTableViewController: UITableViewController, WCSessionDelegate {
                 showLoadSubview()
             }
             
-            CryptoCurrencyKit.fetchTickers(convert: .eur, idArray: idArray, limit: 0) { (response) in
+            CryptoCurrencyKit.fetchTickers(convert: SettingsUserDefaults().getCurrentCurrency(), idArray: idArray, limit: 0) { (response) in
                 switch response {
                 case .success(let tickers):
                     getTickerID = tickers

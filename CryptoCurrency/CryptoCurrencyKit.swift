@@ -9,8 +9,9 @@ public struct CryptoCurrencyKit {
             urlString.append("&limit=\(limit)")
         }
         let url = URL(string: urlString)!
-        let urlRequest = URLRequest(url: url)
-        
+        var urlRequest = URLRequest(url: url)
+        urlRequest.timeoutInterval = 20
+        urlRequest.cachePolicy = .reloadIgnoringLocalCacheData
         let closure: ((ResponseA<Ticker>) -> Void)? = { r in
             switch r {
             case .success(let data):
@@ -27,6 +28,7 @@ public struct CryptoCurrencyKit {
                 }
                 response?(ResponseA.success(tickerFilterArray))
             case .failure(let error):
+                print(error.localizedDescription)
                 response?(ResponseA.failure(error: error))
             }
         }
@@ -59,13 +61,53 @@ extension CryptoCurrencyKit {
     public enum Money: String {
         case usd = "USD"
         case eur = "EUR"
+        case btc = "BTC"
+       // case aud = "AUD" //
+       // case brl = "BRL"
+        
         case gbp = "GBP"
         case jpy = "JPY"
         case cny = "CNY"
         case hkd = "HKD"
+        /*
+        case cad = "CAD"
+        case chf = "CHF"
+        case clp = "CLP"
+        case cny = "CNY"
+        case czk = "CZK"
+        case dkk = "DKK"
+        case gbp = "GBP"
+        case hkd = "HKD"
+        case huf = "HUF"
+        case idr = "IDR"
+        case ils = "ILS"
+        case inr = "INR"
+        case jpy = "JPY"
+        case krw = "KRW"
+        case mxn = "MXN"
+        case myr = "MYR"
+        case nok = "NOK"
+        case nsd = "NZD"
+        case php = "PHP"
+        case pkr = "PKR"
+        case pln = "PLN"
+        case rub = "RUB"
+        case sek = "SEK"
+        case sgd = "SGD"
+        case thb = "THB"
+        case tryl = "TRY"
+        case twd = "TWD"
+        case zar = "ZAR"
+ */
         
+        
+        /*
         public var symbol: String {
             switch self {
+            case .aud:
+                return "$"
+            case .brl:
+                return ""
             case .cny:
                 return "¥"
             case .eur:
@@ -80,9 +122,47 @@ extension CryptoCurrencyKit {
                 return "$"
             }
         }
+         */
         
         public static var allValues: [Money] {
-            return [.usd, .eur, .gbp, .jpy, .cny, .hkd]
+            return [.usd,
+                    .eur,
+                    .btc,
+                    .gbp,
+                    .jpy,
+                    .cny,
+                    .hkd
+                
+                
+                   /* .aud,
+                    .brl,
+                    .cad,
+                    .chf,
+                    .clp,
+                    .cny,
+                    .czk,
+                    .dkk,
+                    .gbp,
+                    .hkd,
+                    .huf,
+                    .idr,
+                    .ils,
+                    .inr,
+                    .jpy,
+                    .krw,
+                    .mxn,
+                    .myr,
+                    .nok,
+                    .php,
+                    .pkr,
+                    .pln,
+                    .rub,
+                    .sek,
+                    .sgd,
+                    .thb,
+                    .tryl,
+                    .twd,
+                    .zar*/]
         }
         
         public static var allRawValues: [String] {
