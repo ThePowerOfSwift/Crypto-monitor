@@ -224,16 +224,8 @@ class CoinTableViewController: UITableViewController, WCSessionDelegate {
             headerView.dataCurrencyLabel.text = "-"
         }
         
-        switch keyStore.longLong(forKey: "priceCurrency") {
-        case 0:
-            headerView.priceLabel.text = "Price (USD)"
-        case 1:
-            headerView.priceLabel.text = "Price (BTC)"
-        case 2:
-            headerView.priceLabel.text = "Price (EUR)"
-        default:
-            headerView.priceLabel.text = "-"
-        }
+        headerView.priceLabel.text = "Price (\(SettingsUserDefaults().getCurrentCurrency().rawValue))"
+
         
         let contentView = headerView.contentView
         
