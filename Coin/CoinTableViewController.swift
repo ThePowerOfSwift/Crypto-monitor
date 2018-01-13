@@ -103,7 +103,7 @@ class CoinTableViewController: UITableViewController, WCSessionDelegate {
             watchSession!.activate()
         }
         loadCache()
-        loadTicker()
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -115,6 +115,7 @@ class CoinTableViewController: UITableViewController, WCSessionDelegate {
             updateApplicationContext(id: idKeyStore)
         }
         cryptocurrencyView()
+        loadTicker()
 
     }
     
@@ -130,8 +131,8 @@ class CoinTableViewController: UITableViewController, WCSessionDelegate {
     
     @objc func applicationDidBecomeActiveNotification(notification : NSNotification) {
         print("unlock")
-        loadCache()
-        loadTicker()
+      //  loadCache()
+       // loadTicker()
     }
     
     @objc func ubiquitousKeyValueStoreDidChange(notification: NSNotification) {
@@ -332,9 +333,7 @@ class CoinTableViewController: UITableViewController, WCSessionDelegate {
     }
     
     private func loadTicker() {
-        
 
-        
         let keyStore = NSUbiquitousKeyValueStore ()
         guard let idArray = keyStore.array(forKey: "id") as? [String] else { return }
         

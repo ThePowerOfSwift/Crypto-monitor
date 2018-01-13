@@ -17,12 +17,12 @@
 		<key>CryptoCurrency iOS.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>12</integer>
+			<integer>15</integer>
 		</dict>
 		<key>CryptoCurrency watchOS.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>13</integer>
+			<integer>16</integer>
 		</dict>
 		<key>Cryptocurrency monitor widget.xcscheme</key>
 		<dict>

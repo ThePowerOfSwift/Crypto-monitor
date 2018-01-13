@@ -1,4 +1,5 @@
 import Foundation
+import Alamofire
 
 public struct CryptoCurrencyKit {
     
@@ -9,9 +10,11 @@ public struct CryptoCurrencyKit {
             urlString.append("&limit=\(limit)")
         }
         let url = URL(string: urlString)!
-        var urlRequest = URLRequest(url: url)
-        urlRequest.timeoutInterval = 20
-        urlRequest.cachePolicy = .reloadIgnoringLocalCacheData
+        let urlRequest = URLRequest(url: url)
+        //   urlRequest.timeoutInterval = 5
+        // urlRequest.cachePolicy = .reloadIgnoringLocalCacheData
+        
+        
         let closure: ((ResponseA<Ticker>) -> Void)? = { r in
             switch r {
             case .success(let data):
@@ -62,66 +65,68 @@ extension CryptoCurrencyKit {
         case usd = "USD"
         case eur = "EUR"
         case btc = "BTC"
-       // case aud = "AUD" //
-       // case brl = "BRL"
+        // case aud = "AUD" //
+        // case brl = "BRL"
         
         case gbp = "GBP"
         case jpy = "JPY"
         case cny = "CNY"
         case hkd = "HKD"
         /*
-        case cad = "CAD"
-        case chf = "CHF"
-        case clp = "CLP"
-        case cny = "CNY"
-        case czk = "CZK"
-        case dkk = "DKK"
-        case gbp = "GBP"
-        case hkd = "HKD"
-        case huf = "HUF"
-        case idr = "IDR"
-        case ils = "ILS"
-        case inr = "INR"
-        case jpy = "JPY"
-        case krw = "KRW"
-        case mxn = "MXN"
-        case myr = "MYR"
-        case nok = "NOK"
-        case nsd = "NZD"
-        case php = "PHP"
-        case pkr = "PKR"
-        case pln = "PLN"
-        case rub = "RUB"
-        case sek = "SEK"
-        case sgd = "SGD"
-        case thb = "THB"
-        case tryl = "TRY"
-        case twd = "TWD"
-        case zar = "ZAR"
- */
+         case cad = "CAD"
+         case chf = "CHF"
+         case clp = "CLP"
+         case cny = "CNY"
+         case czk = "CZK"
+         case dkk = "DKK"
+         case gbp = "GBP"
+         case hkd = "HKD"
+         case huf = "HUF"
+         case idr = "IDR"
+         case ils = "ILS"
+         case inr = "INR"
+         case jpy = "JPY"
+         case krw = "KRW"
+         case mxn = "MXN"
+         case myr = "MYR"
+         case nok = "NOK"
+         case nsd = "NZD"
+         case php = "PHP"
+         case pkr = "PKR"
+         case pln = "PLN"
+         case rub = "RUB"
+         case sek = "SEK"
+         case sgd = "SGD"
+         case thb = "THB"
+         case tryl = "TRY"
+         case twd = "TWD"
+         case zar = "ZAR"
+         */
+        
+    
         
         
         /*
-        public var symbol: String {
-            switch self {
-            case .aud:
-                return "$"
-            case .brl:
-                return ""
-            case .cny:
-                return "¥"
-            case .eur:
-                return "€"
-            case .gbp:
-                return "£"
-            case .jpy:
-                return "¥"
-            case .usd:
-                return "$"
-            case .hkd:
-                return "$"
-            }
-        }
+         public var symbol: String {
+         switch self {
+         case .aud:
+         return "$"
+         case .brl:
+         return ""
+         case .cny:
+         return "¥"
+         case .eur:
+         return "€"
+         case .gbp:
+         return "£"
+         case .jpy:
+         return "¥"
+         case .usd:
+         return "$"
+         case .hkd:
+         return "$"
+         }
+         }
          */
         
         public static var allValues: [Money] {
@@ -134,35 +139,35 @@ extension CryptoCurrencyKit {
                     .hkd
                 
                 
-                   /* .aud,
-                    .brl,
-                    .cad,
-                    .chf,
-                    .clp,
-                    .cny,
-                    .czk,
-                    .dkk,
-                    .gbp,
-                    .hkd,
-                    .huf,
-                    .idr,
-                    .ils,
-                    .inr,
-                    .jpy,
-                    .krw,
-                    .mxn,
-                    .myr,
-                    .nok,
-                    .php,
-                    .pkr,
-                    .pln,
-                    .rub,
-                    .sek,
-                    .sgd,
-                    .thb,
-                    .tryl,
-                    .twd,
-                    .zar*/]
+                /* .aud,
+                 .brl,
+                 .cad,
+                 .chf,
+                 .clp,
+                 .cny,
+                 .czk,
+                 .dkk,
+                 .gbp,
+                 .hkd,
+                 .huf,
+                 .idr,
+                 .ils,
+                 .inr,
+                 .jpy,
+                 .krw,
+                 .mxn,
+                 .myr,
+                 .nok,
+                 .php,
+                 .pkr,
+                 .pln,
+                 .rub,
+                 .sek,
+                 .sgd,
+                 .thb,
+                 .tryl,
+                 .twd,
+                 .zar*/]
         }
         
         public static var allRawValues: [String] {
@@ -183,36 +188,138 @@ extension CryptoCurrencyKit {
     }
     
     static func requestA<T>(urlRequest: URLRequest, idArray: [String]?, response: ((_ r: ResponseA<T>) -> Void)?) {
-        URLSession.shared.dataTask(with: urlRequest) { (data, _, error) in
+        print("requestA")
+        //    let configuration = URLSessionConfiguration.default
+        //  let session = URLSession(configuration: configuration)
+        
+        //   let destination = DownloadRequest.suggestedDownloadDestination()
+        /*   Alamofire.download(urlRequest).responseData { res in
+         switch res.result{
+         case.success(let responseData):
+         let decoder = JSONDecoder()
+         do {
+         let objects = try decoder.decode([T].self, from: responseData)
+         response?(ResponseA.success(objects))
+         } catch let decodeE {
+         response?(ResponseA.failure(error: decodeE))
+         }
+         case .failure(let error):
+         response?(ResponseA.failure(error: error))
+         }
+         }
+         */
+        /*
+         let destination: DownloadRequest.DownloadFileDestination = { _, _ in
+         var documentsURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
+         documentsURL.appendPathComponent("duck.png")
+         return (documentsURL, [.removePreviousFile])
+         }
+         */
+        /*
+        if FileManager.default.fileExists(atPath: res.destinationURL!.path) {
+            FileManager.default.removeItem(atPath: res.destinationURL!.path)
+        }
+        
+        let destination = DownloadRequest.suggestedDownloadDestination()
+        
+        Alamofire.download(urlRequest, to: destination).validate().responseData { res in
+            //          guard let data = res.result.value else { return }
             DispatchQueue.main.async {
-                if let data = data {
+                switch res.result{
+                case.success(let responseData):
+                    let decoder = JSONDecoder()
                     do {
-                        let objects = try JSONDecoder().decode([T].self, from: data) //as! [Ticker]
+                        let data = try Data(contentsOf: res.destinationURL!)
+                        let objects = try decoder.decode([T].self, from: data)
+                        
+                        if FileManager.default.fileExists(atPath: res.destinationURL!.path) {
+                            try FileManager.default.removeItem(atPath: res.destinationURL!.path)
+                        }
+                        
                         response?(ResponseA.success(objects))
                     } catch let decodeE {
                         response?(ResponseA.failure(error: decodeE))
                     }
-                } else if let error = error {
+                case .failure(let error):
                     response?(ResponseA.failure(error: error))
                 }
             }
-        }.resume()
+        }
+    }
+        */
+        
+        Alamofire.SessionManager.default.session.getTasksWithCompletionHandler { dataTasks, _, _ in
+            dataTasks.forEach
+                {
+                    if ($0.originalRequest?.url?.absoluteString.range(of: "https://api.coinmarketcap.com/v1/ticker/") != nil)
+                    {
+                        $0.cancel()
+                    }
+            }
+        }
+       
+
+        
+        Alamofire.SessionManager.default.request(urlRequest).validate().responseData { res in
+            switch res.result {
+            case .success(let responseData):
+                print("Validation Successful getTicker2")
+                
+                let decoder = JSONDecoder()
+                do {
+                    let objects = try decoder.decode([T].self, from: responseData)
+                    response?(ResponseA.success(objects))
+                } catch let decodeE {
+                    response?(ResponseA.failure(error: decodeE))
+                }
+            case .failure(let error):
+                response?(ResponseA.failure(error: error))
+            }
+        }
     }
     
-    static func requestD<T>(urlRequest: URLRequest, response: ((_ r: ResponseD<T>) -> Void)?) {
-        URLSession.shared.dataTask(with: urlRequest) { (data, _, error) in
-            DispatchQueue.main.async {
-                if let data = data {
-                    do {
-                        let object = try JSONDecoder().decode(T.self, from: data)
-                        response?(ResponseD.success(object))
-                    } catch let decodeE {
-                        response?(ResponseD.failure(error: decodeE))
+        
+        /*
+         session.dataTask(with: urlRequest) { (data, res, error) in
+         print(res)
+         print(error?.localizedDescription)
+         guard let httpResponse = res as? HTTPURLResponse,
+         (200...299).contains(httpResponse.statusCode) else {
+         print("res error")
+         return
+         }
+         
+         DispatchQueue.main.async {
+         if let data = data {
+         do {
+         let objects = try JSONDecoder().decode([T].self, from: data)
+         response?(ResponseA.success(objects))
+         } catch let decodeE {
+         response?(ResponseA.failure(error: decodeE))
+         }
+         } else if let error = error {
+         print(error.localizedDescription)
+         response?(ResponseA.failure(error: error))
+         }
+         }
+         }.resume()*/
+        // }
+        
+        static func requestD<T>(urlRequest: URLRequest, response: ((_ r: ResponseD<T>) -> Void)?) {
+            URLSession.shared.dataTask(with: urlRequest) { (data, _, error) in
+                DispatchQueue.main.async {
+                    if let data = data {
+                        do {
+                            let object = try JSONDecoder().decode(T.self, from: data)
+                            response?(ResponseD.success(object))
+                        } catch let decodeE {
+                            response?(ResponseD.failure(error: decodeE))
+                        }
+                    } else if let error = error {
+                        response?(ResponseD.failure(error: error))
                     }
-                } else if let error = error {
-                    response?(ResponseD.failure(error: error))
                 }
-            }
-        }.resume()
-    }
+                }.resume()
+        }
+    
 }

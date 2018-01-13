@@ -26,11 +26,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Coin/CoinTableViewController.swift"
-            timestampString = "537502491.20902"
+            timestampString = "537575913.80328"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "253"
-            endingLineNumber = "253"
+            startingLineNumber = "254"
+            endingLineNumber = "254"
             landmarkName = "tableView(_:didSelectRowAt:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -42,11 +42,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Coin/CoinTableViewController.swift"
-            timestampString = "537502491.209403"
+            timestampString = "537575913.803365"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "159"
-            endingLineNumber = "159"
+            startingLineNumber = "160"
+            endingLineNumber = "160"
             landmarkName = "loadCache()"
             landmarkType = "7">
          </BreakpointContent>
@@ -80,6 +80,22 @@
             startingLineNumber = "321"
             endingLineNumber = "321"
             landmarkName = "encode(to:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "CryptoCurrency/CryptoCurrencyKit.swift"
+            timestampString = "537575913.803507"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "254"
+            endingLineNumber = "254"
+            landmarkName = "requestA(urlRequest:idArray:response:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
