@@ -186,10 +186,16 @@ class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
             ticker = tick
         }
         if let ticker = ticker {
+            
+            
+            let money = SettingsUserDefaults().getCurrentCurrency()
+            
             nameLabel.text = ticker.name + " (\(ticker.symbol))"
             
             priceUsdLabel.text = ticker.priceUsdToString(maximumFractionDigits: 10)
             priceEurLabel.text = ticker.priceEurToString(maximumFractionDigits: 10)
+            
+            
             priceBtcLabel.text = ticker.priceBtcToString()
     
             
@@ -205,15 +211,8 @@ class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
             
             rankLabel.text = String(ticker.rank)
             
-            let keyStore = NSUbiquitousKeyValueStore()
-            switch keyStore.longLong(forKey: "priceCurrency") {
-            case 2:
-                marketcapLabel.text = ticker.marketCapToString(for: .eur, maximumFractionDigits: 10)
-                volumeLabel.text = ticker.volumeToString(for: .eur, maximumFractionDigits: 10)
-            default:
-                marketcapLabel.text = ticker.marketCapToString(for: .usd, maximumFractionDigits: 10)
-                volumeLabel.text = ticker.volumeToString(for: .usd, maximumFractionDigits: 10)
-            }
+            marketcapLabel.text = ticker.marketCapToString(for: money, maximumFractionDigits: 10)
+            volumeLabel.text = ticker.volumeToString(for: money, maximumFractionDigits: 10)
         }
         
         if let subviews = self.view.superview?.subviews {
