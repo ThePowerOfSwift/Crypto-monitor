@@ -141,7 +141,6 @@ class CoinTableViewController: UITableViewController, WCSessionDelegate {
         let idKeyStore = keyStore.array(forKey: "id") as? [String]
         let userDefaults = UserDefaults(suiteName: "group.mialin.valentyn.crypto.monitor")
         let idUserDefaults = userDefaults?.array(forKey: "id") as? [String]
-        /*
         if idKeyStore != nil && idUserDefaults != nil {
             if idKeyStore! != idUserDefaults! {
                 loadTicker()
@@ -150,7 +149,7 @@ class CoinTableViewController: UITableViewController, WCSessionDelegate {
                 loadCache()
             }
         }
-        */
+
         if let idKeyStore = idKeyStore {
             updateApplicationContext(id: idKeyStore)
         }

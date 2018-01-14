@@ -53,11 +53,6 @@ public struct CryptoCurrencyKit {
         }
         requestA(urlRequest: urlRequest, idArray: nil, response: closure)
     }
-    
-    public static func fetchGlobal(convert: Money = .usd, response: ((_ r: ResponseD<Global>) -> Void)?) {
-        let urlRequest = URLRequest(url: URL(string: "https://api.coinmarketcap.com/v1/global/")!)
-        requestD(urlRequest: urlRequest, response: response)
-    }
 }
 
 extension CryptoCurrencyKit {

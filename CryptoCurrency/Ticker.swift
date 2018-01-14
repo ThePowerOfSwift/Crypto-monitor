@@ -299,6 +299,8 @@ extension Ticker: Encodable {
         try container.encode(doubleToString(double: percentChange7d), forKey: .percentChange7d)
         try container.encode(doubleToString(double: lastUpdated), forKey: .lastUpdated)
         try container.encode(doubleToString(double: priceBTC), forKey: .priceBTC)
+        try container.encode(doubleToString(double: volumeBTC24h), forKey: .volumeBTC24h)
+        try container.encode(doubleToString(double: marketCapBTC), forKey: .marketCapBTC)
         try container.encode(doubleToString(double: priceUSD), forKey: .priceUSD)
         try container.encode(doubleToString(double: volumeUSD24h), forKey: .volumeUSD24h)
         try container.encode(doubleToString(double: marketCapUSD), forKey: .marketCapUSD)
@@ -317,6 +319,9 @@ extension Ticker: Encodable {
         try container.encode(doubleToString(double: priceJPY), forKey: .priceJPY)
         try container.encode(doubleToString(double: volumeJPY24h), forKey: .volumeJPY24h)
         try container.encode(doubleToString(double: marketCapJPY), forKey: .marketCapJPY)
+        try container.encode(doubleToString(double: priceRUB), forKey: .priceRUB)
+        try container.encode(doubleToString(double: volumeRUB24h), forKey: .volumeRUB24h)
+        try container.encode(doubleToString(double: marketCapRUB), forKey: .marketCapRUB)
     }
     
     func doubleToString(double: Double?) -> String? {
