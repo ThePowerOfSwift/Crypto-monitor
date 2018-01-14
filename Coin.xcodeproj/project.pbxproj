@@ -17,6 +17,8 @@
 		FB20D0E220090DD70007305C /* SettingsUserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB20D0E120090DD70007305C /* SettingsUserDefaults.swift */; };
 		FB20D0E320090DD70007305C /* SettingsUserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB20D0E120090DD70007305C /* SettingsUserDefaults.swift */; };
 		FB27C53B200A4F4000DB2907 /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FBFF9FED1F56FAA4001F573C /* Alamofire.framework */; };
+		FB27C53D200AD72D00DB2907 /* Ticker.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB27C53C200AD72D00DB2907 /* Ticker.swift */; };
+		FB27C53E200AD72D00DB2907 /* Ticker.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB27C53C200AD72D00DB2907 /* Ticker.swift */; };
 		FB2F889D1FEBFA32003B62CF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FB2F889B1FEBFA32003B62CF /* Main.storyboard */; };
 		FB2F88A01FEBFABD003B62CF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FB2F889E1FEBFABD003B62CF /* LaunchScreen.storyboard */; };
 		FB2F88A31FEBFACC003B62CF /* EmptySubview.xib in Resources */ = {isa = PBXBuildFile; fileRef = FB2F88A11FEBFACC003B62CF /* EmptySubview.xib */; };
@@ -60,8 +62,6 @@
 		FBBE49242008F5E700277014 /* CryptoCurrency.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FBBE491D2008F5E700277014 /* CryptoCurrency.framework */; };
 		FBBE49252008F5E700277014 /* CryptoCurrency.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FBBE491D2008F5E700277014 /* CryptoCurrency.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		FBBE492C2008FB3800277014 /* CryptoCurrency.h in Headers */ = {isa = PBXBuildFile; fileRef = FBBE490E2008F5A300277014 /* CryptoCurrency.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		FBBE49322008FD7300277014 /* Ticker.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBBE492F2008FD7300277014 /* Ticker.swift */; };
-		FBBE49332008FD7300277014 /* Ticker.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBBE492F2008FD7300277014 /* Ticker.swift */; };
 		FBBE49342008FD7300277014 /* CryptoCurrencyKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBBE49302008FD7300277014 /* CryptoCurrencyKit.swift */; };
 		FBBE49352008FD7300277014 /* CryptoCurrencyKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBBE49302008FD7300277014 /* CryptoCurrencyKit.swift */; };
 		FBBE49362008FD7300277014 /* Global.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBBE49312008FD7300277014 /* Global.swift */; };
@@ -262,6 +262,7 @@
 		FB20D0EC200957620007305C /* Alamofire.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Alamofire.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FB20D0EE200957670007305C /* SwiftyJSON.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SwiftyJSON.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FB2585D11F8FE1DA00B164FC /* AlamofireImage.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = AlamofireImage.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		FB27C53C200AD72D00DB2907 /* Ticker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Ticker.swift; sourceTree = "<group>"; };
 		FB2F889C1FEBFA32003B62CF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		FB2F889F1FEBFABD003B62CF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		FB2F88A21FEBFACC003B62CF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/EmptySubview.xib; sourceTree = "<group>"; };
@@ -338,7 +339,6 @@
 		FBBE490F2008F5A300277014 /* info-iOS.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "info-iOS.plist"; sourceTree = "<group>"; };
 		FBBE491D2008F5E700277014 /* CryptoCurrency.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = CryptoCurrency.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FBBE49202008F5E700277014 /* info-watchOS.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "info-watchOS.plist"; sourceTree = "<group>"; };
-		FBBE492F2008FD7300277014 /* Ticker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Ticker.swift; path = "../../../../Downloads/CryptoCurrencyKit-46615dfd9f23e732c8b725807b2b3191b19a5a4e/Sources/Ticker.swift"; sourceTree = "<group>"; };
 		FBBE49302008FD7300277014 /* CryptoCurrencyKit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CryptoCurrencyKit.swift; sourceTree = "<group>"; };
 		FBBE49312008FD7300277014 /* Global.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Global.swift; sourceTree = "<group>"; };
 		FBBF266D1F5AD2CD0050BED7 /* ComplicationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComplicationController.swift; sourceTree = "<group>"; };
@@ -607,8 +607,8 @@
 				FBBE490E2008F5A300277014 /* CryptoCurrency.h */,
 				FBBE49302008FD7300277014 /* CryptoCurrencyKit.swift */,
 				FBBE49312008FD7300277014 /* Global.swift */,
-				FBBE492F2008FD7300277014 /* Ticker.swift */,
 				FB20D0E120090DD70007305C /* SettingsUserDefaults.swift */,
+				FB27C53C200AD72D00DB2907 /* Ticker.swift */,
 				FBBE490F2008F5A300277014 /* info-iOS.plist */,
 				FBBE49202008F5E700277014 /* info-watchOS.plist */,
 			);
@@ -1140,8 +1140,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				FBBE49342008FD7300277014 /* CryptoCurrencyKit.swift in Sources */,
+				FB27C53D200AD72D00DB2907 /* Ticker.swift in Sources */,
 				FB20D0E220090DD70007305C /* SettingsUserDefaults.swift in Sources */,
-				FBBE49322008FD7300277014 /* Ticker.swift in Sources */,
 				FBBE49362008FD7300277014 /* Global.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1151,8 +1151,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				FBBE49352008FD7300277014 /* CryptoCurrencyKit.swift in Sources */,
+				FB27C53E200AD72D00DB2907 /* Ticker.swift in Sources */,
 				FB20D0E320090DD70007305C /* SettingsUserDefaults.swift in Sources */,
-				FBBE49332008FD7300277014 /* Ticker.swift in Sources */,
 				FBBE49372008FD7300277014 /* Global.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
