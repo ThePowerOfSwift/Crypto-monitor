@@ -57,15 +57,32 @@ public class SettingsUserDefaults{
     
     #if os(iOS)
     public func setCurrentCurrency(money: CryptoCurrencyKit.Money) {
-        let userDefaults = NSUbiquitousKeyValueStore()
-        userDefaults.set(money.rawValue, forKey: "CurrentCurrency")
-        userDefaults.synchronize()
+        let keyStore = NSUbiquitousKeyValueStore()
+        keyStore.set(money.rawValue, forKey: "CurrentCurrency")
+        keyStore.synchronize()
     }
     
     public func getCurrentCurrency() ->  CryptoCurrencyKit.Money {
-        let userDefaults = NSUbiquitousKeyValueStore()
-        
-        guard let currentCurrencyString = userDefaults.string(forKey: "CurrentCurrency") else { return CryptoCurrencyKit.Money.usd }
+        let keyStore = NSUbiquitousKeyValueStore()
+
+        if !keyStore.bool(forKey: "converPriceCurrencyToCurrentCurrency"){
+            
+            switch Int(keyStore.longLong(forKey: "priceCurrency")) {
+            case 0:
+                SettingsUserDefaults().setCurrentCurrency(money: .usd)
+            case 1:
+                SettingsUserDefaults().setCurrentCurrency(money: .btc)
+            case 2:
+                SettingsUserDefaults().setCurrentCurrency(money: .eur)
+            default:
+                break
+            }
+            keyStore.removeObject(forKey: "priceCurrency")
+            keyStore.set(true, forKey: "converPriceCurrencyToCurrentCurrency")
+            keyStore.synchronize()
+        }
+
+        guard let currentCurrencyString = keyStore.string(forKey: "CurrentCurrency") else { return CryptoCurrencyKit.Money.usd }
         guard let currentCurrency = CryptoCurrencyKit.Money(rawValue: currentCurrencyString) else { return CryptoCurrencyKit.Money.usd }
         
         return currentCurrency

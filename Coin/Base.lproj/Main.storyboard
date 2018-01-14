@@ -92,49 +92,10 @@
                                     </fragment>
                                 </attributedString>
                             </tableViewSection>
-                            <tableViewSection headerTitle="Price" id="tyt-ZY-uLd">
-                                <cells>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" id="w4O-Uz-IQo">
-                                        <rect key="frame" x="0.0" y="255.5" width="375" height="44"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="w4O-Uz-IQo" id="E1r-Oh-52f">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="AUk-9u-q0O">
-                                                    <rect key="frame" x="16" y="8" width="343" height="29"/>
-                                                    <segments>
-                                                        <segment title="USD"/>
-                                                        <segment title="BTC"/>
-                                                        <segment title="EUR"/>
-                                                    </segments>
-                                                    <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                    <connections>
-                                                        <action selector="priceIindexCurrency:" destination="mSk-LG-rjD" eventType="valueChanged" id="sTP-Qm-7N1"/>
-                                                    </connections>
-                                                </segmentedControl>
-                                            </subviews>
-                                            <constraints>
-                                                <constraint firstItem="AUk-9u-q0O" firstAttribute="trailing" secondItem="E1r-Oh-52f" secondAttribute="trailingMargin" id="157-bO-Tr0"/>
-                                                <constraint firstItem="AUk-9u-q0O" firstAttribute="centerY" secondItem="E1r-Oh-52f" secondAttribute="centerY" id="kfv-Ev-ZFv"/>
-                                                <constraint firstItem="AUk-9u-q0O" firstAttribute="leading" secondItem="E1r-Oh-52f" secondAttribute="leadingMargin" id="lgh-JZ-VmL"/>
-                                            </constraints>
-                                        </tableViewCellContentView>
-                                    </tableViewCell>
-                                </cells>
-                                <attributedString key="userComments">
-                                    <fragment content="Настройки выбор валюты">
-                                        <attributes>
-                                            <font key="NSFont" size="11" name="HelveticaNeue"/>
-                                            <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO"/>
-                                        </attributes>
-                                    </fragment>
-                                </attributedString>
-                            </tableViewSection>
                             <tableViewSection headerTitle="Data source" id="yeO-1L-1gs">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" id="QAV-OG-fBc">
-                                        <rect key="frame" x="0.0" y="355.5" width="375" height="44"/>
+                                        <rect key="frame" x="0.0" y="255.5" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="QAV-OG-fBc" id="rIA-YP-x6x">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
@@ -181,7 +142,7 @@
                             <tableViewSection headerTitle="Data source" id="5Tn-JZ-DNH">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" id="pdp-vy-22s">
-                                        <rect key="frame" x="0.0" y="455.5" width="375" height="44"/>
+                                        <rect key="frame" x="0.0" y="355.5" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="pdp-vy-22s" id="Etj-5u-6DP">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
@@ -234,7 +195,6 @@
                     <navigationItem key="navigationItem" title="Settings" id="a5a-yk-s2O"/>
                     <connections>
                         <outlet property="percentChangeSegmentedControl" destination="EKk-hl-QzT" id="0OK-2U-leo"/>
-                        <outlet property="priceCurrencySegmentedControl" destination="AUk-9u-q0O" id="sP1-D8-roH"/>
                         <outlet property="symbol" destination="hDt-rS-WYM" id="vQ7-un-sqK"/>
                     </connections>
                 </tableViewController>
@@ -455,13 +415,13 @@
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="€" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="TDq-tP-BrO">
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="₿" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="TDq-tP-BrO">
                                                 <rect key="frame" x="0.0" y="20.5" width="11" height="20.5"/>
                                                 <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="₿" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8Nk-dX-NRl">
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="€" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8Nk-dX-NRl">
                                                 <rect key="frame" x="0.0" y="41" width="11" height="20.5"/>
                                                 <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                 <nil key="textColor"/>
@@ -831,8 +791,8 @@
                         <outlet property="oneHourChangeLabel" destination="qvM-fr-xLG" id="yzj-yc-4jV"/>
                         <outlet property="oneHourChangeView" destination="Obg-oR-F8H" id="XYf-xu-Sif"/>
                         <outlet property="paymentButton" destination="WVM-8J-Hzj" id="Wve-Mg-FoY"/>
-                        <outlet property="priceBtcLabel" destination="8Nk-dX-NRl" id="AT2-I5-Yea"/>
-                        <outlet property="priceConvertLabel" destination="TDq-tP-BrO" id="VcU-p9-o7e"/>
+                        <outlet property="priceBtcLabel" destination="TDq-tP-BrO" id="VcU-p9-o7e"/>
+                        <outlet property="priceConvertLabel" destination="8Nk-dX-NRl" id="AT2-I5-Yea"/>
                         <outlet property="priceUsdLabel" destination="tIF-uW-0Bc" id="WfS-pL-ZLP"/>
                         <outlet property="rankLabel" destination="xBz-zq-Jrg" id="joS-tm-Whb"/>
                         <outlet property="selectSegmentedControl" destination="Y3q-Wh-tVv" id="5hQ-nF-rxJ"/>

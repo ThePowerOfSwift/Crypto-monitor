@@ -108,7 +108,7 @@ extension CryptoCurrencyKit {
             case .eur:
                 return "🇪🇺" //💶
             case .btc:
-                return "₿"
+                return "🌍"//🌐
             case .gbp:
                 return "🇬🇧"
             case .jpy:

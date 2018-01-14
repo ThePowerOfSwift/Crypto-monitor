@@ -33,8 +33,8 @@ class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
     @IBOutlet weak var weekChangeView: UIView!
     @IBOutlet weak var weekChangeLabel: UILabel!
     
-    @IBOutlet weak var priceConvertLabel: UILabel!
     @IBOutlet weak var priceBtcLabel: UILabel!
+    @IBOutlet weak var priceConvertLabel: UILabel!
     @IBOutlet weak var rankLabel: UILabel!
     @IBOutlet weak var marketcapLabel: UILabel!
     @IBOutlet weak var volumeLabel: UILabel!
@@ -192,9 +192,17 @@ class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
             
             nameLabel.text = ticker.name + " (\(ticker.symbol))"
             
+          //   priceConvertLabel
+            
             priceUsdLabel.text = ticker.priceToString(for: .usd, maximumFractionDigits: 10)
-            priceConvertLabel.text = ticker.priceToString(for: money, maximumFractionDigits: 10)
             priceBtcLabel.text = ticker.priceBtcToString()
+            
+            if money == .usd || money == .btc {
+                priceConvertLabel.text = ""
+            }
+            else{
+               priceConvertLabel.text = ticker.priceToString(for: money, maximumFractionDigits: 10)
+            }
 
             // 1h
             oneHourChangeLabel.text = ticker.percentChange1h != nil ? "\(ticker.percentChange1h!)%" : "null"

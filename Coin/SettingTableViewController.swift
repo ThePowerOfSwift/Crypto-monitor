@@ -13,7 +13,6 @@ import StoreKit
 class SettingTableViewController: UITableViewController, SKProductsRequestDelegate, SKPaymentTransactionObserver {
     
     @IBOutlet weak var percentChangeSegmentedControl: UISegmentedControl!
-    @IBOutlet weak var priceCurrencySegmentedControl: UISegmentedControl!
     @IBOutlet weak var symbol: UILabel!
     
     let developerSupportId = "mialin.Coin.BuyMeCoffee"
@@ -24,8 +23,7 @@ class SettingTableViewController: UITableViewController, SKProductsRequestDelega
         
         let keyStore = NSUbiquitousKeyValueStore ()
         percentChangeSegmentedControl.selectedSegmentIndex = Int(keyStore.longLong(forKey: "percentChange"))
-        priceCurrencySegmentedControl.selectedSegmentIndex = Int(keyStore.longLong(forKey: "priceCurrency"))
-        
+
         // Put here your IAP Products ID's
         let productIdentifiers = NSSet(objects:developerSupportId)
         
@@ -65,19 +63,12 @@ class SettingTableViewController: UITableViewController, SKProductsRequestDelega
         keyStore.synchronize()
     }
     
-    @IBAction func priceIindexCurrency(_ sender: UISegmentedControl) {
-        let keyStore = NSUbiquitousKeyValueStore ()
-        keyStore.set(priceCurrencySegmentedControl.selectedSegmentIndex, forKey: "priceCurrency")
-        keyStore.synchronize()
-    }
-    
     @IBAction func coinMarketCapAction(_ sender: Any) {
         UIApplication.shared.open(URL(string: "https://coinmarketcap.com")!, options: [:], completionHandler: nil)
     }
     
     @IBAction func developerSupportAction(_ sender: UIButton) {
 
-        
     }
     
 }

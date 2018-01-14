@@ -21,9 +21,7 @@ class CurrentCurrencyTableViewController: UITableViewController {
     }
 
     // MARK: - Table view data source
-
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
         return money.count
     }
 
@@ -44,8 +42,6 @@ class CurrentCurrencyTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let row = indexPath.row
-        print(row)
-    
         SettingsUserDefaults().setCurrentCurrency(money: CryptoCurrencyKit.Money(rawValue: money[row].rawValue)!)
         _ = navigationController?.popViewController(animated: true)
     }

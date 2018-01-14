@@ -190,7 +190,7 @@ extension Ticker {
         let formatterCurrency = NumberFormatter()
         formatterCurrency.numberStyle = .currency
         formatterCurrency.currencyCode = money.rawValue
-    //    formatterCurrency.locale = Locale(identifier: "en_US")
+        //formatterCurrency.locale = Locale(identifier: "en_US")
         formatterCurrency.locale  = Locale.current
         formatterCurrency.maximumFractionDigits = maximumFractionDigits
         return formatterCurrency

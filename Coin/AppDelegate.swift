@@ -8,6 +8,7 @@
 
 import UIKit
 import AlamofireNetworkActivityIndicator
+import CryptoCurrency
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -31,7 +32,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             keyStore.set(true, forKey: "launchedBefore")
             keyStore.synchronize()
         }
-        
+
         // NetworkActivityIndicatorManager
         NetworkActivityIndicatorManager.shared.isEnabled = true
         return true
