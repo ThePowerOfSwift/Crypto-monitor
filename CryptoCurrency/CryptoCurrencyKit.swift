@@ -72,6 +72,8 @@ extension CryptoCurrencyKit {
         case jpy = "JPY"
         case cny = "CNY"
         case hkd = "HKD"
+        
+        case rub = "RUB"
         /*
          case cad = "CAD"
          case chf = "CHF"
@@ -94,7 +96,7 @@ extension CryptoCurrencyKit {
          case php = "PHP"
          case pkr = "PKR"
          case pln = "PLN"
-         case rub = "RUB"
+         
          case sek = "SEK"
          case sgd = "SGD"
          case thb = "THB"
@@ -120,6 +122,8 @@ extension CryptoCurrencyKit {
                 return "🇨🇳"
             case .hkd:
                 return "🇭🇰"
+            case .rub:
+                return "🇷🇺"
             }
         }
     
@@ -154,7 +158,8 @@ extension CryptoCurrencyKit {
                     .gbp,
                     .jpy,
                     .cny,
-                    .hkd
+                    .hkd,
+                    .rub
                 
                 
                 /* .aud,
@@ -207,65 +212,6 @@ extension CryptoCurrencyKit {
     
     static func requestA<T>(urlRequest: URLRequest, idArray: [String]?, response: ((_ r: ResponseA<T>) -> Void)?) {
         print("requestA")
-        //    let configuration = URLSessionConfiguration.default
-        //  let session = URLSession(configuration: configuration)
-        
-        //   let destination = DownloadRequest.suggestedDownloadDestination()
-        /*   Alamofire.download(urlRequest).responseData { res in
-         switch res.result{
-         case.success(let responseData):
-         let decoder = JSONDecoder()
-         do {
-         let objects = try decoder.decode([T].self, from: responseData)
-         response?(ResponseA.success(objects))
-         } catch let decodeE {
-         response?(ResponseA.failure(error: decodeE))
-         }
-         case .failure(let error):
-         response?(ResponseA.failure(error: error))
-         }
-         }
-         */
-        /*
-         let destination: DownloadRequest.DownloadFileDestination = { _, _ in
-         var documentsURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
-         documentsURL.appendPathComponent("duck.png")
-         return (documentsURL, [.removePreviousFile])
-         }
-         */
-        /*
-        if FileManager.default.fileExists(atPath: res.destinationURL!.path) {
-            FileManager.default.removeItem(atPath: res.destinationURL!.path)
-        }
-        
-        let destination = DownloadRequest.suggestedDownloadDestination()
-        
-        Alamofire.download(urlRequest, to: destination).validate().responseData { res in
-            //          guard let data = res.result.value else { return }
-            DispatchQueue.main.async {
-                switch res.result{
-                case.success(let responseData):
-                    let decoder = JSONDecoder()
-                    do {
-                        let data = try Data(contentsOf: res.destinationURL!)
-                        let objects = try decoder.decode([T].self, from: data)
-                        
-                        if FileManager.default.fileExists(atPath: res.destinationURL!.path) {
-                            try FileManager.default.removeItem(atPath: res.destinationURL!.path)
-                        }
-                        
-                        response?(ResponseA.success(objects))
-                    } catch let decodeE {
-                        response?(ResponseA.failure(error: decodeE))
-                    }
-                case .failure(let error):
-                    response?(ResponseA.failure(error: error))
-                }
-            }
-        }
-    }
-        */
-        
         Alamofire.SessionManager.default.session.getTasksWithCompletionHandler { dataTasks, _, _ in
             dataTasks.forEach
                 {
@@ -275,9 +221,7 @@ extension CryptoCurrencyKit {
                     }
             }
         }
-       
 
-        
         Alamofire.SessionManager.default.request(urlRequest).validate().responseData { res in
             switch res.result {
             case .success(let responseData):
@@ -295,33 +239,6 @@ extension CryptoCurrencyKit {
             }
         }
     }
-    
-        
-        /*
-         session.dataTask(with: urlRequest) { (data, res, error) in
-         print(res)
-         print(error?.localizedDescription)
-         guard let httpResponse = res as? HTTPURLResponse,
-         (200...299).contains(httpResponse.statusCode) else {
-         print("res error")
-         return
-         }
-         
-         DispatchQueue.main.async {
-         if let data = data {
-         do {
-         let objects = try JSONDecoder().decode([T].self, from: data)
-         response?(ResponseA.success(objects))
-         } catch let decodeE {
-         response?(ResponseA.failure(error: decodeE))
-         }
-         } else if let error = error {
-         print(error.localizedDescription)
-         response?(ResponseA.failure(error: error))
-         }
-         }
-         }.resume()*/
-        // }
         
         static func requestD<T>(urlRequest: URLRequest, response: ((_ r: ResponseD<T>) -> Void)?) {
             URLSession.shared.dataTask(with: urlRequest) { (data, _, error) in

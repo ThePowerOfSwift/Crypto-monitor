@@ -47,6 +47,10 @@ public struct Ticker {
     public let volumeHKD24h: Double?
     public let marketCapHKD: Double?
     
+    public let priceRUB: Double?
+    public let volumeRUB24h: Double?
+    public let marketCapRUB: Double?
+    
     enum CodingKeys: String, CodingKey {
         case id
         case name
@@ -87,6 +91,10 @@ public struct Ticker {
         case priceCNY = "price_cny"
         case volumeCNY24h = "24h_volume_cny"
         case marketCapCNY = "market_cap_cny"
+        
+        case priceRUB = "price_rub"
+        case volumeRUB24h = "24h_volume_rub"
+        case marketCapRUB = "market_cap_rub"
         
       /*  case priceAUD = "price_aud"
         case volumeAUD24h = "24h_volume_aud"
@@ -131,6 +139,8 @@ extension Ticker {
             return priceJPY
         case .btc:
             return priceBTC
+        case .rub:
+            return priceRUB
         }
     }
     
@@ -150,6 +160,8 @@ extension Ticker {
             return volumeJPY24h
         case .btc:
             return volumeBTC24h
+        case .rub:
+            return volumeRUB24h
         }
     }
     
@@ -168,7 +180,9 @@ extension Ticker {
         case .jpy:
             return marketCapJPY
         case .btc:
-            return volumeBTC24h
+            return marketCapBTC
+        case .rub:
+            return marketCapRUB
         }
     }
     
@@ -176,33 +190,26 @@ extension Ticker {
         let formatterCurrency = NumberFormatter()
         formatterCurrency.numberStyle = .currency
         formatterCurrency.currencyCode = money.rawValue
-        formatterCurrency.locale = Locale(identifier: "en_US")
+    //    formatterCurrency.locale = Locale(identifier: "en_US")
+        formatterCurrency.locale  = Locale.current
         formatterCurrency.maximumFractionDigits = maximumFractionDigits
         return formatterCurrency
     }
     
-    public func priceUsdToString(maximumFractionDigits: Int) -> String {
-        if let priceUSD = priceUSD {
-            let formatterCurrencyUSD = formatterCurrency(for: .usd, maximumFractionDigits: maximumFractionDigits)
-            return formatterCurrencyUSD.string(from: NSNumber(value: priceUSD))!
-        }
-        else{
-            return "null"
-        }
-    }
-    
-    public func priceEurToString(maximumFractionDigits: Int) -> String {
-        if let priceEUR = priceEUR {
-            let formatterCurrencyEUR = formatterCurrency(for: .eur, maximumFractionDigits: maximumFractionDigits)
-            return formatterCurrencyEUR.string(from: NSNumber(value: priceEUR))!
-        }
-        else{
-            return "null"
-        }
-    }
-    
     public func priceBtcToString() -> String {
         return priceBTC != nil ? "₿\(priceBTC!)" : "null"
+    }
+    
+    public func priceToString(for money: CryptoCurrencyKit.Money, maximumFractionDigits: Int) -> String {
+        let  price = self.price(for: money)
+        
+        if let price = price {
+            let formatterCurrency = self.formatterCurrency(for: money, maximumFractionDigits: maximumFractionDigits)
+            return formatterCurrency.string(from: NSNumber(value: price))!
+        }
+        else{
+            return "null"
+        }
     }
     
     public func marketCapToString(for money: CryptoCurrencyKit.Money, maximumFractionDigits: Int) -> String {
@@ -216,9 +223,7 @@ extension Ticker {
             return "null"
         }
     }
-    
-    
-    
+
     public func volumeToString(for money: CryptoCurrencyKit.Money, maximumFractionDigits: Int) -> String {
         let volume = self.volume24h(for: money)
         
@@ -230,37 +235,10 @@ extension Ticker {
             return "null"
         }
     }
-    //dfgdfgdf
     
     
     
      #if os(iOS)
- /*   public func priceCurrency() -> String {
-        switch NSUbiquitousKeyValueStore().longLong(forKey: "priceCurrency") {
-        case 0:
-            guard let priceUsd = priceUSD else { return "null" }
-            if priceUsd > 0.0001 {
-                return priceUsdToString(maximumFractionDigits: 4)
-            }
-            else{
-                return priceUsdToString(maximumFractionDigits: 8)
-            }
-        case 1:
-            return priceBtcToString()
-        case 2:
-            guard let priceEur = priceEUR else { return "null" }
-            if priceEur > 0.0001 {
-                return priceEurToString(maximumFractionDigits: 4)
-            }
-            else{
-                return priceEurToString(maximumFractionDigits: 8)
-            }
-        default:
-            break
-        }
-        return "null"
-    }
-    */
     public func priceCurrency() -> String {
 
         let currency =  SettingsUserDefaults().getCurrentCurrency()
@@ -352,8 +330,24 @@ extension Ticker: Encodable {
 }
 
 extension Ticker {
-    public init(id: String, symbol: String, name: String, rank: Int, availableSupply: Double?, totalSupply: Double?, percentChange1h: Double?, percentChange24h: Double?, percentChange7d: Double?, lastUpdated: Double?, priceBTC: Double?, volumeBTC24h: Double?, marketCapBTC: Double?, priceUSD: Double?, volumeUSD24h: Double?, marketCapUSD: Double?, priceEUR: Double?, volumeEUR24h: Double?, marketCapEUR: Double?, priceGBP: Double?, volumeGBP24h: Double?, marketCapGBP: Double?, priceJPY: Double?, volumeJPY24h: Double?, marketCapJPY: Double?, priceCNY: Double?, volumeCNY24h: Double?, marketCapCNY: Double?, priceHKD: Double?, volumeHKD24h: Double?, marketCapHKD: Double?) {
-        self.init(id: id, symbol: symbol, name: name, rank: rank, availableSupply: availableSupply, totalSupply: totalSupply, percentChange1h: percentChange1h, percentChange24h: percentChange24h, percentChange7d: percentChange7d, lastUpdated: lastUpdated, priceBTC: priceBTC, volumeBTC24h: volumeBTC24h, marketCapBTC: marketCapBTC, priceUSD: priceUSD, volumeUSD24h: volumeUSD24h, marketCapUSD: marketCapUSD, priceEUR: priceEUR, volumeEUR24h: volumeUSD24h, marketCapEUR: marketCapEUR, priceGBP: priceGBP, volumeGBP24h: volumeGBP24h, marketCapGBP: marketCapGBP, priceJPY: priceJPY, volumeJPY24h: volumeJPY24h, marketCapJPY: marketCapJPY, priceCNY: priceCNY, volumeCNY24h: volumeCNY24h, marketCapCNY: marketCapCNY, priceHKD: priceHKD, volumeHKD24h: volumeHKD24h, marketCapHKD: marketCapHKD)
+    public init(id: String, symbol: String, name: String, rank: Int, availableSupply: Double?, totalSupply: Double?, percentChange1h: Double?, percentChange24h: Double?, percentChange7d: Double?, lastUpdated: Double?, priceBTC: Double?, volumeBTC24h: Double?, marketCapBTC: Double?,
+                priceUSD: Double?, volumeUSD24h: Double?, marketCapUSD: Double?,
+                priceEUR: Double?, volumeEUR24h: Double?, marketCapEUR: Double?,
+                priceGBP: Double?, volumeGBP24h: Double?, marketCapGBP: Double?,
+                priceJPY: Double?, volumeJPY24h: Double?, marketCapJPY: Double?,
+                priceCNY: Double?, volumeCNY24h: Double?, marketCapCNY: Double?,
+                priceHKD: Double?, volumeHKD24h: Double?, marketCapHKD: Double?,
+                priceRUB: Double?, volumeRUB24h: Double?, marketCapRUB: Double?
+        
+        ) {
+        self.init(id: id, symbol: symbol, name: name, rank: rank, availableSupply: availableSupply, totalSupply: totalSupply, percentChange1h: percentChange1h, percentChange24h: percentChange24h, percentChange7d: percentChange7d, lastUpdated: lastUpdated, priceBTC: priceBTC, volumeBTC24h: volumeBTC24h, marketCapBTC: marketCapBTC,
+                  priceUSD: priceUSD, volumeUSD24h: volumeUSD24h, marketCapUSD: marketCapUSD,
+                  priceEUR: priceEUR, volumeEUR24h: volumeUSD24h, marketCapEUR: marketCapEUR,
+                  priceGBP: priceGBP, volumeGBP24h: volumeGBP24h, marketCapGBP: marketCapGBP,
+                  priceJPY: priceJPY, volumeJPY24h: volumeJPY24h, marketCapJPY: marketCapJPY,
+                  priceCNY: priceCNY, volumeCNY24h: volumeCNY24h, marketCapCNY: marketCapCNY,
+                  priceHKD: priceHKD, volumeHKD24h: volumeHKD24h, marketCapHKD: marketCapHKD,
+                  priceRUB: priceRUB, volumeRUB24h: volumeRUB24h, marketCapRUB: marketCapRUB)
     }
 }
 
@@ -509,6 +503,22 @@ extension Ticker: Decodable {
             marketCapJPY = Double(marketCapJPYTemp)
         } else {
             marketCapJPY = nil
+        }
+        
+        if let priceRUBTemp = try? values.decode(String.self, forKey: .priceRUB) {
+            priceRUB = Double(priceRUBTemp)
+        } else {
+            priceRUB = nil
+        }
+        if let volumeRUB24hTemp = try? values.decode(String.self, forKey: .volumeRUB24h) {
+            volumeRUB24h = Double(volumeRUB24hTemp)
+        } else {
+            volumeRUB24h = nil
+        }
+        if let marketCapRUBTemp = try? values.decode(String.self, forKey: .marketCapRUB) {
+            marketCapRUB = Double(marketCapRUBTemp)
+        } else {
+            marketCapRUB = nil
         }
     }
 }

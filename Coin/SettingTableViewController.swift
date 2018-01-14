@@ -35,7 +35,8 @@ class SettingTableViewController: UITableViewController, SKProductsRequestDelega
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        symbol.text = SettingsUserDefaults().getCurrentCurrency().rawValue
+        let money = SettingsUserDefaults().getCurrentCurrency()
+        symbol.text = money.flag + " " + money.rawValue
     }
     
     func paymentQueue(_ queue: SKPaymentQueue, updatedTransactions transactions: [SKPaymentTransaction]) {
