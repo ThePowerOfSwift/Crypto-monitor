@@ -49,9 +49,9 @@ class CoinTableViewController: UITableViewController, WCSessionDelegate {
         do {
             let keyStore = NSUbiquitousKeyValueStore ()
             let percentChange = Int(keyStore.longLong(forKey: "percentChange"))
-            let priceCurrency = Int(keyStore.longLong(forKey: "priceCurrency"))
+            let currentCurrency = SettingsUserDefaults().getCurrentCurrency().rawValue
             
-            let context = ["id" : id, "percentChange" : percentChange, "priceCurrency" : priceCurrency] as [String : Any]
+            let context = ["id" : id, "percentChange" : percentChange, "CurrentCurrency" : currentCurrency] as [String : Any]
             try watchSession?.updateApplicationContext(context)
             
         } catch let error as NSError {

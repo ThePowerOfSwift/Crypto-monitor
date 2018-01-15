@@ -105,7 +105,22 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate {
         print("load")
         if let idArray = UserDefaults().array(forKey: "id") as? [String] {
             if !idArray.isEmpty {
-                NetworkRequest().getTickerID(idArray: idArray, completion: { (ticker : [Ticker]?, error : Error?) in
+                
+                CryptoCurrencyKit.fetchTickers(convert: SettingsUserDefaults().getCurrentCurrency(), idArray: idArray, limit: 0) { (response) in
+                    switch response {
+                    case .success(let tickers):
+                        SettingsUserDefaults().setUserDefaults(ticher: tickers, idArray: idArray, lastUpdate: Date())
+                        self.reloadTimeline()
+                        DispatchQueue.main.async() {
+                            self.tableView(ticker: tickers)
+                        }
+                        print("success")
+                    case .failure(let error):
+                        print("failure \(error.localizedDescription)")
+                    }
+                }
+                
+              /*  NetworkRequest().getTickerID(idArray: idArray, completion: { (ticker : [Ticker]?, error : Error?) in
                     if error == nil {
                         if let ticker = ticker {
                             SettingsUserDefaults().setUserDefaults(ticher: ticker, idArray: idArray, lastUpdate: Date())
@@ -115,7 +130,7 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate {
                             }
                         }
                     }
-                })
+                })*/
             }
             else{
                 SettingsUserDefaults().setUserDefaults(ticher: nil, idArray: idArray, lastUpdate: Date())
@@ -141,19 +156,10 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate {
             cryptocurrencyTable.setHidden(false)
             emptyGroup.setHidden(true)
             
-            if let idArray = UserDefaults().array(forKey: "id") as? [String] {
-                var tickerFilter = [Ticker]()
-                for id in idArray{
-                    if let json = ticker.filter({ $0.id == id}).first{
-                        tickerFilter.append(json)
-                    }
-                }
-                
-                cryptocurrencyTable.setNumberOfRows(tickerFilter.count, withRowType: "cell")
-                for index in 0..<cryptocurrencyTable.numberOfRows {
-                    guard let controller = cryptocurrencyTable.rowController(at: index) as? cryptocurrencyRowController else { continue }
-                    controller.ticker = tickerFilter[index]
-                }
+            cryptocurrencyTable.setNumberOfRows(ticker.count, withRowType: "cell")
+            for index in 0..<cryptocurrencyTable.numberOfRows {
+                guard let controller = cryptocurrencyTable.rowController(at: index) as? cryptocurrencyRowController else { continue }
+                controller.ticker = ticker[index]
             }
         }
         else{

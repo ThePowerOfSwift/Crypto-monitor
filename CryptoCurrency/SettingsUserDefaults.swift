@@ -46,7 +46,15 @@ public class SettingsUserDefaults{
     }
     
     public func loadcacheTicker() -> ([Ticker]?){
-        let userDefaults = UserDefaults(suiteName: "group.mialin.valentyn.crypto.monitor")
+        let userDefaults: UserDefaults?
+        #if os(iOS)
+            userDefaults = UserDefaults(suiteName: "group.mialin.valentyn.crypto.monitor")
+        #endif
+        
+        #if os(watchOS)
+            userDefaults = UserDefaults()
+        #endif
+        
         var cacheTicker:[Ticker]?
         
         if let jsonTicker = userDefaults?.data(forKey: "tickers") {
@@ -94,7 +102,6 @@ public class SettingsUserDefaults{
                 keyStore.removeObject(forKey: "priceCurrency")
                 keyStore.set(true, forKey: "converPriceCurrencyToCurrentCurrency")
                 keyStore.synchronize()
-                
             }
         #endif
         
