@@ -100,7 +100,7 @@ extension CryptoCurrencyKit {
          case zar = "ZAR"
          */
         
-    
+        
         public var flag: String {
             switch self {
             case .usd:
@@ -121,7 +121,7 @@ extension CryptoCurrencyKit {
                 return "🇷🇺"
             }
         }
-    
+        
         
         /*
          public var symbol: String {
@@ -216,7 +216,7 @@ extension CryptoCurrencyKit {
                     }
             }
         }
-
+        
         Alamofire.SessionManager.default.request(urlRequest).validate().responseData { res in
             switch res.result {
             case .success(let responseData):
@@ -234,22 +234,23 @@ extension CryptoCurrencyKit {
             }
         }
     }
-        
-        static func requestD<T>(urlRequest: URLRequest, response: ((_ r: ResponseD<T>) -> Void)?) {
-            URLSession.shared.dataTask(with: urlRequest) { (data, _, error) in
-                DispatchQueue.main.async {
-                    if let data = data {
-                        do {
-                            let object = try JSONDecoder().decode(T.self, from: data)
-                            response?(ResponseD.success(object))
-                        } catch let decodeE {
-                            response?(ResponseD.failure(error: decodeE))
-                        }
-                    } else if let error = error {
-                        response?(ResponseD.failure(error: error))
+    
+    static func requestD<T>(urlRequest: URLRequest, response: ((_ r: ResponseD<T>) -> Void)?) {
+        URLSession.shared.dataTask(with: urlRequest) { (data, _, error) in
+            DispatchQueue.main.async {
+                if let data = data {
+                    do {
+                        let object = try JSONDecoder().decode(T.self, from: data)
+                        response?(ResponseD.success(object))
+                    } catch let decodeE {
+                        response?(ResponseD.failure(error: decodeE))
                     }
+                } else if let error = error {
+                    response?(ResponseD.failure(error: error))
                 }
-                }.resume()
-        }
+            }
+            }.resume()
+    }
     
 }
+

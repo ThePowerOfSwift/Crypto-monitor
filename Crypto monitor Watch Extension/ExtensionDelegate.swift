@@ -7,6 +7,7 @@
 //
 
 import WatchKit
+import CryptoCurrency
 
 let timeIntervalRefresh = TimeInterval(30 * 60)
 
@@ -99,7 +100,7 @@ class ExtensionDelegate: NSObject, WKExtensionDelegate, URLSessionDownloadDelega
                         }
                     }
                     
-                    CacheTicker().setUserDefaults(ticher: tickerFilterArray)
+                    SettingsUserDefaults().setUserDefaults(ticher: tickerFilterArray, idArray: idArray, lastUpdate: Date())
                     DispatchQueue.main.async {
                         let complicationServer = CLKComplicationServer.sharedInstance()
                         complicationServer.activeComplications?.forEach(complicationServer.reloadTimeline)

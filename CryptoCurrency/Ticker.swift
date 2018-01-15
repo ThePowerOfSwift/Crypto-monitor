@@ -96,22 +96,22 @@ public struct Ticker {
         case volumeRUB24h = "24h_volume_rub"
         case marketCapRUB = "market_cap_rub"
         
-      /*  case priceAUD = "price_aud"
-        case volumeAUD24h = "24h_volume_aud"
-        case marketCapAUD = "market_cap_aud"
-        
-        case priceBRL = "price_brl"
-        case volumeBRL24h = "24h_volume_brl"
-        case marketCapBRL = "market_cap_brl"
-        
-        */
+        /*  case priceAUD = "price_aud"
+         case volumeAUD24h = "24h_volume_aud"
+         case marketCapAUD = "market_cap_aud"
+         
+         case priceBRL = "price_brl"
+         case volumeBRL24h = "24h_volume_brl"
+         case marketCapBRL = "market_cap_brl"
+         
+         */
         
         
         /*
-        case priceAUD = "price_"
-        case volumeAUD24h = "24h_volume_"
-        case marketCapAUD = "market_cap_"
-        */
+         case priceAUD = "price_"
+         case volumeAUD24h = "24h_volume_"
+         case marketCapAUD = "market_cap_"
+         */
         
     }
 }
@@ -223,7 +223,7 @@ extension Ticker {
             return "null"
         }
     }
-
+    
     public func volumeToString(for money: CryptoCurrencyKit.Money, maximumFractionDigits: Int) -> String {
         let volume = self.volume24h(for: money)
         
@@ -238,9 +238,9 @@ extension Ticker {
     
     
     
-     #if os(iOS)
+    
     public func priceCurrency() -> String {
-
+        
         let currency =  SettingsUserDefaults().getCurrentCurrency()
         
         switch currency {
@@ -262,7 +262,15 @@ extension Ticker {
     
     public func percentChangeCurrent() -> String {
         var percentChange:Double?
-        switch NSUbiquitousKeyValueStore().longLong(forKey: "percentChange") {
+        #if os(iOS)
+            let dd = NSUbiquitousKeyValueStore().longLong(forKey: "percentChange")
+        #endif
+        
+        #if os(watchOS)
+            let dd = UserDefaults().integer(forKey: "percentChange")
+        #endif
+        
+        switch dd {
         case 0:
             percentChange = percentChange1h
         case 1:
@@ -280,9 +288,32 @@ extension Ticker {
             return "null"
         }
     }
-    #endif
     
-   
+    /*
+     func percentChangeCurrent() -> String {
+     var percentChange:String?
+     switch UserDefaults().integer(forKey: "percentChange") {
+     case 0:
+     percentChange = percent_change_1h
+     case 1:
+     percentChange = percent_change_24h
+     case 2:
+     percentChange = percent_change_7d
+     default:
+     break
+     }
+     
+     if let percentChange = percentChange {
+     return percentChange
+     }
+     else{
+     return "null"
+     }
+     }
+     */
+    
+    
+    
 }
 
 extension Ticker: Encodable {
@@ -363,7 +394,7 @@ extension Ticker: Decodable {
         name = try values.decode(String.self, forKey: .name)
         symbol = try values.decode(String.self, forKey: .symbol)
         rank =  try Int(values.decode(String.self, forKey: .rank))!
-
+        
         if let availableSupplyTemp = try? values.decode(String.self, forKey: .availableSupply) {
             availableSupply = Double(availableSupplyTemp)
         } else {
@@ -379,7 +410,7 @@ extension Ticker: Decodable {
         } else {
             lastUpdated = nil
         }
-
+        
         if let priceBTCTemp = try? values.decode(String.self, forKey: .priceBTC) {
             priceBTC = Double(priceBTCTemp)
         } else {

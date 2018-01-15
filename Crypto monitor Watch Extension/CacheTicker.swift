@@ -5,7 +5,7 @@
 //  Created by Mialin Valentin on 12.10.17.
 //  Copyright © 2017 Mialin Valentyn. All rights reserved.
 //
-
+/*
 import WatchKit
 
 class CacheTicker {
@@ -33,3 +33,4 @@ class CacheTicker {
     }
 }
 
+*/

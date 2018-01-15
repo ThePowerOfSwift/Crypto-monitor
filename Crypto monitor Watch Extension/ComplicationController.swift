@@ -8,6 +8,7 @@
 
 import WatchKit
 import ClockKit
+import CryptoCurrency
 
 class ComplicationController: NSObject, CLKComplicationDataSource {
     
@@ -18,7 +19,7 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
     
     func getCurrentTimelineEntry(for complication: CLKComplication, withHandler handler: @escaping (CLKComplicationTimelineEntry?) -> Void) {
         
-        if let tickers = CacheTicker().loadcacheTicker(), tickers.indices.contains(0) {
+        if let tickers = SettingsUserDefaults().loadcacheTicker(), tickers.indices.contains(0) {
             switch complication.family {
             case .modularLarge:
                 let template = CLKComplicationTemplateModularLargeColumns()
@@ -26,7 +27,7 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
                 if tickers.indices.contains(0) {
                     template.row1ImageProvider = colorImage(percentChange: tickers[0].percentChangeCurrent())
                     template.row1Column1TextProvider = CLKSimpleTextProvider(text: tickers[0].symbol)
-                    template.row1Column2TextProvider =  CLKSimpleTextProvider(text: tickers[0].priceCurrencyCurrent(maximumFractionDigits: 4))
+                    template.row1Column2TextProvider =  CLKSimpleTextProvider(text: tickers[0].priceCurrency())
                 }
                 else{
                     template.row1Column1TextProvider = CLKSimpleTextProvider(text:"")
@@ -36,7 +37,7 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
                 if tickers.indices.contains(1) {
                     template.row2ImageProvider = colorImage(percentChange: tickers[1].percentChangeCurrent())
                     template.row2Column1TextProvider = CLKSimpleTextProvider(text: tickers[1].symbol)
-                    template.row2Column2TextProvider =  CLKSimpleTextProvider(text: tickers[1].priceCurrencyCurrent(maximumFractionDigits: 4))
+                    template.row2Column2TextProvider =  CLKSimpleTextProvider(text: tickers[1].priceCurrency())
                 }
                 else{
                     template.row2Column1TextProvider = CLKSimpleTextProvider(text:"")
@@ -46,7 +47,7 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
                 if tickers.indices.contains(2) {
                     template.row3ImageProvider = colorImage(percentChange: tickers[2].percentChangeCurrent())
                     template.row3Column1TextProvider = CLKSimpleTextProvider(text: tickers[2].symbol)
-                    template.row3Column2TextProvider =  CLKSimpleTextProvider(text: tickers[2].priceCurrencyCurrent(maximumFractionDigits: 4))
+                    template.row3Column2TextProvider =  CLKSimpleTextProvider(text: tickers[2].priceCurrency())
                 }
                 else{
                     template.row3Column1TextProvider = CLKSimpleTextProvider(text:"")
@@ -88,7 +89,7 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
             case .utilitarianLarge:
                 let template = CLKComplicationTemplateUtilitarianLargeFlat()
                 
-                let priceString = tickers[0].priceCurrencyCurrent(maximumFractionDigits: 4)
+                let priceString = tickers[0].priceCurrency()
                 let percentChange = tickers[0].percentChangeCurrent()
                 
                 template.imageProvider = colorImage(percentChange: tickers[0].percentChangeCurrent())

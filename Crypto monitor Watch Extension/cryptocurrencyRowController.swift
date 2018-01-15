@@ -7,7 +7,7 @@
 //
 
 import WatchKit
-
+import CryptoCurrency
 
 
 class cryptocurrencyRowController: NSObject {
@@ -21,7 +21,7 @@ class cryptocurrencyRowController: NSObject {
         didSet {
             if let ticker = ticker {
                 symbolLabel.setText(ticker.symbol)
-                priceLabel.setText(ticker.priceCurrencyCurrent(maximumFractionDigits: 8))
+                priceLabel.setText(ticker.priceCurrency())
                 let percentChange = ticker.percentChangeCurrent()
                 percentChangeLabel.setText(percentChange + " %")
                 backgroundColorView(percentChange: percentChange)

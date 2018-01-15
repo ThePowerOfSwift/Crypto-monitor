@@ -13,36 +13,42 @@ public class SettingsUserDefaults{
     
     public init() {}
     
-    public func setUserDefaults(ticher: [Ticker], idArray: [String], lastUpdate: Date?) {
+    public func setUserDefaults(ticher: [Ticker]?, idArray: [String], lastUpdate: Date?) {
+        var userDefaults: UserDefaults?
+        #if os(iOS)
+            userDefaults = UserDefaults(suiteName: "group.mialin.valentyn.crypto.monitor")
+        #endif
         
-        let userDefaults = UserDefaults(suiteName: "group.mialin.valentyn.crypto.monitor")
+        #if os(watchOS)
+            userDefaults = UserDefaults()
+        #endif
+        
         userDefaults?.set(idArray, forKey: "id")
         
-        let encoder = JSONEncoder()
-        encoder.outputFormatting = .prettyPrinted
-        do{
-        
-            let encodedStore = try encoder.encode(ticher)
-            userDefaults?.set(encodedStore, forKey: "tickers")
-            
-            
-            if lastUpdate != nil{
-                userDefaults?.set(lastUpdate, forKey: "lastUpdate")
+        if let ticher = ticher {
+            let encoder = JSONEncoder()
+            encoder.outputFormatting = .prettyPrinted
+            do{
+                
+                let encodedStore = try encoder.encode(ticher)
+                userDefaults?.set(encodedStore, forKey: "tickers")
+                
+                
+                if lastUpdate != nil{
+                    userDefaults?.set(lastUpdate, forKey: "lastUpdate")
+                }
             }
-            userDefaults?.synchronize()
+            catch let error {
+                print(error.localizedDescription)
+            }
         }
-        catch let error {
-            print(error.localizedDescription)
-        }
-        
-        
-        
+        userDefaults?.synchronize()
     }
     
     public func loadcacheTicker() -> ([Ticker]?){
         let userDefaults = UserDefaults(suiteName: "group.mialin.valentyn.crypto.monitor")
         var cacheTicker:[Ticker]?
-
+        
         if let jsonTicker = userDefaults?.data(forKey: "tickers") {
             let decoder = JSONDecoder()
             do{
@@ -55,38 +61,56 @@ public class SettingsUserDefaults{
         return cacheTicker
     }
     
-    #if os(iOS)
+    
     public func setCurrentCurrency(money: CryptoCurrencyKit.Money) {
-        let keyStore = NSUbiquitousKeyValueStore()
+        #if os(iOS)
+            let keyStore = NSUbiquitousKeyValueStore()
+        #endif
+        
+        #if os(watchOS)
+            let keyStore = UserDefaults()
+        #endif
+        
         keyStore.set(money.rawValue, forKey: "CurrentCurrency")
         keyStore.synchronize()
     }
     
+    
     public func getCurrentCurrency() ->  CryptoCurrencyKit.Money {
-        let keyStore = NSUbiquitousKeyValueStore()
-
-        if !keyStore.bool(forKey: "converPriceCurrencyToCurrentCurrency"){
-            
-            switch Int(keyStore.longLong(forKey: "priceCurrency")) {
-            case 0:
-                SettingsUserDefaults().setCurrentCurrency(money: .usd)
-            case 1:
-                SettingsUserDefaults().setCurrentCurrency(money: .btc)
-            case 2:
-                SettingsUserDefaults().setCurrentCurrency(money: .eur)
-            default:
-                break
+        #if os(iOS)
+            let keyStore = NSUbiquitousKeyValueStore()
+            if !keyStore.bool(forKey: "converPriceCurrencyToCurrentCurrency"){
+                
+                switch Int(keyStore.longLong(forKey: "priceCurrency")) {
+                case 0:
+                    SettingsUserDefaults().setCurrentCurrency(money: .usd)
+                case 1:
+                    SettingsUserDefaults().setCurrentCurrency(money: .btc)
+                case 2:
+                    SettingsUserDefaults().setCurrentCurrency(money: .eur)
+                default:
+                    break
+                }
+                keyStore.removeObject(forKey: "priceCurrency")
+                keyStore.set(true, forKey: "converPriceCurrencyToCurrentCurrency")
+                keyStore.synchronize()
+                
             }
-            keyStore.removeObject(forKey: "priceCurrency")
-            keyStore.set(true, forKey: "converPriceCurrencyToCurrentCurrency")
-            keyStore.synchronize()
-        }
-
-        guard let currentCurrencyString = keyStore.string(forKey: "CurrentCurrency") else { return CryptoCurrencyKit.Money.usd }
-        guard let currentCurrency = CryptoCurrencyKit.Money(rawValue: currentCurrencyString) else { return CryptoCurrencyKit.Money.usd }
+        #endif
         
+        
+        #if os(iOS)
+            guard let currentCurrencyString = NSUbiquitousKeyValueStore().string(forKey: "CurrentCurrency") else { return CryptoCurrencyKit.Money.usd }
+        #endif
+        
+        #if os(watchOS)
+            guard let currentCurrencyString = UserDefaults().string(forKey: "CurrentCurrency") else { return CryptoCurrencyKit.Money.usd }
+        #endif
+        
+        guard let currentCurrency = CryptoCurrencyKit.Money(rawValue: currentCurrencyString) else { return CryptoCurrencyKit.Money.usd }
         return currentCurrency
     }
-    #endif
+    
     
 }
+

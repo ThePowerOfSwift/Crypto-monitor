@@ -21,3 +21,7 @@ target 'Cryptocurrency monitor widget' do
 	pod 'AlamofireImage'
 end
 
+target 'Crypto monitor Watch Extension' do
+    pod 'Alamofire', '~> 4.5’
+end
+

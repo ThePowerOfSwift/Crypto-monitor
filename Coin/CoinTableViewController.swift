@@ -103,13 +103,7 @@ class CoinTableViewController: UITableViewController, WCSessionDelegate {
             watchSession!.activate()
         }
         loadCache()
-        
     }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(true)
-    }
-    
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(true)

@@ -9,9 +9,10 @@
 import WatchKit
 import Foundation
 import WatchConnectivity
+import CryptoCurrency
 
 class InterfaceController: WKInterfaceController, WCSessionDelegate {
-
+    
     @IBOutlet var cryptocurrencyTable: WKInterfaceTable!
     @IBOutlet var emptyGroup: WKInterfaceGroup!
     // Our WatchConnectivity Session for communicating with the iOS app
@@ -30,8 +31,8 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate {
             userDefaults.set(percentChange, forKey: "percentChange")
         }
         
-        if let priceCurrency = applicationContext["priceCurrency"] as? Int {
-            userDefaults.set(priceCurrency, forKey: "priceCurrency")
+        if let currentCurrency = applicationContext["CurrentCurrency"] as? String {
+            SettingsUserDefaults().setCurrentCurrency(money: CryptoCurrencyKit.Money(rawValue: currentCurrency)!)
         }
         
         if let id = applicationContext["id"] as? [String] {
@@ -39,6 +40,8 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate {
         }
         userDefaults.synchronize()
         load()
+        
+        //SettingsUserDefaults().setCurrentCurrency(money: CryptoCurrencyKit.Money(rawValue: money[row].rawValue)!)
     }
     
     // Sender
@@ -50,7 +53,7 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate {
             
             let context = ["percentChange" : percentChange, "priceCurrency" : priceCurrency] as [String : Any]
             try watchSession?.updateApplicationContext(context)
-        
+            
             reloadTimeline()
             
         } catch let error as NSError {
@@ -58,7 +61,7 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate {
         }
         
     }
-
+    
     
     func awakeWithContext(context: AnyObject?) {
         super.awake(withContext: context)
@@ -93,7 +96,7 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate {
     }
     
     private func viewCache() {
-         if let cacheTicker = CacheTicker().loadcacheTicker() {
+        if let cacheTicker = SettingsUserDefaults().loadcacheTicker() {
             self.tableView(ticker: cacheTicker)
         }
     }
@@ -105,7 +108,7 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate {
                 NetworkRequest().getTickerID(idArray: idArray, completion: { (ticker : [Ticker]?, error : Error?) in
                     if error == nil {
                         if let ticker = ticker {
-                            CacheTicker().setUserDefaults(ticher: ticker)
+                            SettingsUserDefaults().setUserDefaults(ticher: ticker, idArray: idArray, lastUpdate: Date())
                             self.reloadTimeline()
                             DispatchQueue.main.async() {
                                 self.tableView(ticker: ticker)
@@ -115,7 +118,7 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate {
                 })
             }
             else{
-                CacheTicker().setUserDefaults(ticher: nil)
+                SettingsUserDefaults().setUserDefaults(ticher: nil, idArray: idArray, lastUpdate: Date())
                 reloadTimeline()
                 cryptocurrencyTable.setHidden(true)
                 emptyGroup.setHidden(false)
@@ -159,7 +162,7 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate {
         }
     }
     
-
+    
     
     //MARK: Actions
     @IBAction func oneHourSelected() {
