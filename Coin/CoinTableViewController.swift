@@ -122,6 +122,7 @@ class CoinTableViewController: UITableViewController, WCSessionDelegate {
             self.cryptocurrencyView()
             self.loadTicker()
         }
+
     }
     
     @objc func applicationDidBecomeActiveNotification(notification : NSNotification) {
@@ -175,7 +176,7 @@ class CoinTableViewController: UITableViewController, WCSessionDelegate {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "coin", for: indexPath as IndexPath) as! CoinTableViewCell
         let row = indexPath.row
-        
+
         if let ticker = getTickerID {
             
             let url = URL(string: "https://files.coinmarketcap.com/static/img/coins/32x32/\(ticker[row].id).png")!

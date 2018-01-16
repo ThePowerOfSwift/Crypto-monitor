@@ -13,7 +13,7 @@ public class SettingsUserDefaults{
     
     public init() {}
     
-    public func setUserDefaults(ticher: [Ticker]?, idArray: [String], lastUpdate: Date?) {
+    public func setUserDefaults(ticher: [Ticker]?, idArray: [String]?, lastUpdate: Date?) {
         var userDefaults: UserDefaults?
         #if os(iOS)
             userDefaults = UserDefaults(suiteName: "group.mialin.valentyn.crypto.monitor")
@@ -23,8 +23,10 @@ public class SettingsUserDefaults{
             userDefaults = UserDefaults()
         #endif
         
-        userDefaults?.set(idArray, forKey: "id")
-        
+        if let idArray = idArray {
+                    userDefaults?.set(idArray, forKey: "id")
+        }
+  
         if let ticher = ticher {
             let encoder = JSONEncoder()
             encoder.outputFormatting = .prettyPrinted
@@ -104,7 +106,6 @@ public class SettingsUserDefaults{
                 keyStore.synchronize()
             }
         #endif
-        
         
         #if os(iOS)
             guard let currentCurrencyString = NSUbiquitousKeyValueStore().string(forKey: "CurrentCurrency") else { return CryptoCurrencyKit.Money.usd }

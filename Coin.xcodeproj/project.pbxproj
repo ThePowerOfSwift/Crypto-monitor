@@ -7,6 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		FB18375A200D028A001C6358 /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FB18375B200D028A001C6358 /* Alamofire.framework */; };
+		FB18375C200D0298001C6358 /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FB18375D200D0298001C6358 /* Alamofire.framework */; };
+		FB18375E200D02F5001C6358 /* AlamofireImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FB18375F200D02F5001C6358 /* AlamofireImage.framework */; };
+		FB183760200D0328001C6358 /* SwiftyJSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FB183761200D0328001C6358 /* SwiftyJSON.framework */; };
+		FB183762200D033B001C6358 /* Charts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FB183763200D033B001C6358 /* Charts.framework */; };
+		FB183764200D035D001C6358 /* AlamofireNetworkActivityIndicator.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FB183765200D035D001C6358 /* AlamofireNetworkActivityIndicator.framework */; };
 		FB20D0DE2008FECD0007305C /* CryptoCurrency.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FBBE490C2008F5A200277014 /* CryptoCurrency.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		FB20D0E220090DD70007305C /* SettingsUserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB20D0E120090DD70007305C /* SettingsUserDefaults.swift */; };
 		FB20D0E320090DD70007305C /* SettingsUserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB20D0E120090DD70007305C /* SettingsUserDefaults.swift */; };
@@ -33,7 +39,6 @@
 		FB5326CB1F254A9400D9C498 /* AddTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB5326CA1F254A9400D9C498 /* AddTableViewCell.swift */; };
 		FB623FAF1F67464900C99460 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FB623FAE1F67464900C99460 /* Assets.xcassets */; };
 		FB670CE61F16D900005761CF /* CryptocurrencyInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB670CE51F16D900005761CF /* CryptocurrencyInfoViewController.swift */; };
-		FB735A931F8FD1D70050051F /* CacheTicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB735A921F8FD1D70050051F /* CacheTicker.swift */; };
 		FB99B48C1F2FEF1F007C0235 /* NotificationCenter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FB99B48B1F2FEF1F007C0235 /* NotificationCenter.framework */; };
 		FB99B48F1F2FEF1F007C0235 /* TodayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB99B48E1F2FEF1F007C0235 /* TodayViewController.swift */; };
 		FB99B4961F2FEF1F007C0235 /* Cryptocurrency monitor widget.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = FB99B48A1F2FEF1F007C0235 /* Cryptocurrency monitor widget.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
@@ -56,7 +61,6 @@
 		FBBE49352008FD7300277014 /* CryptoCurrencyKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBBE49302008FD7300277014 /* CryptoCurrencyKit.swift */; };
 		FBBF266E1F5AD2CD0050BED7 /* ComplicationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBBF266D1F5AD2CD0050BED7 /* ComplicationController.swift */; };
 		FBCDD40F1F307E50002B9BA4 /* WidgetCellTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBCDD40E1F307E50002B9BA4 /* WidgetCellTableViewCell.swift */; };
-		FBD121241F52EB3A0079D15D /* NetworkRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBD121231F52EB3A0079D15D /* NetworkRequest.swift */; };
 		FBD5ABE51F214CFA003A3AAC /* AddTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBD5ABE41F214CFA003A3AAC /* AddTableViewController.swift */; };
 		FBD6A3021F73C5E50063FD62 /* LoadSubview.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBD6A3001F73C5E50063FD62 /* LoadSubview.swift */; };
 		FBE0F44C1F3D1E33008DF778 /* EmptySubview.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBE0F44B1F3D1E33008DF778 /* EmptySubview.swift */; };
@@ -243,6 +247,12 @@
 		FB0B34F61FED56D400D21F8F /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		FB0B34F71FED56D500D21F8F /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/EmptySubview.strings; sourceTree = "<group>"; };
 		FB0B34F81FED56D500D21F8F /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		FB18375B200D028A001C6358 /* Alamofire.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Alamofire.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		FB18375D200D0298001C6358 /* Alamofire.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Alamofire.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		FB18375F200D02F5001C6358 /* AlamofireImage.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = AlamofireImage.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		FB183761200D0328001C6358 /* SwiftyJSON.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SwiftyJSON.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		FB183763200D033B001C6358 /* Charts.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Charts.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		FB183765200D035D001C6358 /* AlamofireNetworkActivityIndicator.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = AlamofireNetworkActivityIndicator.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FB20D0E120090DD70007305C /* SettingsUserDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsUserDefaults.swift; sourceTree = "<group>"; };
 		FB20D0E42009551D0007305C /* Charts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Charts.swift; sourceTree = "<group>"; };
 		FB27C53C200AD72D00DB2907 /* Ticker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Ticker.swift; sourceTree = "<group>"; };
@@ -281,7 +291,6 @@
 		FB5326CA1F254A9400D9C498 /* AddTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddTableViewCell.swift; sourceTree = "<group>"; };
 		FB623FAE1F67464900C99460 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		FB670CE51F16D900005761CF /* CryptocurrencyInfoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CryptocurrencyInfoViewController.swift; sourceTree = "<group>"; };
-		FB735A921F8FD1D70050051F /* CacheTicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CacheTicker.swift; sourceTree = "<group>"; };
 		FB9592531F20B8AB00F9F74B /* Coin.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Coin.entitlements; sourceTree = "<group>"; };
 		FB99B48A1F2FEF1F007C0235 /* Cryptocurrency monitor widget.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "Cryptocurrency monitor widget.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
 		FB99B48B1F2FEF1F007C0235 /* NotificationCenter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = NotificationCenter.framework; path = System/Library/Frameworks/NotificationCenter.framework; sourceTree = SDKROOT; };
@@ -310,7 +319,6 @@
 		FBBE49302008FD7300277014 /* CryptoCurrencyKit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CryptoCurrencyKit.swift; sourceTree = "<group>"; };
 		FBBF266D1F5AD2CD0050BED7 /* ComplicationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComplicationController.swift; sourceTree = "<group>"; };
 		FBCDD40E1F307E50002B9BA4 /* WidgetCellTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WidgetCellTableViewCell.swift; sourceTree = "<group>"; };
-		FBD121231F52EB3A0079D15D /* NetworkRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkRequest.swift; sourceTree = "<group>"; };
 		FBD5ABE41F214CFA003A3AAC /* AddTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddTableViewController.swift; sourceTree = "<group>"; };
 		FBD6A3001F73C5E50063FD62 /* LoadSubview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadSubview.swift; sourceTree = "<group>"; };
 		FBE0F44B1F3D1E33008DF778 /* EmptySubview.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmptySubview.swift; sourceTree = "<group>"; };
@@ -328,6 +336,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FB18375E200D02F5001C6358 /* AlamofireImage.framework in Frameworks */,
 				FBA6D946200C3C6100B9F3EE /* CryptoCurrency.framework in Frameworks */,
 				FB99B48C1F2FEF1F007C0235 /* NotificationCenter.framework in Frameworks */,
 			);
@@ -345,6 +354,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FB183764200D035D001C6358 /* AlamofireNetworkActivityIndicator.framework in Frameworks */,
+				FB183762200D033B001C6358 /* Charts.framework in Frameworks */,
+				FB183760200D0328001C6358 /* SwiftyJSON.framework in Frameworks */,
 				FB448FCA2007866100EC2FA7 /* StoreKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -353,6 +365,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FB18375A200D028A001C6358 /* Alamofire.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -360,6 +373,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FB18375C200D0298001C6358 /* Alamofire.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -388,6 +402,12 @@
 		731467F8FA5309E32222B93E /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				FB183765200D035D001C6358 /* AlamofireNetworkActivityIndicator.framework */,
+				FB183763200D033B001C6358 /* Charts.framework */,
+				FB183761200D0328001C6358 /* SwiftyJSON.framework */,
+				FB18375F200D02F5001C6358 /* AlamofireImage.framework */,
+				FB18375D200D0298001C6358 /* Alamofire.framework */,
+				FB18375B200D028A001C6358 /* Alamofire.framework */,
 				FB448FC92007866100EC2FA7 /* StoreKit.framework */,
 				FB99B48B1F2FEF1F007C0235 /* NotificationCenter.framework */,
 			);
@@ -463,8 +483,6 @@
 				FBB009791F4E3292000B1298 /* InterfaceController.swift */,
 				FBB0098C1F4E37AF000B1298 /* cryptocurrencyRowController.swift */,
 				FBBF266D1F5AD2CD0050BED7 /* ComplicationController.swift */,
-				FB735A921F8FD1D70050051F /* CacheTicker.swift */,
-				FBD121231F52EB3A0079D15D /* NetworkRequest.swift */,
 				FBB0097B1F4E3292000B1298 /* ExtensionDelegate.swift */,
 				FB623FAE1F67464900C99460 /* Assets.xcassets */,
 				FBB0097F1F4E3292000B1298 /* Info.plist */,
@@ -1079,8 +1097,6 @@
 				FBB0097C1F4E3292000B1298 /* ExtensionDelegate.swift in Sources */,
 				FBB0098D1F4E37AF000B1298 /* cryptocurrencyRowController.swift in Sources */,
 				FBBF266E1F5AD2CD0050BED7 /* ComplicationController.swift in Sources */,
-				FBD121241F52EB3A0079D15D /* NetworkRequest.swift in Sources */,
-				FB735A931F8FD1D70050051F /* CacheTicker.swift in Sources */,
 				FBB0097A1F4E3292000B1298 /* InterfaceController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1635,6 +1651,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = C982DDD457B6A5B7E2931C96 /* Pods-CryptoCurrency iOS.debug.xcconfig */;
 			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
@@ -1667,6 +1684,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 0F0BAB17A70021A765F2DD89 /* Pods-CryptoCurrency iOS.release.xcconfig */;
 			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;

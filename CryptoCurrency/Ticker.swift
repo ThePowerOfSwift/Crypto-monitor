@@ -248,8 +248,8 @@ extension Ticker {
             return priceBtcToString()
         default:
             guard let price = price(for: currency) else { return "null" }
-            if price > 0.0001 {
-                let formatter = formatterCurrency(for: currency, maximumFractionDigits: 4)
+            if price > 0.01 {
+                let formatter = formatterCurrency(for: currency, maximumFractionDigits: 2)
                 return formatter.string(from: NSNumber(value: price))!
             }
             else{

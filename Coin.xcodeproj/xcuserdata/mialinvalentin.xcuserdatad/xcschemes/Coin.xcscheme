@@ -97,6 +97,15 @@
                title = "Run Script"
                scriptText = "buildNumber=$(/usr/libexec/PlistBuddy -c &quot;Print CFBundleVersion&quot; &quot;${PROJECT_DIR}/${INFOPLIST_FILE}&quot;)&#10;buildNumber=$(($buildNumber + 1))&#10;/usr/libexec/PlistBuddy -c &quot;Set :CFBundleVersion $buildNumber&quot; &quot;${PROJECT_DIR}/${INFOPLIST_FILE}&quot;"
                shellToInvoke = "/bin/sh">
+               <EnvironmentBuildable>
+                  <BuildableReference
+                     BuildableIdentifier = "primary"
+                     BlueprintIdentifier = "FBB2CC971F155CF800D800FD"
+                     BuildableName = "Coin.app"
+                     BlueprintName = "Coin"
+                     ReferencedContainer = "container:Coin.xcodeproj">
+                  </BuildableReference>
+               </EnvironmentBuildable>
             </ActionContent>
          </ExecutionAction>
          <ExecutionAction

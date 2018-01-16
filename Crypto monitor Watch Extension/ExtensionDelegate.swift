@@ -49,7 +49,11 @@ class ExtensionDelegate: NSObject, WKExtensionDelegate, URLSessionDownloadDelega
                 config.sessionSendsLaunchEvents = true
                 let session = URLSession(configuration: config, delegate: self, delegateQueue: nil)
                 
-                let task = session.downloadTask(with: URL(string: "https://api.coinmarketcap.com/v1/ticker/?convert=EUR&limit=0")!)
+                var urlString = "https://api.coinmarketcap.com/v1/ticker/"
+                urlString.append("?convert=\(SettingsUserDefaults().getCurrentCurrency().rawValue)")
+                urlString.append("&limit=0")
+                
+                let task = session.downloadTask(with: URL(string: urlString)!)
                 task.resume()
                 
                 WKExtension.shared().scheduleBackgroundRefresh(withPreferredDate: Date(timeIntervalSinceNow: timeIntervalRefresh), userInfo: nil) { (error: Error?) in
@@ -105,9 +109,7 @@ class ExtensionDelegate: NSObject, WKExtensionDelegate, URLSessionDownloadDelega
                         let complicationServer = CLKComplicationServer.sharedInstance()
                         complicationServer.activeComplications?.forEach(complicationServer.reloadTimeline)
                     }
-                    
                     self.savedTask?.setTaskCompletedWithSnapshot(true)
-                    
                 } catch {
                     print("error trying to convert data to JSON")
                     print(error)

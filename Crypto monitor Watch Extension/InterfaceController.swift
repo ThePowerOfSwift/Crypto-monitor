@@ -40,8 +40,6 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate {
         }
         userDefaults.synchronize()
         load()
-        
-        //SettingsUserDefaults().setCurrentCurrency(money: CryptoCurrencyKit.Money(rawValue: money[row].rawValue)!)
     }
     
     // Sender
@@ -60,11 +58,6 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate {
             print("Error: \(error.description)")
         }
         
-    }
-    
-    
-    func awakeWithContext(context: AnyObject?) {
-        super.awake(withContext: context)
     }
     
     override func willActivate() {
@@ -89,12 +82,7 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate {
             viewCache()
         }
     }
-    
-    override func didDeactivate() {
-        // This method is called when watch view controller is no longer visible
-        super.didDeactivate()
-    }
-    
+
     private func viewCache() {
         if let cacheTicker = SettingsUserDefaults().loadcacheTicker() {
             self.tableView(ticker: cacheTicker)
@@ -103,42 +91,27 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate {
     
     private func load() {
         print("load")
-        if let idArray = UserDefaults().array(forKey: "id") as? [String] {
-            if !idArray.isEmpty {
-                
+        if let idArray = UserDefaults().array(forKey: "id") as? [String],  !idArray.isEmpty {
                 CryptoCurrencyKit.fetchTickers(convert: SettingsUserDefaults().getCurrentCurrency(), idArray: idArray, limit: 0) { (response) in
                     switch response {
                     case .success(let tickers):
                         SettingsUserDefaults().setUserDefaults(ticher: tickers, idArray: idArray, lastUpdate: Date())
-                        self.reloadTimeline()
                         DispatchQueue.main.async() {
                             self.tableView(ticker: tickers)
+                            self.reloadTimeline()
                         }
                         print("success")
                     case .failure(let error):
                         print("failure \(error.localizedDescription)")
                     }
                 }
-                
-              /*  NetworkRequest().getTickerID(idArray: idArray, completion: { (ticker : [Ticker]?, error : Error?) in
-                    if error == nil {
-                        if let ticker = ticker {
-                            SettingsUserDefaults().setUserDefaults(ticher: ticker, idArray: idArray, lastUpdate: Date())
-                            self.reloadTimeline()
-                            DispatchQueue.main.async() {
-                                self.tableView(ticker: ticker)
-                            }
-                        }
-                    }
-                })*/
             }
             else{
-                SettingsUserDefaults().setUserDefaults(ticher: nil, idArray: idArray, lastUpdate: Date())
+                SettingsUserDefaults().setUserDefaults(ticher: nil, idArray: nil, lastUpdate: Date())
                 reloadTimeline()
                 cryptocurrencyTable.setHidden(true)
                 emptyGroup.setHidden(false)
             }
-        }
         WKExtension.shared().scheduleBackgroundRefresh(withPreferredDate: Date(timeIntervalSinceNow: timeIntervalRefresh), userInfo: nil) { (error: Error?) in
             if let error = error {
                 print("Error occurred while scheduling background refresh: \(error.localizedDescription)")
