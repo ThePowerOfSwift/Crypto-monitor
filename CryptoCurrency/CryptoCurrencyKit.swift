@@ -21,6 +21,7 @@ public struct CryptoCurrencyKit {
                 var tickerFilterArray = [Ticker]()
                 if let idArray = idArray {
                     for id in idArray{
+                        print (id)
                         if let json = data.filter({ $0.id == id}).first{
                             tickerFilterArray.append(json)
                         }
@@ -29,6 +30,7 @@ public struct CryptoCurrencyKit {
                 else{
                     tickerFilterArray = data
                 }
+                            //        print(tickerFilterArray)
                 response?(ResponseA.success(tickerFilterArray))
             case .failure(let error):
                 print(error.localizedDescription)

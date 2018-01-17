@@ -37,7 +37,7 @@ public class Chart: Codable {
 
 struct ChartRequest {
     
-    public func cancelRequest(url: String = "https://graphs.coinmarketcap.com/currencies/")  {
+    public func cancelRequest(url: String = "https://graphs2.coinmarketcap.com/currencies/")  {
         Alamofire.SessionManager.default.session.getTasksWithCompletionHandler { dataTasks, _, _ in
             dataTasks.forEach
                 {
@@ -53,7 +53,7 @@ struct ChartRequest {
         
         var currencyCharts:CurrencyCharts?
         var error:Error?
-        var url = "https://graphs.coinmarketcap.com/currencies/" + id + "/"
+        var url = "https://graphs2.coinmarketcap.com/currencies/" + id + "/"
         
         if let of = of {
             url += String(Int(of.timeIntervalSince1970)) + "000/" + String(Int(NSDate().timeIntervalSince1970)) + "000/"
@@ -106,7 +106,7 @@ struct ChartRequest {
         var minDate:Date?
         var error:Error?
         
-        let url = "https://graphs.coinmarketcap.com/currencies/" + id
+        let url = "https://graphs2.coinmarketcap.com/currencies/" + id
         
         let configuration = URLSessionConfiguration.default
         configuration.urlCache = nil

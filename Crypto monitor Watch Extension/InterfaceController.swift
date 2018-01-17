@@ -95,7 +95,7 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate {
                 CryptoCurrencyKit.fetchTickers(convert: SettingsUserDefaults().getCurrentCurrency(), idArray: idArray, limit: 0) { (response) in
                     switch response {
                     case .success(let tickers):
-                        SettingsUserDefaults().setUserDefaults(ticher: tickers, idArray: idArray, lastUpdate: Date())
+                        SettingsUserDefaults().setUserDefaults(ticher: tickers)
                         DispatchQueue.main.async() {
                             self.tableView(ticker: tickers)
                             self.reloadTimeline()
@@ -106,12 +106,13 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate {
                     }
                 }
             }
-            else{
-                SettingsUserDefaults().setUserDefaults(ticher: nil, idArray: nil, lastUpdate: Date())
-                reloadTimeline()
-                cryptocurrencyTable.setHidden(true)
-                emptyGroup.setHidden(false)
-            }
+        else{
+            SettingsUserDefaults().setUserDefaults(ticher: nil)
+            SettingsUserDefaults().setIdArray(idArray: nil)
+            reloadTimeline()
+            cryptocurrencyTable.setHidden(true)
+            emptyGroup.setHidden(false)
+        }
         WKExtension.shared().scheduleBackgroundRefresh(withPreferredDate: Date(timeIntervalSinceNow: timeIntervalRefresh), userInfo: nil) { (error: Error?) in
             if let error = error {
                 print("Error occurred while scheduling background refresh: \(error.localizedDescription)")

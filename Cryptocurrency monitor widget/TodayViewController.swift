@@ -57,7 +57,7 @@ class TodayViewController: UIViewController, UITableViewDataSource, UITableViewD
             CryptoCurrencyKit.fetchTickers(convert: SettingsUserDefaults().getCurrentCurrency(), idArray: idArray, limit: 0) { (response) in
                 switch response {
                 case .success(let tickers):
-                    SettingsUserDefaults().setUserDefaults(ticher: tickers, idArray: idArray, lastUpdate: Date())
+                    SettingsUserDefaults().setUserDefaults(ticher: tickers)
                     DispatchQueue.main.async() {
                         self.cryptocurrencyView(ticker: tickers)
                     }

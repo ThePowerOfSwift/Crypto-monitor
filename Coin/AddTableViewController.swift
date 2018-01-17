@@ -169,7 +169,7 @@ class AddTableViewController: UITableViewController {
                     getTickerID!.append(ticker)
                 }
                 
-                SettingsUserDefaults().setUserDefaults(ticher: getTickerID!, idArray: idArray, lastUpdate: nil)
+                SettingsUserDefaults().setUserDefaults(ticher: getTickerID!, lastUpdate: nil)
                 
                 _ = navigationController?.popViewController(animated: true)
             }

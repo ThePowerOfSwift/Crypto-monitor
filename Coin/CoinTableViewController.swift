@@ -125,32 +125,30 @@ class CoinTableViewController: UITableViewController, WCSessionDelegate {
             self.cryptocurrencyView()
             self.loadTicker()
         }
-
     }
     
     @objc func applicationDidBecomeActiveNotification(notification : NSNotification) {
         print("unlock")
-      //  loadCache()
-       // loadTicker()
     }
     
     @objc func ubiquitousKeyValueStoreDidChange(notification: NSNotification) {
-        let keyStore = NSUbiquitousKeyValueStore ()
-        let idKeyStore = keyStore.array(forKey: "id") as? [String]
-        let userDefaults = UserDefaults(suiteName: "group.mialin.valentyn.crypto.monitor")
-        let idUserDefaults = userDefaults?.array(forKey: "id") as? [String]
-        if idKeyStore != nil && idUserDefaults != nil {
-            if idKeyStore! != idUserDefaults! {
-                loadTicker()
+        
+        guard let userInfo = notification.userInfo else { return }
+        guard let changedKeysKey = userInfo[AnyHashable("NSUbiquitousKeyValueStoreChangedKeysKey")] as? NSArray else { return }
+        
+        if changedKeysKey.contains("id") {
+            if let idArray = SettingsUserDefaults().getIdArray(){
+                let userDefaults = UserDefaults(suiteName: "group.mialin.valentyn.crypto.monitor")
+                userDefaults?.set(idArray, forKey: "id")
+                userDefaults?.synchronize()
             }
-            else{
-                loadCache()
-            }
+            CSSearchableIndex.default().deleteAllSearchableItems()
         }
-
-        if let idKeyStore = idKeyStore {
-            updateApplicationContext(id: idKeyStore)
+        
+        if let idArray = SettingsUserDefaults().getIdArray(){
+            updateApplicationContext(id: idArray)
         }
+        loadTicker()
         print("iCloud key-value-store change detected")
     }
     
@@ -261,7 +259,7 @@ class CoinTableViewController: UITableViewController, WCSessionDelegate {
                     
                     updateApplicationContext(id: idArray)
                     // set UserDefaults
-                    SettingsUserDefaults().setUserDefaults(ticher: getTickerID!, idArray: idArray, lastUpdate: nil)
+                    SettingsUserDefaults().setUserDefaults(ticher: getTickerID!, lastUpdate: nil)
                 }
             }
             cryptocurrencyView()
@@ -292,7 +290,7 @@ class CoinTableViewController: UITableViewController, WCSessionDelegate {
                 
                 updateApplicationContext(id: idArray)
                 // set UserDefaults
-                SettingsUserDefaults().setUserDefaults(ticher: getTickerID!, idArray: idArray, lastUpdate: nil)
+                SettingsUserDefaults().setUserDefaults(ticher: getTickerID!, lastUpdate: nil)
             }
         }
     }
@@ -324,13 +322,11 @@ class CoinTableViewController: UITableViewController, WCSessionDelegate {
     }
     
     private func loadTicker() {
-
-        let keyStore = NSUbiquitousKeyValueStore ()
-        guard let idArray = keyStore.array(forKey: "id") as? [String] else { return }
-        
+        guard let idArray = SettingsUserDefaults().getIdArray() else { return }
+   
         if idArray.isEmpty {
             getTickerID = [Ticker]()
-            SettingsUserDefaults().setUserDefaults(ticher: [Ticker](), idArray: idArray, lastUpdate: nil)
+            SettingsUserDefaults().setUserDefaults(ticher: [Ticker](), lastUpdate: nil)
             showEmptySubview()
         }
         else{
@@ -343,7 +339,7 @@ class CoinTableViewController: UITableViewController, WCSessionDelegate {
                 switch response {
                 case .success(let tickers):
                     getTickerID = tickers
-                    SettingsUserDefaults().setUserDefaults(ticher: tickers, idArray: idArray, lastUpdate: Date())
+                    SettingsUserDefaults().setUserDefaults(ticher: tickers)
                     self.updateApplicationContext(id: idArray)
                     self.indexItem(ticker: tickers)
                     DispatchQueue.main.async() {
@@ -469,6 +465,13 @@ class CoinTableViewController: UITableViewController, WCSessionDelegate {
     }
     
     //MARK: Spotlight
+    override func updateUserActivityState(_ activity: NSUserActivity) {
+        if let cacheTicker = SettingsUserDefaults().loadcacheTicker() {
+            CSSearchableIndex.default().deleteAllSearchableItems()
+            indexItem(ticker: cacheTicker)
+        }
+    }
+    
     func indexItem(ticker: [Ticker]) {
         DispatchQueue.global(qos: .userInitiated).async {
             var searchableItems = [CSSearchableItem]()
@@ -482,14 +485,12 @@ class CoinTableViewController: UITableViewController, WCSessionDelegate {
                 searchableItemAttributeSet.contentDescription = ticker.symbol
                 // Set the image.
                 let url = URL(string: "https://files.coinmarketcap.com/static/img/coins/64x64/\(ticker.id).png")!
-                let view = UIImageView()
-                view.af_setImage(withURL: url) { (responce) in
-                    if let image = view.image {
-                        if let data = UIImagePNGRepresentation(image) {
-                            searchableItemAttributeSet.thumbnailData = data
-                        }
+                if let cashedImage = UIImageView.af_sharedImageDownloader.imageCache?.image(for: URLRequest(url: url), withIdentifier: nil) {
+                    if let data = UIImagePNGRepresentation(cashedImage) {
+                        searchableItemAttributeSet.thumbnailData = data
                     }
                 }
+                
                 searchableItemAttributeSet.keywords = ["coin", "монета", "Pièce de monnaie", "Münze",
                                                        "cryptocurrency", "Криптовалюта", "Cryptomonnaie", "Kryptowährung",
                                                        "rates", "обменный курс", "taux de change", "Tauschrate" ]
@@ -518,8 +519,6 @@ class CoinTableViewController: UITableViewController, WCSessionDelegate {
             }
         }
     }
-    
-    
 }
 
 extension Array {

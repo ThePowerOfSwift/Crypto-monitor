@@ -104,7 +104,7 @@ class ExtensionDelegate: NSObject, WKExtensionDelegate, URLSessionDownloadDelega
                         }
                     }
                     
-                    SettingsUserDefaults().setUserDefaults(ticher: tickerFilterArray, idArray: idArray, lastUpdate: Date())
+                    SettingsUserDefaults().setUserDefaults(ticher: tickerFilterArray)
                     DispatchQueue.main.async {
                         let complicationServer = CLKComplicationServer.sharedInstance()
                         complicationServer.activeComplications?.forEach(complicationServer.reloadTimeline)

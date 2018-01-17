@@ -23,7 +23,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let keyStore = NSUbiquitousKeyValueStore ()
         if !keyStore.bool(forKey: "launchedBefore"){
             
-            keyStore.set(["bitcoin", "ethereum", "ripple", "bitcoin-cash", "litecoin", "dash", "nem", "neo", "monero", "iota"], forKey: "id")
+            keyStore.set(["bitcoin", "ethereum", "ripple", "bitcoin-cash", "cardano", "litecoin", "neo", "nem", "stellar", "karbowanec"], forKey: "id")
             keyStore.set(1, forKey: "percentChange")
             keyStore.set(1, forKey: "typeChart")
             keyStore.set(1, forKey: "zoomChart")
@@ -45,6 +45,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         return true
     }
+    
+
 
     func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any] = [:]) -> Bool {
         // When you type customSchemeExample://red in the search bar in Safari

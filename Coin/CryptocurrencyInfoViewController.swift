@@ -167,7 +167,7 @@ class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
             switch response {
             case .success(let tickers):
                 getTickerID = tickers
-                SettingsUserDefaults().setUserDefaults(ticher: getTickerID!, idArray: idArray, lastUpdate: Date())
+                SettingsUserDefaults().setUserDefaults(ticher: getTickerID!)
                 DispatchQueue.main.async() {
                     self.viewCryptocurrencyInfo()
                 }
@@ -193,8 +193,7 @@ class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
             let money = SettingsUserDefaults().getCurrentCurrency()
             
             nameLabel.text = ticker.name + " (\(ticker.symbol))"
-            
-          //   priceConvertLabel
+
             
             priceUsdLabel.text = ticker.priceToString(for: .usd, maximumFractionDigits: 10)
             priceBtcLabel.text = ticker.priceBtcToString()
@@ -248,7 +247,7 @@ class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
     
     func loadlineView() {
         
-        guard self.minDate != nil else {self.lineView();  return }
+   //     guard self.minDate != nil else { self.lineView();  return }
 
         lineChartView.isHidden = true
         lineChartActivityIndicator.isHidden = false

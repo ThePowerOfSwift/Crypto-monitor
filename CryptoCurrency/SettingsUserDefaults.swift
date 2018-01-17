@@ -13,7 +13,36 @@ public class SettingsUserDefaults{
     
     public init() {}
     
-    public func setUserDefaults(ticher: [Ticker]?, idArray: [String]?, lastUpdate: Date?) {
+    public func setIdArray(idArray: [String]?) {
+        #if os(iOS)
+            let keyStore = NSUbiquitousKeyValueStore()
+        #endif
+        
+        #if os(watchOS)
+            let keyStore = UserDefaults()
+        #endif
+        
+        if let idArray = idArray {
+            keyStore.set(idArray, forKey: "id")
+        }
+        else{
+            keyStore.removeObject(forKey: "id")
+        }
+        keyStore.synchronize()
+    }
+    
+    public func getIdArray() -> [String]? {
+        #if os(iOS)
+            let keyStore = NSUbiquitousKeyValueStore()
+        #endif
+        
+        #if os(watchOS)
+            let keyStore = UserDefaults()
+        #endif
+        return keyStore.array(forKey: "id") as? [String]
+    }
+    
+    public func setUserDefaults(ticher: [Ticker]?, lastUpdate: Date? = Date()) {
         var userDefaults: UserDefaults?
         #if os(iOS)
             userDefaults = UserDefaults(suiteName: "group.mialin.valentyn.crypto.monitor")
@@ -23,18 +52,12 @@ public class SettingsUserDefaults{
             userDefaults = UserDefaults()
         #endif
         
-        if let idArray = idArray {
-                    userDefaults?.set(idArray, forKey: "id")
-        }
-  
         if let ticher = ticher {
             let encoder = JSONEncoder()
             encoder.outputFormatting = .prettyPrinted
             do{
-                
                 let encodedStore = try encoder.encode(ticher)
                 userDefaults?.set(encodedStore, forKey: "tickers")
-                
                 
                 if lastUpdate != nil{
                     userDefaults?.set(lastUpdate, forKey: "lastUpdate")
