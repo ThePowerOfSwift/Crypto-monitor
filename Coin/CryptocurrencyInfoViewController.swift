@@ -11,6 +11,7 @@ import Charts
 import CryptoCurrency
 import AlamofireImage
 import Alamofire
+import CoreSpotlight
 
 class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
     
@@ -81,7 +82,7 @@ class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
         // title image
         let view = UIImageView(frame: CGRect(x: 0, y: 0, width: 32, height: 32))
         view.contentMode = .scaleAspectFit
-        let url = URL(string: "https://files.coinmarketcap.com/static/img/coins/32x32/\(openID).png")!
+        let url = URL(string: "https://files.coinmarketcap.com/static/img/coins/64x64/\(openID).png")!
         view.af_setImage(withURL: url) { (responce) in
             self.navigationItem.titleView = view
         }
@@ -116,9 +117,7 @@ class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
                 self.loadlineView()
             }
             else{
-                DispatchQueue.main.async() {
-                    self.lineChartErrorView(error: error!.localizedDescription)
-                }
+                self.lineChartErrorView(error: error!)
             }
         })
     }
@@ -134,13 +133,16 @@ class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
         loadlineView()
     }
     
+    override func viewDidDisappear(_ animated: Bool) {
+        ChartRequest().cancelRequest()
+    }
+    
     //Unlock
     @objc func applicationDidBecomeActiveNotification(notification : NSNotification) {
         viewCryptocurrencyInfo()
         loadTicker()
         loadlineView()
     }
-
     
     func zoomSelectedSegment(index: Int){
         var index = index
@@ -250,6 +252,7 @@ class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
 
         lineChartView.isHidden = true
         lineChartActivityIndicator.isHidden = false
+        LineChartErrorView.isHidden = true
         
         var of: NSDate?
         
@@ -318,14 +321,10 @@ class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
                 }
             }
             else{
-                if (error! as NSError).code != -999 {
-                    DispatchQueue.main.async() {
-                        self.lineChartErrorView(error: error!.localizedDescription)
-                    }
-                }
+                self.lineChartErrorView(error: error!)
             }
         })
-            
+        
     }
     
     func lineView() {
@@ -441,35 +440,38 @@ class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
     
     //MARK: ErrorSubview
     func showErrorSubview(error: Error, frame: CGRect) {
-        refreshBarButtonItem()
-        
-        self.errorSubview = ErrorSubview(frame: frame)
-        
-        if !UIAccessibilityIsReduceTransparencyEnabled() {
-            self.errorSubview?.backgroundColor = UIColor.clear
-            
-            let blurEffect = UIBlurEffect(style: .prominent)
-            let blurEffectView = UIVisualEffectView(effect: blurEffect)
-            //always fill the view
-            blurEffectView.frame = CGRect(x: 0, y: 0, width: self.view.bounds.width, height: self.view.bounds.height)
-            blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-            
-            self.errorSubview?.insertSubview(blurEffectView, at: 0) //if you have more UIViews, use an insertSubview API to place it where needed
-        } else {
-            self.errorSubview?.backgroundColor = UIColor.white
+        if (error as NSError).code != -999 {
+                self.refreshBarButtonItem()
+                
+                self.errorSubview = ErrorSubview(frame: frame)
+                
+                if !UIAccessibilityIsReduceTransparencyEnabled() {
+                    self.errorSubview?.backgroundColor = UIColor.clear
+                    
+                    let blurEffect = UIBlurEffect(style: .prominent)
+                    let blurEffectView = UIVisualEffectView(effect: blurEffect)
+                    //always fill the view
+                    blurEffectView.frame = CGRect(x: 0, y: 0, width: self.view.bounds.width, height: self.view.bounds.height)
+                    blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+                    
+                    self.errorSubview?.insertSubview(blurEffectView, at: 0) //if you have more UIViews, use an insertSubview API to place it where needed
+                } else {
+                    self.errorSubview?.backgroundColor = UIColor.white
+                }
+                
+                self.errorSubview?.errorStringLabel.text = error.localizedDescription
+                self.errorSubview?.reloadPressed.addTarget(self, action: #selector(self.reload(_:)), for: UIControlEvents.touchUpInside)
+                
+                self.view.superview?.addSubview(self.errorSubview!)
         }
-        
-        self.errorSubview?.errorStringLabel.text = error.localizedDescription
-        self.errorSubview?.reloadPressed.addTarget(self, action: #selector(reload(_:)), for: UIControlEvents.touchUpInside)
-        
-        self.view.superview?.addSubview(self.errorSubview!)
     }
     
-    func lineChartErrorView(error: String) {
-        self.LineChartErrorView.isHidden = false
-        refreshBarButtonItem()
-        
-        LineChartErrorLabel.text = error
+    func lineChartErrorView(error: Error) {
+        if (error as NSError).code != -999 {
+                self.LineChartErrorView.isHidden = false
+                self.refreshBarButtonItem()
+                self.LineChartErrorLabel.text = error.localizedDescription
+        }
     }
 }
 

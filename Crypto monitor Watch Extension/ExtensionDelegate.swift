@@ -118,11 +118,10 @@ class ExtensionDelegate: NSObject, WKExtensionDelegate, URLSessionDownloadDelega
         }
         catch{
             print("error read file")
+            self.savedTask?.setTaskCompletedWithSnapshot(false)
         }
     }
-    
-    
-    
+
     func urlSession(_ session: URLSession, task: URLSessionTask, didCompleteWithError error: Error?) {
         DispatchQueue.main.async {
             if let error = error {
@@ -130,8 +129,6 @@ class ExtensionDelegate: NSObject, WKExtensionDelegate, URLSessionDownloadDelega
             }
         }
     }
-    
-    
 }
 
 

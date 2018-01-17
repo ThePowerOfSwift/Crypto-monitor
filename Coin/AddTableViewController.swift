@@ -127,7 +127,7 @@ class AddTableViewController: UITableViewController {
         
         cell.cryptocurrencyImageView.image = nil
         
-        let url = URL(string: "https://files.coinmarketcap.com/static/img/coins/32x32/\(ticker.id).png")!
+        let url = URL(string: "https://files.coinmarketcap.com/static/img/coins/64x64/\(ticker.id).png")!
         cell.cryptocurrencyImageView.af_setImage(withURL: url)
 
         cell.cryptocurrencyNameLabel?.text = ticker.name + " (\(ticker.symbol))"
@@ -185,29 +185,31 @@ class AddTableViewController: UITableViewController {
     
     //MARK: ErrorSubview
     func showErrorSubview(error: Error) {
-        var errorSubview:ErrorSubview?
-        self.refreshControl?.endRefreshing()
-        
-        errorSubview = ErrorSubview(frame: CGRect(x: 0, y: 0, width: self.view.bounds.width, height: self.view.bounds.height))
-        
-        if !UIAccessibilityIsReduceTransparencyEnabled() {
-            errorSubview?.backgroundColor = UIColor.clear
+        if (error as NSError).code != -999 {
+            var errorSubview:ErrorSubview?
+            self.refreshControl?.endRefreshing()
             
-            let blurEffect = UIBlurEffect(style: .prominent)
-            let blurEffectView = UIVisualEffectView(effect: blurEffect)
-            //always fill the view
-            blurEffectView.frame = CGRect(x: 0, y: 0, width: self.view.bounds.width, height: self.view.bounds.height)
-            blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+            errorSubview = ErrorSubview(frame: CGRect(x: 0, y: 0, width: self.view.bounds.width, height: self.view.bounds.height))
             
-            errorSubview?.insertSubview(blurEffectView, at: 0)
-        } else {
-            errorSubview?.backgroundColor = UIColor.white
+            if !UIAccessibilityIsReduceTransparencyEnabled() {
+                errorSubview?.backgroundColor = UIColor.clear
+                
+                let blurEffect = UIBlurEffect(style: .prominent)
+                let blurEffectView = UIVisualEffectView(effect: blurEffect)
+                //always fill the view
+                blurEffectView.frame = CGRect(x: 0, y: 0, width: self.view.bounds.width, height: self.view.bounds.height)
+                blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+                
+                errorSubview?.insertSubview(blurEffectView, at: 0)
+            } else {
+                errorSubview?.backgroundColor = UIColor.white
+            }
+            
+            errorSubview?.errorStringLabel.text = error.localizedDescription
+            errorSubview?.reloadPressed.addTarget(self, action: #selector(reload(_:)), for: UIControlEvents.touchUpInside)
+            
+            self.view.superview?.addSubview(errorSubview!)
         }
-        
-        errorSubview?.errorStringLabel.text = error.localizedDescription
-        errorSubview?.reloadPressed.addTarget(self, action: #selector(reload(_:)), for: UIControlEvents.touchUpInside)
-        
-        self.view.superview?.addSubview(errorSubview!)
     }
     
     @objc func reload(_ sender:UIButton) {

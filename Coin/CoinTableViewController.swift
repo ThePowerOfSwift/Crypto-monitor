@@ -8,6 +8,9 @@
 
 import UIKit
 import WatchConnectivity
+import CoreSpotlight
+import MobileCoreServices
+import AlamofireImage
 import CryptoCurrency
 
 var openID = ""
@@ -179,7 +182,7 @@ class CoinTableViewController: UITableViewController, WCSessionDelegate {
 
         if let ticker = getTickerID {
             
-            let url = URL(string: "https://files.coinmarketcap.com/static/img/coins/32x32/\(ticker[row].id).png")!
+            let url = URL(string: "https://files.coinmarketcap.com/static/img/coins/64x64/\(ticker[row].id).png")!
             cell.coinImageView.af_setImage(withURL: url)
             cell.coinNameLabel.text = ticker[row].name
             
@@ -249,6 +252,7 @@ class CoinTableViewController: UITableViewController, WCSessionDelegate {
             if var idArray = keyStore.array(forKey: "id") as? [String] {
                 if let index = idArray.index(of: getTickerID![indexPath.row].id){
                     idArray.remove(at: index)
+                    deindexItem(identifier: getTickerID![indexPath.row].id)
                     getTickerID!.remove(at: indexPath.row)
                     
                     // set iCloud key-value
@@ -339,8 +343,9 @@ class CoinTableViewController: UITableViewController, WCSessionDelegate {
                 switch response {
                 case .success(let tickers):
                     getTickerID = tickers
-                    SettingsUserDefaults().setUserDefaults(ticher: getTickerID!, idArray: idArray, lastUpdate: Date())
+                    SettingsUserDefaults().setUserDefaults(ticher: tickers, idArray: idArray, lastUpdate: Date())
                     self.updateApplicationContext(id: idArray)
+                    self.indexItem(ticker: tickers)
                     DispatchQueue.main.async() {
                         self.cryptocurrencyView()
                     }
@@ -396,29 +401,31 @@ class CoinTableViewController: UITableViewController, WCSessionDelegate {
     
     //MARK: ErrorSubview
     func showErrorSubview(error: Error) {
-        var errorSubview:ErrorSubview?
-        self.refreshControl?.endRefreshing()
-        
-        errorSubview = ErrorSubview(frame: CGRect(x: 0, y: 0, width: self.view.bounds.width, height: self.view.bounds.height))
-        
-        if !UIAccessibilityIsReduceTransparencyEnabled() {
-            errorSubview?.backgroundColor = UIColor.clear
+        if (error as NSError).code != -999 {
+            var errorSubview:ErrorSubview?
+            self.refreshControl?.endRefreshing()
             
-            let blurEffect = UIBlurEffect(style: .prominent)
-            let blurEffectView = UIVisualEffectView(effect: blurEffect)
-            //always fill the view
-            blurEffectView.frame = CGRect(x: 0, y: 0, width: self.view.bounds.width, height: self.view.bounds.height)
-            blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+            errorSubview = ErrorSubview(frame: CGRect(x: 0, y: 0, width: self.view.bounds.width, height: self.view.bounds.height))
             
-            errorSubview?.insertSubview(blurEffectView, at: 0)
-        } else {
-            errorSubview?.backgroundColor = UIColor.white
+            if !UIAccessibilityIsReduceTransparencyEnabled() {
+                errorSubview?.backgroundColor = UIColor.clear
+                
+                let blurEffect = UIBlurEffect(style: .prominent)
+                let blurEffectView = UIVisualEffectView(effect: blurEffect)
+                //always fill the view
+                blurEffectView.frame = CGRect(x: 0, y: 0, width: self.view.bounds.width, height: self.view.bounds.height)
+                blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+                
+                errorSubview?.insertSubview(blurEffectView, at: 0)
+            } else {
+                errorSubview?.backgroundColor = UIColor.white
+            }
+            
+            errorSubview?.errorStringLabel.text = error.localizedDescription
+            errorSubview?.reloadPressed.addTarget(self, action: #selector(reload(_:)), for: UIControlEvents.touchUpInside)
+            
+            self.view.superview?.addSubview(errorSubview!)
         }
-        
-        errorSubview?.errorStringLabel.text = error.localizedDescription
-        errorSubview?.reloadPressed.addTarget(self, action: #selector(reload(_:)), for: UIControlEvents.touchUpInside)
-        
-        self.view.superview?.addSubview(errorSubview!)
     }
     
     func showEmptySubview() {
@@ -460,6 +467,59 @@ class CoinTableViewController: UITableViewController, WCSessionDelegate {
         formatter.locale = Locale.current
         return formatter.string(from: date as Date)
     }
+    
+    //MARK: Spotlight
+    func indexItem(ticker: [Ticker]) {
+        DispatchQueue.global(qos: .userInitiated).async {
+            var searchableItems = [CSSearchableItem]()
+            
+            for ticker in ticker{
+                let searchableItemAttributeSet = CSSearchableItemAttributeSet(itemContentType: kUTTypeText as String)
+                
+                // Set the title.
+                searchableItemAttributeSet.title = ticker.name
+                // Set the description.
+                searchableItemAttributeSet.contentDescription = ticker.symbol
+                // Set the image.
+                let url = URL(string: "https://files.coinmarketcap.com/static/img/coins/64x64/\(ticker.id).png")!
+                let view = UIImageView()
+                view.af_setImage(withURL: url) { (responce) in
+                    if let image = view.image {
+                        if let data = UIImagePNGRepresentation(image) {
+                            searchableItemAttributeSet.thumbnailData = data
+                        }
+                    }
+                }
+                searchableItemAttributeSet.keywords = ["coin", "монета", "Pièce de monnaie", "Münze",
+                                                       "cryptocurrency", "Криптовалюта", "Cryptomonnaie", "Kryptowährung",
+                                                       "rates", "обменный курс", "taux de change", "Tauschrate" ]
+ 
+                let searchableItem = CSSearchableItem(uniqueIdentifier: ticker.id, domainIdentifier: "mialin.Coin", attributeSet: searchableItemAttributeSet)
+                searchableItems.append(searchableItem)
+            }
+            
+            CSSearchableIndex.default().indexSearchableItems(searchableItems) { error in
+                if let error = error {
+                    print("Indexing error: \(error.localizedDescription)")
+                } else {
+                    print("Search item successfully indexed!")
+                }
+            }
+        }
+        
+    }
+    
+    func deindexItem(identifier: String) {
+        CSSearchableIndex.default().deleteSearchableItems(withIdentifiers: ["\(identifier)"]) { error in
+            if let error = error {
+                print("Deindexing error: \(error.localizedDescription)")
+            } else {
+                print("Search item successfully removed!")
+            }
+        }
+    }
+    
+    
 }
 
 extension Array {

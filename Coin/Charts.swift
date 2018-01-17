@@ -36,6 +36,19 @@ public class Chart: Codable {
 }
 
 struct ChartRequest {
+    
+    public func cancelRequest(url: String = "https://graphs.coinmarketcap.com/currencies/")  {
+        Alamofire.SessionManager.default.session.getTasksWithCompletionHandler { dataTasks, _, _ in
+            dataTasks.forEach
+                {
+                    if ($0.originalRequest?.url?.absoluteString.range(of: url) != nil)
+                    {
+                        $0.cancel()
+                    }
+            }
+        }
+    }
+    
     public func getCurrencyCharts(id: String, of: NSDate?, completion: @escaping  (CurrencyCharts?, Error?) -> ()) {
         
         var currencyCharts:CurrencyCharts?
@@ -46,16 +59,7 @@ struct ChartRequest {
             url += String(Int(of.timeIntervalSince1970)) + "000/" + String(Int(NSDate().timeIntervalSince1970)) + "000/"
         }
         
-        //Cancel a request Alamofire
-        Alamofire.SessionManager.default.session.getTasksWithCompletionHandler { dataTasks, _, _ in
-            dataTasks.forEach
-                {
-                    if ($0.originalRequest?.url?.absoluteString.range(of: "https://graphs.coinmarketcap.com/currencies/" + id + "/") != nil)
-                    {
-                        $0.cancel()
-                    }
-            }
-        }
+        cancelRequest() // url: "https://graphs.coinmarketcap.com/currencies/" + id + "/"
         
         Alamofire.SessionManager.default.request(url).validate().responseJSON { response in
             

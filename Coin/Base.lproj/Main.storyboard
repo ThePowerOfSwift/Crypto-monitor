@@ -139,53 +139,6 @@
                                     </fragment>
                                 </attributedString>
                             </tableViewSection>
-                            <tableViewSection headerTitle="Data source" id="5Tn-JZ-DNH">
-                                <cells>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" id="pdp-vy-22s">
-                                        <rect key="frame" x="0.0" y="355.5" width="375" height="44"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="pdp-vy-22s" id="Etj-5u-6DP">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Link" translatesAutoresizingMaskIntoConstraints="NO" id="bNu-aS-gNO">
-                                                    <rect key="frame" x="8" y="6" width="32" height="32"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="height" constant="32" id="TtX-hc-X3w"/>
-                                                        <constraint firstAttribute="width" constant="32" id="nGp-wa-1Os"/>
-                                                    </constraints>
-                                                </imageView>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nUO-yE-jWd">
-                                                    <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                                                    <state key="normal" title="Buy">
-                                                        <color key="titleColor" red="0.0" green="0.45798993110000003" blue="0.99927455190000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                    </state>
-                                                    <connections>
-                                                        <action selector="developerSupportAction:" destination="mSk-LG-rjD" eventType="touchUpInside" id="UtT-IG-zIN"/>
-                                                    </connections>
-                                                </button>
-                                            </subviews>
-                                            <constraints>
-                                                <constraint firstAttribute="trailing" secondItem="nUO-yE-jWd" secondAttribute="trailing" id="3we-yP-n2o"/>
-                                                <constraint firstItem="bNu-aS-gNO" firstAttribute="leading" secondItem="Etj-5u-6DP" secondAttribute="leading" constant="8" id="CZh-TL-NgC"/>
-                                                <constraint firstItem="nUO-yE-jWd" firstAttribute="top" secondItem="Etj-5u-6DP" secondAttribute="top" id="IfR-9m-sHv"/>
-                                                <constraint firstItem="nUO-yE-jWd" firstAttribute="leading" secondItem="Etj-5u-6DP" secondAttribute="leading" id="KcI-X9-7DS"/>
-                                                <constraint firstItem="bNu-aS-gNO" firstAttribute="centerY" secondItem="Etj-5u-6DP" secondAttribute="centerY" id="fCf-qs-vcU"/>
-                                                <constraint firstAttribute="bottom" secondItem="nUO-yE-jWd" secondAttribute="bottom" id="kdN-Ow-J2h"/>
-                                            </constraints>
-                                        </tableViewCellContentView>
-                                    </tableViewCell>
-                                </cells>
-                                <attributedString key="userComments">
-                                    <fragment content="Настройки источник данных ">
-                                        <attributes>
-                                            <font key="NSFont" metaFont="smallSystem"/>
-                                            <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
-                                        </attributes>
-                                    </fragment>
-                                </attributedString>
-                            </tableViewSection>
                         </sections>
                         <connections>
                             <outlet property="dataSource" destination="mSk-LG-rjD" id="4uz-Or-TJL"/>

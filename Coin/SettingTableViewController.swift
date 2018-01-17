@@ -10,26 +10,17 @@ import UIKit
 import CryptoCurrency
 import StoreKit
 
-class SettingTableViewController: UITableViewController, SKProductsRequestDelegate, SKPaymentTransactionObserver {
+class SettingTableViewController: UITableViewController {
     
     @IBOutlet weak var percentChangeSegmentedControl: UISegmentedControl!
     @IBOutlet weak var symbol: UILabel!
-    
-    let developerSupportId = "mialin.Coin.BuyMeCoffee"
-    var productsRequest = SKProductsRequest()
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
         let keyStore = NSUbiquitousKeyValueStore ()
         percentChangeSegmentedControl.selectedSegmentIndex = Int(keyStore.longLong(forKey: "percentChange"))
 
-        // Put here your IAP Products ID's
-        let productIdentifiers = NSSet(objects:developerSupportId)
-        
-        productsRequest = SKProductsRequest(productIdentifiers: productIdentifiers as! Set<String>)
-        productsRequest.delegate = self
-        productsRequest.start()   
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -66,9 +57,5 @@ class SettingTableViewController: UITableViewController, SKProductsRequestDelega
     @IBAction func coinMarketCapAction(_ sender: Any) {
         UIApplication.shared.open(URL(string: "https://coinmarketcap.com")!, options: [:], completionHandler: nil)
     }
-    
-    @IBAction func developerSupportAction(_ sender: UIButton) {
 
-    }
-    
 }

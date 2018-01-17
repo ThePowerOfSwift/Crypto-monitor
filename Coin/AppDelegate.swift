@@ -9,13 +9,12 @@
 import UIKit
 import AlamofireNetworkActivityIndicator
 import CryptoCurrency
+import CoreSpotlight
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-   
-
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
@@ -34,6 +33,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         // NetworkActivityIndicatorManager
         NetworkActivityIndicatorManager.shared.isEnabled = true
+        return true
+    }
+    
+    func application(_ application: UIApplication, continue userActivity: NSUserActivity, restorationHandler: @escaping ([Any]?) -> Void) -> Bool {
+        if userActivity.activityType == CSSearchableItemActionType {
+            if let uniqueIdentifier = userActivity.userInfo?[CSSearchableItemActivityIdentifier] as? String {
+                openID = uniqueIdentifier
+                showViewControllet(withIdentifier: "CryptocurrencyInfoViewControllerID")
+            }
+        }
         return true
     }
 
@@ -60,7 +69,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }        
         return true
     }
-    
+
     func showViewControllet(withIdentifier: String){
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         
@@ -71,18 +80,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     }
     
-    private func application(application: UIApplication, continueUserActivity userActivity: NSUserActivity,
-                     restorationHandler: @escaping ([AnyObject]!) -> Void) -> Bool {
-        if let window = self.window, let rvc = window.rootViewController {
-            rvc.childViewControllers.first?.restoreUserActivityState(userActivity)
-        }
-        return true
-    }
-  
 
-    func application(_ application: UIApplication, continue userActivity: NSUserActivity, restorationHandler: @escaping ([Any]?) -> Void) -> Bool {
-        return false
-    }
     
     func application(_ application: UIApplication,
                      didFailToContinueUserActivityWithType userActivityType: String,
