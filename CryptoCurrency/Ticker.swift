@@ -219,15 +219,15 @@ extension Ticker {
         return formatterCurrency(for: .btc, maximumFractionDigits: 8).string(for: priceBTC)!
     }
     
-    public func priceToString(for money: CryptoCurrencyKit.Money, maximumFractionDigits: Int) -> String {
-        let  price = self.price(for: money)
-        
-        if let price = price {
-            let formatterCurrency = self.formatterCurrency(for: money, maximumFractionDigits: maximumFractionDigits)
-            return formatterCurrency.string(from: NSNumber(value: price))!
+    public func priceToString(for money: CryptoCurrencyKit.Money) -> String {
+        guard let price = price(for: money) else { return "-" }
+        if price > 0.01 {
+            let formatter = formatterCurrency(for: money, maximumFractionDigits: 2)
+            return formatter.string(from: NSNumber(value: price))!
         }
         else{
-            return "-"
+            let formatter = formatterCurrency(for: money, maximumFractionDigits: 8)
+            return formatter.string(from: NSNumber(value: price))!
         }
     }
     

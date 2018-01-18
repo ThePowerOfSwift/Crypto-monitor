@@ -195,24 +195,24 @@ class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
             nameLabel.text = ticker.name + " (\(ticker.symbol))"
 
             
-            priceUsdLabel.text = ticker.priceToString(for: .usd, maximumFractionDigits: 10)
+            priceUsdLabel.text = ticker.priceToString(for: .usd)
             priceBtcLabel.text = ticker.priceBtcToString()
             
             if money == .usd || money == .btc {
                 priceConvertLabel.text = ""
             }
             else{
-               priceConvertLabel.text = ticker.priceToString(for: money, maximumFractionDigits: 10)
+               priceConvertLabel.text = ticker.priceToString(for: money)
             }
 
             // 1h
-            oneHourChangeLabel.text = ticker.percentChange1h != nil ? "\(ticker.percentChange1h!)%" : "null"
+            oneHourChangeLabel.text = ticker.percentChange1h != nil ? "\(ticker.percentChange1h!)%" : "-"
             backgroundColorView(view: oneHourChangeView, percentChange: ticker.percentChange1h)
             // 24h
-            dayChangeLabel.text = ticker.percentChange24h != nil ? "\(ticker.percentChange24h!)%" : "null"
+            dayChangeLabel.text = ticker.percentChange24h != nil ? "\(ticker.percentChange24h!)%" : "-"
             backgroundColorView(view: dayChangeView, percentChange: ticker.percentChange24h)
             // 7d
-            weekChangeLabel.text = ticker.percentChange7d != nil ? "\(ticker.percentChange7d!)%" : "null"
+            weekChangeLabel.text = ticker.percentChange7d != nil ? "\(ticker.percentChange7d!)%" : "-"
             backgroundColorView(view: weekChangeView, percentChange: ticker.percentChange7d)
             
             rankLabel.text = String(ticker.rank)

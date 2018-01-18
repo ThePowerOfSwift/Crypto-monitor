@@ -154,7 +154,7 @@ class TodayViewController: UIViewController, UITableViewDataSource, UITableViewD
         }
         else{
             cell.percentChangeView.backgroundColor = UIColor.orange
-            cell.percentChangeLabel.text = "null"
+            cell.percentChangeLabel.text = "-"
         }
         return cell
     }
