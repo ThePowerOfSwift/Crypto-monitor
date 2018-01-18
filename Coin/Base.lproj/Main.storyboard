@@ -60,7 +60,7 @@
                                     </fragment>
                                 </attributedString>
                             </tableViewSection>
-                            <tableViewSection headerTitle="Price" id="7Hc-Jc-x8U">
+                            <tableViewSection headerTitle="Currency settings" id="7Hc-Jc-x8U">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="hDt-rS-WYM" style="IBUITableViewCellStyleDefault" id="Vpo-Od-DJu">
                                         <rect key="frame" x="0.0" y="155.5" width="375" height="44"/>

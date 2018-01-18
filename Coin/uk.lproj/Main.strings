@@ -1,3 +1,9 @@
+/* Class = "UINavigationItem"; title = "Currency"; ObjectID = "2xi-Rp-o8w"; */
+"2xi-Rp-o8w.title" = "Валюта";
+
+/* Class = "UITableViewSection"; headerTitle = "Currency settings"; ObjectID = "7Hc-Jc-x8U"; Note = "Настройки источник данных "; */
+"7Hc-Jc-x8U.headerTitle" = "Параметри валют";
+
 /* Class = "UIButton"; normalTitle = "Buy / Sell Instantly"; ObjectID = "WVM-8J-Hzj"; Note = "changelly"; */
 "WVM-8J-Hzj.normalTitle" = "Купуйте / продавайте миттєво";
 
@@ -7,7 +13,7 @@
 /* Class = "UINavigationItem"; title = "Add"; ObjectID = "fra-i8-hjZ"; */
 "fra-i8-hjZ.title" = "Додати";
 
-/* Class = "UITableViewSection"; headerTitle = "Price"; ObjectID = "tyt-ZY-uLd"; Note = "Настройки выбор валюты"; */
+/* (No Comment) */
 "tyt-ZY-uLd.headerTitle" = "Ціна";
 
 /* Class = "UITableViewSection"; headerTitle = "Rate change period"; ObjectID = "uMW-aC-8Ll"; Note = "Настройки выбор периода"; */
