@@ -42,7 +42,7 @@ public class SettingsUserDefaults{
         return keyStore.array(forKey: "id") as? [String]
     }
     
-    public func setUserDefaults(ticher: [Ticker]?, lastUpdate: Date? = Date()) {
+    public func setUserDefaults(ticher: [Ticker]?, idArray: [String]? = nil, lastUpdate: Date? = Date()) {
         var userDefaults: UserDefaults?
         #if os(iOS)
             userDefaults = UserDefaults(suiteName: "group.mialin.valentyn.crypto.monitor")
@@ -66,6 +66,9 @@ public class SettingsUserDefaults{
             catch let error {
                 print(error.localizedDescription)
             }
+        }
+        if let idArray = idArray {
+            userDefaults?.set(idArray, forKey: "id")
         }
         userDefaults?.synchronize()
     }

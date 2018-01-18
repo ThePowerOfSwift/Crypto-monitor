@@ -4,40 +4,41 @@ import Alamofire
 public struct CryptoCurrencyKit {
     
     public static func fetchTickers(convert: Money = .usd, idArray: [String]?, limit: Int? = nil, response: ((_ r: ResponseA<Ticker>) -> Void)?) {
-        var urlString = "https://api.coinmarketcap.com/v1/ticker/"
-        urlString.append("?convert=\(convert.rawValue)")
-        if let limit = limit {
-            urlString.append("&limit=\(limit)")
-        }
-        let url = URL(string: urlString)!
-        let urlRequest = URLRequest(url: url)
-        //   urlRequest.timeoutInterval = 5
-        // urlRequest.cachePolicy = .reloadIgnoringLocalCacheData
-        
-        
-        let closure: ((ResponseA<Ticker>) -> Void)? = { r in
-            switch r {
-            case .success(let data):
-                var tickerFilterArray = [Ticker]()
-                if let idArray = idArray {
-                    for id in idArray{
-                        print (id)
-                        if let json = data.filter({ $0.id == id}).first{
-                            tickerFilterArray.append(json)
+        DispatchQueue .global (qos: .utility) .async {
+            var urlString = "https://api.coinmarketcap.com/v1/ticker/"
+            urlString.append("?convert=\(convert.rawValue)")
+            if let limit = limit {
+                urlString.append("&limit=\(limit)")
+            }
+            let url = URL(string: urlString)!
+            let urlRequest = URLRequest(url: url)
+            
+            let closure: ((ResponseA<Ticker>) -> Void)? = { r in
+                switch r {
+                case .success(let data):
+                    var tickerFilterArray = [Ticker]()
+                    if let idArray = idArray {
+                        for id in idArray{
+                            if let json = data.filter({ $0.id == id}).first{
+                                tickerFilterArray.append(json)
+                            }
                         }
                     }
+                    else{
+                        tickerFilterArray = data
+                    }
+                    DispatchQueue.main.async {
+                        response?(ResponseA.success(tickerFilterArray))
+                    }
+                case .failure(let error):
+                    print(error.localizedDescription)
+                    DispatchQueue.main.async {
+                        response?(ResponseA.failure(error: error))
+                    }
                 }
-                else{
-                    tickerFilterArray = data
-                }
-                            //        print(tickerFilterArray)
-                response?(ResponseA.success(tickerFilterArray))
-            case .failure(let error):
-                print(error.localizedDescription)
-                response?(ResponseA.failure(error: error))
             }
+            requestA(urlRequest: urlRequest, idArray: idArray, response: closure)
         }
-        requestA(urlRequest: urlRequest, idArray: idArray, response: closure)
     }
     
     public static func fetchTicker(coinName: String, convert: Money = .usd, response: ((_ r: ResponseD<Ticker>) -> Void)?) {
@@ -209,32 +210,36 @@ extension CryptoCurrencyKit {
     
     static func requestA<T>(urlRequest: URLRequest, idArray: [String]?, response: ((_ r: ResponseA<T>) -> Void)?) {
         print("requestA")
-        Alamofire.SessionManager.default.session.getTasksWithCompletionHandler { dataTasks, _, _ in
-            dataTasks.forEach
-                {
-                    if ($0.originalRequest?.url?.absoluteString.range(of: "https://api.coinmarketcap.com/v1/ticker/") != nil)
+        DispatchQueue .global (qos: .userInitiated) .async {
+            Alamofire.SessionManager.default.session.getTasksWithCompletionHandler { dataTasks, _, _ in
+                dataTasks.forEach
                     {
-                        $0.cancel()
+                        if ($0.originalRequest?.url?.absoluteString.range(of: "https://api.coinmarketcap.com/v1/ticker/") != nil)
+                        {
+                            $0.cancel()
+                        }
+                }
+            }
+            
+            Alamofire.SessionManager.default.request(urlRequest).validate().responseData { res in
+                
+                switch res.result {
+                case .success(let responseData):
+                    print("Validation Successful getTicker2")
+                    
+                    let decoder = JSONDecoder()
+                    do {
+                        let objects = try decoder.decode([T].self, from: responseData)
+                        response?(ResponseA.success(objects))
+                    } catch let decodeE {
+                        response?(ResponseA.failure(error: decodeE))
                     }
+                case .failure(let error):
+                    response?(ResponseA.failure(error: error))
+                }
             }
         }
         
-        Alamofire.SessionManager.default.request(urlRequest).validate().responseData { res in
-            switch res.result {
-            case .success(let responseData):
-                print("Validation Successful getTicker2")
-                
-                let decoder = JSONDecoder()
-                do {
-                    let objects = try decoder.decode([T].self, from: responseData)
-                    response?(ResponseA.success(objects))
-                } catch let decodeE {
-                    response?(ResponseA.failure(error: decodeE))
-                }
-            case .failure(let error):
-                response?(ResponseA.failure(error: error))
-            }
-        }
     }
     
     static func requestD<T>(urlRequest: URLRequest, response: ((_ r: ResponseD<T>) -> Void)?) {

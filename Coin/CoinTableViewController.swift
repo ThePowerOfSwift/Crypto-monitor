@@ -49,16 +49,18 @@ class CoinTableViewController: UITableViewController, WCSessionDelegate {
     
     // Sender Watch
     private func updateApplicationContext(id: [String]) {
-        do {
-            let keyStore = NSUbiquitousKeyValueStore ()
-            let percentChange = Int(keyStore.longLong(forKey: "percentChange"))
-            let currentCurrency = SettingsUserDefaults().getCurrentCurrency().rawValue
-            
-            let context = ["id" : id, "percentChange" : percentChange, "CurrentCurrency" : currentCurrency] as [String : Any]
-            try watchSession?.updateApplicationContext(context)
-            
-        } catch let error as NSError {
-            print("Error: \(error.description)")
+        DispatchQueue.global(qos: .background).async {
+            do {
+                let keyStore = NSUbiquitousKeyValueStore ()
+                let percentChange = Int(keyStore.longLong(forKey: "percentChange"))
+                let currentCurrency = SettingsUserDefaults().getCurrentCurrency().rawValue
+                
+                let context = ["id" : id, "percentChange" : percentChange, "CurrentCurrency" : currentCurrency] as [String : Any]
+                try watchSession?.updateApplicationContext(context)
+                
+            } catch let error as NSError {
+                print("Error: \(error.description)")
+            }
         }
     }
     
@@ -66,27 +68,28 @@ class CoinTableViewController: UITableViewController, WCSessionDelegate {
     /** Called on the delegate of the receiver. Will be called on startup if an applicationContext is available. */
     func session(_ session: WCSession, didReceiveApplicationContext applicationContext: [String : Any]){
         // handle receiving application context
-        let keyStore = NSUbiquitousKeyValueStore ()
-        
-        if let percentChange = applicationContext["percentChange"] as? Int {
-            keyStore.set(percentChange, forKey: "percentChange")
-        }
-        
-        if let priceCurrency = applicationContext["priceCurrency"] as? Int {
-            keyStore.set(priceCurrency, forKey: "priceCurrency")
-        }
-        keyStore.synchronize()
-        
-        DispatchQueue.main.async() {
+        DispatchQueue.global(qos: .background).async {
+            let keyStore = NSUbiquitousKeyValueStore ()
+            
+            if let percentChange = applicationContext["percentChange"] as? Int {
+                keyStore.set(percentChange, forKey: "percentChange")
+            }
+            
+            if let priceCurrency = applicationContext["priceCurrency"] as? Int {
+                keyStore.set(priceCurrency, forKey: "priceCurrency")
+            }
+            keyStore.synchronize()
+            
             self.loadCache()
         }
     }
     
+
     //MARK:LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
         NotificationCenter.default.addObserver(self, selector: #selector(applicationDidBecomeActiveNotification), name:NSNotification.Name.UIApplicationDidBecomeActive, object: nil)
-        self.refreshControl?.addTarget(self, action: #selector(self.refresh), for: UIControlEvents.valueChanged)
+      // self.refreshControl?.addTarget(self, action: #selector(CoinTableViewController.refresh(_:)), for: UIControlEvents.ValueChanged)
         
         let keyStore = NSUbiquitousKeyValueStore()
         NotificationCenter.default.addObserver(self,
@@ -98,6 +101,8 @@ class CoinTableViewController: UITableViewController, WCSessionDelegate {
         let editBarButton = UIBarButtonItem.init(barButtonSystemItem: .edit, target: self, action: #selector(edit))
         self.navigationItem.rightBarButtonItem = editBarButton
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "Setting"), style: UIBarButtonItemStyle.plain, target: self, action: #selector(settingsShow))
+
+        
         
         // Set up and activate your session early here!
         if(WCSession.isSupported()){
@@ -116,40 +121,69 @@ class CoinTableViewController: UITableViewController, WCSessionDelegate {
             }
         }
         
-        DispatchQueue.main.async() {
-            let keyStore = NSUbiquitousKeyValueStore ()
-            let idKeyStore = keyStore.array(forKey: "id") as? [String]
-            if let idKeyStore = idKeyStore {
-                self.updateApplicationContext(id: idKeyStore)
-            }
-            self.cryptocurrencyView()
-            self.loadTicker()
+        
+        let keyStore = NSUbiquitousKeyValueStore ()
+        let idKeyStore = keyStore.array(forKey: "id") as? [String]
+        if let idKeyStore = idKeyStore {
+            self.updateApplicationContext(id: idKeyStore)
         }
+        self.cryptocurrencyView()
+        self.loadTicker()
+        
     }
     
     @objc func applicationDidBecomeActiveNotification(notification : NSNotification) {
         print("unlock")
     }
+    @IBAction func refresh(_ sender: UIRefreshControl) {
+         DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) {
+            self.loadTicker()
+        }
+
+    
+    }
     
     @objc func ubiquitousKeyValueStoreDidChange(notification: NSNotification) {
-        
-        guard let userInfo = notification.userInfo else { return }
-        guard let changedKeysKey = userInfo[AnyHashable("NSUbiquitousKeyValueStoreChangedKeysKey")] as? NSArray else { return }
-        
-        if changedKeysKey.contains("id") {
-            if let idArray = SettingsUserDefaults().getIdArray(){
-                let userDefaults = UserDefaults(suiteName: "group.mialin.valentyn.crypto.monitor")
-                userDefaults?.set(idArray, forKey: "id")
-                userDefaults?.synchronize()
+        /*
+         guard let userInfo = notification.userInfo else { return }
+         guard let changedKeysKey = userInfo[AnyHashable("NSUbiquitousKeyValueStoreChangedKeysKey")] as? NSArray else { return }
+         
+         if changedKeysKey.contains("id") {
+         if let idArray = SettingsUserDefaults().getIdArray(){
+         let userDefaults = UserDefaults(suiteName: "group.mialin.valentyn.crypto.monitor")
+         userDefaults?.set(idArray, forKey: "id")
+         userDefaults?.synchronize()
+         }
+         CSSearchableIndex.default().deleteAllSearchableItems()
+         }
+         
+         if let idArray = SettingsUserDefaults().getIdArray(){
+         updateApplicationContext(id: idArray)
+         }
+         loadTicker()*/
+        DispatchQueue.global(qos: .background).async {
+            let keyStore = NSUbiquitousKeyValueStore ()
+            let idKeyStore = keyStore.array(forKey: "id") as? [String]
+            let userDefaults = UserDefaults(suiteName: "group.mialin.valentyn.crypto.monitor")
+            let idUserDefaults = userDefaults?.array(forKey: "id") as? [String]
+            if idKeyStore != nil && idUserDefaults != nil {
+                if idKeyStore! != idUserDefaults! {
+                    self.loadTicker()
+                    print("************loadTicker ************")
+                }
+                else{
+                    self.loadCache()
+                    print("************ loadCache************ ")
+                }
             }
-            CSSearchableIndex.default().deleteAllSearchableItems()
+            
+            if let idKeyStore = idKeyStore {
+                self.updateApplicationContext(id: idKeyStore)
+            }
+            
+            
+            print("iCloud key-value-store change detected")
         }
-        
-        if let idArray = SettingsUserDefaults().getIdArray(){
-            updateApplicationContext(id: idArray)
-        }
-        loadTicker()
-        print("iCloud key-value-store change detected")
     }
     
     func loadCache() {
@@ -157,9 +191,13 @@ class CoinTableViewController: UITableViewController, WCSessionDelegate {
             getTickerID = cacheTicker
             let userDefaults = UserDefaults(suiteName: "group.mialin.valentyn.crypto.monitor")
             if let lastUpdate = userDefaults?.object(forKey: "lastUpdate") as? NSDate {
-                self.refreshControl?.attributedTitle = NSAttributedString(string: dateToString(date: lastUpdate))
+                DispatchQueue.main.async {
+                    self.refreshControl?.attributedTitle = NSAttributedString(string: self.dateToString(date: lastUpdate))
+                }
             }
-            tableView.reloadData()
+            DispatchQueue .main.async {
+                self.tableView.reloadData()
+            }
         }
     }
     
@@ -245,24 +283,27 @@ class CoinTableViewController: UITableViewController, WCSessionDelegate {
     }
     
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete{
-            let keyStore = NSUbiquitousKeyValueStore ()
-            if var idArray = keyStore.array(forKey: "id") as? [String] {
-                if let index = idArray.index(of: getTickerID![indexPath.row].id){
-                    idArray.remove(at: index)
-                    deindexItem(identifier: getTickerID![indexPath.row].id)
-                    getTickerID!.remove(at: indexPath.row)
-                    
-                    // set iCloud key-value
-                    keyStore.set(idArray, forKey: "id")
-                    keyStore.synchronize()
-                    
-                    updateApplicationContext(id: idArray)
-                    // set UserDefaults
-                    SettingsUserDefaults().setUserDefaults(ticher: getTickerID!, lastUpdate: nil)
+        DispatchQueue.global(qos: .utility).async {
+            if editingStyle == .delete{
+                let keyStore = NSUbiquitousKeyValueStore ()
+                if var idArray = keyStore.array(forKey: "id") as? [String] {
+                    if let index = idArray.index(of: getTickerID![indexPath.row].id){
+                        idArray.remove(at: index)
+                        self.deindexItem(identifier: getTickerID![indexPath.row].id)
+                        getTickerID!.remove(at: indexPath.row)
+                        
+                        // set UserDefaults
+                        SettingsUserDefaults().setUserDefaults(ticher: getTickerID!, idArray: idArray, lastUpdate: nil)
+                        
+                        // set iCloud key-value
+                        keyStore.set(idArray, forKey: "id")
+                        keyStore.synchronize()
+                        
+                        self.updateApplicationContext(id: idArray)
+                    }
                 }
+                self.cryptocurrencyView()
             }
-            cryptocurrencyView()
         }
     }
     
@@ -276,30 +317,34 @@ class CoinTableViewController: UITableViewController, WCSessionDelegate {
     }
     
     override func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
-        
-        let keyStore = NSUbiquitousKeyValueStore()
-        if var idArray = keyStore.array(forKey: "id") as? [String] {
-            if let index = idArray.index(of: getTickerID![sourceIndexPath.row].id){
-                idArray.remove(at: index)
-                idArray.insert(getTickerID![sourceIndexPath.row].id, at: destinationIndexPath.row)
-                getTickerID!.rearrange(from: sourceIndexPath.row, to: destinationIndexPath.row)
-                
-                // set iCloud key-value
-                keyStore.set(idArray, forKey: "id")
-                keyStore.synchronize()
-                
-                updateApplicationContext(id: idArray)
-                // set UserDefaults
-                SettingsUserDefaults().setUserDefaults(ticher: getTickerID!, lastUpdate: nil)
+        DispatchQueue.global(qos: .utility).async {
+            let keyStore = NSUbiquitousKeyValueStore()
+            if var idArray = keyStore.array(forKey: "id") as? [String] {
+                if let index = idArray.index(of: getTickerID![sourceIndexPath.row].id){
+                    idArray.remove(at: index)
+                    idArray.insert(getTickerID![sourceIndexPath.row].id, at: destinationIndexPath.row)
+                    getTickerID!.rearrange(from: sourceIndexPath.row, to: destinationIndexPath.row)
+      
+                    SettingsUserDefaults().setUserDefaults(ticher: getTickerID!, idArray: idArray, lastUpdate: nil)
+
+                    // set iCloud key-value
+                    keyStore.set(idArray, forKey: "id")
+                    keyStore.synchronize()
+                    
+                    self.updateApplicationContext(id: idArray)
+                    
+                }
             }
         }
     }
     
     private func cryptocurrencyView() {
-        self.refreshControl?.endRefreshing()
-        
+        DispatchQueue.main.async {
+            UIView.animate(withDuration: 0.25) {
+                self.refreshControl?.endRefreshing()
+            }
+        }
         guard getTickerID != nil else { return }
-        
         
         if getTickerID!.isEmpty {
             self.showEmptySubview()
@@ -314,44 +359,49 @@ class CoinTableViewController: UITableViewController, WCSessionDelegate {
             }
         }
         
-        let userDefaults = UserDefaults(suiteName: "group.mialin.valentyn.crypto.monitor")
-        if let lastUpdate = userDefaults?.object(forKey: "lastUpdate") as? NSDate {
-            self.refreshControl?.attributedTitle = NSAttributedString(string: dateToString(date: lastUpdate))
+        DispatchQueue.main.async {
+            let userDefaults = UserDefaults(suiteName: "group.mialin.valentyn.crypto.monitor")
+            if let lastUpdate = userDefaults?.object(forKey: "lastUpdate") as? NSDate {
+                self.refreshControl?.attributedTitle = NSAttributedString(string: self.dateToString(date: lastUpdate))
+            }
+            
+            self.tableView.reloadData()
         }
-        tableView.reloadData()
     }
     
     private func loadTicker() {
-        guard let idArray = SettingsUserDefaults().getIdArray() else { return }
-   
-        if idArray.isEmpty {
-            getTickerID = [Ticker]()
-            SettingsUserDefaults().setUserDefaults(ticher: [Ticker](), lastUpdate: nil)
-            showEmptySubview()
-        }
-        else{
-            // Какой вид загрузки отображать
-            if getTickerID == nil {
-                showLoadSubview()
-            }
+        DispatchQueue.global(qos: .utility).async {
+            guard let idArray = SettingsUserDefaults().getIdArray() else { return }
             
-            CryptoCurrencyKit.fetchTickers(convert: SettingsUserDefaults().getCurrentCurrency(), idArray: idArray, limit: 0) { (response) in
-                switch response {
-                case .success(let tickers):
-                    getTickerID = tickers
-                    SettingsUserDefaults().setUserDefaults(ticher: tickers)
-                    self.updateApplicationContext(id: idArray)
-                    self.indexItem(ticker: tickers)
-                    DispatchQueue.main.async() {
+            if idArray.isEmpty {
+                getTickerID = [Ticker]()
+                SettingsUserDefaults().setUserDefaults(ticher: [Ticker](), lastUpdate: nil)
+                self.showEmptySubview()
+            }
+            else{
+                // Какой вид загрузки отображать
+                if getTickerID == nil {
+                    self.showLoadSubview()
+                }
+                
+                CryptoCurrencyKit.fetchTickers(convert: SettingsUserDefaults().getCurrentCurrency(), idArray: idArray, limit: 0) { (response) in
+                    switch response {
+                    case .success(let tickers):
+                        
+                        getTickerID = tickers
                         self.cryptocurrencyView()
+                        SettingsUserDefaults().setUserDefaults(ticher: tickers)
+                        self.updateApplicationContext(id: idArray)
+                        self.indexItem(ticker: tickers)
+
+                        print("success")
+                    case .failure(let error):
+                        self.showErrorSubview(error: error)
+                        print("failure")
                     }
-                    print("success")
-                case .failure(let error):
-                    self.showErrorSubview(error: error)
-                    print("failure")
                 }
             }
-        }
+      }
     }
     
     func fetch(_ completion: () -> Void) {
@@ -379,9 +429,7 @@ class CoinTableViewController: UITableViewController, WCSessionDelegate {
     }
     
     
-    @objc func refresh(sender:AnyObject) {
-        loadTicker()
-    }
+
     
     @objc func reload(_ sender:UIButton) {
         loadTicker()
@@ -390,62 +438,68 @@ class CoinTableViewController: UITableViewController, WCSessionDelegate {
     
     //MARK:LoadSubview
     func showLoadSubview() {
-        self.refreshControl?.endRefreshing()
-        self.loadSubview = LoadSubview(frame: CGRect(x: 0, y: 0, width: self.view.bounds.width, height: self.view.bounds.height ))
-        self.view.superview?.addSubview(self.loadSubview!)
+        DispatchQueue.main.async() {
+            self.refreshControl?.endRefreshing()
+            self.loadSubview = LoadSubview(frame: CGRect(x: 0, y: 0, width: self.view.bounds.width, height: self.view.bounds.height ))
+            self.view.superview?.addSubview(self.loadSubview!)
+        }
     }
     
     //MARK: ErrorSubview
     func showErrorSubview(error: Error) {
         if (error as NSError).code != -999 {
-            var errorSubview:ErrorSubview?
-            self.refreshControl?.endRefreshing()
-            
-            errorSubview = ErrorSubview(frame: CGRect(x: 0, y: 0, width: self.view.bounds.width, height: self.view.bounds.height))
-            
-            if !UIAccessibilityIsReduceTransparencyEnabled() {
-                errorSubview?.backgroundColor = UIColor.clear
+            DispatchQueue.main.async() {
                 
-                let blurEffect = UIBlurEffect(style: .prominent)
-                let blurEffectView = UIVisualEffectView(effect: blurEffect)
-                //always fill the view
-                blurEffectView.frame = CGRect(x: 0, y: 0, width: self.view.bounds.width, height: self.view.bounds.height)
-                blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+                var errorSubview:ErrorSubview?
+                self.refreshControl?.endRefreshing()
                 
-                errorSubview?.insertSubview(blurEffectView, at: 0)
-            } else {
-                errorSubview?.backgroundColor = UIColor.white
+                errorSubview = ErrorSubview(frame: CGRect(x: 0, y: 0, width: self.view.bounds.width, height: self.view.bounds.height))
+                
+                if !UIAccessibilityIsReduceTransparencyEnabled() {
+                    errorSubview?.backgroundColor = UIColor.clear
+                    
+                    let blurEffect = UIBlurEffect(style: .prominent)
+                    let blurEffectView = UIVisualEffectView(effect: blurEffect)
+                    //always fill the view
+                    blurEffectView.frame = CGRect(x: 0, y: 0, width: self.view.bounds.width, height: self.view.bounds.height)
+                    blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+                    
+                    errorSubview?.insertSubview(blurEffectView, at: 0)
+                } else {
+                    errorSubview?.backgroundColor = UIColor.white
+                }
+                
+                errorSubview?.errorStringLabel.text = error.localizedDescription
+                errorSubview?.reloadPressed.addTarget(self, action: #selector(self.reload(_:)), for: UIControlEvents.touchUpInside)
+                
+                self.view.superview?.addSubview(errorSubview!)
             }
-            
-            errorSubview?.errorStringLabel.text = error.localizedDescription
-            errorSubview?.reloadPressed.addTarget(self, action: #selector(reload(_:)), for: UIControlEvents.touchUpInside)
-            
-            self.view.superview?.addSubview(errorSubview!)
         }
     }
     
     func showEmptySubview() {
-        self.refreshControl?.endRefreshing()
-        
-        self.emptySubview = EmptySubview(frame: CGRect(x: 0, y: 0, width: self.view.bounds.width, height: self.view.bounds.height ))
-        
-        if !UIAccessibilityIsReduceTransparencyEnabled() {
-            self.emptySubview?.backgroundColor = UIColor.clear
+        DispatchQueue.main.async() {
+            self.refreshControl?.endRefreshing()
             
-            let blurEffect = UIBlurEffect(style: .dark)
-            let blurEffectView = UIVisualEffectView(effect: blurEffect)
-            //always fill the view
-            blurEffectView.frame = CGRect(x: 0, y: 0, width: self.view.bounds.width, height: self.view.bounds.height )
-            blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+            self.emptySubview = EmptySubview(frame: CGRect(x: 0, y: 0, width: self.view.bounds.width, height: self.view.bounds.height ))
             
-            self.emptySubview?.insertSubview(blurEffectView, at: 0)
-        } else {
-            self.emptySubview?.backgroundColor = UIColor.white
+            if !UIAccessibilityIsReduceTransparencyEnabled() {
+                self.emptySubview?.backgroundColor = UIColor.clear
+                
+                let blurEffect = UIBlurEffect(style: .dark)
+                let blurEffectView = UIVisualEffectView(effect: blurEffect)
+                //always fill the view
+                blurEffectView.frame = CGRect(x: 0, y: 0, width: self.view.bounds.width, height: self.view.bounds.height )
+                blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+                
+                self.emptySubview?.insertSubview(blurEffectView, at: 0)
+            } else {
+                self.emptySubview?.backgroundColor = UIColor.white
+            }
+            
+            self.emptySubview?.addCryptocurrency.addTarget(self, action: #selector(self.addShow(_:)), for: UIControlEvents.touchUpInside)
+            self.view.superview?.addSubview(self.emptySubview!)
         }
-        
-        self.emptySubview?.addCryptocurrency.addTarget(self, action: #selector(addShow(_:)), for: UIControlEvents.touchUpInside)
-        self.view.superview?.addSubview(emptySubview!)
-
     }
     
     
@@ -466,14 +520,16 @@ class CoinTableViewController: UITableViewController, WCSessionDelegate {
     
     //MARK: Spotlight
     override func updateUserActivityState(_ activity: NSUserActivity) {
-        if let cacheTicker = SettingsUserDefaults().loadcacheTicker() {
-            CSSearchableIndex.default().deleteAllSearchableItems()
-            indexItem(ticker: cacheTicker)
+        DispatchQueue.global(qos: .background).async {
+            if let cacheTicker = SettingsUserDefaults().loadcacheTicker() {
+                CSSearchableIndex.default().deleteAllSearchableItems()
+                self.indexItem(ticker: cacheTicker)
+            }
         }
     }
     
     func indexItem(ticker: [Ticker]) {
-        DispatchQueue.global(qos: .userInitiated).async {
+        DispatchQueue.global(qos: .background).async {
             var searchableItems = [CSSearchableItem]()
             
             for ticker in ticker{
@@ -507,15 +563,16 @@ class CoinTableViewController: UITableViewController, WCSessionDelegate {
                 }
             }
         }
-        
     }
     
     func deindexItem(identifier: String) {
-        CSSearchableIndex.default().deleteSearchableItems(withIdentifiers: ["\(identifier)"]) { error in
-            if let error = error {
-                print("Deindexing error: \(error.localizedDescription)")
-            } else {
-                print("Search item successfully removed!")
+        DispatchQueue.global(qos: .background).async {
+            CSSearchableIndex.default().deleteSearchableItems(withIdentifiers: ["\(identifier)"]) { error in
+                if let error = error {
+                    print("Deindexing error: \(error.localizedDescription)")
+                } else {
+                    print("Search item successfully removed!")
+                }
             }
         }
     }

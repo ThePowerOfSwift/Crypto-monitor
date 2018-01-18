@@ -193,11 +193,30 @@ extension Ticker {
         //formatterCurrency.locale = Locale(identifier: "en_US")
         formatterCurrency.locale  = Locale.current
         formatterCurrency.maximumFractionDigits = maximumFractionDigits
+        formatterCurrency.nilSymbol = "-"
         return formatterCurrency
     }
     
+    func formatterBtc() -> NumberFormatter {
+        let formatterBtc = NumberFormatter()
+        formatterBtc.locale = Locale.current
+        formatterBtc.numberStyle = .currency
+        formatterBtc.maximumFractionDigits = 8
+        formatterBtc.currencySymbol = "₿"
+        formatterBtc.nilSymbol = "-"
+        return formatterBtc
+    }
+    
     public func priceBtcToString() -> String {
-        return priceBTC != nil ? "₿\(priceBTC!)" : "null"
+        let formatter = NumberFormatter()
+        formatter.locale = Locale.current
+        formatter.numberStyle = .currency
+        formatter.maximumFractionDigits = 8
+        formatter.currencySymbol = "₿"
+        formatter.nilSymbol = "-"
+
+
+        return formatterCurrency(for: .btc, maximumFractionDigits: 8).string(for: priceBTC)!
     }
     
     public func priceToString(for money: CryptoCurrencyKit.Money, maximumFractionDigits: Int) -> String {
@@ -208,7 +227,7 @@ extension Ticker {
             return formatterCurrency.string(from: NSNumber(value: price))!
         }
         else{
-            return "null"
+            return "-"
         }
     }
     
@@ -220,7 +239,7 @@ extension Ticker {
             return formatterCurrency.string(from: NSNumber(value: marketCap))!
         }
         else{
-            return "null"
+            return "-"
         }
     }
     
@@ -232,7 +251,7 @@ extension Ticker {
             return formatterCurrency.string(from: NSNumber(value: volume))!
         }
         else{
-            return "null"
+            return "-"
         }
     }
     
@@ -240,14 +259,14 @@ extension Ticker {
     
     
     public func priceCurrency() -> String {
-        
+
         let currency =  SettingsUserDefaults().getCurrentCurrency()
         
         switch currency {
         case .btc:
             return priceBtcToString()
         default:
-            guard let price = price(for: currency) else { return "null" }
+            guard let price = price(for: currency) else { return "-" }
             if price > 0.01 {
                 let formatter = formatterCurrency(for: currency, maximumFractionDigits: 2)
                 return formatter.string(from: NSNumber(value: price))!
@@ -285,7 +304,7 @@ extension Ticker {
             return String(percentChange)
         }
         else{
-            return "null"
+            return "-"
         }
     }
     
@@ -307,7 +326,7 @@ extension Ticker {
      return percentChange
      }
      else{
-     return "null"
+     return "-"
      }
      }
      */
