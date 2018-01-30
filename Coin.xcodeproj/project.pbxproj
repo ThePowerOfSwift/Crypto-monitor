@@ -33,7 +33,6 @@
 		FB2F88F31FEC07CB003B62CF /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = FB2F88F51FEC07CB003B62CF /* InfoPlist.strings */; };
 		FB2F88F81FEC07CC003B62CF /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = FB2F88FA1FEC07CC003B62CF /* Localizable.strings */; };
 		FB2F88FD1FEC07CD003B62CF /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = FB2F88FF1FEC07CD003B62CF /* InfoPlist.strings */; };
-		FB448FCA2007866100EC2FA7 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FB448FC92007866100EC2FA7 /* StoreKit.framework */; };
 		FB466DDA1F2D479200D771C9 /* SettingTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB466DD91F2D479200D771C9 /* SettingTableViewController.swift */; };
 		FB4955241F2B627600169CB0 /* ErrorSubview.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB4955221F2B627600169CB0 /* ErrorSubview.swift */; };
 		FB5326CB1F254A9400D9C498 /* AddTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB5326CA1F254A9400D9C498 /* AddTableViewCell.swift */; };
@@ -62,6 +61,7 @@
 		FBBE49342008FD7300277014 /* CryptoCurrencyKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBBE49302008FD7300277014 /* CryptoCurrencyKit.swift */; };
 		FBBE49352008FD7300277014 /* CryptoCurrencyKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBBE49302008FD7300277014 /* CryptoCurrencyKit.swift */; };
 		FBBF266E1F5AD2CD0050BED7 /* ComplicationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBBF266D1F5AD2CD0050BED7 /* ComplicationController.swift */; };
+		FBC054B8201F67FA00458F8D /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FBC054B7201F67FA00458F8D /* StoreKit.framework */; };
 		FBCDD40F1F307E50002B9BA4 /* WidgetCellTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBCDD40E1F307E50002B9BA4 /* WidgetCellTableViewCell.swift */; };
 		FBD5ABE51F214CFA003A3AAC /* AddTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBD5ABE41F214CFA003A3AAC /* AddTableViewController.swift */; };
 		FBD6A3021F73C5E50063FD62 /* LoadSubview.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBD6A3001F73C5E50063FD62 /* LoadSubview.swift */; };
@@ -287,7 +287,6 @@
 		FB2F88F41FEC07CB003B62CF /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		FB2F88F91FEC07CC003B62CF /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
 		FB2F88FE1FEC07CD003B62CF /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		FB448FC92007866100EC2FA7 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		FB466DD91F2D479200D771C9 /* SettingTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingTableViewController.swift; sourceTree = "<group>"; };
 		FB4955221F2B627600169CB0 /* ErrorSubview.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ErrorSubview.swift; sourceTree = "<group>"; };
 		FB5326CA1F254A9400D9C498 /* AddTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddTableViewCell.swift; sourceTree = "<group>"; };
@@ -328,6 +327,7 @@
 		FBBE49202008F5E700277014 /* info-watchOS.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "info-watchOS.plist"; sourceTree = "<group>"; };
 		FBBE49302008FD7300277014 /* CryptoCurrencyKit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CryptoCurrencyKit.swift; sourceTree = "<group>"; };
 		FBBF266D1F5AD2CD0050BED7 /* ComplicationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComplicationController.swift; sourceTree = "<group>"; };
+		FBC054B7201F67FA00458F8D /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		FBCDD40E1F307E50002B9BA4 /* WidgetCellTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WidgetCellTableViewCell.swift; sourceTree = "<group>"; };
 		FBD5ABE41F214CFA003A3AAC /* AddTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddTableViewController.swift; sourceTree = "<group>"; };
 		FBD6A3001F73C5E50063FD62 /* LoadSubview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadSubview.swift; sourceTree = "<group>"; };
@@ -367,7 +367,7 @@
 				FB183764200D035D001C6358 /* AlamofireNetworkActivityIndicator.framework in Frameworks */,
 				FB183762200D033B001C6358 /* Charts.framework in Frameworks */,
 				FB183760200D0328001C6358 /* SwiftyJSON.framework in Frameworks */,
-				FB448FCA2007866100EC2FA7 /* StoreKit.framework in Frameworks */,
+				FBC054B8201F67FA00458F8D /* StoreKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -412,13 +412,13 @@
 		731467F8FA5309E32222B93E /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				FBC054B7201F67FA00458F8D /* StoreKit.framework */,
 				FB183765200D035D001C6358 /* AlamofireNetworkActivityIndicator.framework */,
 				FB183763200D033B001C6358 /* Charts.framework */,
 				FB183761200D0328001C6358 /* SwiftyJSON.framework */,
 				FB18375F200D02F5001C6358 /* AlamofireImage.framework */,
 				FB18375D200D0298001C6358 /* Alamofire.framework */,
 				FB18375B200D028A001C6358 /* Alamofire.framework */,
-				FB448FC92007866100EC2FA7 /* StoreKit.framework */,
 				FB99B48B1F2FEF1F007C0235 /* NotificationCenter.framework */,
 			);
 			name = Frameworks;

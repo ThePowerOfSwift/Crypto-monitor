@@ -133,6 +133,8 @@ class CoinTableViewController: UITableViewController, WCSessionDelegate {
     }
     
     @objc func applicationDidBecomeActiveNotification(notification : NSNotification) {
+        loadCache()
+        loadTicker()
         print("unlock")
     }
     @IBAction func refresh(_ sender: UIRefreshControl) {

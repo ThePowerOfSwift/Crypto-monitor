@@ -124,11 +124,13 @@ class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
+             print("viewWillAppear")
         viewCryptocurrencyInfo()
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(true)
+        print("viewDidAppear")
         loadTicker()
         loadlineView()
     }
@@ -139,6 +141,7 @@ class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
     
     //Unlock
     @objc func applicationDidBecomeActiveNotification(notification : NSNotification) {
+        print("applicationDidBecomeActiveNotification")
         viewCryptocurrencyInfo()
         loadTicker()
         loadlineView()
