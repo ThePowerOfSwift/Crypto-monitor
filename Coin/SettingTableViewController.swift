@@ -10,51 +10,44 @@ import UIKit
 import CryptoCurrency
 import StoreKit
 
-class SettingTableViewController: UITableViewController, SKProductsRequestDelegate, SKPaymentTransactionObserver {
+class SettingTableViewController: UITableViewController {
     
     @IBOutlet weak var percentChangeSegmentedControl: UISegmentedControl!
     @IBOutlet weak var symbol: UILabel!
-    
-    let developerSupportId = "mialin.Coin.BuyMeCoffee"
-    var productsRequest = SKProductsRequest()
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
         let keyStore = NSUbiquitousKeyValueStore ()
         percentChangeSegmentedControl.selectedSegmentIndex = Int(keyStore.longLong(forKey: "percentChange"))
-
-        // Put here your IAP Products ID's
-        let productIdentifiers = NSSet(objects:developerSupportId)
         
-        productsRequest = SKProductsRequest(productIdentifiers: productIdentifiers as! Set<String>)
-        productsRequest.delegate = self
-        productsRequest.start()   
+        IAPHandler.shared.requestProducts { success, products in
+            if success {
+                
+              //  products?.sorted(){Float(truncating: $0.price) < Float(truncating: $1.price)}
+                
+                let sortProducts = products?.sorted(){$0.price.floatValue < $1.price.floatValue}
+                for product in sortProducts! {
+                    print(product.localizedDescription)
+                }
+            }
+        }
+        IAPHandler.shared.purchaseStatusBlock = {[weak self] (type) in
+            guard let strongSelf = self else{ return }
+            if type == .purchased {
+                let alertView = UIAlertController(title: "", message: type.message(), preferredStyle: .alert)
+                let action = UIAlertAction(title: "OK", style: .default, handler: { (alert) in
+                    
+                })
+                alertView.addAction(action)
+                strongSelf.present(alertView, animated: true, completion: nil)
+            }
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
         let money = SettingsUserDefaults().getCurrentCurrency()
         symbol.text = money.flag + " " + money.rawValue
-    }
-    
-    func paymentQueue(_ queue: SKPaymentQueue, updatedTransactions transactions: [SKPaymentTransaction]) {
-        for transaction in transactions {
-            print(transaction.transactionState)
-        }
-    }
-    
-    func productsRequest(_ request: SKProductsRequest, didReceive response: SKProductsResponse) {
-        let products = response.products
-        print("Loaded list of products...")
-        
-        for p in products {
-            print("Found product: \(p.productIdentifier) \(p.localizedTitle) \(p.price.floatValue)")
-        }
-    }
-    
-    public func request(_ request: SKRequest, didFailWithError error: Error) {
-        print("Failed to load list of products.")
-        print("Error: \(error.localizedDescription)")
     }
     
     @IBAction func percentIindexChanged(_ sender: UISegmentedControl) {
@@ -68,7 +61,6 @@ class SettingTableViewController: UITableViewController, SKProductsRequestDelega
     }
     
     @IBAction func developerSupportAction(_ sender: UIButton) {
-
+        IAPHandler.shared.purchaseMyProduct(index: 0)
     }
-    
 }

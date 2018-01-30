@@ -59,7 +59,7 @@ class CoinTableViewController: UITableViewController, WCSessionDelegate {
                 try watchSession?.updateApplicationContext(context)
                 
             } catch let error as NSError {
-                print("Error: \(error.description)")
+             //   print("Error: \(error.description)")
             }
         }
     }
@@ -89,7 +89,6 @@ class CoinTableViewController: UITableViewController, WCSessionDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         NotificationCenter.default.addObserver(self, selector: #selector(applicationDidBecomeActiveNotification), name:NSNotification.Name.UIApplicationDidBecomeActive, object: nil)
-      // self.refreshControl?.addTarget(self, action: #selector(CoinTableViewController.refresh(_:)), for: UIControlEvents.ValueChanged)
         
         let keyStore = NSUbiquitousKeyValueStore()
         NotificationCenter.default.addObserver(self,
@@ -115,6 +114,8 @@ class CoinTableViewController: UITableViewController, WCSessionDelegate {
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(true)
+        print("viewDidAppear")
+        
         if getTickerID != nil {
             if getTickerID!.isEmpty {
                 self.showEmptySubview()
@@ -127,14 +128,15 @@ class CoinTableViewController: UITableViewController, WCSessionDelegate {
         if let idKeyStore = idKeyStore {
             self.updateApplicationContext(id: idKeyStore)
         }
-        self.cryptocurrencyView()
-        self.loadTicker()
         
+        self.cryptocurrencyView()
     }
     
     @objc func applicationDidBecomeActiveNotification(notification : NSNotification) {
-        loadCache()
-        loadTicker()
+        if self.viewIfLoaded?.window != nil {
+            loadCache()
+            loadTicker()
+        }
         print("unlock")
     }
     @IBAction func refresh(_ sender: UIRefreshControl) {
@@ -146,23 +148,6 @@ class CoinTableViewController: UITableViewController, WCSessionDelegate {
     }
     
     @objc func ubiquitousKeyValueStoreDidChange(notification: NSNotification) {
-        /*
-         guard let userInfo = notification.userInfo else { return }
-         guard let changedKeysKey = userInfo[AnyHashable("NSUbiquitousKeyValueStoreChangedKeysKey")] as? NSArray else { return }
-         
-         if changedKeysKey.contains("id") {
-         if let idArray = SettingsUserDefaults().getIdArray(){
-         let userDefaults = UserDefaults(suiteName: "group.mialin.valentyn.crypto.monitor")
-         userDefaults?.set(idArray, forKey: "id")
-         userDefaults?.synchronize()
-         }
-         CSSearchableIndex.default().deleteAllSearchableItems()
-         }
-         
-         if let idArray = SettingsUserDefaults().getIdArray(){
-         updateApplicationContext(id: idArray)
-         }
-         loadTicker()*/
         DispatchQueue.global(qos: .background).async {
             let keyStore = NSUbiquitousKeyValueStore ()
             let idKeyStore = keyStore.array(forKey: "id") as? [String]

@@ -139,6 +139,18 @@
                                     </fragment>
                                 </attributedString>
                             </tableViewSection>
+                            <tableViewSection headerTitle="In App" id="7bR-4H-EmQ">
+                                <cells>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="seA-1G-YTd">
+                                        <rect key="frame" x="0.0" y="355.5" width="375" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="seA-1G-YTd" id="UVm-2W-eQk">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
                         </sections>
                         <connections>
                             <outlet property="dataSource" destination="mSk-LG-rjD" id="4uz-Or-TJL"/>
@@ -153,7 +165,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="DAm-mD-TBY" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4346.25" y="-595.77464788732391"/>
+            <point key="canvasLocation" x="4344.8000000000002" y="-595.95202398800609"/>
         </scene>
         <!--Currency-->
         <scene sceneID="3JI-gw-2Gg">
