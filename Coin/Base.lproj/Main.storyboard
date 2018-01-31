@@ -12,10 +12,119 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
+        <!--Setting Table View Controller-->
+        <scene sceneID="Tcc-7p-d8k">
+            <objects>
+                <tableViewController id="l7K-TH-zo9" customClass="SettingTableViewController" customModule="Coin" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" scrollEnabled="NO" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="FwS-wG-3vk">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="rateChangePeriodCell" id="oDX-3m-6oK" customClass="RateChangePeriodCell" customModule="Coin" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="55.5" width="375" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="oDX-3m-6oK" id="a46-E1-SvA">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="4CQ-mx-WN4">
+                                            <rect key="frame" x="16" y="8" width="343" height="29"/>
+                                            <segments>
+                                                <segment title="1h"/>
+                                                <segment title="24h"/>
+                                                <segment title="7d"/>
+                                            </segments>
+                                            <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <connections>
+                                                <action selector="percentIindexChanged:" destination="oDX-3m-6oK" eventType="valueChanged" id="RHl-aK-9VK"/>
+                                            </connections>
+                                        </segmentedControl>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="4CQ-mx-WN4" firstAttribute="centerY" secondItem="a46-E1-SvA" secondAttribute="centerY" id="IZi-of-ocf"/>
+                                        <constraint firstItem="4CQ-mx-WN4" firstAttribute="trailing" secondItem="a46-E1-SvA" secondAttribute="trailingMargin" id="a7K-BY-Mi7"/>
+                                        <constraint firstItem="4CQ-mx-WN4" firstAttribute="leading" secondItem="a46-E1-SvA" secondAttribute="leadingMargin" id="t3J-L9-eTd"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="percentChangeSegmentedControl" destination="4CQ-mx-WN4" id="6zn-d5-0sr"/>
+                                </connections>
+                            </tableViewCell>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="currencySettingsCell" textLabel="U3P-dF-SBz" style="IBUITableViewCellStyleDefault" id="IrH-wX-ZyM" customClass="CurrencySettingsCell" customModule="Coin" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="99.5" width="375" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="IrH-wX-ZyM" id="gLS-7D-BUL">
+                                    <rect key="frame" x="0.0" y="0.0" width="341" height="43.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="U3P-dF-SBz">
+                                            <rect key="frame" x="16" y="0.0" width="324" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="symbol" destination="U3P-dF-SBz" id="GLd-lU-W6w"/>
+                                    <segue destination="IYR-Fp-WJc" kind="show" id="os8-Wb-uCV"/>
+                                </connections>
+                            </tableViewCell>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="inAppCell" id="ZhR-Bi-92J" customClass="inAppCell" customModule="Coin" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="143.5" width="375" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="ZhR-Bi-92J" id="SZt-tu-bmX">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="Label" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZUR-ke-lS6">
+                                            <rect key="frame" x="16" y="11" width="39.5" height="22"/>
+                                            <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nIH-W1-el9">
+                                            <rect key="frame" x="310" y="11" width="49" height="22"/>
+                                            <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
+                                            <state key="normal" title="Button"/>
+                                            <connections>
+                                                <action selector="developerSupportAction:" destination="ZhR-Bi-92J" eventType="touchUpInside" id="XSX-n9-wVS"/>
+                                            </connections>
+                                        </button>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstAttribute="bottomMargin" secondItem="nIH-W1-el9" secondAttribute="bottom" id="1GV-oC-cnf"/>
+                                        <constraint firstItem="ZUR-ke-lS6" firstAttribute="top" secondItem="SZt-tu-bmX" secondAttribute="topMargin" id="3zC-wr-WFl"/>
+                                        <constraint firstAttribute="bottomMargin" secondItem="ZUR-ke-lS6" secondAttribute="bottom" id="8eo-EY-jcJ"/>
+                                        <constraint firstItem="nIH-W1-el9" firstAttribute="top" secondItem="SZt-tu-bmX" secondAttribute="topMargin" id="DQe-yH-ICJ"/>
+                                        <constraint firstItem="nIH-W1-el9" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="ZUR-ke-lS6" secondAttribute="trailing" constant="8" id="FQh-0l-e3s"/>
+                                        <constraint firstItem="nIH-W1-el9" firstAttribute="trailing" secondItem="SZt-tu-bmX" secondAttribute="trailingMargin" id="Gde-IW-q5P"/>
+                                        <constraint firstItem="ZUR-ke-lS6" firstAttribute="leading" secondItem="SZt-tu-bmX" secondAttribute="leadingMargin" id="Wni-xT-a3L"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="developerSupport" destination="nIH-W1-el9" id="10L-yH-DBW"/>
+                                    <outlet property="title" destination="ZUR-ke-lS6" id="IXS-qk-3e1"/>
+                                </connections>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="l7K-TH-zo9" id="s05-EI-Vzz"/>
+                            <outlet property="delegate" destination="l7K-TH-zo9" id="af3-0Y-9ms"/>
+                        </connections>
+                    </tableView>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="iuv-yo-OMl" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3472.8000000000002" y="-840.62968515742136"/>
+        </scene>
         <!--Settings-->
         <scene sceneID="vLu-Jo-9tw">
             <objects>
-                <tableViewController id="mSk-LG-rjD" customClass="SettingTableViewController" customModule="Coin" customModuleProvider="target" sceneMemberID="viewController">
+                <placeholder placeholderIdentifier="IBFirstResponder" id="DAm-mD-TBY" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <tableViewController id="mSk-LG-rjD" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="static" style="grouped" separatorStyle="none" rowHeight="44" sectionHeaderHeight="18" sectionFooterHeight="18" id="dTI-Sp-KRs">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -38,9 +147,6 @@
                                                         <segment title="7d"/>
                                                     </segments>
                                                     <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                    <connections>
-                                                        <action selector="percentIindexChanged:" destination="mSk-LG-rjD" eventType="valueChanged" id="v6X-GW-A0L"/>
-                                                    </connections>
                                                 </segmentedControl>
                                             </subviews>
                                             <constraints>
@@ -78,9 +184,6 @@
                                                 </label>
                                             </subviews>
                                         </tableViewCellContentView>
-                                        <connections>
-                                            <segue destination="IYR-Fp-WJc" kind="show" id="TYg-ET-hjH"/>
-                                        </connections>
                                     </tableViewCell>
                                 </cells>
                                 <attributedString key="userComments">
@@ -114,9 +217,6 @@
                                                     <state key="normal" title="CoinMarketCap">
                                                         <color key="titleColor" red="0.0" green="0.45798993110656738" blue="0.99927455186843872" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     </state>
-                                                    <connections>
-                                                        <action selector="coinMarketCapAction:" destination="mSk-LG-rjD" eventType="touchUpInside" id="xH8-ix-8y0"/>
-                                                    </connections>
                                                 </button>
                                             </subviews>
                                             <constraints>
@@ -158,14 +258,9 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Settings" id="a5a-yk-s2O"/>
-                    <connections>
-                        <outlet property="percentChangeSegmentedControl" destination="EKk-hl-QzT" id="0OK-2U-leo"/>
-                        <outlet property="symbol" destination="hDt-rS-WYM" id="vQ7-un-sqK"/>
-                    </connections>
                 </tableViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="DAm-mD-TBY" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4344.8000000000002" y="-595.95202398800609"/>
+            <point key="canvasLocation" x="4316" y="-597"/>
         </scene>
         <!--Currency-->
         <scene sceneID="3JI-gw-2Gg">
@@ -345,7 +440,11 @@
                     </tableView>
                     <navigationItem key="navigationItem" title="Crypto monitor" id="obh-JI-x0P">
                         <barButtonItem key="backBarButtonItem" title=" " id="2wB-Tb-5JM"/>
-                        <barButtonItem key="leftBarButtonItem" image="Setting" id="yMj-9l-wbO"/>
+                        <barButtonItem key="leftBarButtonItem" image="Setting" id="yMj-9l-wbO">
+                            <connections>
+                                <segue destination="l7K-TH-zo9" kind="show" identifier="settingSegue" id="AZV-SU-dYR"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <refreshControl key="refreshControl" opaque="NO" multipleTouchEnabled="YES" contentMode="center" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" id="oTh-bY-dns">
                         <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
@@ -357,7 +456,6 @@
                     </refreshControl>
                     <connections>
                         <segue destination="C1j-e5-RAf" kind="show" identifier="add" id="E6T-mz-IS4"/>
-                        <segue destination="mSk-LG-rjD" kind="show" identifier="settingSegue" id="op1-UU-vpT"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Pn9-uy-4an" userLabel="First Responder" sceneMemberID="firstResponder"/>
