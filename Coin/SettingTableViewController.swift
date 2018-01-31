@@ -74,15 +74,7 @@ class SettingTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-
-        
-        IAPHandler.shared.requestProducts { success, products in
-            if success {
-                let sortProducts = products?.sorted(){$0.price.floatValue < $1.price.floatValue}
-                self.products = sortProducts!
-                self.tableView.reloadData()
-            }
-        }
+        products = IAPHandler.shared.iapProducts.sorted(){$0.price.floatValue < $1.price.floatValue}
         
         IAPHandler.shared.purchaseStatusBlock = {[weak self] (type) in
             guard let strongSelf = self else{ return }

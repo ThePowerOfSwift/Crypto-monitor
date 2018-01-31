@@ -10,6 +10,7 @@ import UIKit
 import AlamofireNetworkActivityIndicator
 import CryptoCurrency
 import CoreSpotlight
+import StoreKit
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -19,6 +20,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         UIApplication.shared.setMinimumBackgroundFetchInterval(UIApplicationBackgroundFetchIntervalMinimum)
+        
+        // Load IAP
+        IAPHandler.shared.requestProducts()
         
         let keyStore = NSUbiquitousKeyValueStore ()
         if !keyStore.bool(forKey: "launchedBefore"){

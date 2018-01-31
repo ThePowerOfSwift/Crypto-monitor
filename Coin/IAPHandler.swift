@@ -29,6 +29,9 @@ enum IAPHandlerAlertType{
 
 class IAPHandler: NSObject {
     static let shared = IAPHandler()
+
+ 
+    
     
     fileprivate var productsRequestCompletionHandler: ProductsRequestCompletionHandler?
     
@@ -40,7 +43,7 @@ class IAPHandler: NSObject {
     
     fileprivate var productID = ""
     fileprivate var productsRequest = SKProductsRequest()
-    fileprivate var iapProducts = [SKProduct]()
+    var iapProducts = [SKProduct]()
     
     var purchaseStatusBlock: ((IAPHandlerAlertType) -> Void)?
     
@@ -69,10 +72,7 @@ class IAPHandler: NSObject {
         SKPaymentQueue.default().restoreCompletedTransactions()
     }
     
-    func requestProducts(completionHandler: @escaping ProductsRequestCompletionHandler) {
-        productsRequest.cancel()
-        productsRequestCompletionHandler = completionHandler
-        
+    func requestProducts() {
         let productIdentifiers = NSSet(objects: coffee_ID, croissant_ID, macBook)
         
         productsRequest = SKProductsRequest(productIdentifiers: productIdentifiers as! Set<String>)
@@ -86,7 +86,8 @@ extension IAPHandler: SKProductsRequestDelegate, SKPaymentTransactionObserver{
     func productsRequest (_ request:SKProductsRequest, didReceive response:SKProductsResponse) {
         
         productsRequestCompletionHandler?(true, response.products)
-        
+
+
         if (response.products.count > 0) {
             iapProducts = response.products
             for product in iapProducts{

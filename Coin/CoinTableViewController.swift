@@ -122,14 +122,14 @@ class CoinTableViewController: UITableViewController, WCSessionDelegate {
             }
         }
         
-        
         let keyStore = NSUbiquitousKeyValueStore ()
         let idKeyStore = keyStore.array(forKey: "id") as? [String]
         if let idKeyStore = idKeyStore {
             self.updateApplicationContext(id: idKeyStore)
         }
-        
-        self.cryptocurrencyView()
+
+        loadCache()
+        loadTicker()
     }
     
     @objc func applicationDidBecomeActiveNotification(notification : NSNotification) {
@@ -143,8 +143,6 @@ class CoinTableViewController: UITableViewController, WCSessionDelegate {
          DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) {
             self.loadTicker()
         }
-
-    
     }
     
     @objc func ubiquitousKeyValueStoreDidChange(notification: NSNotification) {
@@ -176,15 +174,7 @@ class CoinTableViewController: UITableViewController, WCSessionDelegate {
     func loadCache() {
         if let cacheTicker = SettingsUserDefaults().loadcacheTicker() {
             getTickerID = cacheTicker
-            let userDefaults = UserDefaults(suiteName: "group.mialin.valentyn.crypto.monitor")
-            if let lastUpdate = userDefaults?.object(forKey: "lastUpdate") as? NSDate {
-                DispatchQueue.main.async {
-                    self.refreshControl?.attributedTitle = NSAttributedString(string: self.dateToString(date: lastUpdate))
-                }
-            }
-            DispatchQueue .main.async {
-                self.tableView.reloadData()
-            }
+            cryptocurrencyView()
         }
     }
     
