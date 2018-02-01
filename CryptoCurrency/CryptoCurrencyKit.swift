@@ -3,7 +3,7 @@ import Alamofire
 
 public struct CryptoCurrencyKit {
     
-    public static func fetchTickers(convert: Money = .usd, idArray: [String]?, limit: Int? = nil, response: ((_ r: ResponseA<Ticker>) -> Void)?) {
+    public static func fetchTickers(convert: Money = .usd, idArray: [String]? = nil, limit: Int? = 0, response: ((_ r: ResponseA<Ticker>) -> Void)?) {
         DispatchQueue .global (qos: .utility) .async {
             var urlString = "https://api.coinmarketcap.com/v1/ticker/"
             urlString.append("?convert=\(convert.rawValue)")
@@ -120,7 +120,7 @@ extension CryptoCurrencyKit {
     
     static func requestA<T>(urlRequest: URLRequest, idArray: [String]?, response: ((_ r: ResponseA<T>) -> Void)?) {
         print("requestA")
-        DispatchQueue .global (qos: .userInitiated) .async {
+        DispatchQueue .global (qos: .utility) .async {
             Alamofire.SessionManager.default.session.getTasksWithCompletionHandler { dataTasks, _, _ in
                 dataTasks.forEach
                     {
@@ -130,7 +130,7 @@ extension CryptoCurrencyKit {
                         }
                 }
             }
-            
+ 
             Alamofire.SessionManager.default.request(urlRequest).validate().responseData { res in
                 
                 switch res.result {
@@ -168,6 +168,23 @@ extension CryptoCurrencyKit {
             }
             }.resume()
     }
-    
+}
+
+extension CryptoCurrencyKit {
+    public static func checkRequest(urlString: String, completion: @escaping (Bool)->()) {
+        Alamofire.SessionManager.default.session.getTasksWithCompletionHandler { dataTasks, _, _ in
+            dataTasks.forEach
+                {
+                    if ($0.originalRequest?.url?.absoluteString.range(of: "https://api.coinmarketcap.com/v1/ticker/") != nil)
+                    {
+                        completion(true)
+                    }
+                    else{
+                        completion(false)
+                    }
+            }
+            completion(false)
+        }
+    }
 }
 

@@ -52,7 +52,7 @@ class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        NotificationCenter.default.addObserver(self, selector: #selector(applicationDidBecomeActiveNotification), name:NSNotification.Name.UIApplicationDidBecomeActive, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(applicationWillEnterForeground), name:NSNotification.Name.UIApplicationWillEnterForeground, object: nil)
 
         // percent change view
         oneHourChangeView.layer.cornerRadius = 3
@@ -124,7 +124,7 @@ class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
-             print("viewWillAppear 2 ")
+        print("viewWillAppear 2 ")
         viewCryptocurrencyInfo()
     }
     
@@ -132,7 +132,7 @@ class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
         super.viewDidAppear(true)
         print("viewDidAppear 2 ")
         loadTicker()
-        loadlineView()
+    //    loadlineView()
     }
     
     override func viewDidDisappear(_ animated: Bool) {
@@ -140,8 +140,8 @@ class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
     }
     
     //Unlock
-    @objc func applicationDidBecomeActiveNotification(notification : NSNotification) {
-        print("applicationDidBecomeActiveNotification")
+    @objc func applicationWillEnterForeground(notification : NSNotification) {
+        print("applicationWillEnterForeground")
      //   viewCryptocurrencyInfo()
         loadTicker()
         loadlineView()
@@ -166,7 +166,7 @@ class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
         let keyStore = NSUbiquitousKeyValueStore()
         guard let idArray = keyStore.array(forKey: "id") as? [String] else { return }
         
-        CryptoCurrencyKit.fetchTickers(convert: SettingsUserDefaults().getCurrentCurrency(), idArray: idArray, limit: 0) { (response) in
+        CryptoCurrencyKit.fetchTickers(convert: SettingsUserDefaults().getCurrentCurrency(), idArray: idArray) { (response) in
             switch response {
             case .success(let tickers):
                 getTickerID = tickers

@@ -10,6 +10,7 @@ import UIKit
 import WatchConnectivity
 import CoreSpotlight
 import MobileCoreServices
+import Alamofire
 import AlamofireImage
 import CryptoCurrency
 
@@ -88,7 +89,7 @@ class CoinTableViewController: UITableViewController, WCSessionDelegate {
     //MARK:LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        NotificationCenter.default.addObserver(self, selector: #selector(applicationDidBecomeActiveNotification), name:NSNotification.Name.UIApplicationDidBecomeActive, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(applicationWillEnterForeground), name:NSNotification.Name.UIApplicationWillEnterForeground, object: nil)
         
         let keyStore = NSUbiquitousKeyValueStore()
         NotificationCenter.default.addObserver(self,
@@ -100,7 +101,7 @@ class CoinTableViewController: UITableViewController, WCSessionDelegate {
         let editBarButton = UIBarButtonItem.init(barButtonSystemItem: .edit, target: self, action: #selector(edit))
         self.navigationItem.rightBarButtonItem = editBarButton
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "Setting"), style: UIBarButtonItemStyle.plain, target: self, action: #selector(settingsShow))
-
+        
         
         
         // Set up and activate your session early here!
@@ -109,18 +110,16 @@ class CoinTableViewController: UITableViewController, WCSessionDelegate {
             watchSession!.delegate = self
             watchSession!.activate()
         }
-        loadCache()
     }
     
     
     override func viewWillAppear(_ animated: Bool) {
-       super.viewWillAppear(true)
-       if getTickerID != nil {
-          if getTickerID!.isEmpty {
-                self.showEmptySubview()
+        super.viewWillAppear(true)
+        if getTickerID != nil {
+            if getTickerID!.isEmpty {
+            //    self.showEmptySubview()
             }
         }
-
         loadCache()
     }
     
@@ -130,7 +129,7 @@ class CoinTableViewController: UITableViewController, WCSessionDelegate {
         
 
         DispatchQueue.global(qos: .background).async {
-            let keyStore = NSUbiquitousKeyValueStore ()
+            let keyStore = NSUbiquitousKeyValueStore()
             let idKeyStore = keyStore.array(forKey: "id") as? [String]
             if let idKeyStore = idKeyStore {
                 self.updateApplicationContext(id: idKeyStore)
@@ -139,13 +138,31 @@ class CoinTableViewController: UITableViewController, WCSessionDelegate {
         loadTicker()
     }
     
-    @objc func applicationDidBecomeActiveNotification(notification : NSNotification) {
-        if self.viewIfLoaded?.window != nil {
-            loadCache()
-            loadTicker()
+    
+    override func viewWillDisappear(_ animated: Bool) {
+         print("viewWillDisappear")
+        DispatchQueue.main.async {
+            if let subviews = self.view.superview?.subviews {
+                for view in subviews{
+                    if (view is LoadSubview || view is ErrorSubview || view is EmptySubview) {
+                        view.removeFromSuperview()
+                    }
+                }
+            }
         }
-        print("unlock")
     }
+ 
+    
+    @objc func applicationWillEnterForeground(notification : NSNotification) {
+        if self.viewIfLoaded?.window != nil {
+            DispatchQueue.global(qos: .utility).async {
+                print("unlock")
+                self.loadCache()
+                self.loadTicker()
+            }
+        }
+    }
+    
     @IBAction func refresh(_ sender: UIRefreshControl) {
          DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) {
             self.loadTicker()
@@ -179,7 +196,7 @@ class CoinTableViewController: UITableViewController, WCSessionDelegate {
     }
     
     func loadCache() {
-        DispatchQueue.global(qos: .utility).async {
+        DispatchQueue.global(qos: .userInitiated).async {
             if let cacheTicker = SettingsUserDefaults().loadcacheTicker() {
                 getTickerID = cacheTicker
                 self.cryptocurrencyView()
@@ -320,7 +337,6 @@ class CoinTableViewController: UITableViewController, WCSessionDelegate {
                     SettingsUserDefaults().setUserDefaults(ticher: getTickerID!, idArray: idArray, lastUpdate: nil)
 
                     // set iCloud key-value
-        
                     keyStore.set(idArray, forKey: "id")
                     keyStore.synchronize()
                     
@@ -341,7 +357,7 @@ class CoinTableViewController: UITableViewController, WCSessionDelegate {
         guard getTickerID != nil else { return }
         
         if getTickerID!.isEmpty {
-            self.showEmptySubview()
+            //self.showEmptySubview()
         }
         else{
             DispatchQueue.main.async {
@@ -373,7 +389,7 @@ class CoinTableViewController: UITableViewController, WCSessionDelegate {
     private func loadTicker() {
         DispatchQueue.global(qos: .utility).async {
             guard let idArray = SettingsUserDefaults().getIdArray() else {
-             self.showEmptySubview()
+            // self.showEmptySubview()
                 return
                 
             }
@@ -381,15 +397,15 @@ class CoinTableViewController: UITableViewController, WCSessionDelegate {
             if idArray.isEmpty {
                 getTickerID = [Ticker]()
                 SettingsUserDefaults().setUserDefaults(ticher: [Ticker](), lastUpdate: nil)
-                self.showEmptySubview()
+              //  self.showEmptySubview()
             }
             else{
                 // Какой вид загрузки отображать
                 if getTickerID == nil {
-                    self.showLoadSubview()
+                //    self.showLoadSubview()
                 }
                 
-                CryptoCurrencyKit.fetchTickers(convert: SettingsUserDefaults().getCurrentCurrency(), idArray: idArray, limit: 0) { (response) in
+                CryptoCurrencyKit.fetchTickers(convert: SettingsUserDefaults().getCurrentCurrency(), idArray: idArray) { (response) in
                     switch response {
                     case .success(let tickers):
                         
@@ -401,7 +417,7 @@ class CoinTableViewController: UITableViewController, WCSessionDelegate {
 
                         print("success")
                     case .failure(let error):
-                        self.showErrorSubview(error: error)
+                    //    self.showErrorSubview(error: error)
                         print("failure")
                     }
                 }
@@ -440,7 +456,7 @@ class CoinTableViewController: UITableViewController, WCSessionDelegate {
         loadTicker()
     }
     
-    
+    /*
     //MARK:LoadSubview
     func showLoadSubview() {
         DispatchQueue.main.async() {
@@ -449,7 +465,9 @@ class CoinTableViewController: UITableViewController, WCSessionDelegate {
             self.view.superview?.addSubview(self.loadSubview!)
         }
     }
+ */
     
+    /*
     //MARK: ErrorSubview
     func showErrorSubview(error: Error) {
         if (error as NSError).code != -999 {
@@ -481,7 +499,8 @@ class CoinTableViewController: UITableViewController, WCSessionDelegate {
             }
         }
     }
-    
+    */
+    /*
     func showEmptySubview() {
         DispatchQueue.main.async() {
             self.refreshControl?.endRefreshing()
@@ -503,10 +522,12 @@ class CoinTableViewController: UITableViewController, WCSessionDelegate {
             }
             
             self.emptySubview?.addCryptocurrency.addTarget(self, action: #selector(self.addShow(_:)), for: UIControlEvents.touchUpInside)
-            self.view.superview?.addSubview(self.emptySubview!)
+         //   self.view.superview?.addSubview(self.emptySubview!)
+            
+            self.tableView.addSubview(EmptySubview(frame: CGRect(x: 0, y: 0, width: self.view.bounds.width, height: self.view.bounds.height )))
         }
     }
-    
+    */
     
     @objc func settingsShow(_ sender:UIButton) {
         self.performSegue(withIdentifier: "settingSegue", sender: nil)

@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		171520A47A49A7D6AF39D01D /* Pods_CryptoCurrency_iOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BDAC7D2115AEFD5FBEBFD26F /* Pods_CryptoCurrency_iOS.framework */; };
+		9DE27A505546C1A6FAC652B0 /* Pods_CryptoCurrency_watchOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 46520A5B8ACF1A943782EBA4 /* Pods_CryptoCurrency_watchOS.framework */; };
+		BE09E86F83C4C87E0C1209BA /* Pods_Cryptocurrency_monitor_widget.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B24CCD9F49DA85AEAC5AA79 /* Pods_Cryptocurrency_monitor_widget.framework */; };
+		CAB6423711272B09BACBCB78 /* Pods_Crypto_monitor_Watch_Extension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 767BAC04F27D5A468B750C19 /* Pods_Crypto_monitor_Watch_Extension.framework */; };
+		D41841D00AC7E52EE7B4400F /* Pods_Coin.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F91D764A862E2B7E34DE4862 /* Pods_Coin.framework */; };
 		FB18375A200D028A001C6358 /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FB18375B200D028A001C6358 /* Alamofire.framework */; };
 		FB18375C200D0298001C6358 /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FB18375D200D0298001C6358 /* Alamofire.framework */; };
 		FB18375E200D02F5001C6358 /* AlamofireImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FB18375F200D02F5001C6358 /* AlamofireImage.framework */; };
@@ -194,15 +199,20 @@
 		01F9714F6353F1AB6D25C8EF /* Pods-CryptocurrencyRequest.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CryptocurrencyRequest.debug.xcconfig"; path = "Pods/Target Support Files/Pods-CryptocurrencyRequest/Pods-CryptocurrencyRequest.debug.xcconfig"; sourceTree = "<group>"; };
 		0F0BAB17A70021A765F2DD89 /* Pods-CryptoCurrency iOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CryptoCurrency iOS.release.xcconfig"; path = "Pods/Target Support Files/Pods-CryptoCurrency iOS/Pods-CryptoCurrency iOS.release.xcconfig"; sourceTree = "<group>"; };
 		16A7B4C6AC770891197F4647 /* Pods-Cryptocurrency monitor widget.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Cryptocurrency monitor widget.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Cryptocurrency monitor widget/Pods-Cryptocurrency monitor widget.debug.xcconfig"; sourceTree = "<group>"; };
+		46520A5B8ACF1A943782EBA4 /* Pods_CryptoCurrency_watchOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CryptoCurrency_watchOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		52A58A0CB07EFDE0332C4875 /* Pods-Crypto monitor Watch Extension.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Crypto monitor Watch Extension.release.xcconfig"; path = "Pods/Target Support Files/Pods-Crypto monitor Watch Extension/Pods-Crypto monitor Watch Extension.release.xcconfig"; sourceTree = "<group>"; };
 		5E0412321BFD16292136CF2A /* Pods-Coin.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Coin.release.xcconfig"; path = "Pods/Target Support Files/Pods-Coin/Pods-Coin.release.xcconfig"; sourceTree = "<group>"; };
 		618655D2118E432C584CA8AE /* Pods-CryptoCurrency watchOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CryptoCurrency watchOS.release.xcconfig"; path = "Pods/Target Support Files/Pods-CryptoCurrency watchOS/Pods-CryptoCurrency watchOS.release.xcconfig"; sourceTree = "<group>"; };
 		6E50EC17AD7CE4C0ECA200E3 /* Pods-CryptocurrencyRequest.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CryptocurrencyRequest.release.xcconfig"; path = "Pods/Target Support Files/Pods-CryptocurrencyRequest/Pods-CryptocurrencyRequest.release.xcconfig"; sourceTree = "<group>"; };
+		767BAC04F27D5A468B750C19 /* Pods_Crypto_monitor_Watch_Extension.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Crypto_monitor_Watch_Extension.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		8B24CCD9F49DA85AEAC5AA79 /* Pods_Cryptocurrency_monitor_widget.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Cryptocurrency_monitor_widget.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9320A7CF324B6EF07C919266 /* Pods-Cryptocurrency monitor widget.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Cryptocurrency monitor widget.release.xcconfig"; path = "Pods/Target Support Files/Pods-Cryptocurrency monitor widget/Pods-Cryptocurrency monitor widget.release.xcconfig"; sourceTree = "<group>"; };
+		BDAC7D2115AEFD5FBEBFD26F /* Pods_CryptoCurrency_iOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CryptoCurrency_iOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C27B03F01E034C8D5D922198 /* Pods-Crypto monitor Watch Extension.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Crypto monitor Watch Extension.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Crypto monitor Watch Extension/Pods-Crypto monitor Watch Extension.debug.xcconfig"; sourceTree = "<group>"; };
 		C982DDD457B6A5B7E2931C96 /* Pods-CryptoCurrency iOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CryptoCurrency iOS.debug.xcconfig"; path = "Pods/Target Support Files/Pods-CryptoCurrency iOS/Pods-CryptoCurrency iOS.debug.xcconfig"; sourceTree = "<group>"; };
 		D2644E3DDE8034D62D53ACCA /* Pods-Coin.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Coin.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Coin/Pods-Coin.debug.xcconfig"; sourceTree = "<group>"; };
 		DA46FE18D960048F40EA15D0 /* Pods-CryptoCurrency watchOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CryptoCurrency watchOS.debug.xcconfig"; path = "Pods/Target Support Files/Pods-CryptoCurrency watchOS/Pods-CryptoCurrency watchOS.debug.xcconfig"; sourceTree = "<group>"; };
+		F91D764A862E2B7E34DE4862 /* Pods_Coin.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Coin.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FB0B34C71FED34D600D21F8F /* uk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = uk; path = uk.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		FB0B34C81FED34D600D21F8F /* uk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = uk; path = uk.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		FB0B34C91FED34D700D21F8F /* uk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = uk; path = uk.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -351,6 +361,7 @@
 				FB18375E200D02F5001C6358 /* AlamofireImage.framework in Frameworks */,
 				FBA6D946200C3C6100B9F3EE /* CryptoCurrency.framework in Frameworks */,
 				FB99B48C1F2FEF1F007C0235 /* NotificationCenter.framework in Frameworks */,
+				BE09E86F83C4C87E0C1209BA /* Pods_Cryptocurrency_monitor_widget.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -359,6 +370,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				FBBE49242008F5E700277014 /* CryptoCurrency.framework in Frameworks */,
+				CAB6423711272B09BACBCB78 /* Pods_Crypto_monitor_Watch_Extension.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -370,6 +382,7 @@
 				FB183762200D033B001C6358 /* Charts.framework in Frameworks */,
 				FB183760200D0328001C6358 /* SwiftyJSON.framework in Frameworks */,
 				FBC054B8201F67FA00458F8D /* StoreKit.framework in Frameworks */,
+				D41841D00AC7E52EE7B4400F /* Pods_Coin.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -378,6 +391,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				FB18375A200D028A001C6358 /* Alamofire.framework in Frameworks */,
+				171520A47A49A7D6AF39D01D /* Pods_CryptoCurrency_iOS.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -386,6 +400,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				FB18375C200D0298001C6358 /* Alamofire.framework in Frameworks */,
+				9DE27A505546C1A6FAC652B0 /* Pods_CryptoCurrency_watchOS.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -422,6 +437,11 @@
 				FB18375D200D0298001C6358 /* Alamofire.framework */,
 				FB18375B200D028A001C6358 /* Alamofire.framework */,
 				FB99B48B1F2FEF1F007C0235 /* NotificationCenter.framework */,
+				F91D764A862E2B7E34DE4862 /* Pods_Coin.framework */,
+				767BAC04F27D5A468B750C19 /* Pods_Crypto_monitor_Watch_Extension.framework */,
+				BDAC7D2115AEFD5FBEBFD26F /* Pods_CryptoCurrency_iOS.framework */,
+				46520A5B8ACF1A943782EBA4 /* Pods_CryptoCurrency_watchOS.framework */,
+				8B24CCD9F49DA85AEAC5AA79 /* Pods_Cryptocurrency_monitor_widget.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";

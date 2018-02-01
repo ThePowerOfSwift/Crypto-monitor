@@ -12,12 +12,10 @@ import CryptoCurrency
 class CurrentCurrencyTableViewController: UITableViewController {
 
     var money = [CryptoCurrencyKit.Money]()
-    var currentCurrency = CryptoCurrencyKit.Money.usd
     
     override func viewDidLoad() {
         super.viewDidLoad()
         money = CryptoCurrencyKit.Money.allValues
-        currentCurrency = SettingsUserDefaults().getCurrentCurrency()
     }
 
     // MARK: - Table view data source
@@ -25,11 +23,14 @@ class CurrentCurrencyTableViewController: UITableViewController {
         return money.count
     }
 
+    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "currentSymbol", for: indexPath) as! CurrentCurrencyTableViewCell
         let row = indexPath.row
         
         cell.symbol.text = money[row].flag + " " + money[row].rawValue
+        
+        let currentCurrency = SettingsUserDefaults().getCurrentCurrency()
         
         if money[row].rawValue == currentCurrency.rawValue {
             cell.accessoryType = .checkmark

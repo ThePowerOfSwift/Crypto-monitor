@@ -94,7 +94,6 @@ class SettingTableViewController: UITableViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
-        
         self.tableView.reloadData()
     }
     
@@ -119,7 +118,13 @@ class SettingTableViewController: UITableViewController {
             return 1
         }
     }
-
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if indexPath.section == 2 {
+            IAPHandler.shared.purchaseMyProduct(products[(indexPath as NSIndexPath).row])
+        }
+    }
+  
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         switch indexPath.section{

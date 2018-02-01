@@ -70,7 +70,8 @@ class AddTableViewController: UITableViewController {
         self.tableView.setContentOffset(CGPoint(x: 0, y: -self.refreshControl!.frame.size.height - self.topLayoutGuide.length), animated: true)
         self.refreshControl!.beginRefreshing()
         
-        CryptoCurrencyKit.fetchTickers(convert: .jpy, idArray: nil, limit: 0) { (response) in
+        let currentCurrency = SettingsUserDefaults().getCurrentCurrency()
+        CryptoCurrencyKit.fetchTickers(convert: currentCurrency, idArray: nil, limit: 0) { (response) in
             switch response {
             case .success(let tickers):
                 getTickerAll = tickers
@@ -153,7 +154,16 @@ class AddTableViewController: UITableViewController {
                 
                 SettingsUserDefaults().setUserDefaults(ticher: getTickerID!, lastUpdate: nil)
                 
-                _ = navigationController?.popViewController(animated: true)
+                
+          //     _ = navigationController?.popViewController(animated: true)
+                _ = navigationController?.popToRootViewController(animated: true)
+                /*
+                if let nav = self.navigationController {
+                    nav.popViewController(animated: true)
+                } else {
+                    self.dismiss(animated: true, completion: nil)
+                }
+ */
             }
             else{ 
                 let messageString = ticker.name + NSLocalizedString(" has already been added to favorites.", comment: "Title message")
