@@ -13,6 +13,7 @@ import MobileCoreServices
 import Alamofire
 import AlamofireImage
 import CryptoCurrency
+import DZNEmptyDataSet
 
 var openID = ""
 var getTickerID:[Ticker]?
@@ -25,8 +26,8 @@ class CoinTableViewController: UITableViewController, WCSessionDelegate {
     let userCalendar = Calendar.current
     
     // Subview
-    var loadSubview:LoadSubview?
-    var emptySubview:EmptySubview?
+ //   var loadSubview:LoadSubview?
+  //  var emptySubview:EmptySubview?
     
     
     //MARK:WCSession
@@ -102,7 +103,9 @@ class CoinTableViewController: UITableViewController, WCSessionDelegate {
         self.navigationItem.rightBarButtonItem = editBarButton
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "Setting"), style: UIBarButtonItemStyle.plain, target: self, action: #selector(settingsShow))
         
-        
+        tableView.emptyDataSetSource = self
+        tableView.emptyDataSetDelegate = self
+        tableView.tableFooterView = UIView()
         
         // Set up and activate your session early here!
         if(WCSession.isSupported()){
@@ -356,24 +359,6 @@ class CoinTableViewController: UITableViewController, WCSessionDelegate {
         
         guard getTickerID != nil else { return }
         
-        if getTickerID!.isEmpty {
-            //self.showEmptySubview()
-        }
-        else{
-            DispatchQueue.main.async {
-                if let subviews = self.view.superview?.subviews {
-                    for view in subviews{
-                        if (view is LoadSubview || view is ErrorSubview || view is EmptySubview) {
-                            
-                            view.removeFromSuperview()
-                            
-                        }
-                    }
-                }
-            }
-        }
-        
-        
         let userDefaults = UserDefaults(suiteName: "group.mialin.valentyn.crypto.monitor")
         if let lastUpdate = userDefaults?.object(forKey: "lastUpdate") as? NSDate {
             DispatchQueue.main.async {
@@ -456,16 +441,6 @@ class CoinTableViewController: UITableViewController, WCSessionDelegate {
         loadTicker()
     }
     
-    /*
-    //MARK:LoadSubview
-    func showLoadSubview() {
-        DispatchQueue.main.async() {
-            self.refreshControl?.endRefreshing()
-            self.loadSubview = LoadSubview(frame: CGRect(x: 0, y: 0, width: self.view.bounds.width, height: self.view.bounds.height ))
-            self.view.superview?.addSubview(self.loadSubview!)
-        }
-    }
- */
     
     /*
     //MARK: ErrorSubview
@@ -601,6 +576,14 @@ class CoinTableViewController: UITableViewController, WCSessionDelegate {
                 }
             }
         }
+    }
+}
+
+extension CoinTableViewController: DZNEmptyDataSetSource, DZNEmptyDataSetDelegate {
+    func title(forEmptyDataSet scrollView: UIScrollView!) -> NSAttributedString! {
+        let str = "Welcome"
+        let attrs = [NSAttributedStringKey.font: UIFont.preferredFont(forTextStyle: UIFontTextStyle.headline)]
+        return NSAttributedString(string: str, attributes: attrs)
     }
 }
 

@@ -46,6 +46,7 @@
 		FB670CE61F16D900005761CF /* CryptocurrencyInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB670CE51F16D900005761CF /* CryptocurrencyInfoViewController.swift */; };
 		FB8F45B1201044FD005D7571 /* info-watchOSPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = FB8F45B3201044FD005D7571 /* info-watchOSPlist.strings */; };
 		FB8F45B620104502005D7571 /* info-iOSPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = FB8F45B820104502005D7571 /* info-iOSPlist.strings */; };
+		FB91BB5C202377B20007B573 /* DZNEmptyDataSet.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FB91BB5D202377B20007B573 /* DZNEmptyDataSet.framework */; };
 		FB99B48C1F2FEF1F007C0235 /* NotificationCenter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FB99B48B1F2FEF1F007C0235 /* NotificationCenter.framework */; };
 		FB99B48F1F2FEF1F007C0235 /* TodayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB99B48E1F2FEF1F007C0235 /* TodayViewController.swift */; };
 		FB99B4961F2FEF1F007C0235 /* Cryptocurrency monitor widget.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = FB99B48A1F2FEF1F007C0235 /* Cryptocurrency monitor widget.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
@@ -312,6 +313,7 @@
 		FB8F45BC20104526005D7571 /* uk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = uk; path = "uk.lproj/info-iOSPlist.strings"; sourceTree = "<group>"; };
 		FB8F45BD20104534005D7571 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = "ru.lproj/info-watchOSPlist.strings"; sourceTree = "<group>"; };
 		FB8F45BE20104536005D7571 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = "ru.lproj/info-iOSPlist.strings"; sourceTree = "<group>"; };
+		FB91BB5D202377B20007B573 /* DZNEmptyDataSet.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = DZNEmptyDataSet.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FB9592531F20B8AB00F9F74B /* Coin.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Coin.entitlements; sourceTree = "<group>"; };
 		FB99B48A1F2FEF1F007C0235 /* Cryptocurrency monitor widget.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "Cryptocurrency monitor widget.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
 		FB99B48B1F2FEF1F007C0235 /* NotificationCenter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = NotificationCenter.framework; path = System/Library/Frameworks/NotificationCenter.framework; sourceTree = SDKROOT; };
@@ -378,6 +380,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FB91BB5C202377B20007B573 /* DZNEmptyDataSet.framework in Frameworks */,
 				FB183764200D035D001C6358 /* AlamofireNetworkActivityIndicator.framework in Frameworks */,
 				FB183762200D033B001C6358 /* Charts.framework in Frameworks */,
 				FB183760200D0328001C6358 /* SwiftyJSON.framework in Frameworks */,
@@ -429,6 +432,7 @@
 		731467F8FA5309E32222B93E /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				FB91BB5D202377B20007B573 /* DZNEmptyDataSet.framework */,
 				FBC054B7201F67FA00458F8D /* StoreKit.framework */,
 				FB183765200D035D001C6358 /* AlamofireNetworkActivityIndicator.framework */,
 				FB183763200D033B001C6358 /* Charts.framework */,

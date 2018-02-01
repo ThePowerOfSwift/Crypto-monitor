@@ -154,16 +154,16 @@ class AddTableViewController: UITableViewController {
                 
                 SettingsUserDefaults().setUserDefaults(ticher: getTickerID!, lastUpdate: nil)
                 
+           //     self.dismiss(animated: true, completion: nil)
+             _ = navigationController?.popViewController(animated: true)
+              //  _ = navigationController?.popToRootViewController(animated: true)
                 
-          //     _ = navigationController?.popViewController(animated: true)
-                _ = navigationController?.popToRootViewController(animated: true)
-                /*
-                if let nav = self.navigationController {
+               /* if let nav = self.navigationController {
                     nav.popViewController(animated: true)
                 } else {
                     self.dismiss(animated: true, completion: nil)
                 }
- */
+*/
             }
             else{ 
                 let messageString = ticker.name + NSLocalizedString(" has already been added to favorites.", comment: "Title message")
@@ -179,6 +179,7 @@ class AddTableViewController: UITableViewController {
             idArray.append(ticker.id)
             keyStore.set(idArray, forKey: "id")
             keyStore.synchronize()
+             _ = navigationController?.popViewController(animated: true)
         }
     }
     
