@@ -12,7 +12,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Setting Table View Controller-->
+        <!--Settings-->
         <scene sceneID="Tcc-7p-d8k">
             <objects>
                 <tableViewController id="l7K-TH-zo9" customClass="SettingTableViewController" customModule="Coin" customModuleProvider="target" sceneMemberID="viewController">
@@ -72,7 +72,7 @@
                                     <segue destination="IYR-Fp-WJc" kind="show" id="os8-Wb-uCV"/>
                                 </connections>
                             </tableViewCell>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="inAppCell" id="ZhR-Bi-92J" customClass="inAppCell" customModule="Coin" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="inAppCell" id="ZhR-Bi-92J" customClass="inAppCell" customModule="Coin" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="143.5" width="375" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="ZhR-Bi-92J" id="SZt-tu-bmX">
@@ -109,158 +109,52 @@
                                     <outlet property="title" destination="ZUR-ke-lS6" id="IXS-qk-3e1"/>
                                 </connections>
                             </tableViewCell>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="coinMarketCapCell" id="QAV-OG-fBc" customClass="CoinMarketCapCell" customModule="Coin" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="187.5" width="375" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="QAV-OG-fBc" id="rIA-YP-x6x">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Link" translatesAutoresizingMaskIntoConstraints="NO" id="0Bx-WM-IXH">
+                                            <rect key="frame" x="8" y="6" width="32" height="32"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="32" id="fXF-60-M61"/>
+                                                <constraint firstAttribute="height" constant="32" id="wFO-1I-xOw"/>
+                                            </constraints>
+                                        </imageView>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="E8q-si-UcI">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                            <state key="normal" title="CoinMarketCap">
+                                                <color key="titleColor" red="0.0" green="0.45798993110656738" blue="0.99927455186843872" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            </state>
+                                            <connections>
+                                                <action selector="coinMarketCapAction:" destination="QAV-OG-fBc" eventType="touchUpInside" id="EUZ-17-XX5"/>
+                                            </connections>
+                                        </button>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstAttribute="bottom" secondItem="E8q-si-UcI" secondAttribute="bottom" id="8nJ-jU-gHb"/>
+                                        <constraint firstItem="0Bx-WM-IXH" firstAttribute="centerY" secondItem="rIA-YP-x6x" secondAttribute="centerY" id="Aw1-wx-VLe"/>
+                                        <constraint firstItem="0Bx-WM-IXH" firstAttribute="leading" secondItem="rIA-YP-x6x" secondAttribute="leading" constant="8" id="Awv-mt-dNw"/>
+                                        <constraint firstItem="E8q-si-UcI" firstAttribute="leading" secondItem="rIA-YP-x6x" secondAttribute="leading" id="GTc-lw-HK7"/>
+                                        <constraint firstAttribute="trailing" secondItem="E8q-si-UcI" secondAttribute="trailing" id="gIn-va-OOx"/>
+                                        <constraint firstItem="E8q-si-UcI" firstAttribute="top" secondItem="rIA-YP-x6x" secondAttribute="top" id="rhl-wv-DNf"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                            </tableViewCell>
                         </prototypes>
                         <connections>
                             <outlet property="dataSource" destination="l7K-TH-zo9" id="s05-EI-Vzz"/>
                             <outlet property="delegate" destination="l7K-TH-zo9" id="af3-0Y-9ms"/>
                         </connections>
                     </tableView>
+                    <navigationItem key="navigationItem" title="Settings" id="DTw-zY-pjb"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="iuv-yo-OMl" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3472.8000000000002" y="-840.62968515742136"/>
-        </scene>
-        <!--Settings-->
-        <scene sceneID="vLu-Jo-9tw">
-            <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="DAm-mD-TBY" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <tableViewController id="mSk-LG-rjD" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="static" style="grouped" separatorStyle="none" rowHeight="44" sectionHeaderHeight="18" sectionFooterHeight="18" id="dTI-Sp-KRs">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
-                        <sections>
-                            <tableViewSection headerTitle="Rate change period" id="uMW-aC-8Ll">
-                                <cells>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" id="ICd-ip-jyH">
-                                        <rect key="frame" x="0.0" y="55.5" width="375" height="44"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ICd-ip-jyH" id="qi5-yv-FDd">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="EKk-hl-QzT">
-                                                    <rect key="frame" x="16" y="8" width="343" height="29"/>
-                                                    <segments>
-                                                        <segment title="1h"/>
-                                                        <segment title="24h"/>
-                                                        <segment title="7d"/>
-                                                    </segments>
-                                                    <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                </segmentedControl>
-                                            </subviews>
-                                            <constraints>
-                                                <constraint firstItem="EKk-hl-QzT" firstAttribute="trailing" secondItem="qi5-yv-FDd" secondAttribute="trailingMargin" id="0II-Yq-1bM"/>
-                                                <constraint firstItem="EKk-hl-QzT" firstAttribute="leading" secondItem="qi5-yv-FDd" secondAttribute="leadingMargin" id="Xv0-wY-pHc"/>
-                                                <constraint firstItem="EKk-hl-QzT" firstAttribute="centerY" secondItem="qi5-yv-FDd" secondAttribute="centerY" id="glB-tt-94B"/>
-                                            </constraints>
-                                        </tableViewCellContentView>
-                                    </tableViewCell>
-                                </cells>
-                                <attributedString key="userComments">
-                                    <fragment content="Настройки выбор периода">
-                                        <attributes>
-                                            <font key="NSFont" metaFont="smallSystem"/>
-                                            <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
-                                        </attributes>
-                                    </fragment>
-                                </attributedString>
-                            </tableViewSection>
-                            <tableViewSection headerTitle="Currency settings" id="7Hc-Jc-x8U">
-                                <cells>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="hDt-rS-WYM" style="IBUITableViewCellStyleDefault" id="Vpo-Od-DJu">
-                                        <rect key="frame" x="0.0" y="155.5" width="375" height="44"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Vpo-Od-DJu" id="7PQ-eL-5u8">
-                                            <rect key="frame" x="0.0" y="0.0" width="341" height="44"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="hDt-rS-WYM">
-                                                    <rect key="frame" x="16" y="0.0" width="324" height="44"/>
-                                                    <autoresizingMask key="autoresizingMask"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <nil key="textColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                            </subviews>
-                                        </tableViewCellContentView>
-                                    </tableViewCell>
-                                </cells>
-                                <attributedString key="userComments">
-                                    <fragment content="Настройки источник данных ">
-                                        <attributes>
-                                            <font key="NSFont" metaFont="smallSystem"/>
-                                            <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
-                                        </attributes>
-                                    </fragment>
-                                </attributedString>
-                            </tableViewSection>
-                            <tableViewSection headerTitle="Data source" id="yeO-1L-1gs">
-                                <cells>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" id="QAV-OG-fBc">
-                                        <rect key="frame" x="0.0" y="255.5" width="375" height="44"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="QAV-OG-fBc" id="rIA-YP-x6x">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Link" translatesAutoresizingMaskIntoConstraints="NO" id="0Bx-WM-IXH">
-                                                    <rect key="frame" x="8" y="6" width="32" height="32"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="width" constant="32" id="fXF-60-M61"/>
-                                                        <constraint firstAttribute="height" constant="32" id="wFO-1I-xOw"/>
-                                                    </constraints>
-                                                </imageView>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="E8q-si-UcI">
-                                                    <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                                                    <state key="normal" title="CoinMarketCap">
-                                                        <color key="titleColor" red="0.0" green="0.45798993110656738" blue="0.99927455186843872" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                    </state>
-                                                </button>
-                                            </subviews>
-                                            <constraints>
-                                                <constraint firstAttribute="bottom" secondItem="E8q-si-UcI" secondAttribute="bottom" id="8nJ-jU-gHb"/>
-                                                <constraint firstItem="0Bx-WM-IXH" firstAttribute="centerY" secondItem="rIA-YP-x6x" secondAttribute="centerY" id="Aw1-wx-VLe"/>
-                                                <constraint firstItem="0Bx-WM-IXH" firstAttribute="leading" secondItem="rIA-YP-x6x" secondAttribute="leading" constant="8" id="Awv-mt-dNw"/>
-                                                <constraint firstItem="E8q-si-UcI" firstAttribute="leading" secondItem="rIA-YP-x6x" secondAttribute="leading" id="GTc-lw-HK7"/>
-                                                <constraint firstAttribute="trailing" secondItem="E8q-si-UcI" secondAttribute="trailing" id="gIn-va-OOx"/>
-                                                <constraint firstItem="E8q-si-UcI" firstAttribute="top" secondItem="rIA-YP-x6x" secondAttribute="top" id="rhl-wv-DNf"/>
-                                            </constraints>
-                                        </tableViewCellContentView>
-                                    </tableViewCell>
-                                </cells>
-                                <attributedString key="userComments">
-                                    <fragment content="Настройки источник данных ">
-                                        <attributes>
-                                            <font key="NSFont" metaFont="smallSystem"/>
-                                            <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
-                                        </attributes>
-                                    </fragment>
-                                </attributedString>
-                            </tableViewSection>
-                            <tableViewSection headerTitle="In App" id="7bR-4H-EmQ">
-                                <cells>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="seA-1G-YTd">
-                                        <rect key="frame" x="0.0" y="355.5" width="375" height="44"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="seA-1G-YTd" id="UVm-2W-eQk">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                        </tableViewCellContentView>
-                                    </tableViewCell>
-                                </cells>
-                            </tableViewSection>
-                        </sections>
-                        <connections>
-                            <outlet property="dataSource" destination="mSk-LG-rjD" id="4uz-Or-TJL"/>
-                            <outlet property="delegate" destination="mSk-LG-rjD" id="IgG-kM-BWf"/>
-                        </connections>
-                    </tableView>
-                    <navigationItem key="navigationItem" title="Settings" id="a5a-yk-s2O"/>
-                </tableViewController>
-            </objects>
-            <point key="canvasLocation" x="4316" y="-597"/>
+            <point key="canvasLocation" x="4345" y="-597"/>
         </scene>
         <!--Currency-->
         <scene sceneID="3JI-gw-2Gg">

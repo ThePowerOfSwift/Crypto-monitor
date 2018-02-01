@@ -111,24 +111,31 @@ class CoinTableViewController: UITableViewController, WCSessionDelegate {
         }
         loadCache()
     }
-
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(true)
-        print("viewDidAppear")
-        
-        if getTickerID != nil {
-            if getTickerID!.isEmpty {
+    
+    
+    override func viewWillAppear(_ animated: Bool) {
+       super.viewWillAppear(true)
+       if getTickerID != nil {
+          if getTickerID!.isEmpty {
                 self.showEmptySubview()
             }
         }
-        
-        let keyStore = NSUbiquitousKeyValueStore ()
-        let idKeyStore = keyStore.array(forKey: "id") as? [String]
-        if let idKeyStore = idKeyStore {
-            self.updateApplicationContext(id: idKeyStore)
-        }
 
         loadCache()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+      super.viewDidAppear(true)
+        print("viewDidAppear")
+        
+
+        DispatchQueue.global(qos: .background).async {
+            let keyStore = NSUbiquitousKeyValueStore ()
+            let idKeyStore = keyStore.array(forKey: "id") as? [String]
+            if let idKeyStore = idKeyStore {
+                self.updateApplicationContext(id: idKeyStore)
+            }
+        }
         loadTicker()
     }
     
@@ -172,9 +179,11 @@ class CoinTableViewController: UITableViewController, WCSessionDelegate {
     }
     
     func loadCache() {
-        if let cacheTicker = SettingsUserDefaults().loadcacheTicker() {
-            getTickerID = cacheTicker
-            cryptocurrencyView()
+        DispatchQueue.global(qos: .utility).async {
+            if let cacheTicker = SettingsUserDefaults().loadcacheTicker() {
+                getTickerID = cacheTicker
+                self.cryptocurrencyView()
+            }
         }
     }
     
@@ -263,6 +272,7 @@ class CoinTableViewController: UITableViewController, WCSessionDelegate {
         DispatchQueue.global(qos: .utility).async {
             if editingStyle == .delete{
                 let keyStore = NSUbiquitousKeyValueStore ()
+                
                 if var idArray = keyStore.array(forKey: "id") as? [String] {
                     if let index = idArray.index(of: getTickerID![indexPath.row].id){
                         idArray.remove(at: index)
@@ -273,7 +283,12 @@ class CoinTableViewController: UITableViewController, WCSessionDelegate {
                         SettingsUserDefaults().setUserDefaults(ticher: getTickerID!, idArray: idArray, lastUpdate: nil)
                         
                         // set iCloud key-value
-                        keyStore.set(idArray, forKey: "id")
+                        if getTickerID?.count == 0 {
+                            keyStore.removeObject(forKey: "id")
+                        }
+                        else{
+                            keyStore.set(idArray, forKey: "id")
+                        }
                         keyStore.synchronize()
                         
                         self.updateApplicationContext(id: idArray)
@@ -305,6 +320,7 @@ class CoinTableViewController: UITableViewController, WCSessionDelegate {
                     SettingsUserDefaults().setUserDefaults(ticher: getTickerID!, idArray: idArray, lastUpdate: nil)
 
                     // set iCloud key-value
+        
                     keyStore.set(idArray, forKey: "id")
                     keyStore.synchronize()
                     
@@ -321,35 +337,47 @@ class CoinTableViewController: UITableViewController, WCSessionDelegate {
                 self.refreshControl?.endRefreshing()
             }
         }
+        
         guard getTickerID != nil else { return }
         
         if getTickerID!.isEmpty {
             self.showEmptySubview()
         }
         else{
-            if let subviews = self.view.superview?.subviews {
-                for view in subviews{
-                    if (view is LoadSubview || view is ErrorSubview || view is EmptySubview) {
-                        view.removeFromSuperview()
+            DispatchQueue.main.async {
+                if let subviews = self.view.superview?.subviews {
+                    for view in subviews{
+                        if (view is LoadSubview || view is ErrorSubview || view is EmptySubview) {
+                            
+                            view.removeFromSuperview()
+                            
+                        }
                     }
                 }
             }
         }
         
-        DispatchQueue.main.async {
-            let userDefaults = UserDefaults(suiteName: "group.mialin.valentyn.crypto.monitor")
-            if let lastUpdate = userDefaults?.object(forKey: "lastUpdate") as? NSDate {
+        
+        let userDefaults = UserDefaults(suiteName: "group.mialin.valentyn.crypto.monitor")
+        if let lastUpdate = userDefaults?.object(forKey: "lastUpdate") as? NSDate {
+            DispatchQueue.main.async {
                 self.refreshControl?.attributedTitle = NSAttributedString(string: self.dateToString(date: lastUpdate))
             }
-            
+        }
+        
+        DispatchQueue.main.async {
             self.tableView.reloadData()
         }
     }
     
     private func loadTicker() {
         DispatchQueue.global(qos: .utility).async {
-            guard let idArray = SettingsUserDefaults().getIdArray() else { return }
-            
+            guard let idArray = SettingsUserDefaults().getIdArray() else {
+             self.showEmptySubview()
+                return
+                
+            }
+
             if idArray.isEmpty {
                 getTickerID = [Ticker]()
                 SettingsUserDefaults().setUserDefaults(ticher: [Ticker](), lastUpdate: nil)
@@ -378,7 +406,7 @@ class CoinTableViewController: UITableViewController, WCSessionDelegate {
                     }
                 }
             }
-      }
+      } 
     }
     
     func fetch(_ completion: () -> Void) {

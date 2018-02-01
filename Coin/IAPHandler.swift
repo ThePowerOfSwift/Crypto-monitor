@@ -19,9 +19,9 @@ enum IAPHandlerAlertType{
     
     func message() -> String{
         switch self {
-        case .disabled: return "Purchases are disabled in your device!"
-        case .restored: return "You've successfully restored your purchase!"
-        case .purchased: return "You've successfully bought this purchase!"
+        case .disabled: return NSLocalizedString("Purchases are disabled in your device!", comment: "Purchases are disabled in your device!")
+        case .restored: return NSLocalizedString("You've successfully restored your purchase!", comment: "You've successfully restored your purchase!")
+        case .purchased: return NSLocalizedString("Thank you!", comment: "Thank you!")
         }
     }
 }
@@ -29,19 +29,12 @@ enum IAPHandlerAlertType{
 
 class IAPHandler: NSObject {
     static let shared = IAPHandler()
-
- 
-    
-    
     fileprivate var productsRequestCompletionHandler: ProductsRequestCompletionHandler?
-    
-    let CONSUMABLE_PURCHASE_PRODUCT_ID = "mialin.Coin.BuyMeCoffee"
-    
+
     let coffee_ID = "mialin.Coin.coffee"
     let croissant_ID = "mialin.Coin.Croissant"
-    let macBook = "mialin.Coin.MacBook"
+    let macBook_ID = "mialin.Coin.MacBook"
     
-    fileprivate var productID = ""
     fileprivate var productsRequest = SKProductsRequest()
     var iapProducts = [SKProduct]()
     
@@ -50,21 +43,18 @@ class IAPHandler: NSObject {
     // MARK: - MAKE PURCHASE OF A PRODUCT
     func canMakePurchases() -> Bool {  return SKPaymentQueue.canMakePayments()  }
     
-    func purchaseMyProduct(index: Int){
-        if iapProducts.count == 0 { return }
-        
+    func purchaseMyProduct(_ product: SKProduct){
         if self.canMakePurchases() {
-            let product = iapProducts[index]
             let payment = SKPayment(product: product)
             SKPaymentQueue.default().add(self)
             SKPaymentQueue.default().add(payment)
             
             print("PRODUCT TO PURCHASE: \(product.productIdentifier)")
-            productID = product.productIdentifier
         } else {
             purchaseStatusBlock?(.disabled)
         }
     }
+
     
     // MARK: - RESTORE PURCHASE
     func restorePurchase(){
@@ -73,7 +63,7 @@ class IAPHandler: NSObject {
     }
     
     func requestProducts() {
-        let productIdentifiers = NSSet(objects: coffee_ID, croissant_ID, macBook)
+        let productIdentifiers = NSSet(objects: coffee_ID, croissant_ID, macBook_ID)
         
         productsRequest = SKProductsRequest(productIdentifiers: productIdentifiers as! Set<String>)
         productsRequest.delegate = self
@@ -84,20 +74,10 @@ class IAPHandler: NSObject {
 extension IAPHandler: SKProductsRequestDelegate, SKPaymentTransactionObserver{
     // MARK: - REQUEST IAP PRODUCTS
     func productsRequest (_ request:SKProductsRequest, didReceive response:SKProductsResponse) {
-        
         productsRequestCompletionHandler?(true, response.products)
-
 
         if (response.products.count > 0) {
             iapProducts = response.products
-            for product in iapProducts{
-                let numberFormatter = NumberFormatter()
-                numberFormatter.formatterBehavior = .behavior10_4
-                numberFormatter.numberStyle = .currency
-                numberFormatter.locale = product.priceLocale
-                let price1Str = numberFormatter.string(from: product.price)
-                print(product.localizedDescription + "\nfor just \(price1Str!)")
-            }
         }
     }
     

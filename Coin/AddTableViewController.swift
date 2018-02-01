@@ -85,24 +85,6 @@ class AddTableViewController: UITableViewController {
                 self.showErrorSubview(error: error)
             }
         }
-        
-        /*
-        AlamofireRequest().getTicker(completion: { (ticker : [Ticker]?, error : Error?) in
-            if error == nil {
-                if let ticker = ticker {
-                    
-                    getTickerAll = ticker
-                    self.ticker = ticker
-                    
-                    DispatchQueue.main.async() {
-                        self.cryptocurrencyView()
-                    }
-                }
-            }
-            else{
-                self.showErrorSubview(error: error!)
-            }
-        })*/
     }
     
     // MARK: - Table view data source
@@ -180,6 +162,13 @@ class AddTableViewController: UITableViewController {
                 alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler: nil))
                 self.present(alert, animated: true, completion: nil)
             }
+        }
+        else{
+            let keyStore = NSUbiquitousKeyValueStore ()
+            var idArray = [String]()
+            idArray.append(ticker.id)
+            keyStore.set(idArray, forKey: "id")
+            keyStore.synchronize()
         }
     }
     

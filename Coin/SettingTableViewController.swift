@@ -27,10 +27,11 @@ class RateChangePeriodCell: UITableViewCell {
 
 class CurrencySettingsCell: UITableViewCell {
     @IBOutlet weak var symbol: UILabel!
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        let money = SettingsUserDefaults().getCurrentCurrency()
-        symbol.text = money.flag + " " + money.rawValue
+    var money: CryptoCurrencyKit.Money?{
+        didSet {
+            guard let money = money else { return }
+            symbol.text = money.flag + " " + money.rawValue
+        }
     }
 }
 
@@ -47,10 +48,6 @@ class inAppCell: UITableViewCell {
         return formatter
     }()
     
-    override func awakeFromNib() {
-        super.awakeFromNib()
-    }
-    
     var product: SKProduct? {
         didSet {
             guard let product = product else { return }
@@ -62,7 +59,13 @@ class inAppCell: UITableViewCell {
     }
     
     @IBAction func developerSupportAction(_ sender: UIButton) {
-        IAPHandler.shared.purchaseMyProduct(index: 0)
+        IAPHandler.shared.purchaseMyProduct(product!)
+    }
+}
+
+class CoinMarketCapCell: UITableViewCell {
+    @IBAction func coinMarketCapAction(_ sender: Any) {
+        UIApplication.shared.open(URL(string: "https://coinmarketcap.com")!, options: [:], completionHandler: nil)
     }
 }
 
@@ -78,7 +81,7 @@ class SettingTableViewController: UITableViewController {
         
         IAPHandler.shared.purchaseStatusBlock = {[weak self] (type) in
             guard let strongSelf = self else{ return }
-            if type == .purchased {
+            if type == .disabled {
                 let alertView = UIAlertController(title: "", message: type.message(), preferredStyle: .alert)
                 let action = UIAlertAction(title: "OK", style: .default, handler: { (alert) in
                     
@@ -89,8 +92,23 @@ class SettingTableViewController: UITableViewController {
         }
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        
+        self.tableView.reloadData()
+    }
+    
+    let section = [NSLocalizedString("Rate change period", comment: "Rate change period"),
+                   NSLocalizedString("Currency settings", comment: "Currency settings"),
+                   NSLocalizedString("tip jar", comment: "tip jar"),
+                   NSLocalizedString("Data source", comment: "Data source")]
+    
+    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return self.section[section]
+    }
+    
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return 3
+        return 4
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -101,35 +119,26 @@ class SettingTableViewController: UITableViewController {
             return 1
         }
     }
+
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
         switch indexPath.section{
         case 0:
             return tableView.dequeueReusableCell(withIdentifier: "rateChangePeriodCell", for: indexPath)
         case 1:
-            return tableView.dequeueReusableCell(withIdentifier: "currencySettingsCell", for: indexPath)
+            let cell = tableView.dequeueReusableCell(withIdentifier: "currencySettingsCell", for: indexPath) as! CurrencySettingsCell
+            let money = SettingsUserDefaults().getCurrentCurrency()
+            cell.money = money
+            return cell
         case 2:
             let cell = tableView.dequeueReusableCell(withIdentifier: "inAppCell", for: indexPath) as! inAppCell
-            
-             let product = products[(indexPath as NSIndexPath).row]
-             cell.product = product
-            
+            let product = products[(indexPath as NSIndexPath).row]
+            cell.product = product
             return cell
+        case 3:
+            return tableView.dequeueReusableCell(withIdentifier: "coinMarketCapCell", for: indexPath)
         default:
             return tableView.dequeueReusableCell(withIdentifier: "rateChangePeriodCell", for: indexPath)
         }
     }
-    
-    
-    
-    
-    
-
-    
-    @IBAction func coinMarketCapAction(_ sender: Any) {
-        UIApplication.shared.open(URL(string: "https://coinmarketcap.com")!, options: [:], completionHandler: nil)
-    }
-    
-
 }
