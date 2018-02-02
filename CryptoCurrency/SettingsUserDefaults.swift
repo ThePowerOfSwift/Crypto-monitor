@@ -13,7 +13,7 @@ public class SettingsUserDefaults{
     
     public init() {}
     
-    public func setIdArray(idArray: [String]?) {
+    public static func setIdArray(idArray: [String]?) {
         #if os(iOS)
             let keyStore = NSUbiquitousKeyValueStore()
         #endif
@@ -31,7 +31,7 @@ public class SettingsUserDefaults{
         keyStore.synchronize()
     }
     
-    public func getIdArray() -> [String]? {
+    public static func getIdArray() -> [String]? {
         #if os(iOS)
             let keyStore = NSUbiquitousKeyValueStore()
         #endif
@@ -42,7 +42,7 @@ public class SettingsUserDefaults{
         return keyStore.array(forKey: "id") as? [String]
     }
     
-    public func setUserDefaults(ticher: [Ticker]?, idArray: [String]? = nil, lastUpdate: Date? = Date()) {
+    public static func setUserDefaults(ticher: [Ticker]?, idArray: [String]? = nil, lastUpdate: Date? = Date()) {
         var userDefaults: UserDefaults?
         #if os(iOS)
             userDefaults = UserDefaults(suiteName: "group.mialin.valentyn.crypto.monitor")
@@ -73,7 +73,7 @@ public class SettingsUserDefaults{
         userDefaults?.synchronize()
     }
     
-    public func loadcacheTicker() -> ([Ticker]?){
+    public static func loadcacheTicker() -> ([Ticker]?){
         let userDefaults: UserDefaults?
         #if os(iOS)
             userDefaults = UserDefaults(suiteName: "group.mialin.valentyn.crypto.monitor")
@@ -98,7 +98,7 @@ public class SettingsUserDefaults{
     }
     
     
-    public func setCurrentCurrency(money: CryptoCurrencyKit.Money) {
+    public static func setCurrentCurrency(money: CryptoCurrencyKit.Money) {
         #if os(iOS)
             let keyStore = NSUbiquitousKeyValueStore()
         #endif
@@ -112,18 +112,18 @@ public class SettingsUserDefaults{
     }
     
     
-    public func getCurrentCurrency() ->  CryptoCurrencyKit.Money {
+    public static func getCurrentCurrency() ->  CryptoCurrencyKit.Money {
         #if os(iOS)
             let keyStore = NSUbiquitousKeyValueStore()
             if !keyStore.bool(forKey: "converPriceCurrencyToCurrentCurrency"){
                 
                 switch Int(keyStore.longLong(forKey: "priceCurrency")) {
                 case 0:
-                    SettingsUserDefaults().setCurrentCurrency(money: .usd)
+                    SettingsUserDefaults.setCurrentCurrency(money: .usd)
                 case 1:
-                    SettingsUserDefaults().setCurrentCurrency(money: .btc)
+                    SettingsUserDefaults.setCurrentCurrency(money: .btc)
                 case 2:
-                    SettingsUserDefaults().setCurrentCurrency(money: .eur)
+                    SettingsUserDefaults.setCurrentCurrency(money: .eur)
                 default:
                     break
                 }

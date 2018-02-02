@@ -19,7 +19,7 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
     
     func getCurrentTimelineEntry(for complication: CLKComplication, withHandler handler: @escaping (CLKComplicationTimelineEntry?) -> Void) {
         
-        if let tickers = SettingsUserDefaults().loadcacheTicker(), tickers.indices.contains(0) {
+        if let tickers = SettingsUserDefaults.loadcacheTicker(), tickers.indices.contains(0) {
             switch complication.family {
             case .modularLarge:
                 let template = CLKComplicationTemplateModularLargeColumns()

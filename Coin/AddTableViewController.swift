@@ -70,7 +70,7 @@ class AddTableViewController: UITableViewController {
         self.tableView.setContentOffset(CGPoint(x: 0, y: -self.refreshControl!.frame.size.height - self.topLayoutGuide.length), animated: true)
         self.refreshControl!.beginRefreshing()
         
-        let currentCurrency = SettingsUserDefaults().getCurrentCurrency()
+        let currentCurrency = SettingsUserDefaults.getCurrentCurrency()
         CryptoCurrencyKit.fetchTickers(convert: currentCurrency, idArray: nil, limit: 0) { (response) in
             switch response {
             case .success(let tickers):
@@ -152,18 +152,9 @@ class AddTableViewController: UITableViewController {
                     getTickerID!.append(ticker)
                 }
                 
-                SettingsUserDefaults().setUserDefaults(ticher: getTickerID!, lastUpdate: nil)
-                
-           //     self.dismiss(animated: true, completion: nil)
+                SettingsUserDefaults.setUserDefaults(ticher: getTickerID!, lastUpdate: nil)
+
              _ = navigationController?.popViewController(animated: true)
-              //  _ = navigationController?.popToRootViewController(animated: true)
-                
-               /* if let nav = self.navigationController {
-                    nav.popViewController(animated: true)
-                } else {
-                    self.dismiss(animated: true, completion: nil)
-                }
-*/
             }
             else{ 
                 let messageString = ticker.name + NSLocalizedString(" has already been added to favorites.", comment: "Title message")
@@ -182,6 +173,7 @@ class AddTableViewController: UITableViewController {
              _ = navigationController?.popViewController(animated: true)
         }
     }
+   
     
     //MARK: ErrorSubview
     func showErrorSubview(error: Error) {
@@ -211,7 +203,7 @@ class AddTableViewController: UITableViewController {
             self.view.superview?.addSubview(errorSubview!)
         }
     }
-    
+ 
     @objc func reload(_ sender:UIButton) {
         loadTicker()
     }

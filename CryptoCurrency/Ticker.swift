@@ -260,7 +260,7 @@ extension Ticker {
     
     public func priceCurrency() -> String {
 
-        let currency =  SettingsUserDefaults().getCurrentCurrency()
+        let currency =  SettingsUserDefaults.getCurrentCurrency()
         
         switch currency {
         case .btc:

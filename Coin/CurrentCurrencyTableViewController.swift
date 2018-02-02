@@ -30,7 +30,7 @@ class CurrentCurrencyTableViewController: UITableViewController {
         
         cell.symbol.text = money[row].flag + " " + money[row].rawValue
         
-        let currentCurrency = SettingsUserDefaults().getCurrentCurrency()
+        let currentCurrency = SettingsUserDefaults.getCurrentCurrency()
         
         if money[row].rawValue == currentCurrency.rawValue {
             cell.accessoryType = .checkmark
@@ -43,7 +43,7 @@ class CurrentCurrencyTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let row = indexPath.row
-        SettingsUserDefaults().setCurrentCurrency(money: CryptoCurrencyKit.Money(rawValue: money[row].rawValue)!)
+        SettingsUserDefaults.setCurrentCurrency(money: CryptoCurrencyKit.Money(rawValue: money[row].rawValue)!)
         _ = navigationController?.popViewController(animated: true)
     }
 }

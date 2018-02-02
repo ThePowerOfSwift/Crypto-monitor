@@ -21,9 +21,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
         UIApplication.shared.setMinimumBackgroundFetchInterval(UIApplicationBackgroundFetchIntervalMinimum)
         
-        // Load IAP
-        IAPHandler.shared.requestProducts()
-        
         let keyStore = NSUbiquitousKeyValueStore ()
         if !keyStore.bool(forKey: "launchedBefore"){
             
@@ -34,9 +31,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             keyStore.set(true, forKey: "launchedBefore")
             keyStore.synchronize()
         }
+        
+        // Load IAP
+        IAPHandler.shared.requestProducts()
+        
+        incrementAppRuns()
 
         // NetworkActivityIndicatorManager
         NetworkActivityIndicatorManager.shared.isEnabled = true
+        
         return true
     }
     

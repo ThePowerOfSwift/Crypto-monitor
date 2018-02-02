@@ -39,6 +39,8 @@
 		FB2F88FD1FEC07CD003B62CF /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = FB2F88FF1FEC07CD003B62CF /* InfoPlist.strings */; };
 		FB3EF7F220246AA700EB1C31 /* DZNEmptyDataSet.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FB3EF7F320246AA700EB1C31 /* DZNEmptyDataSet.framework */; };
 		FB3EF7F520248E2500EB1C31 /* Spotlight.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB3EF7F420248E2500EB1C31 /* Spotlight.swift */; };
+		FB3EF7FA2024941E00EB1C31 /* DZNEmptyData.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB3EF7F92024941E00EB1C31 /* DZNEmptyData.swift */; };
+		FB3EF7FC2024CB5F00EB1C31 /* ReviewRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB3EF7FB2024CB5F00EB1C31 /* ReviewRequest.swift */; };
 		FB466DDA1F2D479200D771C9 /* SettingTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB466DD91F2D479200D771C9 /* SettingTableViewController.swift */; };
 		FB4955241F2B627600169CB0 /* ErrorSubview.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB4955221F2B627600169CB0 /* ErrorSubview.swift */; };
 		FB5326CB1F254A9400D9C498 /* AddTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB5326CA1F254A9400D9C498 /* AddTableViewCell.swift */; };
@@ -294,6 +296,8 @@
 		FB2F88FE1FEC07CD003B62CF /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		FB3EF7F320246AA700EB1C31 /* DZNEmptyDataSet.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = DZNEmptyDataSet.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FB3EF7F420248E2500EB1C31 /* Spotlight.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Spotlight.swift; sourceTree = "<group>"; };
+		FB3EF7F92024941E00EB1C31 /* DZNEmptyData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DZNEmptyData.swift; sourceTree = "<group>"; };
+		FB3EF7FB2024CB5F00EB1C31 /* ReviewRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewRequest.swift; sourceTree = "<group>"; };
 		FB466DD91F2D479200D771C9 /* SettingTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingTableViewController.swift; sourceTree = "<group>"; };
 		FB4955221F2B627600169CB0 /* ErrorSubview.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ErrorSubview.swift; sourceTree = "<group>"; };
 		FB5326CA1F254A9400D9C498 /* AddTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddTableViewCell.swift; sourceTree = "<group>"; };
@@ -560,6 +564,8 @@
 				FB466DD91F2D479200D771C9 /* SettingTableViewController.swift */,
 				FB6528672020945B004CE9D4 /* IAPHandler.swift */,
 				FB3EF7F420248E2500EB1C31 /* Spotlight.swift */,
+				FB3EF7F92024941E00EB1C31 /* DZNEmptyData.swift */,
+				FB3EF7FB2024CB5F00EB1C31 /* ReviewRequest.swift */,
 				FBA28AD120097C38009EDB84 /* CurrentCurrency */,
 				FB20D0E42009551D0007305C /* Charts.swift */,
 				FB565C461F421ADF004EA42F /* AddTable */,
@@ -1133,12 +1139,14 @@
 			files = (
 				FBA28ACE20097AA6009EDB84 /* CurrentCurrencyTableViewController.swift in Sources */,
 				FB6528682020945B004CE9D4 /* IAPHandler.swift in Sources */,
+				FB3EF7FA2024941E00EB1C31 /* DZNEmptyData.swift in Sources */,
 				FB2F88A81FEBFB28003B62CF /* CoinTableViewController.swift in Sources */,
 				FBA28ACA200959BC009EDB84 /* Charts.swift in Sources */,
 				FB466DDA1F2D479200D771C9 /* SettingTableViewController.swift in Sources */,
 				FBD5ABE51F214CFA003A3AAC /* AddTableViewController.swift in Sources */,
 				FBA28AD020097C31009EDB84 /* CurrentCurrencyTableViewCell.swift in Sources */,
 				FB670CE61F16D900005761CF /* CryptocurrencyInfoViewController.swift in Sources */,
+				FB3EF7FC2024CB5F00EB1C31 /* ReviewRequest.swift in Sources */,
 				FB5326CB1F254A9400D9C498 /* AddTableViewCell.swift in Sources */,
 				FB2F88AA1FEBFB30003B62CF /* TableViewCell.swift in Sources */,
 				FB4955241F2B627600169CB0 /* ErrorSubview.swift in Sources */,

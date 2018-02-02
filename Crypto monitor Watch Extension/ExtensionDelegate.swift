@@ -50,7 +50,7 @@ class ExtensionDelegate: NSObject, WKExtensionDelegate, URLSessionDownloadDelega
                 let session = URLSession(configuration: config, delegate: self, delegateQueue: nil)
                 
                 var urlString = "https://api.coinmarketcap.com/v1/ticker/"
-                urlString.append("?convert=\(SettingsUserDefaults().getCurrentCurrency().rawValue)")
+                urlString.append("?convert=\(SettingsUserDefaults.getCurrentCurrency().rawValue)")
                 urlString.append("&limit=0")
                 
                 let task = session.downloadTask(with: URL(string: urlString)!)
@@ -104,7 +104,7 @@ class ExtensionDelegate: NSObject, WKExtensionDelegate, URLSessionDownloadDelega
                         }
                     }
                     
-                    SettingsUserDefaults().setUserDefaults(ticher: tickerFilterArray)
+                    SettingsUserDefaults.setUserDefaults(ticher: tickerFilterArray)
                     DispatchQueue.main.async {
                         let complicationServer = CLKComplicationServer.sharedInstance()
                         complicationServer.activeComplications?.forEach(complicationServer.reloadTimeline)

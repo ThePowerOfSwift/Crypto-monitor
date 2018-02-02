@@ -63,6 +63,13 @@ class inAppCell: UITableViewCell {
     }
 }
 
+class writeReviewCell: UITableViewCell {
+    @IBAction func writeReviewAction(_ sender: Any) {
+        let appReviewURL = "itms-apps://itunes.apple.com/app/id1261522092?action=write-review&mt=8"
+        UIApplication.shared.open(URL(string:appReviewURL)!,options: [:])
+    }
+}
+
 class CoinMarketCapCell: UITableViewCell {
     @IBAction func coinMarketCapAction(_ sender: Any) {
         UIApplication.shared.open(URL(string: "https://coinmarketcap.com")!, options: [:], completionHandler: nil)
@@ -76,7 +83,6 @@ class SettingTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         products = IAPHandler.shared.iapProducts.sorted(){$0.price.floatValue < $1.price.floatValue}
         
         IAPHandler.shared.purchaseStatusBlock = {[weak self] (type) in
@@ -93,31 +99,62 @@ class SettingTableViewController: UITableViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(true)
+        super.viewWillAppear(true)        
         self.tableView.reloadData()
     }
-    
+ 
     let section = [NSLocalizedString("Rate change period", comment: "Rate change period"),
                    NSLocalizedString("Currency settings", comment: "Currency settings"),
                    NSLocalizedString("tip jar", comment: "tip jar"),
+                   NSLocalizedString("Review", comment: "Review"),
                    NSLocalizedString("Data source", comment: "Data source")]
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        if section == 2 && products.isEmpty {
+            return ""
+        }
         return self.section[section]
     }
     
+    override func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
+        if section == 2 && products.isEmpty  {
+            return ""
+        }
+        return super.tableView(tableView, titleForFooterInSection: section)
+    }
+    
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return 4
+        return 5
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch section {
         case 2:
+            
             return products.count
         default:
             return 1
         }
     }
+    override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        if section == 2 && products.isEmpty  {
+            //header height for selected section
+            return 0.1
+        }
+        
+        //keeps all other Headers unaltered
+        return super.tableView(tableView, heightForHeaderInSection: section)
+    }
+    
+    override func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        if section == 2 && products.isEmpty  {
+            //header height for selected section
+            return 0.1
+        }
+        return super.tableView(tableView, heightForFooterInSection: section)
+    }
+    
+
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath.section == 2 {
@@ -132,7 +169,7 @@ class SettingTableViewController: UITableViewController {
             return tableView.dequeueReusableCell(withIdentifier: "rateChangePeriodCell", for: indexPath)
         case 1:
             let cell = tableView.dequeueReusableCell(withIdentifier: "currencySettingsCell", for: indexPath) as! CurrencySettingsCell
-            let money = SettingsUserDefaults().getCurrentCurrency()
+            let money = SettingsUserDefaults.getCurrentCurrency()
             cell.money = money
             return cell
         case 2:
@@ -141,6 +178,8 @@ class SettingTableViewController: UITableViewController {
             cell.product = product
             return cell
         case 3:
+            return tableView.dequeueReusableCell(withIdentifier: "writeReviewCell", for: indexPath)
+        case 4:
             return tableView.dequeueReusableCell(withIdentifier: "coinMarketCapCell", for: indexPath)
         default:
             return tableView.dequeueReusableCell(withIdentifier: "rateChangePeriodCell", for: indexPath)

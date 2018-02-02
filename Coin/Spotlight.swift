@@ -14,7 +14,7 @@ extension CoinTableViewController {
     
     override func updateUserActivityState(_ activity: NSUserActivity) {
         DispatchQueue.global(qos: .background).async {
-            if let cacheTicker = SettingsUserDefaults().loadcacheTicker() {
+            if let cacheTicker = SettingsUserDefaults.loadcacheTicker() {
                 CSSearchableIndex.default().deleteAllSearchableItems()
                 self.indexItem(ticker: cacheTicker)
             }

@@ -121,6 +121,8 @@ extension CryptoCurrencyKit {
     static func requestA<T>(urlRequest: URLRequest, idArray: [String]?, response: ((_ r: ResponseA<T>) -> Void)?) {
         print("requestA")
         DispatchQueue .global (qos: .utility) .async {
+            
+            
             Alamofire.SessionManager.default.session.getTasksWithCompletionHandler { dataTasks, _, _ in
                 dataTasks.forEach
                     {
@@ -130,9 +132,8 @@ extension CryptoCurrencyKit {
                         }
                 }
             }
- 
+
             Alamofire.SessionManager.default.request(urlRequest).validate().responseData { res in
-                
                 switch res.result {
                 case .success(let responseData):
                     print("Validation Successful getTicker2")

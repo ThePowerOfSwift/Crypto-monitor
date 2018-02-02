@@ -16,7 +16,7 @@
         <scene sceneID="Tcc-7p-d8k">
             <objects>
                 <tableViewController id="l7K-TH-zo9" customClass="SettingTableViewController" customModule="Coin" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" scrollEnabled="NO" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="FwS-wG-3vk">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="FwS-wG-3vk">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
@@ -109,8 +109,34 @@
                                     <outlet property="title" destination="ZUR-ke-lS6" id="IXS-qk-3e1"/>
                                 </connections>
                             </tableViewCell>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="coinMarketCapCell" id="QAV-OG-fBc" customClass="CoinMarketCapCell" customModule="Coin" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="writeReviewCell" id="tfR-fU-dnK" customClass="writeReviewCell" customModule="Coin" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="187.5" width="375" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="tfR-fU-dnK" id="ava-H1-KgG">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="J3x-cK-ObU">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                                            <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
+                                            <state key="normal" title="Write a Review">
+                                                <color key="titleColor" red="0.0" green="0.45798993110000003" blue="0.99927455190000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            </state>
+                                            <connections>
+                                                <action selector="writeReviewAction:" destination="tfR-fU-dnK" eventType="touchUpInside" id="KA7-5F-Sj2"/>
+                                            </connections>
+                                        </button>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="J3x-cK-ObU" firstAttribute="top" secondItem="ava-H1-KgG" secondAttribute="top" id="Duf-O0-lxL"/>
+                                        <constraint firstItem="J3x-cK-ObU" firstAttribute="leading" secondItem="ava-H1-KgG" secondAttribute="leading" id="Eyy-he-aMb"/>
+                                        <constraint firstAttribute="bottom" secondItem="J3x-cK-ObU" secondAttribute="bottom" id="pFa-kM-Je7"/>
+                                        <constraint firstAttribute="trailing" secondItem="J3x-cK-ObU" secondAttribute="trailing" id="tcK-yM-2KL"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="coinMarketCapCell" id="QAV-OG-fBc" customClass="CoinMarketCapCell" customModule="Coin" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="231.5" width="375" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="QAV-OG-fBc" id="rIA-YP-x6x">
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
@@ -125,7 +151,7 @@
                                         </imageView>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="E8q-si-UcI">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                            <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
                                             <state key="normal" title="CoinMarketCap">
                                                 <color key="titleColor" red="0.0" green="0.45798993110656738" blue="0.99927455186843872" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             </state>

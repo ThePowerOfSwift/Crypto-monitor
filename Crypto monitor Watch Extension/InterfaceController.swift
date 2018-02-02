@@ -32,7 +32,7 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate {
         }
         
         if let currentCurrency = applicationContext["CurrentCurrency"] as? String {
-            SettingsUserDefaults().setCurrentCurrency(money: CryptoCurrencyKit.Money(rawValue: currentCurrency)!)
+            SettingsUserDefaults.setCurrentCurrency(money: CryptoCurrencyKit.Money(rawValue: currentCurrency)!)
         }
         
         if let id = applicationContext["id"] as? [String] {
@@ -84,7 +84,7 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate {
     }
 
     private func viewCache() {
-        if let cacheTicker = SettingsUserDefaults().loadcacheTicker() {
+        if let cacheTicker = SettingsUserDefaults.loadcacheTicker() {
             self.tableView(ticker: cacheTicker)
         }
     }
@@ -92,10 +92,10 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate {
     private func load() {
         print("load")
         if let idArray = UserDefaults().array(forKey: "id") as? [String],  !idArray.isEmpty {
-                CryptoCurrencyKit.fetchTickers(convert: SettingsUserDefaults().getCurrentCurrency(), idArray: idArray) { (response) in
+                CryptoCurrencyKit.fetchTickers(convert: SettingsUserDefaults.getCurrentCurrency(), idArray: idArray) { (response) in
                     switch response {
                     case .success(let tickers):
-                        SettingsUserDefaults().setUserDefaults(ticher: tickers)
+                        SettingsUserDefaults.setUserDefaults(ticher: tickers)
                         DispatchQueue.main.async() {
                             self.tableView(ticker: tickers)
                             self.reloadTimeline()
@@ -107,8 +107,8 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate {
                 }
             }
         else{
-            SettingsUserDefaults().setUserDefaults(ticher: nil)
-            SettingsUserDefaults().setIdArray(idArray: nil)
+            SettingsUserDefaults.setUserDefaults(ticher: nil)
+            SettingsUserDefaults.setIdArray(idArray: nil)
             reloadTimeline()
             cryptocurrencyTable.setHidden(true)
             emptyGroup.setHidden(false)

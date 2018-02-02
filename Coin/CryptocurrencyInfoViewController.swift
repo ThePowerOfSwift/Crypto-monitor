@@ -166,11 +166,11 @@ class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
         let keyStore = NSUbiquitousKeyValueStore()
         guard let idArray = keyStore.array(forKey: "id") as? [String] else { return }
         
-        CryptoCurrencyKit.fetchTickers(convert: SettingsUserDefaults().getCurrentCurrency(), idArray: idArray) { (response) in
+        CryptoCurrencyKit.fetchTickers(convert: SettingsUserDefaults.getCurrentCurrency(), idArray: idArray) { (response) in
             switch response {
             case .success(let tickers):
                 getTickerID = tickers
-                SettingsUserDefaults().setUserDefaults(ticher: getTickerID!)
+                SettingsUserDefaults.setUserDefaults(ticher: getTickerID!)
                 DispatchQueue.main.async() {
                     self.viewCryptocurrencyInfo()
                 }
@@ -185,7 +185,7 @@ class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
     func viewCryptocurrencyInfo() {
         refreshBarButtonItem()
 
-        guard let tickerArray = SettingsUserDefaults().loadcacheTicker() else { return }
+        guard let tickerArray = SettingsUserDefaults.loadcacheTicker() else { return }
         
         if let tick = tickerArray.first(where: {$0.id == openID}) {
             ticker = tick
@@ -193,7 +193,7 @@ class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
         if let ticker = ticker {
             
             
-            let money = SettingsUserDefaults().getCurrentCurrency()
+            let money = SettingsUserDefaults.getCurrentCurrency()
             
             nameLabel.text = ticker.name + " (\(ticker.symbol))"
 

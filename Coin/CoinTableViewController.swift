@@ -11,78 +11,13 @@ import WatchConnectivity
 import Alamofire
 import AlamofireImage
 import CryptoCurrency
-import DZNEmptyDataSet
 
 var openID = ""
 var getTickerID:[Ticker]?
 var watchSession : WCSession?
 
 class CoinTableViewController: UITableViewController, WCSessionDelegate {
-    
-    var selectTicker : Ticker?
-    var currentIndexPath: NSIndexPath?
-    let userCalendar = Calendar.current
-    
-    // Subview
-    //   var loadSubview:LoadSubview?   
-    
-    //MARK:WCSession
-    /** Called when all delegate callbacks for the previously selected watch has occurred. The session can be re-activated for the now selected watch using activateSession. */
-    @available(iOS 9.3, *)
-    func sessionDidDeactivate(_ session: WCSession) {
-        
-    }
-    
-    /** Called when the session can no longer be used to modify or add any new transfers and, all interactive messages will be cancelled, but delegate callbacks for background transfers can still occur. This will happen when the selected watch is being changed. */
-    @available(iOS 9.3, *)
-    func sessionDidBecomeInactive(_ session: WCSession) {
-        
-    }
-    
-    /** Called when the session has completed activation. If session state is WCSessionActivationStateNotActivated there will be an error with more details. */
-    @available(iOS 9.3, *)
-    func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: Error?) {
-        
-    }
-    
-    // Sender Watch
-    private func updateApplicationContext(id: [String]) {
-        DispatchQueue.global(qos: .background).async {
-            do {
-                let keyStore = NSUbiquitousKeyValueStore ()
-                let percentChange = Int(keyStore.longLong(forKey: "percentChange"))
-                let currentCurrency = SettingsUserDefaults().getCurrentCurrency().rawValue
-                
-                let context = ["id" : id, "percentChange" : percentChange, "CurrentCurrency" : currentCurrency] as [String : Any]
-                try watchSession?.updateApplicationContext(context)
-                
-            } catch let error as NSError {
-                //   print("Error: \(error.description)")
-            }
-        }
-    }
-    
-    // Receiver
-    /** Called on the delegate of the receiver. Will be called on startup if an applicationContext is available. */
-    func session(_ session: WCSession, didReceiveApplicationContext applicationContext: [String : Any]){
-        // handle receiving application context
-        DispatchQueue.global(qos: .background).async {
-            let keyStore = NSUbiquitousKeyValueStore ()
-            
-            if let percentChange = applicationContext["percentChange"] as? Int {
-                keyStore.set(percentChange, forKey: "percentChange")
-            }
-            
-            if let priceCurrency = applicationContext["priceCurrency"] as? Int {
-                keyStore.set(priceCurrency, forKey: "priceCurrency")
-            }
-            keyStore.synchronize()
-            
-            self.loadCache()
-        }
-    }
-    
-    
+
     //MARK:LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -99,9 +34,13 @@ class CoinTableViewController: UITableViewController, WCSessionDelegate {
         self.navigationItem.rightBarButtonItem = editBarButton
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "Setting"), style: UIBarButtonItemStyle.plain, target: self, action: #selector(settingsShow))
         
+        // Setting DZNEmptyData
         tableView.emptyDataSetSource = self
         tableView.emptyDataSetDelegate = self
+        
         tableView.tableFooterView = UIView()
+        
+        showReview ()
         
         // Set up and activate your session early here!
         if(WCSession.isSupported()){
@@ -110,18 +49,16 @@ class CoinTableViewController: UITableViewController, WCSessionDelegate {
             watchSession!.activate()
         }
     }
-    
-    
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
+        print("viewWillAppear")
         loadCache()
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(true)
         print("viewDidAppear")
-        
-        
         DispatchQueue.global(qos: .background).async {
             let keyStore = NSUbiquitousKeyValueStore()
             let idKeyStore = keyStore.array(forKey: "id") as? [String]
@@ -148,35 +85,11 @@ class CoinTableViewController: UITableViewController, WCSessionDelegate {
         }
     }
     
-    @objc func ubiquitousKeyValueStoreDidChange(notification: NSNotification) {
-        DispatchQueue.global(qos: .background).async {
-            let keyStore = NSUbiquitousKeyValueStore ()
-            let idKeyStore = keyStore.array(forKey: "id") as? [String]
-            let userDefaults = UserDefaults(suiteName: "group.mialin.valentyn.crypto.monitor")
-            let idUserDefaults = userDefaults?.array(forKey: "id") as? [String]
-            if idKeyStore != nil && idUserDefaults != nil {
-                if idKeyStore! != idUserDefaults! {
-                    self.loadTicker()
-                    print("************loadTicker ************")
-                }
-                else{
-                    self.loadCache()
-                    print("************ loadCache************ ")
-                }
-            }
-            
-            if let idKeyStore = idKeyStore {
-                self.updateApplicationContext(id: idKeyStore)
-            }
-            
-            
-            print("iCloud key-value-store change detected")
-        }
-    }
+
     
     func loadCache() {
         DispatchQueue.global(qos: .userInitiated).async {
-            if let cacheTicker = SettingsUserDefaults().loadcacheTicker() {
+            if let cacheTicker = SettingsUserDefaults.loadcacheTicker() {
                 getTickerID = cacheTicker
                 self.cryptocurrencyView()
             }
@@ -239,7 +152,7 @@ class CoinTableViewController: UITableViewController, WCSessionDelegate {
             headerView.dataCurrencyLabel.text = "-"
         }
         
-        headerView.priceLabel.text = "Price (\(SettingsUserDefaults().getCurrentCurrency().rawValue))"
+        headerView.priceLabel.text = "Price (\(SettingsUserDefaults.getCurrentCurrency().rawValue))"
         
         
         let contentView = headerView.contentView
@@ -276,7 +189,7 @@ class CoinTableViewController: UITableViewController, WCSessionDelegate {
                         getTickerID!.remove(at: indexPath.row)
                         
                         // set UserDefaults
-                        SettingsUserDefaults().setUserDefaults(ticher: getTickerID!, idArray: idArray, lastUpdate: nil)
+                        SettingsUserDefaults.setUserDefaults(ticher: getTickerID!, idArray: idArray, lastUpdate: nil)
                         
                         // set iCloud key-value
                         if getTickerID?.count == 0 {
@@ -313,7 +226,7 @@ class CoinTableViewController: UITableViewController, WCSessionDelegate {
                     idArray.insert(getTickerID![sourceIndexPath.row].id, at: destinationIndexPath.row)
                     getTickerID!.rearrange(from: sourceIndexPath.row, to: destinationIndexPath.row)
                     
-                    SettingsUserDefaults().setUserDefaults(ticher: getTickerID!, idArray: idArray, lastUpdate: nil)
+                    SettingsUserDefaults.setUserDefaults(ticher: getTickerID!, idArray: idArray, lastUpdate: nil)
                     
                     // set iCloud key-value
                     keyStore.set(idArray, forKey: "id")
@@ -349,27 +262,32 @@ class CoinTableViewController: UITableViewController, WCSessionDelegate {
     
     private func loadTicker() {
         DispatchQueue.global(qos: .utility).async {
-            guard let idArray = SettingsUserDefaults().getIdArray() else {return}
+            guard let idArray = SettingsUserDefaults.getIdArray() else {return}
             
             if idArray.isEmpty {
                 getTickerID = [Ticker]()
-                SettingsUserDefaults().setUserDefaults(ticher: [Ticker](), lastUpdate: nil)
+                SettingsUserDefaults.setUserDefaults(ticher: [Ticker](), lastUpdate: nil)
             }
             else{
                 
-                CryptoCurrencyKit.fetchTickers(convert: SettingsUserDefaults().getCurrentCurrency(), idArray: idArray) { (response) in
+                CryptoCurrencyKit.fetchTickers(convert: SettingsUserDefaults.getCurrentCurrency(), idArray: idArray) { (response) in
                     switch response {
                     case .success(let tickers):
                         
                         getTickerID = tickers
                         self.cryptocurrencyView()
-                        SettingsUserDefaults().setUserDefaults(ticher: tickers)
+                        SettingsUserDefaults.setUserDefaults(ticher: tickers)
                         self.updateApplicationContext(id: idArray)
                         self.indexItem(ticker: tickers)
                         
                         print("success")
-                    case .failure(let error):
-                        //    self.showErrorSubview(error: error)
+                    case .failure(let error ):
+                        DispatchQueue.main.async {
+                            UIView.animate(withDuration: 0.25) {
+                                self.refreshControl?.endRefreshing()
+                            }
+                        }
+                        self.errorAlert(error: error)
                         print("failure")
                     }
                 }
@@ -408,43 +326,14 @@ class CoinTableViewController: UITableViewController, WCSessionDelegate {
         loadTicker()
     }
     
-    
-    /*
-     //MARK: ErrorSubview
-     func showErrorSubview(error: Error) {
-     if (error as NSError).code != -999 {
-     DispatchQueue.main.async() {
-     
-     var errorSubview:ErrorSubview?
-     self.refreshControl?.endRefreshing()
-     
-     errorSubview = ErrorSubview(frame: CGRect(x: 0, y: 0, width: self.view.bounds.width, height: self.view.bounds.height))
-     
-     if !UIAccessibilityIsReduceTransparencyEnabled() {
-     errorSubview?.backgroundColor = UIColor.clear
-     
-     let blurEffect = UIBlurEffect(style: .prominent)
-     let blurEffectView = UIVisualEffectView(effect: blurEffect)
-     //always fill the view
-     blurEffectView.frame = CGRect(x: 0, y: 0, width: self.view.bounds.width, height: self.view.bounds.height)
-     blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-     
-     errorSubview?.insertSubview(blurEffectView, at: 0)
-     } else {
-     errorSubview?.backgroundColor = UIColor.white
-     }
-     
-     errorSubview?.errorStringLabel.text = error.localizedDescription
-     errorSubview?.reloadPressed.addTarget(self, action: #selector(self.reload(_:)), for: UIControlEvents.touchUpInside)
-     
-     self.view.superview?.addSubview(errorSubview!)
-     }
-     }
-     }
-     */
-    
-
-    
+    func errorAlert(error: Error) {
+        if (error as NSError).code != -999 {
+            let alert = UIAlertController(title: nil, message: error.localizedDescription, preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler: nil))
+            self.present(alert, animated: true, completion: nil)
+        }
+    }
+ 
     @objc func settingsShow(_ sender:UIButton) {
         self.performSegue(withIdentifier: "settingSegue", sender: nil)
     }
@@ -461,38 +350,86 @@ class CoinTableViewController: UITableViewController, WCSessionDelegate {
         return formatter.string(from: date as Date)
     }
     
+    //MARK: - iCloud sync
+    @objc func ubiquitousKeyValueStoreDidChange(notification: NSNotification) {
+        DispatchQueue.global(qos: .background).async {
+            let keyStore = NSUbiquitousKeyValueStore ()
+            let idKeyStore = keyStore.array(forKey: "id") as? [String]
+            let userDefaults = UserDefaults(suiteName: "group.mialin.valentyn.crypto.monitor")
+            let idUserDefaults = userDefaults?.array(forKey: "id") as? [String]
+            if idKeyStore != nil && idUserDefaults != nil {
+                if idKeyStore! != idUserDefaults! {
+                    self.loadTicker()
+                    print("************loadTicker ************")
+                }
+                else{
+                    self.loadCache()
+                    print("************ loadCache************ ")
+                }
+            }
+            
+            if let idKeyStore = idKeyStore {
+                self.updateApplicationContext(id: idKeyStore)
+            }
+            
+            print("iCloud key-value-store change detected")
+        }
+    }
 
+    //MARK: - WCSession
+    /** Called when all delegate callbacks for the previously selected watch has occurred. The session can be re-activated for the now selected watch using activateSession. */
+    func sessionDidDeactivate(_ session: WCSession) {
+        
+    }
+    
+    /** Called when the session can no longer be used to modify or add any new transfers and, all interactive messages will be cancelled, but delegate callbacks for background transfers can still occur. This will happen when the selected watch is being changed. */
+    func sessionDidBecomeInactive(_ session: WCSession) {
+        
+    }
+    
+    /** Called when the session has completed activation. If session state is WCSessionActivationStateNotActivated there will be an error with more details. */
+    func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: Error?) {
+        
+    }
+    
+    // Sender Watch
+    private func updateApplicationContext(id: [String]) {
+        DispatchQueue.global(qos: .background).async {
+            do {
+                let keyStore = NSUbiquitousKeyValueStore ()
+                let percentChange = Int(keyStore.longLong(forKey: "percentChange"))
+                let currentCurrency = SettingsUserDefaults.getCurrentCurrency().rawValue
+                
+                let context = ["id" : id, "percentChange" : percentChange, "CurrentCurrency" : currentCurrency] as [String : Any]
+                try watchSession?.updateApplicationContext(context)
+                
+            } catch let error as NSError {
+                print("Error: \(error.description)")
+            }
+        }
+    }
+    
+    // Receiver
+    /** Called on the delegate of the receiver. Will be called on startup if an applicationContext is available. */
+    func session(_ session: WCSession, didReceiveApplicationContext applicationContext: [String : Any]){
+        // handle receiving application context
+        DispatchQueue.global(qos: .background).async {
+            let keyStore = NSUbiquitousKeyValueStore ()
+            
+            if let percentChange = applicationContext["percentChange"] as? Int {
+                keyStore.set(percentChange, forKey: "percentChange")
+            }
+            
+            if let priceCurrency = applicationContext["priceCurrency"] as? Int {
+                keyStore.set(priceCurrency, forKey: "priceCurrency")
+            }
+            keyStore.synchronize()
+            
+            self.loadCache()
+        }
+    }
 }
 
-// MARK: - Deal with the empty data set
-extension CoinTableViewController: DZNEmptyDataSetSource, DZNEmptyDataSetDelegate {
-    //Add title for empty dataset
-    func title(forEmptyDataSet scrollView: UIScrollView!) -> NSAttributedString! {
-        let str = NSLocalizedString("No cryptocurrencies", comment: "No cryptocurrencies")
-        let attrs = [NSAttributedStringKey.font: UIFont.preferredFont(forTextStyle: UIFontTextStyle.headline)]
-        return NSAttributedString(string: str, attributes: attrs)
-    }
-    
-    //Add description/subtitle on empty dataset
-    func description(forEmptyDataSet scrollView: UIScrollView!) -> NSAttributedString! {
-        let str = NSLocalizedString("Add cryptocurrencies for tracking", comment: "Add cryptocurrencies for tracking")
-        let attrs = [NSAttributedStringKey.font: UIFont.preferredFont(forTextStyle: UIFontTextStyle.body)]
-        return NSAttributedString(string: str, attributes: attrs)
-    }
-    
-    //Add your button
-    func buttonTitle(forEmptyDataSet scrollView: UIScrollView!, for state: UIControlState) -> NSAttributedString! {
-        let str = NSLocalizedString("Add", comment: "Add")
-        let attrs = [NSAttributedStringKey.font: UIFont.preferredFont(forTextStyle: UIFontTextStyle.headline),
-                     NSAttributedStringKey.foregroundColor: #colorLiteral(red: 0.26, green: 0.47, blue: 0.96, alpha: 1)] as [NSAttributedStringKey : Any]
-        return NSAttributedString(string: str, attributes: attrs)
-    }
-    
-    //Add action for button
-    func emptyDataSetDidTapButton(_ scrollView: UIScrollView!) {
-        self.performSegue(withIdentifier: "add", sender: nil)
-    }
-}
 
 // MARK: - Extension Array
 extension Array {

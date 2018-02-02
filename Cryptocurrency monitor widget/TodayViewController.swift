@@ -30,7 +30,7 @@ class TodayViewController: UIViewController, UITableViewDataSource, UITableViewD
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        if let cacheTicker = SettingsUserDefaults().loadcacheTicker() {
+        if let cacheTicker = SettingsUserDefaults.loadcacheTicker() {
             cryptocurrencyView(ticker: cacheTicker)
         }
     }
@@ -54,10 +54,10 @@ class TodayViewController: UIViewController, UITableViewDataSource, UITableViewD
         }
         
         if let idArray = idArray {
-            CryptoCurrencyKit.fetchTickers(convert: SettingsUserDefaults().getCurrentCurrency(), idArray: idArray) { (response) in
+            CryptoCurrencyKit.fetchTickers(convert: SettingsUserDefaults.getCurrentCurrency(), idArray: idArray) { (response) in
                 switch response {
                 case .success(let tickers):
-                    SettingsUserDefaults().setUserDefaults(ticher: tickers)
+                    SettingsUserDefaults.setUserDefaults(ticher: tickers)
                     DispatchQueue.main.async() {
                         self.cryptocurrencyView(ticker: tickers)
                     }
@@ -90,7 +90,7 @@ class TodayViewController: UIViewController, UITableViewDataSource, UITableViewD
     
     func widgetActiveDisplayModeDidChange(_ activeDisplayMode: NCWidgetDisplayMode, withMaximumSize maxSize: CGSize) {
         
-        if let cacheTicker = SettingsUserDefaults().loadcacheTicker() {
+        if let cacheTicker = SettingsUserDefaults.loadcacheTicker() {
             self.cryptocurrency = cacheTicker
         }
         
