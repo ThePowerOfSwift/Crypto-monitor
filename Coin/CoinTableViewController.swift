@@ -26,8 +26,8 @@ class CoinTableViewController: UITableViewController, WCSessionDelegate {
     let userCalendar = Calendar.current
     
     // Subview
- //   var loadSubview:LoadSubview?
-  //  var emptySubview:EmptySubview?
+    //   var loadSubview:LoadSubview?
+    //  var emptySubview:EmptySubview?
     
     
     //MARK:WCSession
@@ -61,7 +61,7 @@ class CoinTableViewController: UITableViewController, WCSessionDelegate {
                 try watchSession?.updateApplicationContext(context)
                 
             } catch let error as NSError {
-             //   print("Error: \(error.description)")
+                //   print("Error: \(error.description)")
             }
         }
     }
@@ -86,7 +86,7 @@ class CoinTableViewController: UITableViewController, WCSessionDelegate {
         }
     }
     
-
+    
     //MARK:LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -120,17 +120,17 @@ class CoinTableViewController: UITableViewController, WCSessionDelegate {
         super.viewWillAppear(true)
         if getTickerID != nil {
             if getTickerID!.isEmpty {
-            //    self.showEmptySubview()
+                //    self.showEmptySubview()
             }
         }
         loadCache()
     }
     
     override func viewDidAppear(_ animated: Bool) {
-      super.viewDidAppear(true)
+        super.viewDidAppear(true)
         print("viewDidAppear")
         
-
+        
         DispatchQueue.global(qos: .background).async {
             let keyStore = NSUbiquitousKeyValueStore()
             let idKeyStore = keyStore.array(forKey: "id") as? [String]
@@ -143,7 +143,7 @@ class CoinTableViewController: UITableViewController, WCSessionDelegate {
     
     
     override func viewWillDisappear(_ animated: Bool) {
-         print("viewWillDisappear")
+        print("viewWillDisappear")
         DispatchQueue.main.async {
             if let subviews = self.view.superview?.subviews {
                 for view in subviews{
@@ -154,7 +154,7 @@ class CoinTableViewController: UITableViewController, WCSessionDelegate {
             }
         }
     }
- 
+    
     
     @objc func applicationWillEnterForeground(notification : NSNotification) {
         if self.viewIfLoaded?.window != nil {
@@ -167,7 +167,7 @@ class CoinTableViewController: UITableViewController, WCSessionDelegate {
     }
     
     @IBAction func refresh(_ sender: UIRefreshControl) {
-         DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) {
             self.loadTicker()
         }
     }
@@ -221,7 +221,7 @@ class CoinTableViewController: UITableViewController, WCSessionDelegate {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "coin", for: indexPath as IndexPath) as! CoinTableViewCell
         let row = indexPath.row
-
+        
         if let ticker = getTickerID {
             
             let url = URL(string: "https://files.coinmarketcap.com/static/img/coins/64x64/\(ticker[row].id).png")!
@@ -229,7 +229,7 @@ class CoinTableViewController: UITableViewController, WCSessionDelegate {
             cell.coinNameLabel.text = ticker[row].name
             
             cell.priceCoinLabel.text = ticker[row].priceCurrency()
-
+            
             let percentChange = ticker[row].percentChangeCurrent()
             cell.percentChangeLabel.text = percentChange + " %"
             if let percent = Float(percentChange) {
@@ -264,7 +264,7 @@ class CoinTableViewController: UITableViewController, WCSessionDelegate {
         }
         
         headerView.priceLabel.text = "Price (\(SettingsUserDefaults().getCurrentCurrency().rawValue))"
-
+        
         
         let contentView = headerView.contentView
         
@@ -336,9 +336,9 @@ class CoinTableViewController: UITableViewController, WCSessionDelegate {
                     idArray.remove(at: index)
                     idArray.insert(getTickerID![sourceIndexPath.row].id, at: destinationIndexPath.row)
                     getTickerID!.rearrange(from: sourceIndexPath.row, to: destinationIndexPath.row)
-      
+                    
                     SettingsUserDefaults().setUserDefaults(ticher: getTickerID!, idArray: idArray, lastUpdate: nil)
-
+                    
                     // set iCloud key-value
                     keyStore.set(idArray, forKey: "id")
                     keyStore.synchronize()
@@ -373,22 +373,14 @@ class CoinTableViewController: UITableViewController, WCSessionDelegate {
     
     private func loadTicker() {
         DispatchQueue.global(qos: .utility).async {
-            guard let idArray = SettingsUserDefaults().getIdArray() else {
-            // self.showEmptySubview()
-                return
-                
-            }
-
+            guard let idArray = SettingsUserDefaults().getIdArray() else {return}
+            
             if idArray.isEmpty {
                 getTickerID = [Ticker]()
                 SettingsUserDefaults().setUserDefaults(ticher: [Ticker](), lastUpdate: nil)
-              //  self.showEmptySubview()
+                //  self.showEmptySubview()
             }
             else{
-                // Какой вид загрузки отображать
-                if getTickerID == nil {
-                //    self.showLoadSubview()
-                }
                 
                 CryptoCurrencyKit.fetchTickers(convert: SettingsUserDefaults().getCurrentCurrency(), idArray: idArray) { (response) in
                     switch response {
@@ -399,15 +391,15 @@ class CoinTableViewController: UITableViewController, WCSessionDelegate {
                         SettingsUserDefaults().setUserDefaults(ticher: tickers)
                         self.updateApplicationContext(id: idArray)
                         self.indexItem(ticker: tickers)
-
+                        
                         print("success")
                     case .failure(let error):
-                    //    self.showErrorSubview(error: error)
+                        //    self.showErrorSubview(error: error)
                         print("failure")
                     }
                 }
             }
-      } 
+        }
     }
     
     func fetch(_ completion: () -> Void) {
@@ -417,7 +409,7 @@ class CoinTableViewController: UITableViewController, WCSessionDelegate {
     
     @objc private func edit(_ sender: Any) {
         self.tableView.setEditing(true, animated: true)
-
+        
         let doneBarButton = UIBarButtonItem.init(barButtonSystemItem: .done, target: self, action: #selector(done))
         self.navigationItem.rightBarButtonItem = doneBarButton
         
@@ -435,7 +427,7 @@ class CoinTableViewController: UITableViewController, WCSessionDelegate {
     }
     
     
-
+    
     
     @objc func reload(_ sender:UIButton) {
         loadTicker()
@@ -443,74 +435,75 @@ class CoinTableViewController: UITableViewController, WCSessionDelegate {
     
     
     /*
-    //MARK: ErrorSubview
-    func showErrorSubview(error: Error) {
-        if (error as NSError).code != -999 {
-            DispatchQueue.main.async() {
-                
-                var errorSubview:ErrorSubview?
-                self.refreshControl?.endRefreshing()
-                
-                errorSubview = ErrorSubview(frame: CGRect(x: 0, y: 0, width: self.view.bounds.width, height: self.view.bounds.height))
-                
-                if !UIAccessibilityIsReduceTransparencyEnabled() {
-                    errorSubview?.backgroundColor = UIColor.clear
-                    
-                    let blurEffect = UIBlurEffect(style: .prominent)
-                    let blurEffectView = UIVisualEffectView(effect: blurEffect)
-                    //always fill the view
-                    blurEffectView.frame = CGRect(x: 0, y: 0, width: self.view.bounds.width, height: self.view.bounds.height)
-                    blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-                    
-                    errorSubview?.insertSubview(blurEffectView, at: 0)
-                } else {
-                    errorSubview?.backgroundColor = UIColor.white
-                }
-                
-                errorSubview?.errorStringLabel.text = error.localizedDescription
-                errorSubview?.reloadPressed.addTarget(self, action: #selector(self.reload(_:)), for: UIControlEvents.touchUpInside)
-                
-                self.view.superview?.addSubview(errorSubview!)
-            }
-        }
-    }
-    */
+     //MARK: ErrorSubview
+     func showErrorSubview(error: Error) {
+     if (error as NSError).code != -999 {
+     DispatchQueue.main.async() {
+     
+     var errorSubview:ErrorSubview?
+     self.refreshControl?.endRefreshing()
+     
+     errorSubview = ErrorSubview(frame: CGRect(x: 0, y: 0, width: self.view.bounds.width, height: self.view.bounds.height))
+     
+     if !UIAccessibilityIsReduceTransparencyEnabled() {
+     errorSubview?.backgroundColor = UIColor.clear
+     
+     let blurEffect = UIBlurEffect(style: .prominent)
+     let blurEffectView = UIVisualEffectView(effect: blurEffect)
+     //always fill the view
+     blurEffectView.frame = CGRect(x: 0, y: 0, width: self.view.bounds.width, height: self.view.bounds.height)
+     blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+     
+     errorSubview?.insertSubview(blurEffectView, at: 0)
+     } else {
+     errorSubview?.backgroundColor = UIColor.white
+     }
+     
+     errorSubview?.errorStringLabel.text = error.localizedDescription
+     errorSubview?.reloadPressed.addTarget(self, action: #selector(self.reload(_:)), for: UIControlEvents.touchUpInside)
+     
+     self.view.superview?.addSubview(errorSubview!)
+     }
+     }
+     }
+     */
     /*
-    func showEmptySubview() {
-        DispatchQueue.main.async() {
-            self.refreshControl?.endRefreshing()
-            
-            self.emptySubview = EmptySubview(frame: CGRect(x: 0, y: 0, width: self.view.bounds.width, height: self.view.bounds.height ))
-            
-            if !UIAccessibilityIsReduceTransparencyEnabled() {
-                self.emptySubview?.backgroundColor = UIColor.clear
-                
-                let blurEffect = UIBlurEffect(style: .dark)
-                let blurEffectView = UIVisualEffectView(effect: blurEffect)
-                //always fill the view
-                blurEffectView.frame = CGRect(x: 0, y: 0, width: self.view.bounds.width, height: self.view.bounds.height )
-                blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-                
-                self.emptySubview?.insertSubview(blurEffectView, at: 0)
-            } else {
-                self.emptySubview?.backgroundColor = UIColor.white
-            }
-            
-            self.emptySubview?.addCryptocurrency.addTarget(self, action: #selector(self.addShow(_:)), for: UIControlEvents.touchUpInside)
-         //   self.view.superview?.addSubview(self.emptySubview!)
-            
-            self.tableView.addSubview(EmptySubview(frame: CGRect(x: 0, y: 0, width: self.view.bounds.width, height: self.view.bounds.height )))
-        }
-    }
-    */
+     func showEmptySubview() {
+     DispatchQueue.main.async() {
+     self.refreshControl?.endRefreshing()
+     
+     self.emptySubview = EmptySubview(frame: CGRect(x: 0, y: 0, width: self.view.bounds.width, height: self.view.bounds.height ))
+     
+     if !UIAccessibilityIsReduceTransparencyEnabled() {
+     self.emptySubview?.backgroundColor = UIColor.clear
+     
+     let blurEffect = UIBlurEffect(style: .dark)
+     let blurEffectView = UIVisualEffectView(effect: blurEffect)
+     //always fill the view
+     blurEffectView.frame = CGRect(x: 0, y: 0, width: self.view.bounds.width, height: self.view.bounds.height )
+     blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+     
+     self.emptySubview?.insertSubview(blurEffectView, at: 0)
+     } else {
+     self.emptySubview?.backgroundColor = UIColor.white
+     }
+     
+     self.emptySubview?.addCryptocurrency.addTarget(self, action: #selector(self.addShow(_:)), for: UIControlEvents.touchUpInside)
+     //   self.view.superview?.addSubview(self.emptySubview!)
+     
+     self.tableView.addSubview(EmptySubview(frame: CGRect(x: 0, y: 0, width: self.view.bounds.width, height: self.view.bounds.height )))
+     }
+     }
+     */
     
     @objc func settingsShow(_ sender:UIButton) {
         self.performSegue(withIdentifier: "settingSegue", sender: nil)
     }
     
     @objc func addShow(_ sender:UIButton) {
-          self.performSegue(withIdentifier: "add", sender: nil)
+        self.performSegue(withIdentifier: "add", sender: nil)
     }
+
     
     private func dateToString(date : NSDate) -> String {
         let formatter = DateFormatter()
@@ -551,7 +544,7 @@ class CoinTableViewController: UITableViewController, WCSessionDelegate {
                 searchableItemAttributeSet.keywords = ["coin", "монета", "Pièce de monnaie", "Münze",
                                                        "cryptocurrency", "Криптовалюта", "Cryptomonnaie", "Kryptowährung",
                                                        "rates", "обменный курс", "taux de change", "Tauschrate" ]
- 
+                
                 let searchableItem = CSSearchableItem(uniqueIdentifier: ticker.id, domainIdentifier: "mialin.Coin", attributeSet: searchableItemAttributeSet)
                 searchableItems.append(searchableItem)
             }
@@ -579,11 +572,32 @@ class CoinTableViewController: UITableViewController, WCSessionDelegate {
     }
 }
 
+// MARK: - Deal with the empty data set
 extension CoinTableViewController: DZNEmptyDataSetSource, DZNEmptyDataSetDelegate {
+    //Add title for empty dataset
     func title(forEmptyDataSet scrollView: UIScrollView!) -> NSAttributedString! {
-        let str = "Welcome"
+        let str = NSLocalizedString("No cryptocurrencies", comment: "No cryptocurrencies")
         let attrs = [NSAttributedStringKey.font: UIFont.preferredFont(forTextStyle: UIFontTextStyle.headline)]
         return NSAttributedString(string: str, attributes: attrs)
+    }
+    
+    //Add description/subtitle on empty dataset
+    func description(forEmptyDataSet scrollView: UIScrollView!) -> NSAttributedString! {
+        let str = NSLocalizedString("Add cryptocurrencies for tracking", comment: "Add cryptocurrencies for tracking")
+        let attrs = [NSAttributedStringKey.font: UIFont.preferredFont(forTextStyle: UIFontTextStyle.body)]
+        return NSAttributedString(string: str, attributes: attrs)
+    }
+    
+    //Add your button
+    func buttonTitle(forEmptyDataSet scrollView: UIScrollView!, for state: UIControlState) -> NSAttributedString! {
+        let str = NSLocalizedString("Add", comment: "Add")
+        let attrs = [NSAttributedStringKey.font: UIFont.preferredFont(forTextStyle: UIFontTextStyle.callout)]
+        return NSAttributedString(string: str, attributes: attrs)
+    }
+    
+    //Add action for button
+    func emptyDataSetDidTapButton(_ scrollView: UIScrollView!) {
+        self.performSegue(withIdentifier: "add", sender: nil)
     }
 }
 
