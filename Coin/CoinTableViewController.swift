@@ -8,8 +8,6 @@
 
 import UIKit
 import WatchConnectivity
-import CoreSpotlight
-import MobileCoreServices
 import Alamofire
 import AlamofireImage
 import CryptoCurrency
@@ -133,22 +131,7 @@ class CoinTableViewController: UITableViewController, WCSessionDelegate {
         }
         loadTicker()
     }
-    
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        print("viewWillDisappear")
-        DispatchQueue.main.async {
-            if let subviews = self.view.superview?.subviews {
-                for view in subviews{
-                    if (view is LoadSubview || view is ErrorSubview || view is EmptySubview) {
-                        view.removeFromSuperview()
-                    }
-                }
-            }
-        }
-    }
-    
-    
+
     @objc func applicationWillEnterForeground(notification : NSNotification) {
         if self.viewIfLoaded?.window != nil {
             DispatchQueue.global(qos: .utility).async {
@@ -460,6 +443,8 @@ class CoinTableViewController: UITableViewController, WCSessionDelegate {
      }
      */
     
+
+    
     @objc func settingsShow(_ sender:UIButton) {
         self.performSegue(withIdentifier: "settingSegue", sender: nil)
     }
@@ -476,64 +461,7 @@ class CoinTableViewController: UITableViewController, WCSessionDelegate {
         return formatter.string(from: date as Date)
     }
     
-    //MARK: - Spotlight
-    override func updateUserActivityState(_ activity: NSUserActivity) {
-        DispatchQueue.global(qos: .background).async {
-            if let cacheTicker = SettingsUserDefaults().loadcacheTicker() {
-                CSSearchableIndex.default().deleteAllSearchableItems()
-                self.indexItem(ticker: cacheTicker)
-            }
-        }
-    }
-    
-    func indexItem(ticker: [Ticker]) {
-        DispatchQueue.global(qos: .background).async {
-            var searchableItems = [CSSearchableItem]()
-            
-            for ticker in ticker{
-                let searchableItemAttributeSet = CSSearchableItemAttributeSet(itemContentType: kUTTypeText as String)
-                
-                // Set the title.
-                searchableItemAttributeSet.title = ticker.name
-                // Set the description.
-                searchableItemAttributeSet.contentDescription = ticker.symbol
-                // Set the image.
-                let url = URL(string: "https://files.coinmarketcap.com/static/img/coins/64x64/\(ticker.id).png")!
-                if let cashedImage = UIImageView.af_sharedImageDownloader.imageCache?.image(for: URLRequest(url: url), withIdentifier: nil) {
-                    if let data = UIImagePNGRepresentation(cashedImage) {
-                        searchableItemAttributeSet.thumbnailData = data
-                    }
-                }
-                
-                searchableItemAttributeSet.keywords = ["coin", "монета", "Pièce de monnaie", "Münze",
-                                                       "cryptocurrency", "Криптовалюта", "Cryptomonnaie", "Kryptowährung",
-                                                       "rates", "обменный курс", "taux de change", "Tauschrate" ]
-                
-                let searchableItem = CSSearchableItem(uniqueIdentifier: ticker.id, domainIdentifier: "mialin.Coin", attributeSet: searchableItemAttributeSet)
-                searchableItems.append(searchableItem)
-            }
-            
-            CSSearchableIndex.default().indexSearchableItems(searchableItems) { error in
-                if let error = error {
-                    print("Indexing error: \(error.localizedDescription)")
-                } else {
-                    print("Search item successfully indexed!")
-                }
-            }
-        }
-    }
-    
-    func deindexItem(identifier: String) {
-        DispatchQueue.global(qos: .background).async {
-            CSSearchableIndex.default().deleteSearchableItems(withIdentifiers: ["\(identifier)"]) { error in
-                if let error = error {
-                    print("Deindexing error: \(error.localizedDescription)")
-                } else {
-                    print("Search item successfully removed!")
-                }
-            }
-        }
-    }
+
 }
 
 // MARK: - Deal with the empty data set
