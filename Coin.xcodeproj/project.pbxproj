@@ -25,7 +25,6 @@
 		FB27C53E200AD72D00DB2907 /* Ticker.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB27C53C200AD72D00DB2907 /* Ticker.swift */; };
 		FB2F889D1FEBFA32003B62CF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FB2F889B1FEBFA32003B62CF /* Main.storyboard */; };
 		FB2F88A01FEBFABD003B62CF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FB2F889E1FEBFABD003B62CF /* LaunchScreen.storyboard */; };
-		FB2F88A31FEBFACC003B62CF /* EmptySubview.xib in Resources */ = {isa = PBXBuildFile; fileRef = FB2F88A11FEBFACC003B62CF /* EmptySubview.xib */; };
 		FB2F88A61FEBFADA003B62CF /* ErrorSubview.xib in Resources */ = {isa = PBXBuildFile; fileRef = FB2F88A41FEBFADA003B62CF /* ErrorSubview.xib */; };
 		FB2F88A81FEBFB28003B62CF /* CoinTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB2F88A71FEBFB28003B62CF /* CoinTableViewController.swift */; };
 		FB2F88AA1FEBFB30003B62CF /* TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB2F88A91FEBFB30003B62CF /* TableViewCell.swift */; };
@@ -72,7 +71,6 @@
 		FBCDD40F1F307E50002B9BA4 /* WidgetCellTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBCDD40E1F307E50002B9BA4 /* WidgetCellTableViewCell.swift */; };
 		FBD5ABE51F214CFA003A3AAC /* AddTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBD5ABE41F214CFA003A3AAC /* AddTableViewController.swift */; };
 		FBD6A3021F73C5E50063FD62 /* LoadSubview.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBD6A3001F73C5E50063FD62 /* LoadSubview.swift */; };
-		FBE0F44C1F3D1E33008DF778 /* EmptySubview.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBE0F44B1F3D1E33008DF778 /* EmptySubview.swift */; };
 		FBE8F6481F73C96B00CE5982 /* Crypto monitor Watch.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = FBB009681F4E3292000B1298 /* Crypto monitor Watch.app */; };
 /* End PBXBuildFile section */
 
@@ -221,7 +219,6 @@
 		FB0B34CB1FED34D700D21F8F /* uk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = uk; path = uk.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		FB0B34CC1FED34D800D21F8F /* uk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = uk; path = uk.lproj/Localizable.strings; sourceTree = "<group>"; };
 		FB0B34CE1FED39F500D21F8F /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/LoadSubview.strings; sourceTree = "<group>"; };
-		FB0B34CF1FED39F500D21F8F /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/EmptySubview.strings; sourceTree = "<group>"; };
 		FB0B34D01FED39F500D21F8F /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Main.strings; sourceTree = "<group>"; };
 		FB0B34D11FED39F500D21F8F /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
 		FB0B34D21FED39F500D21F8F /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/MainInterface.strings; sourceTree = "<group>"; };
@@ -232,7 +229,6 @@
 		FB0B34D71FED3A6B00D21F8F /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
 		FB0B34D81FED3AA500D21F8F /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
 		FB0B34D91FED3AE700D21F8F /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/LoadSubview.strings; sourceTree = "<group>"; };
-		FB0B34DA1FED3AE700D21F8F /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/EmptySubview.strings; sourceTree = "<group>"; };
 		FB0B34DB1FED3AE800D21F8F /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/ErrorSubview.strings; sourceTree = "<group>"; };
 		FB0B34DC1FED3AE800D21F8F /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Main.strings; sourceTree = "<group>"; };
 		FB0B34DD1FED3AE800D21F8F /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
@@ -259,7 +255,6 @@
 		FB0B34F41FED406500D21F8F /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
 		FB0B34F51FED56D400D21F8F /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		FB0B34F61FED56D400D21F8F /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		FB0B34F71FED56D500D21F8F /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/EmptySubview.strings; sourceTree = "<group>"; };
 		FB0B34F81FED56D500D21F8F /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		FB18375B200D028A001C6358 /* Alamofire.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Alamofire.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FB18375D200D0298001C6358 /* Alamofire.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Alamofire.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -272,7 +267,6 @@
 		FB27C53C200AD72D00DB2907 /* Ticker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Ticker.swift; sourceTree = "<group>"; };
 		FB2F889C1FEBFA32003B62CF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		FB2F889F1FEBFABD003B62CF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
-		FB2F88A21FEBFACC003B62CF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/EmptySubview.xib; sourceTree = "<group>"; };
 		FB2F88A51FEBFADA003B62CF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/ErrorSubview.xib; sourceTree = "<group>"; };
 		FB2F88A71FEBFB28003B62CF /* CoinTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CoinTableViewController.swift; path = Coin/CoinTableViewController.swift; sourceTree = "<group>"; };
 		FB2F88A91FEBFB30003B62CF /* TableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TableViewCell.swift; path = Coin/TableViewCell.swift; sourceTree = "<group>"; };
@@ -280,14 +274,12 @@
 		FB2F88AF1FEBFBC2003B62CF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainInterface.storyboard; sourceTree = "<group>"; };
 		FB2F88C81FEC0187003B62CF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LoadSubview.xib; sourceTree = "<group>"; };
 		FB2F88D41FEC0261003B62CF /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/LoadSubview.strings; sourceTree = "<group>"; };
-		FB2F88D51FEC0262003B62CF /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/EmptySubview.strings; sourceTree = "<group>"; };
 		FB2F88D61FEC0262003B62CF /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/ErrorSubview.strings; sourceTree = "<group>"; };
 		FB2F88D71FEC0262003B62CF /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Main.strings; sourceTree = "<group>"; };
 		FB2F88D81FEC0262003B62CF /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
 		FB2F88D91FEC0262003B62CF /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/MainInterface.strings; sourceTree = "<group>"; };
 		FB2F88DA1FEC0262003B62CF /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Interface.strings; sourceTree = "<group>"; };
 		FB2F88DB1FEC0267003B62CF /* uk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = uk; path = uk.lproj/LoadSubview.strings; sourceTree = "<group>"; };
-		FB2F88DC1FEC0267003B62CF /* uk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = uk; path = uk.lproj/EmptySubview.strings; sourceTree = "<group>"; };
 		FB2F88DD1FEC0267003B62CF /* uk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = uk; path = uk.lproj/ErrorSubview.strings; sourceTree = "<group>"; };
 		FB2F88DE1FEC0268003B62CF /* uk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = uk; path = uk.lproj/Main.strings; sourceTree = "<group>"; };
 		FB2F88DF1FEC0268003B62CF /* uk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = uk; path = uk.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
@@ -346,7 +338,6 @@
 		FBCDD40E1F307E50002B9BA4 /* WidgetCellTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WidgetCellTableViewCell.swift; sourceTree = "<group>"; };
 		FBD5ABE41F214CFA003A3AAC /* AddTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddTableViewController.swift; sourceTree = "<group>"; };
 		FBD6A3001F73C5E50063FD62 /* LoadSubview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadSubview.swift; sourceTree = "<group>"; };
-		FBE0F44B1F3D1E33008DF778 /* EmptySubview.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmptySubview.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -570,7 +561,6 @@
 				FB20D0E42009551D0007305C /* Charts.swift */,
 				FB565C461F421ADF004EA42F /* AddTable */,
 				FBD6A3031F73C60B0063FD62 /* LoadSubview */,
-				FBE0F44D1F3D1E3E008DF778 /* EmptySubview */,
 				FB4955261F2B628600169CB0 /* ErrorSubview */,
 				FB2F889B1FEBFA32003B62CF /* Main.storyboard */,
 				FB2F889E1FEBFABD003B62CF /* LaunchScreen.storyboard */,
@@ -602,15 +592,6 @@
 				FB2F88C91FEC0187003B62CF /* LoadSubview.xib */,
 			);
 			name = LoadSubview;
-			sourceTree = "<group>";
-		};
-		FBE0F44D1F3D1E3E008DF778 /* EmptySubview */ = {
-			isa = PBXGroup;
-			children = (
-				FB2F88A11FEBFACC003B62CF /* EmptySubview.xib */,
-				FBE0F44B1F3D1E33008DF778 /* EmptySubview.swift */,
-			);
-			name = EmptySubview;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -918,7 +899,6 @@
 				FB2F88A01FEBFABD003B62CF /* LaunchScreen.storyboard in Resources */,
 				FB2F88F81FEC07CC003B62CF /* Localizable.strings in Resources */,
 				FB2F889D1FEBFA32003B62CF /* Main.storyboard in Resources */,
-				FB2F88A31FEBFACC003B62CF /* EmptySubview.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1161,7 +1141,6 @@
 				FB4955241F2B627600169CB0 /* ErrorSubview.swift in Sources */,
 				FBD6A3021F73C5E50063FD62 /* LoadSubview.swift in Sources */,
 				FBB2CC9C1F155CF800D800FD /* AppDelegate.swift in Sources */,
-				FBE0F44C1F3D1E33008DF778 /* EmptySubview.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1250,19 +1229,6 @@
 				FB0B34EF1FED406400D21F8F /* fr */,
 			);
 			name = LaunchScreen.storyboard;
-			sourceTree = "<group>";
-		};
-		FB2F88A11FEBFACC003B62CF /* EmptySubview.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				FB2F88A21FEBFACC003B62CF /* Base */,
-				FB2F88D51FEC0262003B62CF /* ru */,
-				FB2F88DC1FEC0267003B62CF /* uk */,
-				FB0B34CF1FED39F500D21F8F /* de */,
-				FB0B34DA1FED3AE700D21F8F /* en */,
-				FB0B34F71FED56D500D21F8F /* fr */,
-			);
-			name = EmptySubview.xib;
 			sourceTree = "<group>";
 		};
 		FB2F88A41FEBFADA003B62CF /* ErrorSubview.xib */ = {
