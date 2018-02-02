@@ -52,16 +52,8 @@ class AddTableViewController: UITableViewController {
     }
     
     func cryptocurrencyView() {
-        self.refreshControl?.endRefreshing()
-        
+        self.refreshControl?.endRefreshing() 
         if !ticker.isEmpty {
-            if let subviews = self.view.superview?.subviews {
-                for view in subviews{
-                    if view is ErrorSubview {
-                        view.removeFromSuperview()
-                    }
-                }
-            }
             tableView.reloadData()
         }
     }
@@ -83,7 +75,7 @@ class AddTableViewController: UITableViewController {
                 print("success")
             case .failure(let error):
                 print("failure")
-                self.showErrorSubview(error: error)
+                self.errorAlert(error: error)
             }
         }
     }
@@ -176,31 +168,11 @@ class AddTableViewController: UITableViewController {
    
     
     //MARK: ErrorSubview
-    func showErrorSubview(error: Error) {
+    func errorAlert(error: Error) {
         if (error as NSError).code != -999 {
-            var errorSubview:ErrorSubview?
-            self.refreshControl?.endRefreshing()
-            
-            errorSubview = ErrorSubview(frame: CGRect(x: 0, y: 0, width: self.view.bounds.width, height: self.view.bounds.height))
-            
-            if !UIAccessibilityIsReduceTransparencyEnabled() {
-                errorSubview?.backgroundColor = UIColor.clear
-                
-                let blurEffect = UIBlurEffect(style: .prominent)
-                let blurEffectView = UIVisualEffectView(effect: blurEffect)
-                //always fill the view
-                blurEffectView.frame = CGRect(x: 0, y: 0, width: self.view.bounds.width, height: self.view.bounds.height)
-                blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-                
-                errorSubview?.insertSubview(blurEffectView, at: 0)
-            } else {
-                errorSubview?.backgroundColor = UIColor.white
-            }
-            
-            errorSubview?.errorStringLabel.text = error.localizedDescription
-            errorSubview?.reloadPressed.addTarget(self, action: #selector(reload(_:)), for: UIControlEvents.touchUpInside)
-            
-            self.view.superview?.addSubview(errorSubview!)
+            let alert = UIAlertController(title: nil, message: error.localizedDescription, preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler: nil))
+            self.present(alert, animated: true, completion: nil)
         }
     }
  
