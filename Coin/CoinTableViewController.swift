@@ -13,7 +13,6 @@ import MobileCoreServices
 import Alamofire
 import AlamofireImage
 import CryptoCurrency
-import DZNEmptyDataSet
 
 var openID = ""
 var getTickerID:[Ticker]?
@@ -103,8 +102,6 @@ class CoinTableViewController: UITableViewController, WCSessionDelegate {
         self.navigationItem.rightBarButtonItem = editBarButton
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "Setting"), style: UIBarButtonItemStyle.plain, target: self, action: #selector(settingsShow))
         
-        tableView.emptyDataSetSource = self
-        tableView.emptyDataSetDelegate = self
         tableView.tableFooterView = UIView()
         
         // Set up and activate your session early here!
@@ -572,34 +569,6 @@ class CoinTableViewController: UITableViewController, WCSessionDelegate {
     }
 }
 
-// MARK: - Deal with the empty data set
-extension CoinTableViewController: DZNEmptyDataSetSource, DZNEmptyDataSetDelegate {
-    //Add title for empty dataset
-    func title(forEmptyDataSet scrollView: UIScrollView!) -> NSAttributedString! {
-        let str = NSLocalizedString("No cryptocurrencies", comment: "No cryptocurrencies")
-        let attrs = [NSAttributedStringKey.font: UIFont.preferredFont(forTextStyle: UIFontTextStyle.headline)]
-        return NSAttributedString(string: str, attributes: attrs)
-    }
-    
-    //Add description/subtitle on empty dataset
-    func description(forEmptyDataSet scrollView: UIScrollView!) -> NSAttributedString! {
-        let str = NSLocalizedString("Add cryptocurrencies for tracking", comment: "Add cryptocurrencies for tracking")
-        let attrs = [NSAttributedStringKey.font: UIFont.preferredFont(forTextStyle: UIFontTextStyle.body)]
-        return NSAttributedString(string: str, attributes: attrs)
-    }
-    
-    //Add your button
-    func buttonTitle(forEmptyDataSet scrollView: UIScrollView!, for state: UIControlState) -> NSAttributedString! {
-        let str = NSLocalizedString("Add", comment: "Add")
-        let attrs = [NSAttributedStringKey.font: UIFont.preferredFont(forTextStyle: UIFontTextStyle.callout)]
-        return NSAttributedString(string: str, attributes: attrs)
-    }
-    
-    //Add action for button
-    func emptyDataSetDidTapButton(_ scrollView: UIScrollView!) {
-        self.performSegue(withIdentifier: "add", sender: nil)
-    }
-}
 
 extension Array {
     mutating func rearrange(from: Int, to: Int) {
