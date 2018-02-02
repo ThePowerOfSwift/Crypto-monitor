@@ -26,9 +26,7 @@ class CoinTableViewController: UITableViewController, WCSessionDelegate {
     let userCalendar = Calendar.current
     
     // Subview
-    //   var loadSubview:LoadSubview?
-    //  var emptySubview:EmptySubview?
-    
+    //   var loadSubview:LoadSubview?   
     
     //MARK:WCSession
     /** Called when all delegate callbacks for the previously selected watch has occurred. The session can be re-activated for the now selected watch using activateSession. */
@@ -118,11 +116,6 @@ class CoinTableViewController: UITableViewController, WCSessionDelegate {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
-        if getTickerID != nil {
-            if getTickerID!.isEmpty {
-                //    self.showEmptySubview()
-            }
-        }
         loadCache()
     }
     
@@ -378,7 +371,6 @@ class CoinTableViewController: UITableViewController, WCSessionDelegate {
             if idArray.isEmpty {
                 getTickerID = [Ticker]()
                 SettingsUserDefaults().setUserDefaults(ticher: [Ticker](), lastUpdate: nil)
-                //  self.showEmptySubview()
             }
             else{
                 
@@ -467,34 +459,6 @@ class CoinTableViewController: UITableViewController, WCSessionDelegate {
      }
      }
      */
-    /*
-     func showEmptySubview() {
-     DispatchQueue.main.async() {
-     self.refreshControl?.endRefreshing()
-     
-     self.emptySubview = EmptySubview(frame: CGRect(x: 0, y: 0, width: self.view.bounds.width, height: self.view.bounds.height ))
-     
-     if !UIAccessibilityIsReduceTransparencyEnabled() {
-     self.emptySubview?.backgroundColor = UIColor.clear
-     
-     let blurEffect = UIBlurEffect(style: .dark)
-     let blurEffectView = UIVisualEffectView(effect: blurEffect)
-     //always fill the view
-     blurEffectView.frame = CGRect(x: 0, y: 0, width: self.view.bounds.width, height: self.view.bounds.height )
-     blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-     
-     self.emptySubview?.insertSubview(blurEffectView, at: 0)
-     } else {
-     self.emptySubview?.backgroundColor = UIColor.white
-     }
-     
-     self.emptySubview?.addCryptocurrency.addTarget(self, action: #selector(self.addShow(_:)), for: UIControlEvents.touchUpInside)
-     //   self.view.superview?.addSubview(self.emptySubview!)
-     
-     self.tableView.addSubview(EmptySubview(frame: CGRect(x: 0, y: 0, width: self.view.bounds.width, height: self.view.bounds.height )))
-     }
-     }
-     */
     
     @objc func settingsShow(_ sender:UIButton) {
         self.performSegue(withIdentifier: "settingSegue", sender: nil)
@@ -512,7 +476,7 @@ class CoinTableViewController: UITableViewController, WCSessionDelegate {
         return formatter.string(from: date as Date)
     }
     
-    //MARK: Spotlight
+    //MARK: - Spotlight
     override func updateUserActivityState(_ activity: NSUserActivity) {
         DispatchQueue.global(qos: .background).async {
             if let cacheTicker = SettingsUserDefaults().loadcacheTicker() {
@@ -591,7 +555,8 @@ extension CoinTableViewController: DZNEmptyDataSetSource, DZNEmptyDataSetDelegat
     //Add your button
     func buttonTitle(forEmptyDataSet scrollView: UIScrollView!, for state: UIControlState) -> NSAttributedString! {
         let str = NSLocalizedString("Add", comment: "Add")
-        let attrs = [NSAttributedStringKey.font: UIFont.preferredFont(forTextStyle: UIFontTextStyle.callout)]
+        let attrs = [NSAttributedStringKey.font: UIFont.preferredFont(forTextStyle: UIFontTextStyle.headline),
+                     NSAttributedStringKey.foregroundColor: #colorLiteral(red: 0.26, green: 0.47, blue: 0.96, alpha: 1)] as [NSAttributedStringKey : Any]
         return NSAttributedString(string: str, attributes: attrs)
     }
     
@@ -601,6 +566,7 @@ extension CoinTableViewController: DZNEmptyDataSetSource, DZNEmptyDataSetDelegat
     }
 }
 
+// MARK: - Extension Array
 extension Array {
     mutating func rearrange(from: Int, to: Int) {
         insert(remove(at: from), at: to)
