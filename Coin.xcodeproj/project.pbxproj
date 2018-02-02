@@ -38,6 +38,7 @@
 		FB2F88F31FEC07CB003B62CF /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = FB2F88F51FEC07CB003B62CF /* InfoPlist.strings */; };
 		FB2F88F81FEC07CC003B62CF /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = FB2F88FA1FEC07CC003B62CF /* Localizable.strings */; };
 		FB2F88FD1FEC07CD003B62CF /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = FB2F88FF1FEC07CD003B62CF /* InfoPlist.strings */; };
+		FB3EF7F220246AA700EB1C31 /* DZNEmptyDataSet.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FB3EF7F320246AA700EB1C31 /* DZNEmptyDataSet.framework */; };
 		FB466DDA1F2D479200D771C9 /* SettingTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB466DD91F2D479200D771C9 /* SettingTableViewController.swift */; };
 		FB4955241F2B627600169CB0 /* ErrorSubview.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB4955221F2B627600169CB0 /* ErrorSubview.swift */; };
 		FB5326CB1F254A9400D9C498 /* AddTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB5326CA1F254A9400D9C498 /* AddTableViewCell.swift */; };
@@ -46,7 +47,6 @@
 		FB670CE61F16D900005761CF /* CryptocurrencyInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB670CE51F16D900005761CF /* CryptocurrencyInfoViewController.swift */; };
 		FB8F45B1201044FD005D7571 /* info-watchOSPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = FB8F45B3201044FD005D7571 /* info-watchOSPlist.strings */; };
 		FB8F45B620104502005D7571 /* info-iOSPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = FB8F45B820104502005D7571 /* info-iOSPlist.strings */; };
-		FB91BB5C202377B20007B573 /* DZNEmptyDataSet.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FB91BB5D202377B20007B573 /* DZNEmptyDataSet.framework */; };
 		FB99B48C1F2FEF1F007C0235 /* NotificationCenter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FB99B48B1F2FEF1F007C0235 /* NotificationCenter.framework */; };
 		FB99B48F1F2FEF1F007C0235 /* TodayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB99B48E1F2FEF1F007C0235 /* TodayViewController.swift */; };
 		FB99B4961F2FEF1F007C0235 /* Cryptocurrency monitor widget.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = FB99B48A1F2FEF1F007C0235 /* Cryptocurrency monitor widget.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
@@ -299,6 +299,7 @@
 		FB2F88F41FEC07CB003B62CF /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		FB2F88F91FEC07CC003B62CF /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
 		FB2F88FE1FEC07CD003B62CF /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		FB3EF7F320246AA700EB1C31 /* DZNEmptyDataSet.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = DZNEmptyDataSet.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FB466DD91F2D479200D771C9 /* SettingTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingTableViewController.swift; sourceTree = "<group>"; };
 		FB4955221F2B627600169CB0 /* ErrorSubview.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ErrorSubview.swift; sourceTree = "<group>"; };
 		FB5326CA1F254A9400D9C498 /* AddTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddTableViewCell.swift; sourceTree = "<group>"; };
@@ -380,7 +381,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FB91BB5C202377B20007B573 /* DZNEmptyDataSet.framework in Frameworks */,
+				FB3EF7F220246AA700EB1C31 /* DZNEmptyDataSet.framework in Frameworks */,
 				FB183764200D035D001C6358 /* AlamofireNetworkActivityIndicator.framework in Frameworks */,
 				FB183762200D033B001C6358 /* Charts.framework in Frameworks */,
 				FB183760200D0328001C6358 /* SwiftyJSON.framework in Frameworks */,
@@ -432,6 +433,7 @@
 		731467F8FA5309E32222B93E /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				FB3EF7F320246AA700EB1C31 /* DZNEmptyDataSet.framework */,
 				FB91BB5D202377B20007B573 /* DZNEmptyDataSet.framework */,
 				FBC054B7201F67FA00458F8D /* StoreKit.framework */,
 				FB183765200D035D001C6358 /* AlamofireNetworkActivityIndicator.framework */,
