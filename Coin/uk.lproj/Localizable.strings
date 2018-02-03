@@ -1,9 +1,39 @@
 /* Title message */
 " has already been added to favorites." = " вже доданий в обране.";
 
+/* Add */
+"Add" = "Додати";
+
+/* Add cryptocurrencies for tracking */
+"Add cryptocurrencies for tracking" = "Додайте криптовалюту для відстеження";
+
 /* Title alert */
 "Added" = "Додано";
 
+/* Currency settings */
+"Currency settings" = "Параметри валют";
+
+/* Data source */
+"Data source" = "Джерело даних";
+
+/* No cryptocurrencies */
+"No cryptocurrencies" = "Список криптовалют порожній";
+
 /* lineChartView noDataText */
 "No data load" = "Немає завантажених даних";
+
+/* Purchases are disabled in your device! */
+"Purchases are disabled in your device!" = "Покупки відключені на вашому пристрої!";
+
+/* Rate change period */
+"Rate change period" = "Період зміни курсу";
+
+/* Review */
+"Review" = "відгук";
+
+/* Thank you! */
+"Thank you!" = "";
+
+/* tip jar */
+"tip jar" = "Підтримка розробників";
 

@@ -1,9 +1,36 @@
 /* Title message */
 " has already been added to favorites." = " уже добавлен в избранное.";
 
+/* Add */
+"Add" = "Добавить";
+
+/* Add cryptocurrencies for tracking */
+"Add cryptocurrencies for tracking" = "Добавьте криптовалюты для отслеживания";
+
 /* Title alert */
 "Added" = "Добавлено";
 
+/* Currency settings */
+"Currency settings" = "Настройки валюты";
+
+/* Data source */
+"Data source" = "Источник данных";
+
+/* No cryptocurrencies */
+"No cryptocurrencies" = "Список криптовалют пуст";
+
 /* lineChartView noDataText */
 "No data load" = "Нету загруженных данных";
+
+/* Purchases are disabled in your device! */
+"Purchases are disabled in your device!" = "Покупки отключены на вашем устройстве!";
+
+/* Rate change period */
+"Rate change period" = "Период изменения курса";
+
+/* Review */
+"Review" = "Отзыв";
+
+/* tip jar */
+"tip jar" = "Поддержка разработчиков";
 

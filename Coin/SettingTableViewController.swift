@@ -83,6 +83,7 @@ class SettingTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         products = IAPHandler.shared.iapProducts.sorted(){$0.price.floatValue < $1.price.floatValue}
         
         IAPHandler.shared.purchaseStatusBlock = {[weak self] (type) in
@@ -110,9 +111,12 @@ class SettingTableViewController: UITableViewController {
                    NSLocalizedString("Data source", comment: "Data source")]
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        print(section)
         if section == 2 && products.isEmpty {
             return ""
         }
+       
+        print(self.section[section])
         return self.section[section]
     }
     
@@ -136,11 +140,15 @@ class SettingTableViewController: UITableViewController {
         }
     }
     override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        if section == 0  {
+            //header height for selected section
+            return 36.0
+        }
+        
         if section == 2 && products.isEmpty  {
             //header height for selected section
             return 0.1
         }
-        
         //keeps all other Headers unaltered
         return super.tableView(tableView, heightForHeaderInSection: section)
     }

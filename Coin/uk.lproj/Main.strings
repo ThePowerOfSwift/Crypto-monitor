@@ -1,13 +1,16 @@
 /* Class = "UINavigationItem"; title = "Currency"; ObjectID = "2xi-Rp-o8w"; */
 "2xi-Rp-o8w.title" = "Валюта";
 
-/* Class = "UITableViewSection"; headerTitle = "Currency settings"; ObjectID = "7Hc-Jc-x8U"; Note = "Настройки источник данных "; */
-"7Hc-Jc-x8U.headerTitle" = "Параметри валют";
+/* Class = "UINavigationItem"; title = "Settings"; ObjectID = "DTw-zY-pjb"; */
+"DTw-zY-pjb.title" = "Налаштування";
+
+/* Class = "UIButton"; normalTitle = "Write a Review"; ObjectID = "J3x-cK-ObU"; */
+"J3x-cK-ObU.normalTitle" = "Написати відгук";
 
 /* Class = "UIButton"; normalTitle = "Buy / Sell Instantly"; ObjectID = "WVM-8J-Hzj"; Note = "changelly"; */
 "WVM-8J-Hzj.normalTitle" = "Купуйте / продавайте миттєво";
 
-/* Class = "UINavigationItem"; title = "Settings"; ObjectID = "a5a-yk-s2O"; */
+/* (No Comment) */
 "a5a-yk-s2O.title" = "Налаштування";
 
 /* Class = "UINavigationItem"; title = "Add"; ObjectID = "fra-i8-hjZ"; */
@@ -16,9 +19,9 @@
 /* (No Comment) */
 "tyt-ZY-uLd.headerTitle" = "Ціна";
 
-/* Class = "UITableViewSection"; headerTitle = "Rate change period"; ObjectID = "uMW-aC-8Ll"; Note = "Настройки выбор периода"; */
+/* (No Comment) */
 "uMW-aC-8Ll.headerTitle" = "Період зміни курсу";
 
-/* Class = "UITableViewSection"; headerTitle = "Data source"; ObjectID = "yeO-1L-1gs"; Note = "Настройки источник данных "; */
+/* (No Comment) */
 "yeO-1L-1gs.headerTitle" = "Джерело даних";
 

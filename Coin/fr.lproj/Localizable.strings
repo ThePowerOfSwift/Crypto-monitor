@@ -1,9 +1,33 @@
 /* Title message */
 " has already been added to favorites." = " a déjà été ajouté aux favoris.";
 
+/* Add */
+"Add" = "Ajouter";
+
+/* Add cryptocurrencies for tracking */
+"Add cryptocurrencies for tracking" = "Ajouter des cryptocurrences pour le suivi";
+
 /* Title alert */
 "Added" = "Ajoutée";
 
+/* Currency settings */
+"Currency settings" = "Paramètres de devise";
+
+/* Data source */
+"Data source" = "La source de données";
+
+/* No cryptocurrencies */
+"No cryptocurrencies" = "Pas de crypto-monnaies";
+
 /* lineChartView noDataText */
 "No data load" = "Aucune charge de données";
+
+/* Purchases are disabled in your device! */
+"Purchases are disabled in your device!" = "Les achats sont désactivés sur votre appareil!";
+
+/* Rate change period */
+"Rate change period" = "Période de changement de taux";
+
+/* Review */
+"Review" = "la revue";
 

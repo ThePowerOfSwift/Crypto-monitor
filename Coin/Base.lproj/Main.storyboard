@@ -16,7 +16,7 @@
         <scene sceneID="Tcc-7p-d8k">
             <objects>
                 <tableViewController id="l7K-TH-zo9" customClass="SettingTableViewController" customModule="Coin" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="FwS-wG-3vk">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" sectionFooterHeight="-1" id="FwS-wG-3vk">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
@@ -29,7 +29,7 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="4CQ-mx-WN4">
-                                            <rect key="frame" x="16" y="8" width="343" height="29"/>
+                                            <rect key="frame" x="16" y="11" width="343" height="23"/>
                                             <segments>
                                                 <segment title="1h"/>
                                                 <segment title="24h"/>
@@ -43,6 +43,8 @@
                                     </subviews>
                                     <constraints>
                                         <constraint firstItem="4CQ-mx-WN4" firstAttribute="centerY" secondItem="a46-E1-SvA" secondAttribute="centerY" id="IZi-of-ocf"/>
+                                        <constraint firstItem="4CQ-mx-WN4" firstAttribute="top" secondItem="a46-E1-SvA" secondAttribute="topMargin" id="Jlo-83-Gwt"/>
+                                        <constraint firstAttribute="bottomMargin" secondItem="4CQ-mx-WN4" secondAttribute="bottom" id="K46-iB-YRT"/>
                                         <constraint firstItem="4CQ-mx-WN4" firstAttribute="trailing" secondItem="a46-E1-SvA" secondAttribute="trailingMargin" id="a7K-BY-Mi7"/>
                                         <constraint firstItem="4CQ-mx-WN4" firstAttribute="leading" secondItem="a46-E1-SvA" secondAttribute="leadingMargin" id="t3J-L9-eTd"/>
                                     </constraints>
