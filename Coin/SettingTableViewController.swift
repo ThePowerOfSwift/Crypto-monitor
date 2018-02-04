@@ -47,7 +47,17 @@ class inAppCell: UITableViewCell {
         
         return formatter
     }()
-
+/*
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        
+        developerSupport.backgroundColor = .clear
+        developerSupport.layer.cornerRadius = 5
+        developerSupport.layer.borderWidth = 1
+        developerSupport.titleEdgeInsets = UIEdgeInsetsMake(0.0, 5.0, 0.0, 5.0)
+        developerSupport.layer.borderColor = UIColor.black.cgColor
+    }
+*/
     var product: SKProduct? {
         didSet {
             guard let product = product else { return }
