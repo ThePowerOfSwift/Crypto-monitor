@@ -14,14 +14,14 @@ public typealias ProductsRequestCompletionHandler = (_ success: Bool, _ products
 
 enum IAPHandlerAlertType{
     case disabled
-    case restored
     case purchased
+    case failed
     
     func message() -> String{
         switch self {
         case .disabled: return NSLocalizedString("Purchases are disabled in your device!", comment: "Purchases are disabled in your device!")
-        case .restored: return NSLocalizedString("You've successfully restored your purchase!", comment: "You've successfully restored your purchase!")
         case .purchased: return NSLocalizedString("Thank you!", comment: "Thank you!")
+        case .failed: return NSLocalizedString("Failed", comment: "Failed")
         }
     }
 }
@@ -30,6 +30,8 @@ enum IAPHandlerAlertType{
 class IAPHandler: NSObject {
     static let shared = IAPHandler()
     fileprivate var productsRequestCompletionHandler: ProductsRequestCompletionHandler?
+    
+
 
     let coffee_ID = "mialin.Coin.coffee"
     let croissant_ID = "mialin.Coin.Croissant"
@@ -38,7 +40,7 @@ class IAPHandler: NSObject {
     fileprivate var productsRequest = SKProductsRequest()
     var iapProducts = [SKProduct]()
     
-    var purchaseStatusBlock: ((IAPHandlerAlertType) -> Void)?
+    var purchaseStatusBlock: ((IAPHandlerAlertType, SKPayment?) -> Void)?
     
     // MARK: - MAKE PURCHASE OF A PRODUCT
     func canMakePurchases() -> Bool {  return SKPaymentQueue.canMakePayments()  }
@@ -48,20 +50,12 @@ class IAPHandler: NSObject {
             let payment = SKPayment(product: product)
             SKPaymentQueue.default().add(self)
             SKPaymentQueue.default().add(payment)
-            
             print("PRODUCT TO PURCHASE: \(product.productIdentifier)")
         } else {
-            purchaseStatusBlock?(.disabled)
+            purchaseStatusBlock?(.disabled, nil)
         }
     }
 
-    
-    // MARK: - RESTORE PURCHASE
-    func restorePurchase(){
-        SKPaymentQueue.default().add(self)
-        SKPaymentQueue.default().restoreCompletedTransactions()
-    }
-    
     func requestProducts() {
         let productIdentifiers = NSSet(objects: coffee_ID, croissant_ID, macBook_ID)
         
@@ -81,11 +75,7 @@ extension IAPHandler: SKProductsRequestDelegate, SKPaymentTransactionObserver{
         }
     }
     
-    func paymentQueueRestoreCompletedTransactionsFinished(_ queue: SKPaymentQueue) {
-        purchaseStatusBlock?(.restored)
-    }
-    
-    // MARK:- IAP PAYMENT QUEUE
+    // MARK: - IAP PAYMENT QUEUE
     func paymentQueue(_ queue: SKPaymentQueue, updatedTransactions transactions: [SKPaymentTransaction]) {
         for transaction:AnyObject in transactions {
             if let trans = transaction as? SKPaymentTransaction {
@@ -93,18 +83,11 @@ extension IAPHandler: SKProductsRequestDelegate, SKPaymentTransactionObserver{
                 case .purchased:
                     print("purchased")
                     SKPaymentQueue.default().finishTransaction(transaction as! SKPaymentTransaction)
-                    purchaseStatusBlock?(.purchased)
-                    break
-                    
+                    purchaseStatusBlock?(.purchased, trans.payment)
                 case .failed:
                     print("failed")
                     SKPaymentQueue.default().finishTransaction(transaction as! SKPaymentTransaction)
-                    break
-                case .restored:
-                    print("restored")
-                    SKPaymentQueue.default().finishTransaction(transaction as! SKPaymentTransaction)
-                    break
-                    
+                    purchaseStatusBlock?(.failed, trans.payment)
                 default: break
                 }}}
     }

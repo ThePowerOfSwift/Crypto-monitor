@@ -47,18 +47,21 @@ class inAppCell: UITableViewCell {
         
         return formatter
     }()
-    
+
     var product: SKProduct? {
         didSet {
             guard let product = product else { return }
-            
+            developerSupport.isEnabled = true
             title.text = product.localizedDescription
             inAppCell.priceFormatter.locale = product.priceLocale
+            
             developerSupport.setTitle(inAppCell.priceFormatter.string(from: product.price), for: .normal)
+            developerSupport.setTitle(NSLocalizedString("purchasing...", comment: "purchasing"), for: .disabled)
         }
     }
     
     @IBAction func developerSupportAction(_ sender: UIButton) {
+        developerSupport.isEnabled = false
         IAPHandler.shared.purchaseMyProduct(product!)
     }
 }
@@ -80,21 +83,27 @@ class SettingTableViewController: UITableViewController {
     
     var products = [SKProduct]()
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         products = IAPHandler.shared.iapProducts.sorted(){$0.price.floatValue < $1.price.floatValue}
         
-        IAPHandler.shared.purchaseStatusBlock = {[weak self] (type) in
+        IAPHandler.shared.purchaseStatusBlock = {[weak self] (type, payment) in
             guard let strongSelf = self else{ return }
-            if type == .disabled {
+            
+            switch type {
+            case .purchased, .failed:
+                break
+            case.disabled:
                 let alertView = UIAlertController(title: "", message: type.message(), preferredStyle: .alert)
-                let action = UIAlertAction(title: "OK", style: .default, handler: { (alert) in
-                    
-                })
+                let action = UIAlertAction(title: "OK", style: .default, handler: { (alert) in })
                 alertView.addAction(action)
                 strongSelf.present(alertView, animated: true, completion: nil)
+            }
+            
+            if let rowNumber = self?.products.index(where: { $0.productIdentifier == payment?.productIdentifier }) {
+                let indexPath = IndexPath(item: rowNumber, section: 2)
+                self?.tableView.reloadRows(at: [indexPath], with: .none)
             }
         }
     }
@@ -111,12 +120,9 @@ class SettingTableViewController: UITableViewController {
                    NSLocalizedString("Data source", comment: "Data source")]
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        print(section)
         if section == 2 && products.isEmpty {
             return ""
         }
-       
-        print(self.section[section])
         return self.section[section]
     }
     
@@ -162,14 +168,15 @@ class SettingTableViewController: UITableViewController {
     }
     
 
-    
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+/*
         if indexPath.section == 2 {
+            let cell:UITableViewCell = tableView.cellForRow(at: indexPath) as! inAppCell
+ 
             IAPHandler.shared.purchaseMyProduct(products[(indexPath as NSIndexPath).row])
         }
     }
+ */
   
-    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         switch indexPath.section{
         case 0:
