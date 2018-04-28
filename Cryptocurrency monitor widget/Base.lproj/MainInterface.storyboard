@@ -37,15 +37,8 @@
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="59.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="center" semanticContentAttribute="spatial" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="hfL-CZ-3we">
-                                                    <rect key="frame" x="0.0" y="14" width="32" height="32"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="width" constant="32" id="P8B-ij-GL1"/>
-                                                        <constraint firstAttribute="height" constant="32" id="hH1-hQ-raM"/>
-                                                    </constraints>
-                                                </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="j4q-hj-4re">
-                                                    <rect key="frame" x="32" y="20.5" width="66.5" height="19.5"/>
+                                                    <rect key="frame" x="15" y="20.5" width="66.5" height="19.5"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="0.75" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
@@ -78,25 +71,19 @@
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="hax-C5-6jv" firstAttribute="centerY" secondItem="WHi-5k-Wlc" secondAttribute="centerY" id="5s8-Ss-oix"/>
-                                                <constraint firstItem="j4q-hj-4re" firstAttribute="leading" secondItem="hfL-CZ-3we" secondAttribute="trailing" id="7t8-OP-Gpe"/>
+                                                <constraint firstItem="j4q-hj-4re" firstAttribute="leading" secondItem="WHi-5k-Wlc" secondAttribute="leadingMargin" id="66M-bU-wQq"/>
                                                 <constraint firstItem="hax-C5-6jv" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="j4q-hj-4re" secondAttribute="trailing" constant="4" id="BZ1-Tt-DM4"/>
                                                 <constraint firstItem="Sxj-YE-tdo" firstAttribute="top" secondItem="WHi-5k-Wlc" secondAttribute="topMargin" id="FAb-6I-dHb"/>
                                                 <constraint firstItem="Sxj-YE-tdo" firstAttribute="trailing" secondItem="WHi-5k-Wlc" secondAttribute="trailingMargin" id="PPD-oi-dGY"/>
                                                 <constraint firstItem="Sxj-YE-tdo" firstAttribute="leading" secondItem="hax-C5-6jv" secondAttribute="trailing" constant="4" id="V8G-lB-ODa"/>
                                                 <constraint firstItem="Sxj-YE-tdo" firstAttribute="centerY" secondItem="WHi-5k-Wlc" secondAttribute="centerY" id="Z3Q-2U-2Y2"/>
                                                 <constraint firstItem="Sxj-YE-tdo" firstAttribute="bottom" secondItem="WHi-5k-Wlc" secondAttribute="bottomMargin" id="afw-jm-OgL"/>
-                                                <constraint firstItem="hfL-CZ-3we" firstAttribute="centerY" secondItem="WHi-5k-Wlc" secondAttribute="centerY" id="dPj-Ni-pwb"/>
-                                                <constraint firstItem="hax-C5-6jv" firstAttribute="centerY" secondItem="hfL-CZ-3we" secondAttribute="centerY" id="dU4-S0-TsY"/>
                                                 <constraint firstItem="hax-C5-6jv" firstAttribute="width" secondItem="j4q-hj-4re" secondAttribute="width" id="msq-m7-SJM"/>
-                                                <constraint firstItem="j4q-hj-4re" firstAttribute="centerY" secondItem="hfL-CZ-3we" secondAttribute="centerY" id="tGg-HA-Hca"/>
-                                                <constraint firstItem="hfL-CZ-3we" firstAttribute="leading" secondItem="WHi-5k-Wlc" secondAttribute="leading" id="u0f-UO-Uu1"/>
-                                                <constraint firstItem="j4q-hj-4re" firstAttribute="leading" secondItem="hfL-CZ-3we" secondAttribute="trailing" id="yRO-3S-8bZ"/>
                                                 <constraint firstItem="j4q-hj-4re" firstAttribute="centerY" secondItem="WHi-5k-Wlc" secondAttribute="centerY" id="yq1-Zk-YaG"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <connections>
-                                            <outlet property="coinImageView" destination="hfL-CZ-3we" id="dpd-9w-Dtd"/>
                                             <outlet property="coinNameLabel" destination="j4q-hj-4re" id="L1X-U2-fIg"/>
                                             <outlet property="percentChangeLabel" destination="wXB-pS-gOg" id="gcM-jJ-b5d"/>
                                             <outlet property="percentChangeView" destination="Sxj-YE-tdo" id="W7b-VY-ILA"/>

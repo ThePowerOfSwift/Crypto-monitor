@@ -9,7 +9,6 @@
 import UIKit
 import Charts
 import CryptoCurrency
-import AlamofireImage
 import Alamofire
 import CoreSpotlight
 
@@ -77,13 +76,7 @@ class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
         paymentButton.imageView?.contentMode = .scaleAspectFit
         paymentButton.setImage(#imageLiteral(resourceName: "changellyLogo"), for: .normal)
         
-        // title image
-        let view = UIImageView(frame: CGRect(x: 0, y: 0, width: 32, height: 32))
-        view.contentMode = .scaleAspectFit
-        let url = URL(string: "https://files.coinmarketcap.com/static/img/coins/64x64/\(openID).png")!
-        view.af_setImage(withURL: url) { (responce) in
-            self.navigationItem.titleView = view
-        }
+    
         
         ChartRequest().getMinDateCharts(id: openID, completion: { (minDate: Date?, error : Error?) in
             if error == nil {
@@ -182,18 +175,23 @@ class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
     
     func viewCryptocurrencyInfo() {
         refreshBarButtonItem()
+        
+        
 
         guard let tickerArray = SettingsUserDefaults.loadcacheTicker() else { return }
         
         if let tick = tickerArray.first(where: {$0.id == openID}) {
             ticker = tick
         }
+        
         if let ticker = ticker {
             
+            // title
+            self.navigationItem.title = ticker?.symbol
             
             let money = SettingsUserDefaults.getCurrentCurrency()
             
-            nameLabel.text = ticker.name + " (\(ticker.symbol))"
+            nameLabel.text = ticker.name
 
             
             priceUsdLabel.text = ticker.priceToString(for: .usd)

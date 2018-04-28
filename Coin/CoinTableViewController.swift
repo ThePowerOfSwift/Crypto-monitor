@@ -9,7 +9,6 @@
 import UIKit
 import WatchConnectivity
 import Alamofire
-import AlamofireImage
 import CryptoCurrency
 
 var openID = ""
@@ -113,8 +112,6 @@ class CoinTableViewController: UITableViewController, WCSessionDelegate {
         
         if let ticker = getTickerID {
             
-            let url = URL(string: "https://files.coinmarketcap.com/static/img/coins/64x64/\(ticker[row].id).png")!
-            cell.coinImageView.af_setImage(withURL: url)
             cell.coinNameLabel.text = ticker[row].name
             
             cell.priceCoinLabel.text = ticker[row].priceCurrency()
@@ -318,10 +315,7 @@ class CoinTableViewController: UITableViewController, WCSessionDelegate {
         
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "Setting"), style: UIBarButtonItemStyle.plain, target: self, action: #selector(settingsShow))
     }
-    
-    
-    
-    
+
     @objc func reload(_ sender:UIButton) {
         loadTicker()
     }

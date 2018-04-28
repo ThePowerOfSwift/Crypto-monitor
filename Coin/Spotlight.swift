@@ -32,14 +32,7 @@ extension CoinTableViewController {
                 searchableItemAttributeSet.title = ticker.name
                 // Set the description.
                 searchableItemAttributeSet.contentDescription = ticker.symbol
-                // Set the image.
-                let url = URL(string: "https://files.coinmarketcap.com/static/img/coins/64x64/\(ticker.id).png")!
-                if let cashedImage = UIImageView.af_sharedImageDownloader.imageCache?.image(for: URLRequest(url: url), withIdentifier: nil) {
-                    if let data = UIImagePNGRepresentation(cashedImage) {
-                        searchableItemAttributeSet.thumbnailData = data
-                    }
-                }
-                
+ 
                 searchableItemAttributeSet.keywords = ["coin", "монета", "Pièce de monnaie", "Münze",
                                                        "cryptocurrency", "Криптовалюта", "Cryptomonnaie", "Kryptowährung",
                                                        "rates", "обменный курс", "taux de change", "Tauschrate" ]

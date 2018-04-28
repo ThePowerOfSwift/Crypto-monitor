@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="header" rowHeight="20" id="O2v-P7-d58" customClass="HeaderTableViewCell" customModule="Coin" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="20"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="O2v-P7-d58" id="xdK-Vh-Tli">
+                <rect key="frame" x="0.0" y="0.0" width="375" height="19.5"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="RSe-mu-hfy">
+                        <rect key="frame" x="32" y="2" width="35.5" height="16"/>
+                        <fontDescription key="fontDescription" style="UICTFontTextStyleFootnote"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="24h" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="YzX-1W-MgC">
+                        <rect key="frame" x="323.5" y="1.5" width="24" height="16"/>
+                        <fontDescription key="fontDescription" style="UICTFontTextStyleFootnote"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Price" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="0JJ-sD-ypT">
+                        <rect key="frame" x="261" y="1.5" width="31" height="16"/>
+                        <fontDescription key="fontDescription" style="UICTFontTextStyleFootnote"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                <constraints>
+                    <constraint firstItem="RSe-mu-hfy" firstAttribute="centerY" secondItem="xdK-Vh-Tli" secondAttribute="centerY" id="4I7-cu-jtm"/>
+                    <constraint firstItem="0JJ-sD-ypT" firstAttribute="centerY" secondItem="xdK-Vh-Tli" secondAttribute="centerY" id="Jkv-gU-QQF"/>
+                    <constraint firstItem="YzX-1W-MgC" firstAttribute="centerY" secondItem="xdK-Vh-Tli" secondAttribute="centerY" id="kLx-9j-1YN"/>
+                    <constraint firstAttribute="trailing" secondItem="YzX-1W-MgC" secondAttribute="centerX" constant="39.5" id="lfY-b2-C8N"/>
+                    <constraint firstItem="RSe-mu-hfy" firstAttribute="leading" secondItem="xdK-Vh-Tli" secondAttribute="leading" constant="32" id="ouN-Pv-HpT"/>
+                    <constraint firstItem="0JJ-sD-ypT" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="RSe-mu-hfy" secondAttribute="trailing" constant="4" id="yV0-2h-pHN"/>
+                    <constraint firstAttribute="trailing" secondItem="0JJ-sD-ypT" secondAttribute="trailing" constant="83" id="ydn-Wd-SZ7"/>
+                </constraints>
+            </tableViewCellContentView>
+            <color key="backgroundColor" white="1" alpha="0.84914206290000005" colorSpace="calibratedWhite"/>
+            <connections>
+                <outlet property="dataCurrencyLabel" destination="YzX-1W-MgC" id="zwd-Se-AC6"/>
+                <outlet property="priceLabel" destination="0JJ-sD-ypT" id="euN-aV-rCT"/>
+            </connections>
+        </tableViewCell>
+    </objects>
+</document>

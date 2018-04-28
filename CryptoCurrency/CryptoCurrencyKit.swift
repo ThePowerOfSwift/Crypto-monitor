@@ -40,22 +40,6 @@ public struct CryptoCurrencyKit {
             requestA(urlRequest: urlRequest, idArray: idArray, response: closure)
         }
     }
-    
-    public static func fetchTicker(coinName: String, convert: Money = .usd, response: ((_ r: ResponseD<Ticker>) -> Void)?) {
-        var urlString = "https://api.coinmarketcap.com/v1/ticker/"
-        urlString.append(coinName)
-        urlString.append("/?convert=\(convert.rawValue)")
-        let urlRequest = URLRequest(url: URL(string: urlString)!)
-        let closure: ((ResponseA<Ticker>) -> Void)? = { r in
-            switch r {
-            case .success(let data):
-                response?(ResponseD.success(data[0]))
-            case .failure(let error):
-                response?(ResponseD.failure(error: error))
-            }
-        }
-        requestA(urlRequest: urlRequest, idArray: nil, response: closure)
-    }
 }
 
 extension CryptoCurrencyKit {
@@ -132,18 +116,20 @@ extension CryptoCurrencyKit {
                         }
                 }
             }
-
+            
             Alamofire.SessionManager.default.request(urlRequest).validate().responseData { res in
                 switch res.result {
                 case .success(let responseData):
-                    print("Validation Successful getTicker2")
-                    
-                    let decoder = JSONDecoder()
-                    do {
-                        let objects = try decoder.decode([T].self, from: responseData)
-                        response?(ResponseA.success(objects))
-                    } catch let decodeE {
-                        response?(ResponseA.failure(error: decodeE))
+                    DispatchQueue .global (qos: .utility) .async {
+                        print("Validation Successful getTicker2")
+                        
+                        let decoder = JSONDecoder()
+                        do {
+                            let objects = try decoder.decode([T].self, from: responseData)
+                            response?(ResponseA.success(objects))
+                        } catch let decodeE {
+                            response?(ResponseA.failure(error: decodeE))
+                        }
                     }
                 case .failure(let error):
                     response?(ResponseA.failure(error: error))
@@ -151,23 +137,6 @@ extension CryptoCurrencyKit {
             }
         }
         
-    }
-    
-    static func requestD<T>(urlRequest: URLRequest, response: ((_ r: ResponseD<T>) -> Void)?) {
-        URLSession.shared.dataTask(with: urlRequest) { (data, _, error) in
-            DispatchQueue.main.async {
-                if let data = data {
-                    do {
-                        let object = try JSONDecoder().decode(T.self, from: data)
-                        response?(ResponseD.success(object))
-                    } catch let decodeE {
-                        response?(ResponseD.failure(error: decodeE))
-                    }
-                } else if let error = error {
-                    response?(ResponseD.failure(error: error))
-                }
-            }
-            }.resume()
     }
 }
 

@@ -90,7 +90,6 @@ strip_invalid_archs() {
 
 if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_framework "$BUILT_PRODUCTS_DIR/Alamofire-iOS/Alamofire.framework"
-  install_framework "$BUILT_PRODUCTS_DIR/AlamofireImage/AlamofireImage.framework"
   install_framework "$BUILT_PRODUCTS_DIR/AlamofireNetworkActivityIndicator/AlamofireNetworkActivityIndicator.framework"
   install_framework "$BUILT_PRODUCTS_DIR/Charts/Charts.framework"
   install_framework "$BUILT_PRODUCTS_DIR/DZNEmptyDataSet/DZNEmptyDataSet.framework"
@@ -98,7 +97,6 @@ if [[ "$CONFIGURATION" == "Debug" ]]; then
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
   install_framework "$BUILT_PRODUCTS_DIR/Alamofire-iOS/Alamofire.framework"
-  install_framework "$BUILT_PRODUCTS_DIR/AlamofireImage/AlamofireImage.framework"
   install_framework "$BUILT_PRODUCTS_DIR/AlamofireNetworkActivityIndicator/AlamofireNetworkActivityIndicator.framework"
   install_framework "$BUILT_PRODUCTS_DIR/Charts/Charts.framework"
   install_framework "$BUILT_PRODUCTS_DIR/DZNEmptyDataSet/DZNEmptyDataSet.framework"

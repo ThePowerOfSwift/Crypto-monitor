@@ -11,11 +11,12 @@ import CryptoCurrency
 
 class CurrentCurrencyTableViewController: UITableViewController {
 
-    var money = [CryptoCurrencyKit.Money]()
+    var money : [CryptoCurrencyKit.Money] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
         money = CryptoCurrencyKit.Money.allValues
+        tableView.reloadData()
     }
 
     // MARK: - Table view data source

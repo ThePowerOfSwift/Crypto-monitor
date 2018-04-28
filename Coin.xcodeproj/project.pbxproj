@@ -14,7 +14,6 @@
 		D41841D00AC7E52EE7B4400F /* Pods_Coin.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F91D764A862E2B7E34DE4862 /* Pods_Coin.framework */; };
 		FB18375A200D028A001C6358 /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FB18375B200D028A001C6358 /* Alamofire.framework */; };
 		FB18375C200D0298001C6358 /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FB18375D200D0298001C6358 /* Alamofire.framework */; };
-		FB18375E200D02F5001C6358 /* AlamofireImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FB18375F200D02F5001C6358 /* AlamofireImage.framework */; };
 		FB183760200D0328001C6358 /* SwiftyJSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FB183761200D0328001C6358 /* SwiftyJSON.framework */; };
 		FB183762200D033B001C6358 /* Charts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FB183763200D033B001C6358 /* Charts.framework */; };
 		FB183764200D035D001C6358 /* AlamofireNetworkActivityIndicator.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FB183765200D035D001C6358 /* AlamofireNetworkActivityIndicator.framework */; };
@@ -60,6 +59,7 @@
 		FBB0098D1F4E37AF000B1298 /* cryptocurrencyRowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBB0098C1F4E37AF000B1298 /* cryptocurrencyRowController.swift */; };
 		FBB2CC9C1F155CF800D800FD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBB2CC9B1F155CF800D800FD /* AppDelegate.swift */; };
 		FBB2CCA31F155CF800D800FD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FBB2CCA21F155CF800D800FD /* Assets.xcassets */; };
+		FBB9E7FF203DA43A003C119B /* Constant.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBB9E7FE203DA43A003C119B /* Constant.swift */; };
 		FBBE49102008F5A300277014 /* CryptoCurrency.h in Headers */ = {isa = PBXBuildFile; fileRef = FBBE490E2008F5A300277014 /* CryptoCurrency.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		FBBE49242008F5E700277014 /* CryptoCurrency.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FBBE491D2008F5E700277014 /* CryptoCurrency.framework */; };
 		FBBE49252008F5E700277014 /* CryptoCurrency.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FBBE491D2008F5E700277014 /* CryptoCurrency.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -316,6 +316,7 @@
 		FBB2CC9B1F155CF800D800FD /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		FBB2CCA21F155CF800D800FD /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		FBB2CCA71F155CF800D800FD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		FBB9E7FE203DA43A003C119B /* Constant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constant.swift; sourceTree = "<group>"; };
 		FBBE490C2008F5A200277014 /* CryptoCurrency.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = CryptoCurrency.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FBBE490E2008F5A300277014 /* CryptoCurrency.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CryptoCurrency.h; sourceTree = "<group>"; };
 		FBBE490F2008F5A300277014 /* info-iOS.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "info-iOS.plist"; sourceTree = "<group>"; };
@@ -340,7 +341,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FB18375E200D02F5001C6358 /* AlamofireImage.framework in Frameworks */,
 				FBA6D946200C3C6100B9F3EE /* CryptoCurrency.framework in Frameworks */,
 				FB99B48C1F2FEF1F007C0235 /* NotificationCenter.framework in Frameworks */,
 				BE09E86F83C4C87E0C1209BA /* Pods_Cryptocurrency_monitor_widget.framework in Frameworks */,
@@ -532,6 +532,7 @@
 				FB2F88F51FEC07CB003B62CF /* InfoPlist.strings */,
 				FB9592531F20B8AB00F9F74B /* Coin.entitlements */,
 				FBB2CC9B1F155CF800D800FD /* AppDelegate.swift */,
+				FBB9E7FE203DA43A003C119B /* Constant.swift */,
 				FB9CC16C1FEAB57000DDEA92 /* Coin */,
 				FB670CE51F16D900005761CF /* CryptocurrencyInfoViewController.swift */,
 				FB466DD91F2D479200D771C9 /* SettingTableViewController.swift */,
@@ -1099,6 +1100,7 @@
 			files = (
 				FBA28ACE20097AA6009EDB84 /* CurrentCurrencyTableViewController.swift in Sources */,
 				FB6528682020945B004CE9D4 /* IAPHandler.swift in Sources */,
+				FBB9E7FF203DA43A003C119B /* Constant.swift in Sources */,
 				FB3EF7FA2024941E00EB1C31 /* DZNEmptyData.swift in Sources */,
 				FB2F88A81FEBFB28003B62CF /* CoinTableViewController.swift in Sources */,
 				FBA28ACA200959BC009EDB84 /* Charts.swift in Sources */,
@@ -1573,8 +1575,6 @@
 					"-framework",
 					"\"Alamofire\"",
 					"-framework",
-					"\"AlamofireImage\"",
-					"-framework",
 					"\"SwiftyJSON\"",
 					"-framework",
 					"\"AlamofireNetworkActivityIndicator\"",
@@ -1606,8 +1606,6 @@
 					"$(inherited)",
 					"-framework",
 					"\"Alamofire\"",
-					"-framework",
-					"\"AlamofireImage\"",
 					"-framework",
 					"\"SwiftyJSON\"",
 					"-framework",

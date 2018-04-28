@@ -10,7 +10,6 @@ import UIKit
 
 class WidgetCellTableViewCell: UITableViewCell {
     
-    @IBOutlet weak var coinImageView: UIImageView!
     @IBOutlet weak var coinNameLabel: UILabel!
     @IBOutlet weak var priceCoinLabel: UILabel!
     @IBOutlet weak var percentChangeView: UIView!

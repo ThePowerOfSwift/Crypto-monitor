@@ -9,7 +9,7 @@
 import UIKit
 import NotificationCenter
 import CryptoCurrency
-import AlamofireImage
+
 
 class TodayViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, NCWidgetProviding {
     
@@ -135,9 +135,7 @@ class TodayViewController: UIViewController, UITableViewDataSource, UITableViewD
         }
         
         let row = indexPath.row
-        
-        let url = URL(string: "https://files.coinmarketcap.com/static/img/coins/32x32/\(cryptocurrencyShow[row].id).png")!
-        cell.coinImageView.af_setImage(withURL: url)
+
         cell.coinNameLabel.text = cryptocurrencyShow[row].name
         cell.priceCoinLabel.text = cryptocurrencyShow[row].priceCurrency()
         

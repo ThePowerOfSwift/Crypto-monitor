@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import AlamofireImage
 import CryptoCurrency
 
 var getTickerAll = [Ticker]()
@@ -99,12 +98,7 @@ class AddTableViewController: UITableViewController {
         } else {
             ticker = self.ticker[row]
         }
-        
-        cell.cryptocurrencyImageView.image = nil
-        
-        let url = URL(string: "https://files.coinmarketcap.com/static/img/coins/64x64/\(ticker.id).png")!
-        cell.cryptocurrencyImageView.af_setImage(withURL: url)
-
+   
         cell.cryptocurrencyNameLabel?.text = ticker.name + " (\(ticker.symbol))"
         
         if (getTickerID?.filter({ $0.id == ticker.id}).first) != nil{
