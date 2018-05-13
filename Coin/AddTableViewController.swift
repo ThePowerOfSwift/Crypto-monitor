@@ -62,19 +62,17 @@ class AddTableViewController: UITableViewController {
         self.refreshControl!.beginRefreshing()
         
         let currentCurrency = SettingsUserDefaults.getCurrentCurrency()
-        CryptoCurrencyKit.fetchTickers(convert: currentCurrency, idArray: nil, limit: 0) { (response) in
+        CryptoCurrencyKit.fetchTickers(convert: currentCurrency, idArray: nil, limit: 0) { [weak self] (response) in
             switch response {
             case .success(let tickers):
                 getTickerAll = tickers
-                self.ticker = tickers
+                self?.ticker = tickers
                 
                 DispatchQueue.main.async() {
-                    self.cryptocurrencyView()
+                    self?.cryptocurrencyView()
                 }
-                print("success")
             case .failure(let error):
-                print("failure")
-                self.errorAlert(error: error)
+                self?.errorAlert(error: error)
             }
         }
     }

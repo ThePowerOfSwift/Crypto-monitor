@@ -343,7 +343,6 @@
                                     <outlet property="percentChangeLabel" destination="tLa-nc-r5Z" id="zfq-pl-msh"/>
                                     <outlet property="percentChangeView" destination="3tL-bj-OU7" id="KmQ-rX-JJo"/>
                                     <outlet property="priceCoinLabel" destination="zSM-yy-AP4" id="2Z4-o9-kU4"/>
-                                    <segue destination="EpN-3F-7iw" kind="showDetail" identifier="cryptocurrencyInfoViewController" id="YbS-pu-7lR"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -379,10 +378,11 @@
         <!--Split View Controller-->
         <scene sceneID="z6O-FO-YG7">
             <objects>
-                <splitViewController id="6tW-T0-lqu" customClass="SplitViewController" customModule="Coin" customModuleProvider="target" sceneMemberID="viewController">
+                <splitViewController id="6tW-T0-lqu" sceneMemberID="viewController">
+                    <extendedEdge key="edgesForExtendedLayout"/>
                     <connections>
-                        <segue destination="S9O-U0-Qd5" kind="relationship" relationship="masterViewController" id="hUF-MM-mRL"/>
-                        <segue destination="EpN-3F-7iw" kind="relationship" relationship="detailViewController" id="KVp-PW-p09"/>
+                        <segue destination="EpN-3F-7iw" kind="relationship" relationship="detailViewController" id="MY6-QG-XO9"/>
+                        <segue destination="S9O-U0-Qd5" kind="relationship" relationship="masterViewController" id="DlG-cH-XlT"/>
                     </connections>
                 </splitViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="EZG-aa-FTP" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -906,7 +906,4 @@
         <image name="Link" width="32" height="32"/>
         <image name="Setting" width="25" height="25"/>
     </resources>
-    <inferredMetricsTieBreakers>
-        <segue reference="YbS-pu-7lR"/>
-    </inferredMetricsTieBreakers>
 </document>

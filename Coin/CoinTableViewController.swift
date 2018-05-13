@@ -11,25 +11,26 @@ import WatchConnectivity
 import Alamofire
 import CryptoCurrency
 
-
 var getTickerID:[Ticker]?
 var watchSession : WCSession?
 
-protocol CoinDelegate {
+protocol CoinDelegate: class {
     func coinSelected(_ ticker: Ticker)
 }
 
 class CoinTableViewController: UITableViewController, WCSessionDelegate {
     
-    var coinDelegate: CoinDelegate?
-    var openID = ""
+    weak var coinDelegate: CoinDelegate?
+    var selectDefaultItem = false
 
-    //MARK:LifeCycle
+    //MARK: - LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        NotificationCenter.default.addObserver(self, selector: #selector(applicationWillEnterForeground), name:NSNotification.Name.UIApplicationWillEnterForeground, object: nil)
         
+        splitViewController?.delegate = self
+
+        //Notification
+        NotificationCenter.default.addObserver(self, selector: #selector(applicationWillEnterForeground), name:NSNotification.Name.UIApplicationWillEnterForeground, object: nil)
         let keyStore = NSUbiquitousKeyValueStore()
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(
@@ -37,6 +38,7 @@ class CoinTableViewController: UITableViewController, WCSessionDelegate {
                                                name: NSUbiquitousKeyValueStore.didChangeExternallyNotification,
                                                object: keyStore)
         
+        //Navigation Item
         let editBarButton = UIBarButtonItem.init(barButtonSystemItem: .edit, target: self, action: #selector(edit))
         self.navigationItem.rightBarButtonItem = editBarButton
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "Setting"), style: UIBarButtonItemStyle.plain, target: self, action: #selector(settingsShow))
@@ -47,7 +49,7 @@ class CoinTableViewController: UITableViewController, WCSessionDelegate {
         
         tableView.tableFooterView = UIView()
         
-        showReview ()
+        showReview()
         
         // Set up and activate your session early here!
         if(WCSession.isSupported()){
@@ -75,6 +77,8 @@ class CoinTableViewController: UITableViewController, WCSessionDelegate {
         }
         loadTicker()
     }
+    
+
 
     @objc func applicationWillEnterForeground(notification : NSNotification) {
         if self.viewIfLoaded?.window != nil {
@@ -92,39 +96,18 @@ class CoinTableViewController: UITableViewController, WCSessionDelegate {
         }
     }
     
-
-    
     func loadCache() {
         DispatchQueue.global(qos: .userInitiated).async {
             if let cacheTicker = SettingsUserDefaults.loadcacheTicker() {
                 getTickerID = cacheTicker
-                if let idFirst = getTickerID?.first?.id {
-                    self.openID = idFirst
-                  //  self.performSegue(withIdentifier: "cryptocurrencyInfoViewController", sender: nil)
-                }
                 self.cryptocurrencyView()
             }
         }
     }
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "cryptocurrencyInfoViewController" {
-            let destinationNavigationController = segue.destination as! UINavigationController
-            if let cryptocurrencyInfoViewController = destinationNavigationController.topViewController as? CryptocurrencyInfoViewController {
-                cryptocurrencyInfoViewController.openID = self.openID
-            }
-        }
-    }
-    
-    
+
     // MARK: - Table view data source
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if getTickerID == nil {
-            return 0
-        }
-        else{
-            return getTickerID!.count
-        }
+        return getTickerID?.count ?? 0
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -153,8 +136,8 @@ class CoinTableViewController: UITableViewController, WCSessionDelegate {
         }
         return cell
     }
-    override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView?
-    {
+    
+    override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let headerView = tableView.dequeueReusableCell(withIdentifier: "header") as! HeaderTableViewCell
         
         let keyStore = NSUbiquitousKeyValueStore ()
@@ -184,15 +167,23 @@ class CoinTableViewController: UITableViewController, WCSessionDelegate {
         return contentView
     }
     
-    override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat
-    {
+    override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 20
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath){
         if getTickerID != nil {
-            openID = getTickerID![indexPath.row].id
-         self.coinDelegate?.coinSelected(getTickerID![indexPath.row])
+            let ticker = getTickerID![indexPath.row]
+            coinDelegate?.coinSelected(ticker)
+            
+            let keyStore = NSUbiquitousKeyValueStore ()
+            keyStore.set(ticker.id, forKey: "selectDefaultItemID")
+            keyStore.synchronize()
+            
+            if let detailViewController = coinDelegate as? CryptocurrencyInfoViewController,
+                let detailNavigationController = detailViewController.navigationController {
+                splitViewController?.showDetailViewController(detailNavigationController, sender: nil)
+            }
         }
     }
     
@@ -276,6 +267,20 @@ class CoinTableViewController: UITableViewController, WCSessionDelegate {
         
         DispatchQueue.main.async {
             self.tableView.reloadData()
+
+            if UIDevice.current.userInterfaceIdiom == .pad,
+                !self.selectDefaultItem {
+                let keyStore = NSUbiquitousKeyValueStore()
+                if let tickerID = keyStore.object(forKey: "selectDefaultItemID") as? String,
+                    let index = getTickerID?.index(where: {$0.id == tickerID})
+                {
+                    self.coinDelegate?.coinSelected(getTickerID![index])
+                }
+                else{
+                    self.coinDelegate?.coinSelected(getTickerID![0])
+                }
+                self.selectDefaultItem = true
+            }
         }
     }
     
@@ -289,28 +294,22 @@ class CoinTableViewController: UITableViewController, WCSessionDelegate {
             }
             else{
                 
-                CryptoCurrencyKit.fetchTickers(convert: SettingsUserDefaults.getCurrentCurrency(), idArray: idArray) { (response) in
+                CryptoCurrencyKit.fetchTickers(convert: SettingsUserDefaults.getCurrentCurrency(), idArray: idArray) { [weak self] (response) in
                     switch response {
                     case .success(let tickers):
                         
                         getTickerID = tickers
-                        if let idFirst = getTickerID?.first?.id {
-                            self.openID = idFirst
-                        }
-                        self.cryptocurrencyView()
+                        self?.cryptocurrencyView()
                         SettingsUserDefaults.setUserDefaults(ticher: tickers)
-                        self.updateApplicationContext(id: idArray)
-                        self.indexItem(ticker: tickers)
-                        
-                        print("success")
+                        self?.updateApplicationContext(id: idArray)
+                        self?.indexItem(ticker: tickers)
                     case .failure(let error ):
                         DispatchQueue.main.async {
                             UIView.animate(withDuration: 0.25) {
-                                self.refreshControl?.endRefreshing()
+                                self?.refreshControl?.endRefreshing()
                             }
                         }
-                        self.errorAlert(error: error)
-                        print("failure")
+                        self?.errorAlert(error: error)
                     }
                 }
             }
@@ -446,6 +445,12 @@ class CoinTableViewController: UITableViewController, WCSessionDelegate {
             
             self.loadCache()
         }
+    }
+}
+
+extension CoinTableViewController: UISplitViewControllerDelegate {
+    func splitViewController(_ splitViewController: UISplitViewController, collapseSecondary secondaryViewController: UIViewController, onto primaryViewController: UIViewController) -> Bool {
+        return true
     }
 }
 

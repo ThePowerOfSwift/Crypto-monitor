@@ -92,13 +92,13 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate {
     private func load() {
         print("load")
         if let idArray = UserDefaults().array(forKey: "id") as? [String],  !idArray.isEmpty {
-                CryptoCurrencyKit.fetchTickers(convert: SettingsUserDefaults.getCurrentCurrency(), idArray: idArray) { (response) in
+                CryptoCurrencyKit.fetchTickers(convert: SettingsUserDefaults.getCurrentCurrency(), idArray: idArray) { [weak self] (response) in
                     switch response {
                     case .success(let tickers):
                         SettingsUserDefaults.setUserDefaults(ticher: tickers)
                         DispatchQueue.main.async() {
-                            self.tableView(ticker: tickers)
-                            self.reloadTimeline()
+                            self?.tableView(ticker: tickers)
+                            self?.reloadTimeline()
                         }
                         print("success")
                     case .failure(let error):

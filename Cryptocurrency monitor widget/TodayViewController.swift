@@ -54,18 +54,16 @@ class TodayViewController: UIViewController, UITableViewDataSource, UITableViewD
         }
         
         if let idArray = idArray {
-            CryptoCurrencyKit.fetchTickers(convert: SettingsUserDefaults.getCurrentCurrency(), idArray: idArray) { (response) in
+            CryptoCurrencyKit.fetchTickers(convert: SettingsUserDefaults.getCurrentCurrency(), idArray: idArray) { [weak self] (response) in
                 switch response {
                 case .success(let tickers):
                     SettingsUserDefaults.setUserDefaults(ticher: tickers)
                     DispatchQueue.main.async() {
-                        self.cryptocurrencyView(ticker: tickers)
+                        self?.cryptocurrencyView(ticker: tickers)
                     }
                     completionHandler(NCUpdateResult.newData)
-                    print("success")
                 case .failure:
                     completionHandler(NCUpdateResult.failed)
-                    print("failure")
                 }
             }
         }

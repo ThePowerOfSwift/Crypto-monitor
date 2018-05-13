@@ -176,16 +176,6 @@ class SettingTableViewController: UITableViewController {
         }
         return super.tableView(tableView, heightForFooterInSection: section)
     }
-    
-
-/*
-        if indexPath.section == 2 {
-            let cell:UITableViewCell = tableView.cellForRow(at: indexPath) as! inAppCell
- 
-            IAPHandler.shared.purchaseMyProduct(products[(indexPath as NSIndexPath).row])
-        }
-    }
- */
   
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         switch indexPath.section{

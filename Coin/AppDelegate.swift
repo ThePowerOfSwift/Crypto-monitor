@@ -21,6 +21,24 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
         UIApplication.shared.setMinimumBackgroundFetchInterval(UIApplicationBackgroundFetchIntervalMinimum)
         
+        guard let splitViewController = window?.rootViewController as? UISplitViewController,
+            let leftNavController = splitViewController.viewControllers.first as? UINavigationController,
+            let masterViewController = leftNavController.topViewController as? CoinTableViewController,
+            let rightNavController = splitViewController.viewControllers.last as? UINavigationController,
+            let detailViewController = rightNavController.topViewController as? CryptocurrencyInfoViewController
+            else { fatalError() }
+        
+        splitViewController.preferredDisplayMode = .allVisible
+
+        
+        // let firstMonster = masterViewController.monsters.first
+        //   detailViewController.monster = firstMonster
+        
+        masterViewController.coinDelegate = detailViewController
+        
+        detailViewController.navigationItem.leftItemsSupplementBackButton = true
+        detailViewController.navigationItem.leftBarButtonItem = splitViewController.displayModeButtonItem
+        
         let keyStore = NSUbiquitousKeyValueStore ()
         if !keyStore.bool(forKey: "launchedBefore"){
             
@@ -40,6 +58,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // NetworkActivityIndicatorManager
         NetworkActivityIndicatorManager.shared.isEnabled = true
 
+
+        
         return true
     }
     
@@ -67,7 +87,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                     case "id":
                         if let id = queryItem.value {
                           //  openID = id
-                            showViewControllet(withIdentifier: "CryptocurrencyInfoViewControllerID")
+                         //   showViewControllet(withIdentifier: "CryptocurrencyInfoViewControllerID")
                         }
                     case "add":
                         showViewControllet(withIdentifier: "CoinTableViewControllerID")
