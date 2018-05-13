@@ -43,6 +43,7 @@
 		FB623FAF1F67464900C99460 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FB623FAE1F67464900C99460 /* Assets.xcassets */; };
 		FB6528682020945B004CE9D4 /* IAPHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB6528672020945B004CE9D4 /* IAPHandler.swift */; };
 		FB670CE61F16D900005761CF /* CryptocurrencyInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB670CE51F16D900005761CF /* CryptocurrencyInfoViewController.swift */; };
+		FB8A016A20968175007F3FA7 /* SplitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB8A016920968175007F3FA7 /* SplitViewController.swift */; };
 		FB8F45B1201044FD005D7571 /* info-watchOSPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = FB8F45B3201044FD005D7571 /* info-watchOSPlist.strings */; };
 		FB8F45B620104502005D7571 /* info-iOSPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = FB8F45B820104502005D7571 /* info-iOSPlist.strings */; };
 		FB99B48C1F2FEF1F007C0235 /* NotificationCenter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FB99B48B1F2FEF1F007C0235 /* NotificationCenter.framework */; };
@@ -287,6 +288,7 @@
 		FB623FAE1F67464900C99460 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		FB6528672020945B004CE9D4 /* IAPHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IAPHandler.swift; sourceTree = "<group>"; };
 		FB670CE51F16D900005761CF /* CryptocurrencyInfoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CryptocurrencyInfoViewController.swift; sourceTree = "<group>"; };
+		FB8A016920968175007F3FA7 /* SplitViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplitViewController.swift; sourceTree = "<group>"; };
 		FB8F45B2201044FD005D7571 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = "fr.lproj/info-watchOSPlist.strings"; sourceTree = "<group>"; };
 		FB8F45B720104502005D7571 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = "fr.lproj/info-iOSPlist.strings"; sourceTree = "<group>"; };
 		FB8F45B920104513005D7571 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = "de.lproj/info-watchOSPlist.strings"; sourceTree = "<group>"; };
@@ -434,6 +436,7 @@
 		FB565C461F421ADF004EA42F /* AddTable */ = {
 			isa = PBXGroup;
 			children = (
+				FB7133DA20950FCD00945732 /* Main.storyboard */,
 				FBD5ABE41F214CFA003A3AAC /* AddTableViewController.swift */,
 				FB5326CA1F254A9400D9C498 /* AddTableViewCell.swift */,
 			);
@@ -533,6 +536,7 @@
 				FB9592531F20B8AB00F9F74B /* Coin.entitlements */,
 				FBB2CC9B1F155CF800D800FD /* AppDelegate.swift */,
 				FBB9E7FE203DA43A003C119B /* Constant.swift */,
+				FB8A016920968175007F3FA7 /* SplitViewController.swift */,
 				FB9CC16C1FEAB57000DDEA92 /* Coin */,
 				FB670CE51F16D900005761CF /* CryptocurrencyInfoViewController.swift */,
 				FB466DD91F2D479200D771C9 /* SettingTableViewController.swift */,
@@ -1113,6 +1117,7 @@
 				FB2F88AA1FEBFB30003B62CF /* TableViewCell.swift in Sources */,
 				FB3EF7F520248E2500EB1C31 /* Spotlight.swift in Sources */,
 				FBB2CC9C1F155CF800D800FD /* AppDelegate.swift in Sources */,
+				FB8A016A20968175007F3FA7 /* SplitViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1301,6 +1306,13 @@
 				FB0B34F81FED56D500D21F8F /* fr */,
 			);
 			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		FB7133DA20950FCD00945732 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+			);
+			name = Main.storyboard;
 			sourceTree = "<group>";
 		};
 		FB8F45B3201044FD005D7571 /* info-watchOSPlist.strings */ = {
@@ -1585,7 +1597,7 @@
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Off;
 				SWIFT_VERSION = 4.0;
-				TARGETED_DEVICE_FAMILY = 1;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
@@ -1617,7 +1629,7 @@
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Off;
 				SWIFT_VERSION = 4.0;
-				TARGETED_DEVICE_FAMILY = 1;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};

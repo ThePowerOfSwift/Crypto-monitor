@@ -39,7 +39,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         // NetworkActivityIndicatorManager
         NetworkActivityIndicatorManager.shared.isEnabled = true
-        
+
         return true
     }
     
@@ -47,7 +47,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, continue userActivity: NSUserActivity, restorationHandler: @escaping ([Any]?) -> Void) -> Bool {
         if userActivity.activityType == CSSearchableItemActionType {
             if let uniqueIdentifier = userActivity.userInfo?[CSSearchableItemActivityIdentifier] as? String {
-                openID = uniqueIdentifier
+               // openID = uniqueIdentifier
                 showViewControllet(withIdentifier: "CryptocurrencyInfoViewControllerID")
             }
         }
@@ -66,7 +66,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                     switch queryItem.name {
                     case "id":
                         if let id = queryItem.value {
-                            openID = id
+                          //  openID = id
                             showViewControllet(withIdentifier: "CryptocurrencyInfoViewControllerID")
                         }
                     case "add":

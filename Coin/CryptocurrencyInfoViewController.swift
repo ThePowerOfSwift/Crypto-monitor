@@ -41,16 +41,39 @@ class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
     
     @IBOutlet weak var paymentButton: UIButton!
     
+    var openID = ""
     
     var ticker : Ticker?
     var currencyCharts: CurrencyCharts?
     let userCalendar = Calendar.current
     var minDate: Date?
-
+        var coinTableViewController: CoinTableViewController? = nil
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        NotificationCenter.default.addObserver(self, selector: #selector(applicationWillEnterForeground), name:NSNotification.Name.UIApplicationWillEnterForeground, object: nil)
+        
+        self.navigationItem.leftItemsSupplementBackButton = true
+        self.navigationItem.leftBarButtonItem = splitViewController?.displayModeButtonItem
+        
 
+        
+        if let split = self.splitViewController {
+            let controllers = split.viewControllers
+            self.coinTableViewController = controllers[controllers.count - 1] as? CoinTableViewController
+                
+                //controllers[controllers.count - 1].show as? CoinTableViewController
+        }
+        self.coinTableViewController?.coinDelegate = self
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(applicationWillEnterForeground), name:NSNotification.Name.UIApplicationWillEnterForeground, object: nil)
+        
+        let keyStore = NSUbiquitousKeyValueStore()
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(
+                                                self.ubiquitousKeyValueStoreDidChange),
+                                               name: NSUbiquitousKeyValueStore.didChangeExternallyNotification,
+                                               object: keyStore)
+        
         // percent change view
         oneHourChangeView.layer.cornerRadius = 3
         oneHourChangeView.layer.masksToBounds = true
@@ -69,7 +92,6 @@ class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
         lineChartView.legend.enabled = false
         lineChartView.scaleYEnabled = false
         
-        let keyStore = NSUbiquitousKeyValueStore ()
         selectSegmentedControl.selectedSegmentIndex = Int(keyStore.longLong(forKey: "typeChart"))
         zoomSegmentedControl.selectedSegmentIndex = Int(keyStore.longLong(forKey: "zoomChart"))
         
@@ -115,13 +137,13 @@ class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
-        print("viewWillAppear 2 ")
+        //print("viewWillAppear 2 ")
         viewCryptocurrencyInfo()
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(true)
-        print("viewDidAppear 2 ")
+        //print("viewDidAppear 2 ")
         loadTicker()
     //    loadlineView()
     }
@@ -136,6 +158,13 @@ class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
      //   viewCryptocurrencyInfo()
         loadTicker()
         loadlineView()
+    }
+    
+    //iCloud Value Store
+    @objc func ubiquitousKeyValueStoreDidChange(notification: NSNotification) {
+        print("ubiquitousKeyValueStoreDidChange")
+    //    loadTicker()
+    //    loadlineView()
     }
     
     func zoomSelectedSegment(index: Int){
@@ -175,8 +204,6 @@ class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
     
     func viewCryptocurrencyInfo() {
         refreshBarButtonItem()
-        
-        
 
         guard let tickerArray = SettingsUserDefaults.loadcacheTicker() else { return }
         
@@ -187,7 +214,7 @@ class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
         if let ticker = ticker {
             
             // title
-            self.navigationItem.title = ticker?.symbol
+            self.navigationItem.title = ticker.symbol
             
             let money = SettingsUserDefaults.getCurrentCurrency()
             
@@ -444,6 +471,15 @@ class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
                 self.LineChartErrorLabel.text = error.localizedDescription
         }
     }
+}
+
+extension CryptocurrencyInfoViewController: CoinDelegate {
+    func coinSelected(_ ticker: Ticker) {
+        self.ticker = ticker
+        print("CoinDelegate")
+        viewCryptocurrencyInfo()
+    }
+
 }
 
 

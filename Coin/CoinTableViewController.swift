@@ -11,15 +11,23 @@ import WatchConnectivity
 import Alamofire
 import CryptoCurrency
 
-var openID = ""
+
 var getTickerID:[Ticker]?
 var watchSession : WCSession?
 
+protocol CoinDelegate {
+    func coinSelected(_ ticker: Ticker)
+}
+
 class CoinTableViewController: UITableViewController, WCSessionDelegate {
+    
+    var coinDelegate: CoinDelegate?
+    var openID = ""
 
     //MARK:LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
+
         NotificationCenter.default.addObserver(self, selector: #selector(applicationWillEnterForeground), name:NSNotification.Name.UIApplicationWillEnterForeground, object: nil)
         
         let keyStore = NSUbiquitousKeyValueStore()
@@ -90,7 +98,20 @@ class CoinTableViewController: UITableViewController, WCSessionDelegate {
         DispatchQueue.global(qos: .userInitiated).async {
             if let cacheTicker = SettingsUserDefaults.loadcacheTicker() {
                 getTickerID = cacheTicker
+                if let idFirst = getTickerID?.first?.id {
+                    self.openID = idFirst
+                  //  self.performSegue(withIdentifier: "cryptocurrencyInfoViewController", sender: nil)
+                }
                 self.cryptocurrencyView()
+            }
+        }
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "cryptocurrencyInfoViewController" {
+            let destinationNavigationController = segue.destination as! UINavigationController
+            if let cryptocurrencyInfoViewController = destinationNavigationController.topViewController as? CryptocurrencyInfoViewController {
+                cryptocurrencyInfoViewController.openID = self.openID
             }
         }
     }
@@ -171,6 +192,7 @@ class CoinTableViewController: UITableViewController, WCSessionDelegate {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath){
         if getTickerID != nil {
             openID = getTickerID![indexPath.row].id
+         self.coinDelegate?.coinSelected(getTickerID![indexPath.row])
         }
     }
     
@@ -272,6 +294,9 @@ class CoinTableViewController: UITableViewController, WCSessionDelegate {
                     case .success(let tickers):
                         
                         getTickerID = tickers
+                        if let idFirst = getTickerID?.first?.id {
+                            self.openID = idFirst
+                        }
                         self.cryptocurrencyView()
                         SettingsUserDefaults.setUserDefaults(ticher: tickers)
                         self.updateApplicationContext(id: idArray)
