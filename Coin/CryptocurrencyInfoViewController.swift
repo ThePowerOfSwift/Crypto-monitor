@@ -41,9 +41,7 @@ class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
     
     @IBOutlet weak var paymentButton: UIButton!
     
-  //  var openID = ""
-    
-    var ticker : Ticker!
+    var ticker : Ticker?
     var currencyCharts: CurrencyCharts?
     let userCalendar = Calendar.current
     var minDate: Date?
@@ -59,6 +57,7 @@ class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
             let controllers = split.viewControllers
             self.coinTableViewController = controllers[controllers.count - 1] as? CoinTableViewController
         }
+        
         self.coinTableViewController?.coinDelegate = self
         
         NotificationCenter.default.addObserver(self, selector: #selector(applicationWillEnterForeground), name:NSNotification.Name.UIApplicationWillEnterForeground, object: nil)
@@ -102,7 +101,8 @@ class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
     }
     
     private func getMinDateCharts() {
-        ChartRequest().getMinDateCharts(id: ticker.id, completion: { [weak self] (minDate: Date?, error : Error?) in
+        guard let ticker = ticker else { return }
+        ChartRequest.getMinDateCharts(id: ticker.id, completion: { [weak self] (minDate: Date?, error : Error?) in
             guard let strongSelf = self else { return }
             if error == nil {
                 if let minDate = minDate{
@@ -150,7 +150,7 @@ class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
     }
     
     override func viewDidDisappear(_ animated: Bool) {
-        ChartRequest().cancelRequest()
+        ChartRequest.cancelRequest()
     }
     
     //Unlock
@@ -185,6 +185,8 @@ class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
     }
     
     func loadTicker() {
+        guard let ticker = ticker else { return }
+        
         startRefreshActivityIndicator()
         
         let keyStore = NSUbiquitousKeyValueStore()
@@ -195,7 +197,7 @@ class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
             case .success(let tickers):
                 SettingsUserDefaults.setUserDefaults(ticher: tickers)
                 
-                if let ticker = tickers.first(where: {$0.id == self?.ticker.id}) {
+                if let ticker = tickers.first(where: {$0.id == ticker.id}) {
                     self?.ticker = ticker
                 }
                 
@@ -212,13 +214,8 @@ class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
     
     func viewCryptocurrencyInfo() {
         refreshBarButtonItem()
-//
-//        guard let tickerArray = SettingsUserDefaults.loadcacheTicker() else { return }
-//
-//        if let tick = tickerArray.first(where: {$0.id == openID}) {
-//            ticker = tick
-//        }
-//
+
+        
         if let ticker = ticker {
             
             // title
@@ -274,9 +271,9 @@ class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
     
     
     func loadlineView() {
+        guard let ticker = ticker else { return }
+        guard self.minDate != nil else { self.lineView();  return }
         
-       guard self.minDate != nil else { self.lineView();  return }
-
         lineChartView?.isHidden = true
         lineChartActivityIndicator?.isHidden = false
         LineChartErrorView?.isHidden = true
@@ -337,7 +334,7 @@ class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
         // Set the x values date formatter
         xAxis?.valueFormatter = ChartXAxisFormatter(dateFormatter: dateFormatter)
         
-        ChartRequest().getCurrencyCharts(id: ticker.id, of: of, completion: { [weak self] (currencyCharts: CurrencyCharts?, error: Error?) in
+        ChartRequest.getCurrencyCharts(id: ticker.id, of: of, completion: { [weak self] (currencyCharts: CurrencyCharts?, error: Error?) in
             if error == nil {
                 if let currencyCharts = currencyCharts {
                     self?.currencyCharts = currencyCharts
@@ -476,9 +473,11 @@ class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
 
     func lineChartErrorView(error: Error) {
         if (error as NSError).code != -999 {
+            DispatchQueue.main.async() {
                 self.LineChartErrorView.isHidden = false
                 self.refreshBarButtonItem()
                 self.LineChartErrorLabel.text = error.localizedDescription
+            }
         }
     }
 }

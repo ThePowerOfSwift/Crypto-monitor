@@ -1,5 +1,5 @@
 //
-//  Charts.swift
+//  ChartRequest.swift
 //  Coin
 //
 //  Created by Mialin Valentin on 12.01.18.
@@ -10,34 +10,11 @@ import Foundation
 import Alamofire
 import SwiftyJSON
 
-public class CurrencyCharts: Codable {
-    public var market_cap_by_available_supply:[Chart]
-    public var price_btc:[Chart]
-    public var price_usd:[Chart]
-    public var volume_usd:[Chart]
-    
-    public init(market_cap_by_available_supply:[Chart], price_btc:[Chart], price_usd:[Chart], volume_usd:[Chart]) {
-        self.market_cap_by_available_supply = market_cap_by_available_supply
-        self.price_btc = price_btc
-        self.price_usd = price_usd
-        self.volume_usd = volume_usd
-    }
-}
 
 
-public class Chart: Codable {
-    public var timestamp:Double
-    public var item:Double
+class ChartRequest {
     
-    public init(timestamp:Double, value:Double) {
-        self.timestamp = timestamp
-        self.item = value
-    }
-}
-
-struct ChartRequest {
-    
-    public func cancelRequest(url: String = "https://graphs2.coinmarketcap.com/currencies/")  {
+    static func cancelRequest(url: String = "https://graphs2.coinmarketcap.com/currencies/")  {
         Alamofire.SessionManager.default.session.getTasksWithCompletionHandler { dataTasks, _, _ in
             dataTasks.forEach
                 {
@@ -49,7 +26,7 @@ struct ChartRequest {
         }
     }
     
-    public func getCurrencyCharts(id: String, of: NSDate?, completion: @escaping  (CurrencyCharts?, Error?) -> ()) {
+    static func getCurrencyCharts(id: String, of: NSDate?, completion: @escaping  (CurrencyCharts?, Error?) -> ()) {
         
         var currencyCharts:CurrencyCharts?
         var error:Error?
@@ -59,14 +36,13 @@ struct ChartRequest {
             url += String(Int(of.timeIntervalSince1970)) + "000/" + String(Int(NSDate().timeIntervalSince1970)) + "000/"
         }
         
-        cancelRequest() // url: "https://graphs.coinmarketcap.com/currencies/" + id + "/"
+        cancelRequest()
         
         Alamofire.SessionManager.default.request(url).validate().responseJSON { response in
             
             switch response.result {
             case .success(let value):
-                print("Validation Successful")
-                
+
                 let json = JSON(value)
                 
                 var market_cap_by_available_supply = [Chart]()
@@ -101,7 +77,7 @@ struct ChartRequest {
     }
     
     
-    public func getMinDateCharts(id: String, completion: @escaping  (Date?, Error?) -> ()) {
+    static func getMinDateCharts(id: String, completion: @escaping  (Date?, Error?) -> ()) {
         
         var minDate:Date?
         var error:Error?
@@ -117,8 +93,6 @@ struct ChartRequest {
             
             switch response.result {
             case .success(let value):
-                print("Validation Successful")
-                
                 let json = JSON(value)
                 
                 let timestamp = json["price_usd"].arrayValue

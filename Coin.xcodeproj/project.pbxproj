@@ -48,8 +48,8 @@
 		FB99B48C1F2FEF1F007C0235 /* NotificationCenter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FB99B48B1F2FEF1F007C0235 /* NotificationCenter.framework */; };
 		FB99B48F1F2FEF1F007C0235 /* TodayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB99B48E1F2FEF1F007C0235 /* TodayViewController.swift */; };
 		FB99B4961F2FEF1F007C0235 /* Cryptocurrency monitor widget.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = FB99B48A1F2FEF1F007C0235 /* Cryptocurrency monitor widget.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		FBA28ACA200959BC009EDB84 /* Charts.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB20D0E42009551D0007305C /* Charts.swift */; };
-		FBA28ACE20097AA6009EDB84 /* CurrentCurrencyTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBA28ACD20097AA6009EDB84 /* CurrentCurrencyTableViewController.swift */; };
+		FBA28ACA200959BC009EDB84 /* ChartRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB20D0E42009551D0007305C /* ChartRequest.swift */; };
+		FBA28ACE20097AA6009EDB84 /* CurrentCurrencyTableVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBA28ACD20097AA6009EDB84 /* CurrentCurrencyTableVC.swift */; };
 		FBA28AD020097C31009EDB84 /* CurrentCurrencyTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBA28ACF20097C31009EDB84 /* CurrentCurrencyTableViewCell.swift */; };
 		FBA6D946200C3C6100B9F3EE /* CryptoCurrency.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FBBE490C2008F5A200277014 /* CryptoCurrency.framework */; };
 		FBB0096E1F4E3292000B1298 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FBB0096D1F4E3292000B1298 /* Assets.xcassets */; };
@@ -71,6 +71,9 @@
 		FBD5ABE51F214CFA003A3AAC /* AddTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBD5ABE41F214CFA003A3AAC /* AddTableViewController.swift */; };
 		FBE8F6481F73C96B00CE5982 /* Crypto monitor Watch.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = FBB009681F4E3292000B1298 /* Crypto monitor Watch.app */; };
 		FBFA2A8420AC397D00B11B17 /* Notification.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBFA2A8320AC397D00B11B17 /* Notification.swift */; };
+		FBFA2A8620ACD94000B11B17 /* Array.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBFA2A8520ACD94000B11B17 /* Array.swift */; };
+		FBFA2A8920ACDCB900B11B17 /* CurrencyCharts.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBFA2A8820ACDCB900B11B17 /* CurrencyCharts.swift */; };
+		FBFA2A8B20ACE12A00B11B17 /* WCSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBFA2A8A20ACE12A00B11B17 /* WCSession.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -256,7 +259,7 @@
 		FB183763200D033B001C6358 /* Charts.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Charts.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FB183765200D035D001C6358 /* AlamofireNetworkActivityIndicator.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = AlamofireNetworkActivityIndicator.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FB20D0E120090DD70007305C /* SettingsUserDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsUserDefaults.swift; sourceTree = "<group>"; };
-		FB20D0E42009551D0007305C /* Charts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Charts.swift; sourceTree = "<group>"; };
+		FB20D0E42009551D0007305C /* ChartRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartRequest.swift; sourceTree = "<group>"; };
 		FB27C53C200AD72D00DB2907 /* Ticker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Ticker.swift; sourceTree = "<group>"; };
 		FB2F889C1FEBFA32003B62CF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		FB2F889F1FEBFABD003B62CF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -302,7 +305,7 @@
 		FB99B48E1F2FEF1F007C0235 /* TodayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayViewController.swift; sourceTree = "<group>"; };
 		FB99B4931F2FEF1F007C0235 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FB99B49B1F2FF552007C0235 /* Cryptocurrency monitor widget.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Cryptocurrency monitor widget.entitlements"; sourceTree = "<group>"; };
-		FBA28ACD20097AA6009EDB84 /* CurrentCurrencyTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentCurrencyTableViewController.swift; sourceTree = "<group>"; };
+		FBA28ACD20097AA6009EDB84 /* CurrentCurrencyTableVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentCurrencyTableVC.swift; sourceTree = "<group>"; };
 		FBA28ACF20097C31009EDB84 /* CurrentCurrencyTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentCurrencyTableViewCell.swift; sourceTree = "<group>"; };
 		FBB009681F4E3292000B1298 /* Crypto monitor Watch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Crypto monitor Watch.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		FBB0096D1F4E3292000B1298 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -327,6 +330,9 @@
 		FBCDD40E1F307E50002B9BA4 /* WidgetCellTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WidgetCellTableViewCell.swift; sourceTree = "<group>"; };
 		FBD5ABE41F214CFA003A3AAC /* AddTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddTableViewController.swift; sourceTree = "<group>"; };
 		FBFA2A8320AC397D00B11B17 /* Notification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notification.swift; sourceTree = "<group>"; };
+		FBFA2A8520ACD94000B11B17 /* Array.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Array.swift; sourceTree = "<group>"; };
+		FBFA2A8820ACDCB900B11B17 /* CurrencyCharts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyCharts.swift; sourceTree = "<group>"; };
+		FBFA2A8A20ACE12A00B11B17 /* WCSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WCSession.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -444,6 +450,7 @@
 			isa = PBXGroup;
 			children = (
 				FB2F88A71FEBFB28003B62CF /* CoinTableViewController.swift */,
+				FBFA2A8A20ACE12A00B11B17 /* WCSession.swift */,
 				FB2F88A91FEBFB30003B62CF /* TableViewCell.swift */,
 			);
 			name = Main;
@@ -465,7 +472,7 @@
 		FBA28AD120097C38009EDB84 /* CurrentCurrency */ = {
 			isa = PBXGroup;
 			children = (
-				FBA28ACD20097AA6009EDB84 /* CurrentCurrencyTableViewController.swift */,
+				FBA28ACD20097AA6009EDB84 /* CurrentCurrencyTableVC.swift */,
 				FBA28ACF20097C31009EDB84 /* CurrentCurrencyTableViewCell.swift */,
 			);
 			name = CurrentCurrency;
@@ -538,10 +545,10 @@
 				FB3EF7F420248E2500EB1C31 /* Spotlight.swift */,
 				FB3EF7F92024941E00EB1C31 /* DZNEmptyData.swift */,
 				FB3EF7FB2024CB5F00EB1C31 /* ReviewRequest.swift */,
-				FBFA2A8220AC395A00B11B17 /* Extensions */,
 				FBA28AD120097C38009EDB84 /* CurrentCurrency */,
-				FB20D0E42009551D0007305C /* Charts.swift */,
+				FBFA2A8720ACDB4800B11B17 /* Charts */,
 				FB565C461F421ADF004EA42F /* AddTable */,
+				FBFA2A8220AC395A00B11B17 /* Extensions */,
 				FB2F889B1FEBFA32003B62CF /* Main.storyboard */,
 				FB2F889E1FEBFABD003B62CF /* LaunchScreen.storyboard */,
 				FBB2CCA21F155CF800D800FD /* Assets.xcassets */,
@@ -569,8 +576,18 @@
 			isa = PBXGroup;
 			children = (
 				FBFA2A8320AC397D00B11B17 /* Notification.swift */,
+				FBFA2A8520ACD94000B11B17 /* Array.swift */,
 			);
 			name = Extensions;
+			sourceTree = "<group>";
+		};
+		FBFA2A8720ACDB4800B11B17 /* Charts */ = {
+			isa = PBXGroup;
+			children = (
+				FB20D0E42009551D0007305C /* ChartRequest.swift */,
+				FBFA2A8820ACDCB900B11B17 /* CurrencyCharts.swift */,
+			);
+			name = Charts;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -1105,18 +1122,21 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FBA28ACE20097AA6009EDB84 /* CurrentCurrencyTableViewController.swift in Sources */,
+				FBA28ACE20097AA6009EDB84 /* CurrentCurrencyTableVC.swift in Sources */,
 				FB6528682020945B004CE9D4 /* IAPHandler.swift in Sources */,
+				FBFA2A8B20ACE12A00B11B17 /* WCSession.swift in Sources */,
 				FB3EF7FA2024941E00EB1C31 /* DZNEmptyData.swift in Sources */,
 				FB2F88A81FEBFB28003B62CF /* CoinTableViewController.swift in Sources */,
 				FBFA2A8420AC397D00B11B17 /* Notification.swift in Sources */,
-				FBA28ACA200959BC009EDB84 /* Charts.swift in Sources */,
+				FBFA2A8620ACD94000B11B17 /* Array.swift in Sources */,
+				FBA28ACA200959BC009EDB84 /* ChartRequest.swift in Sources */,
 				FB466DDA1F2D479200D771C9 /* SettingTableViewController.swift in Sources */,
 				FBD5ABE51F214CFA003A3AAC /* AddTableViewController.swift in Sources */,
 				FBA28AD020097C31009EDB84 /* CurrentCurrencyTableViewCell.swift in Sources */,
 				FB670CE61F16D900005761CF /* CryptocurrencyInfoViewController.swift in Sources */,
 				FB3EF7FC2024CB5F00EB1C31 /* ReviewRequest.swift in Sources */,
 				FB5326CB1F254A9400D9C498 /* AddTableViewCell.swift in Sources */,
+				FBFA2A8920ACDCB900B11B17 /* CurrencyCharts.swift in Sources */,
 				FB2F88AA1FEBFB30003B62CF /* TableViewCell.swift in Sources */,
 				FB3EF7F520248E2500EB1C31 /* Spotlight.swift in Sources */,
 				FBB2CC9C1F155CF800D800FD /* AppDelegate.swift in Sources */,

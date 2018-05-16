@@ -9,7 +9,7 @@
 import UIKit
 import CryptoCurrency
 
-class CurrentCurrencyTableViewController: UITableViewController {
+class CurrentCurrencyTableVC: UITableViewController {
 
     var money : [CryptoCurrencyKit.Money] = CryptoCurrencyKit.Money.allValues
 
@@ -22,8 +22,7 @@ class CurrentCurrencyTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return money.count
     }
-
-    
+ 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "currentSymbol", for: indexPath) as! CurrentCurrencyTableViewCell
         let row = indexPath.row
