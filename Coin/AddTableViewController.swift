@@ -9,14 +9,15 @@
 import UIKit
 import CryptoCurrency
 
-var getTickerAll = [Ticker]()
+//var getTickerAll = [Ticker]()
 
 class AddTableViewController: UITableViewController {
     
     let searchController = UISearchController(searchResultsController: nil)
     
-    var ticker = [Ticker]()
+    var tickers = [Ticker]()
     var tickerSearchResult  = [Ticker]()
+    var idArray = [String]()
 
     deinit {
         self.searchController.view.removeFromSuperview()
@@ -29,6 +30,7 @@ class AddTableViewController: UITableViewController {
         searchController.searchResultsUpdater = self
         definesPresentationContext = true
         searchController.dimsBackgroundDuringPresentation = false
+        searchController.hidesNavigationBarDuringPresentation = false
         tableView.tableHeaderView = searchController.searchBar
         
         searchController.searchBar.keyboardType = .asciiCapable
@@ -36,13 +38,15 @@ class AddTableViewController: UITableViewController {
         // Setting refresh control
         self.refreshControl?.addTarget(self, action: #selector(loadTicker), for: UIControlEvents.valueChanged)
         
-        ticker = getTickerAll
+        if let idArrayUserDefaults = SettingsUserDefaults.getIdArray(){
+            self.idArray = idArrayUserDefaults
+        }
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(true)
         
-        if ticker.isEmpty {
+        if tickers.isEmpty {
             loadTicker()
         }
         else{
@@ -52,7 +56,7 @@ class AddTableViewController: UITableViewController {
     
     func cryptocurrencyView() {
         self.refreshControl?.endRefreshing() 
-        if !ticker.isEmpty {
+        if !tickers.isEmpty {
             tableView.reloadData()
         }
     }
@@ -65,8 +69,7 @@ class AddTableViewController: UITableViewController {
         CryptoCurrencyKit.fetchTickers(convert: currentCurrency, idArray: nil, limit: 0) { [weak self] (response) in
             switch response {
             case .success(let tickers):
-                getTickerAll = tickers
-                self?.ticker = tickers
+                self?.tickers = tickers
                 
                 DispatchQueue.main.async() {
                     self?.cryptocurrencyView()
@@ -82,7 +85,7 @@ class AddTableViewController: UITableViewController {
         if searchController.isActive && searchController.searchBar.text != "" {
             return tickerSearchResult.count
         }
-        return ticker.count
+        return tickers.count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -94,18 +97,24 @@ class AddTableViewController: UITableViewController {
         if searchController.isActive && searchController.searchBar.text != "" {
             ticker = self.tickerSearchResult[row]
         } else {
-            ticker = self.ticker[row]
+            ticker = self.tickers[row]
         }
    
         cell.cryptocurrencyNameLabel?.text = ticker.name + " (\(ticker.symbol))"
         
-        if (getTickerID?.filter({ $0.id == ticker.id}).first) != nil{
-           cell.checkImageView.isHidden = false
-        }
-        else{
-            cell.checkImageView.isHidden = true
-        }
+        cell.checkImageView.isHidden = !idArray.contains(ticker.id)
         
+//        if idArray.contains(ticker.id){
+//
+//        }
+//
+//        if (tickers?.filter({ $0.id == ticker.id}).first) != nil{
+//           cell.checkImageView.isHidden = false
+//        }
+//        else{
+//            cell.checkImageView.isHidden = true
+//        }
+//
         return cell
     }
     
@@ -117,7 +126,7 @@ class AddTableViewController: UITableViewController {
             ticker = self.tickerSearchResult[row]
         }
         else{
-            ticker = self.ticker[row]
+            ticker = self.tickers[row]
         }
         
         let keyStore = NSUbiquitousKeyValueStore ()
@@ -129,14 +138,10 @@ class AddTableViewController: UITableViewController {
                 keyStore.set(idArray, forKey: "id")
                 keyStore.synchronize()
                 
-                if getTickerID == nil {
-                    getTickerID = [ticker]
-                }
-                else{
-                    getTickerID!.append(ticker)
-                }
+                tickers.append(ticker)
                 
-                SettingsUserDefaults.setUserDefaults(ticher: getTickerID!, lastUpdate: nil)
+                
+                SettingsUserDefaults.setUserDefaults(ticher: tickers, lastUpdate: nil)
 
              _ = navigationController?.popViewController(animated: true)
             }
@@ -173,7 +178,7 @@ class AddTableViewController: UITableViewController {
     }
     
     func filter(searchText: String)  {
-        tickerSearchResult = ticker.filter{$0.name.lowercased().contains(searchText.lowercased()) || $0.symbol.lowercased().contains(searchText.lowercased()) }
+        tickerSearchResult = tickers.filter{$0.name.lowercased().contains(searchText.lowercased()) || $0.symbol.lowercased().contains(searchText.lowercased()) }
         tableView.reloadData()
     }
     

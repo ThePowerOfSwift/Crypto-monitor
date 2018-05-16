@@ -66,9 +66,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(_ application: UIApplication, continue userActivity: NSUserActivity, restorationHandler: @escaping ([Any]?) -> Void) -> Bool {
         if userActivity.activityType == CSSearchableItemActionType {
-            if let uniqueIdentifier = userActivity.userInfo?[CSSearchableItemActivityIdentifier] as? String {
-               // openID = uniqueIdentifier
-                showViewControllet(withIdentifier: "CryptocurrencyInfoViewControllerID")
+            if let tickerID = userActivity.userInfo?[CSSearchableItemActivityIdentifier] as? String {
+
             }
         }
         return true
@@ -85,9 +84,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                     
                     switch queryItem.name {
                     case "id":
-                        if let id = queryItem.value {
-                          //  openID = id
-                         //   showViewControllet(withIdentifier: "CryptocurrencyInfoViewControllerID")
+                        if let tickerID = queryItem.value {
+                            let imageDataDict:[String: String] = ["tickerID": tickerID]
+                            // post a notification
+                            NotificationCenter.default.post(name: .openTickerID, object: nil, userInfo: imageDataDict)
                         }
                     case "add":
                         showViewControllet(withIdentifier: "CoinTableViewControllerID")

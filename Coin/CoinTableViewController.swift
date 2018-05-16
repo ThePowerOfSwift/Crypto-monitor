@@ -11,7 +11,7 @@ import WatchConnectivity
 import Alamofire
 import CryptoCurrency
 
-var getTickerID:[Ticker]?
+
 var watchSession : WCSession?
 
 protocol CoinDelegate: class {
@@ -20,6 +20,7 @@ protocol CoinDelegate: class {
 
 class CoinTableViewController: UITableViewController, WCSessionDelegate {
     
+    var tickers:[Ticker]?
     weak var coinDelegate: CoinDelegate?
     var selectDefaultItem = false
 
@@ -37,6 +38,7 @@ class CoinTableViewController: UITableViewController, WCSessionDelegate {
                                                 CoinTableViewController.ubiquitousKeyValueStoreDidChange),
                                                name: NSUbiquitousKeyValueStore.didChangeExternallyNotification,
                                                object: keyStore)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.showTickerID(_:)), name: .openTickerID, object: nil)
         
         //Navigation Item
         let editBarButton = UIBarButtonItem.init(barButtonSystemItem: .edit, target: self, action: #selector(edit))
@@ -96,10 +98,28 @@ class CoinTableViewController: UITableViewController, WCSessionDelegate {
         }
     }
     
+    @objc func showTickerID(_ notification: NSNotification) {
+        
+        if let tickerID = notification.userInfo?["tickerID"] as? String {
+            guard let tickerIndex = tickers?.index(where: {$0.id == tickerID}), tickers != nil else { return }
+            let ticker = tickers![tickerIndex]
+            coinDelegate?.coinSelected(ticker)
+            
+            let keyStore = NSUbiquitousKeyValueStore ()
+            keyStore.set(ticker, forKey: "selectDefaultItemID")
+            keyStore.synchronize()
+            
+            if let detailViewController = coinDelegate as? CryptocurrencyInfoViewController,
+                let detailNavigationController = detailViewController.navigationController {
+                splitViewController?.showDetailViewController(detailNavigationController, sender: nil)
+            }
+        }
+    }
+    
     func loadCache() {
         DispatchQueue.global(qos: .userInitiated).async {
             if let cacheTicker = SettingsUserDefaults.loadcacheTicker() {
-                getTickerID = cacheTicker
+                self.tickers = cacheTicker
                 self.cryptocurrencyView()
             }
         }
@@ -107,14 +127,14 @@ class CoinTableViewController: UITableViewController, WCSessionDelegate {
 
     // MARK: - Table view data source
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return getTickerID?.count ?? 0
+        return tickers?.count ?? 0
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "coin", for: indexPath as IndexPath) as! CoinTableViewCell
         let row = indexPath.row
         
-        if let ticker = getTickerID {
+        if let ticker = tickers {
             
             cell.coinNameLabel.text = ticker[row].name
             
@@ -172,8 +192,8 @@ class CoinTableViewController: UITableViewController, WCSessionDelegate {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath){
-        if getTickerID != nil {
-            let ticker = getTickerID![indexPath.row]
+        if tickers != nil {
+            let ticker = tickers![indexPath.row]
             coinDelegate?.coinSelected(ticker)
             
             let keyStore = NSUbiquitousKeyValueStore ()
@@ -193,16 +213,16 @@ class CoinTableViewController: UITableViewController, WCSessionDelegate {
                 let keyStore = NSUbiquitousKeyValueStore ()
                 
                 if var idArray = keyStore.array(forKey: "id") as? [String] {
-                    if let index = idArray.index(of: getTickerID![indexPath.row].id){
+                    if let index = idArray.index(of: self.tickers![indexPath.row].id){
                         idArray.remove(at: index)
-                        self.deindexItem(identifier: getTickerID![indexPath.row].id)
-                        getTickerID!.remove(at: indexPath.row)
+                        self.deindexItem(identifier: self.tickers![indexPath.row].id)
+                        self.tickers!.remove(at: indexPath.row)
                         
                         // set UserDefaults
-                        SettingsUserDefaults.setUserDefaults(ticher: getTickerID!, idArray: idArray, lastUpdate: nil)
+                        SettingsUserDefaults.setUserDefaults(ticher: self.tickers!, idArray: idArray, lastUpdate: nil)
                         
                         // set iCloud key-value
-                        if getTickerID?.count == 0 {
+                        if self.tickers?.count == 0 {
                             keyStore.removeObject(forKey: "id")
                         }
                         else{
@@ -231,12 +251,12 @@ class CoinTableViewController: UITableViewController, WCSessionDelegate {
         DispatchQueue.global(qos: .utility).async {
             let keyStore = NSUbiquitousKeyValueStore()
             if var idArray = keyStore.array(forKey: "id") as? [String] {
-                if let index = idArray.index(of: getTickerID![sourceIndexPath.row].id){
+                if let index = idArray.index(of: self.tickers![sourceIndexPath.row].id){
                     idArray.remove(at: index)
-                    idArray.insert(getTickerID![sourceIndexPath.row].id, at: destinationIndexPath.row)
-                    getTickerID!.rearrange(from: sourceIndexPath.row, to: destinationIndexPath.row)
+                    idArray.insert(self.tickers![sourceIndexPath.row].id, at: destinationIndexPath.row)
+                    self.tickers!.rearrange(from: sourceIndexPath.row, to: destinationIndexPath.row)
                     
-                    SettingsUserDefaults.setUserDefaults(ticher: getTickerID!, idArray: idArray, lastUpdate: nil)
+                    SettingsUserDefaults.setUserDefaults(ticher: self.tickers!, idArray: idArray, lastUpdate: nil)
                     
                     // set iCloud key-value
                     keyStore.set(idArray, forKey: "id")
@@ -256,7 +276,7 @@ class CoinTableViewController: UITableViewController, WCSessionDelegate {
             }
         }
         
-        guard getTickerID != nil else { return }
+        guard self.tickers != nil else { return }
         
         let userDefaults = UserDefaults(suiteName: "group.mialin.valentyn.crypto.monitor")
         if let lastUpdate = userDefaults?.object(forKey: "lastUpdate") as? NSDate {
@@ -272,12 +292,12 @@ class CoinTableViewController: UITableViewController, WCSessionDelegate {
                 !self.selectDefaultItem {
                 let keyStore = NSUbiquitousKeyValueStore()
                 if let tickerID = keyStore.object(forKey: "selectDefaultItemID") as? String,
-                    let index = getTickerID?.index(where: {$0.id == tickerID})
+                    let index = self.tickers?.index(where: {$0.id == tickerID})
                 {
-                    self.coinDelegate?.coinSelected(getTickerID![index])
+                    self.coinDelegate?.coinSelected(self.tickers![index])
                 }
                 else{
-                    self.coinDelegate?.coinSelected(getTickerID![0])
+                    self.coinDelegate?.coinSelected(self.tickers![0])
                 }
                 self.selectDefaultItem = true
             }
@@ -289,7 +309,7 @@ class CoinTableViewController: UITableViewController, WCSessionDelegate {
             guard let idArray = SettingsUserDefaults.getIdArray() else {return}
             
             if idArray.isEmpty {
-                getTickerID = [Ticker]()
+                self.tickers = [Ticker]()
                 SettingsUserDefaults.setUserDefaults(ticher: [Ticker](), lastUpdate: nil)
             }
             else{
@@ -298,7 +318,7 @@ class CoinTableViewController: UITableViewController, WCSessionDelegate {
                     switch response {
                     case .success(let tickers):
                         
-                        getTickerID = tickers
+                        self?.tickers = tickers
                         self?.cryptocurrencyView()
                         SettingsUserDefaults.setUserDefaults(ticher: tickers)
                         self?.updateApplicationContext(id: idArray)

@@ -188,8 +188,7 @@ class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
         CryptoCurrencyKit.fetchTickers(convert: SettingsUserDefaults.getCurrentCurrency(), idArray: idArray) { [weak self] (response) in
             switch response {
             case .success(let tickers):
-                getTickerID = tickers
-                SettingsUserDefaults.setUserDefaults(ticher: getTickerID!)
+                SettingsUserDefaults.setUserDefaults(ticher: tickers)
                 DispatchQueue.main.async() {
                     self?.viewCryptocurrencyInfo()
                 }
