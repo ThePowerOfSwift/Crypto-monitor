@@ -16,7 +16,7 @@ import StoreKit
 let runIncrementerSetting = "numberOfRuns"  // UserDefauls dictionary key where we store number of runs
 let minimumRunCount = 5                     // Minimum number of runs that we should have until we ask for review
 
-func incrementAppRuns() {                   // counter for number of runs for the app. You can call this from App Delegate
+func IncrementAppRuns() {                   // counter for number of runs for the app. You can call this from App Delegate
     
     let usD = UserDefaults()
     let runs = getRunCounts() + 1

@@ -92,7 +92,7 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate {
     private func load() {
         print("load")
         if let idArray = UserDefaults().array(forKey: "id") as? [String],  !idArray.isEmpty {
-                CryptoCurrencyKit.fetchTickers(convert: SettingsUserDefaults.getCurrentCurrency(), idArray: idArray) { [weak self] (response) in
+                CryptoCurrencyKit.fetchTickers(idArray: idArray) { [weak self] (response) in
                     switch response {
                     case .success(let tickers):
                         SettingsUserDefaults.setUserDefaults(ticher: tickers)

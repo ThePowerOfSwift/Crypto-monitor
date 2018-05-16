@@ -54,7 +54,7 @@ class TodayViewController: UIViewController, UITableViewDataSource, UITableViewD
         }
         
         if let idArray = idArray {
-            CryptoCurrencyKit.fetchTickers(convert: SettingsUserDefaults.getCurrentCurrency(), idArray: idArray) { [weak self] (response) in
+            CryptoCurrencyKit.fetchTickers(idArray: idArray) { [weak self] (response) in
                 switch response {
                 case .success(let tickers):
                     SettingsUserDefaults.setUserDefaults(ticher: tickers)

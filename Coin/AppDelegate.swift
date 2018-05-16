@@ -19,8 +19,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
-        UIApplication.shared.setMinimumBackgroundFetchInterval(UIApplicationBackgroundFetchIntervalMinimum)
+        //UIApplication.shared.setMinimumBackgroundFetchInterval(UIApplicationBackgroundFetchIntervalMinimum)
         
+        //SplitViewController
         guard let splitViewController = window?.rootViewController as? UISplitViewController,
             let leftNavController = splitViewController.viewControllers.first as? UINavigationController,
             let masterViewController = leftNavController.topViewController as? CoinTableViewController,
@@ -29,10 +30,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             else { fatalError() }
         
         splitViewController.preferredDisplayMode = .allVisible
-
-        
-        // let firstMonster = masterViewController.monsters.first
-        //   detailViewController.monster = firstMonster
         
         masterViewController.coinDelegate = detailViewController
         
@@ -53,26 +50,25 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Load IAP
         IAPHandler.shared.requestProducts()
         
-        incrementAppRuns()
+        IncrementAppRuns()
 
         // NetworkActivityIndicatorManager
         NetworkActivityIndicatorManager.shared.isEnabled = true
 
-
-        
         return true
     }
     
-    
+
     func application(_ application: UIApplication, continue userActivity: NSUserActivity, restorationHandler: @escaping ([Any]?) -> Void) -> Bool {
         if userActivity.activityType == CSSearchableItemActionType {
             if let tickerID = userActivity.userInfo?[CSSearchableItemActivityIdentifier] as? String {
-
+                let tickerIdDict:[String: String] = ["tickerID": tickerID]
+                NotificationCenter.default.post(name: .openTickerID, object: nil, userInfo: tickerIdDict)
             }
         }
         return true
     }
-    
+
 
 
     func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any] = [:]) -> Bool {
@@ -85,9 +81,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                     switch queryItem.name {
                     case "id":
                         if let tickerID = queryItem.value {
-                            let imageDataDict:[String: String] = ["tickerID": tickerID]
-                            // post a notification
-                            NotificationCenter.default.post(name: .openTickerID, object: nil, userInfo: imageDataDict)
+                            let tickerIdDict:[String: String] = ["tickerID": tickerID]
+                            NotificationCenter.default.post(name: .openTickerID, object: nil, userInfo: tickerIdDict)
                         }
                     case "add":
                         showViewControllet(withIdentifier: "CoinTableViewControllerID")
@@ -109,9 +104,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         (self.window?.rootViewController as! UINavigationController).pushViewController(detailController, animated: false)
 
     }
-    
 
-    
     func application(_ application: UIApplication,
                      didFailToContinueUserActivityWithType userActivityType: String,
                      error: Error) {
@@ -121,8 +114,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             print(message)
 
     }
-
-
 
     func applicationWillResignActive(_ application: UIApplication) {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
@@ -136,6 +127,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func applicationWillEnterForeground(_ application: UIApplication) {
         // Called as part of the transition from the background to the active state; here you can undo many of the changes made on entering the background.
+        
+        print("AppDelegate applicationWillEnterForeground")
     }
 
     func applicationDidBecomeActive(_ application: UIApplication) {
@@ -145,7 +138,5 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationWillTerminate(_ application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
-
-
 }
 

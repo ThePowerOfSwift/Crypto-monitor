@@ -3,17 +3,18 @@ import Alamofire
 
 public struct CryptoCurrencyKit {
     
-    public static func fetchTickers(convert: Money = .usd, idArray: [String]? = nil, limit: Int? = 0, response: ((_ r: ResponseA<Ticker>) -> Void)?) {
+    public static func fetchTickers(idArray: [String]? = nil, limit: Int? = 0, response: ((_ r: Response<Ticker>) -> Void)?) {
         DispatchQueue .global (qos: .utility) .async {
             var urlString = "https://api.coinmarketcap.com/v1/ticker/"
+            let convert = SettingsUserDefaults.getCurrentCurrency()
+            
             urlString.append("?convert=\(convert.rawValue)")
-            if let limit = limit {
-                urlString.append("&limit=\(limit)")
-            }
+            urlString.append("&limit=\(limit ?? 0)")
+            
             let url = URL(string: urlString)!
             let urlRequest = URLRequest(url: url)
             
-            let closure: ((ResponseA<Ticker>) -> Void)? = { r in
+            let closure: ((Response<Ticker>) -> Void)? = { r in
                 switch r {
                 case .success(let data):
                     var tickerFilterArray = [Ticker]()
@@ -28,12 +29,12 @@ public struct CryptoCurrencyKit {
                         tickerFilterArray = data
                     }
                     DispatchQueue.main.async {
-                        response?(ResponseA.success(tickerFilterArray))
+                        response?(Response.success(tickerFilterArray))
                     }
                 case .failure(let error):
                     print(error.localizedDescription)
                     DispatchQueue.main.async {
-                        response?(ResponseA.failure(error: error))
+                        response?(Response.failure(error: error))
                     }
                 }
             }
@@ -92,69 +93,28 @@ extension CryptoCurrencyKit {
 }
 
 extension CryptoCurrencyKit {
-    public enum ResponseD<T: Codable> {
-        case failure(error: Error)
-        case success(T)
-    }
-    
-    public enum ResponseA<T: Codable> {
+    public enum Response<T: Codable> {
         case failure(error: Error)
         case success([T])
     }
     
-    static func requestA<T>(urlRequest: URLRequest, idArray: [String]?, response: ((_ r: ResponseA<T>) -> Void)?) {
+    static func requestA<T>(urlRequest: URLRequest, idArray: [String]?, response: ((_ r: Response<T>) -> Void)?) {
         print("requestA")
-        DispatchQueue .global (qos: .utility) .async {
-            
-            
-            Alamofire.SessionManager.default.session.getTasksWithCompletionHandler { dataTasks, _, _ in
-                dataTasks.forEach
-                    {
-                        if ($0.originalRequest?.url?.absoluteString.range(of: "https://api.coinmarketcap.com/v1/ticker/") != nil)
-                        {
-                            $0.cancel()
-                        }
-                }
-            }
-            
             Alamofire.SessionManager.default.request(urlRequest).validate().responseData { res in
                 switch res.result {
                 case .success(let responseData):
-                    DispatchQueue .global (qos: .utility) .async {
                         print("Validation Successful getTicker2")
                         
                         let decoder = JSONDecoder()
                         do {
                             let objects = try decoder.decode([T].self, from: responseData)
-                            response?(ResponseA.success(objects))
+                            response?(Response.success(objects))
                         } catch let decodeE {
-                            response?(ResponseA.failure(error: decodeE))
+                            response?(Response.failure(error: decodeE))
                         }
-                    }
                 case .failure(let error):
-                    response?(ResponseA.failure(error: error))
+                    response?(Response.failure(error: error))
                 }
             }
-        }
-        
     }
 }
-
-extension CryptoCurrencyKit {
-    public static func checkRequest(urlString: String, completion: @escaping (Bool)->()) {
-        Alamofire.SessionManager.default.session.getTasksWithCompletionHandler { dataTasks, _, _ in
-            dataTasks.forEach
-                {
-                    if ($0.originalRequest?.url?.absoluteString.range(of: "https://api.coinmarketcap.com/v1/ticker/") != nil)
-                    {
-                        completion(true)
-                    }
-                    else{
-                        completion(false)
-                    }
-            }
-            completion(false)
-        }
-    }
-}
-

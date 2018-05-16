@@ -10,5 +10,8 @@ import Foundation
 
 
 extension Notification.Name {
-     static let openTickerID = Notification.Name ("openTickerID")
+    static let updatingTickers = Notification.Name("updatingTickers")
+    static let openTickerID = Notification.Name("openTickerID")
+    
+    static let newCurrentCurrency = Notification.Name("newCurrentCurrency")
 }

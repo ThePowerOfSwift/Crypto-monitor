@@ -62,6 +62,7 @@ class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
         self.coinTableViewController?.coinDelegate = self
         
         NotificationCenter.default.addObserver(self, selector: #selector(applicationWillEnterForeground), name:NSNotification.Name.UIApplicationWillEnterForeground, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(newCurrentCurrency), name: .newCurrentCurrency, object: nil)
         
         //Notification
         let keyStore = NSUbiquitousKeyValueStore()
@@ -159,6 +160,10 @@ class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
         loadlineView()
     }
     
+    @objc func newCurrentCurrency(notification : NSNotification) {
+        loadTicker()
+    }
+    
     //iCloud Value Store
     @objc func ubiquitousKeyValueStoreDidChange(notification: NSNotification) {
         print("ubiquitousKeyValueStoreDidChange")
@@ -185,10 +190,15 @@ class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
         let keyStore = NSUbiquitousKeyValueStore()
         guard let idArray = keyStore.array(forKey: "id") as? [String] else { return }
         
-        CryptoCurrencyKit.fetchTickers(convert: SettingsUserDefaults.getCurrentCurrency(), idArray: idArray) { [weak self] (response) in
+        CryptoCurrencyKit.fetchTickers(idArray: idArray) { [weak self] (response) in
             switch response {
             case .success(let tickers):
                 SettingsUserDefaults.setUserDefaults(ticher: tickers)
+                
+                if let ticker = tickers.first(where: {$0.id == self?.ticker.id}) {
+                    self?.ticker = ticker
+                }
+                
                 DispatchQueue.main.async() {
                     self?.viewCryptocurrencyInfo()
                 }

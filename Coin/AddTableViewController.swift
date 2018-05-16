@@ -64,9 +64,8 @@ class AddTableViewController: UITableViewController {
     @objc func loadTicker() {
         self.tableView.setContentOffset(CGPoint(x: 0, y: -self.refreshControl!.frame.size.height - self.topLayoutGuide.length), animated: true)
         self.refreshControl!.beginRefreshing()
-        
-        let currentCurrency = SettingsUserDefaults.getCurrentCurrency()
-        CryptoCurrencyKit.fetchTickers(convert: currentCurrency, idArray: nil, limit: 0) { [weak self] (response) in
+
+        CryptoCurrencyKit.fetchTickers() { [weak self] (response) in
             switch response {
             case .success(let tickers):
                 self?.tickers = tickers
@@ -103,18 +102,7 @@ class AddTableViewController: UITableViewController {
         cell.cryptocurrencyNameLabel?.text = ticker.name + " (\(ticker.symbol))"
         
         cell.checkImageView.isHidden = !idArray.contains(ticker.id)
-        
-//        if idArray.contains(ticker.id){
-//
-//        }
-//
-//        if (tickers?.filter({ $0.id == ticker.id}).first) != nil{
-//           cell.checkImageView.isHidden = false
-//        }
-//        else{
-//            cell.checkImageView.isHidden = true
-//        }
-//
+
         return cell
     }
     
@@ -135,15 +123,14 @@ class AddTableViewController: UITableViewController {
             if !idArray.contains(ticker.id){
                 idArray.append(ticker.id)
                 
-                keyStore.set(idArray, forKey: "id")
-                keyStore.synchronize()
+                SettingsUserDefaults.setIdArray(idArray: idArray)
                 
-                tickers.append(ticker)
-                
-                
-                SettingsUserDefaults.setUserDefaults(ticher: tickers, lastUpdate: nil)
+                if var loadcacheTicker = SettingsUserDefaults.loadcacheTicker() {
+                    loadcacheTicker.append(ticker)
+                    SettingsUserDefaults.setUserDefaults(ticher: loadcacheTicker, lastUpdate: nil)
+                }
 
-             _ = navigationController?.popViewController(animated: true)
+                _ = navigationController?.popViewController(animated: true)
             }
             else{ 
                 let messageString = ticker.name + NSLocalizedString(" has already been added to favorites.", comment: "Title message")
