@@ -94,10 +94,6 @@ class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
         
         paymentButton.imageView?.contentMode = .scaleAspectFit
         paymentButton.setImage(#imageLiteral(resourceName: "changellyLogo"), for: .normal)
-        
-    
-        
-
     }
     
     private func getMinDateCharts() {

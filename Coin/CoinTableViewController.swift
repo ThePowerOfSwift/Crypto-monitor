@@ -18,7 +18,7 @@ protocol CoinDelegate: class {
     func coinSelected(_ ticker: Ticker)
 }
 
-class CoinTableViewController: UITableViewController, WCSessionDelegate {
+class CoinTableViewController: UITableViewController {
     
     var tickers:[Ticker]?
     weak var coinDelegate: CoinDelegate?
@@ -51,7 +51,7 @@ class CoinTableViewController: UITableViewController, WCSessionDelegate {
         
         tableView.tableFooterView = UIView()
         
-        showReview()
+        Review().showReview()
         
         // Set up and activate your session early here!
         if(WCSession.isSupported()){
@@ -276,7 +276,7 @@ class CoinTableViewController: UITableViewController, WCSessionDelegate {
             }
         }
         
-        guard self.tickers != nil else { return }
+        guard self.tickers != nil && self.tickers?.isEmpty != nil else { return }
         
         let userDefaults = UserDefaults(suiteName: "group.mialin.valentyn.crypto.monitor")
         if let lastUpdate = userDefaults?.object(forKey: "lastUpdate") as? NSDate {
@@ -402,7 +402,7 @@ class CoinTableViewController: UITableViewController, WCSessionDelegate {
                 }
                 else{
                     self.loadCache()
-                    print("************ loadCache************ ")
+                    print("************ loadCache ************ ")
                 }
             }
             
@@ -413,59 +413,6 @@ class CoinTableViewController: UITableViewController, WCSessionDelegate {
             print("iCloud key-value-store change detected")
         }
     }
-
-    //MARK: - WCSession
-    /** Called when all delegate callbacks for the previously selected watch has occurred. The session can be re-activated for the now selected watch using activateSession. */
-    func sessionDidDeactivate(_ session: WCSession) {
-        
-    }
-    
-    /** Called when the session can no longer be used to modify or add any new transfers and, all interactive messages will be cancelled, but delegate callbacks for background transfers can still occur. This will happen when the selected watch is being changed. */
-    func sessionDidBecomeInactive(_ session: WCSession) {
-        
-    }
-    
-    /** Called when the session has completed activation. If session state is WCSessionActivationStateNotActivated there will be an error with more details. */
-    func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: Error?) {
-        
-    }
-    
-    // Sender Watch
-    private func updateApplicationContext(id: [String]) {
-        DispatchQueue.global(qos: .background).async {
-            do {
-                let keyStore = NSUbiquitousKeyValueStore ()
-                let percentChange = Int(keyStore.longLong(forKey: "percentChange"))
-                let currentCurrency = SettingsUserDefaults.getCurrentCurrency().rawValue
-                
-                let context = ["id" : id, "percentChange" : percentChange, "CurrentCurrency" : currentCurrency] as [String : Any]
-                try watchSession?.updateApplicationContext(context)
-                
-            } catch let error as NSError {
-                print("Error: \(error.description)")
-            }
-        }
-    }
-    
-    // Receiver
-    /** Called on the delegate of the receiver. Will be called on startup if an applicationContext is available. */
-    func session(_ session: WCSession, didReceiveApplicationContext applicationContext: [String : Any]){
-        // handle receiving application context
-        DispatchQueue.global(qos: .background).async {
-            let keyStore = NSUbiquitousKeyValueStore ()
-            
-            if let percentChange = applicationContext["percentChange"] as? Int {
-                keyStore.set(percentChange, forKey: "percentChange")
-            }
-            
-            if let priceCurrency = applicationContext["priceCurrency"] as? Int {
-                keyStore.set(priceCurrency, forKey: "priceCurrency")
-            }
-            keyStore.synchronize()
-            
-            self.loadCache()
-        }
-    }
 }
 
 extension CoinTableViewController: UISplitViewControllerDelegate {
@@ -473,12 +420,3 @@ extension CoinTableViewController: UISplitViewControllerDelegate {
         return true
     }
 }
-
-
-// MARK: - Extension Array
-extension Array {
-    mutating func rearrange(from: Int, to: Int) {
-        insert(remove(at: from), at: to)
-    }
-}
-

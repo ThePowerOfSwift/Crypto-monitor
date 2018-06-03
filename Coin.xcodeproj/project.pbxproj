@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		171520A47A49A7D6AF39D01D /* Pods_CryptoCurrency_iOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BDAC7D2115AEFD5FBEBFD26F /* Pods_CryptoCurrency_iOS.framework */; };
 		9DE27A505546C1A6FAC652B0 /* Pods_CryptoCurrency_watchOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 46520A5B8ACF1A943782EBA4 /* Pods_CryptoCurrency_watchOS.framework */; };
+		B1397B9820C41DD100A93FD2 /* UISplitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1397B9720C41DD100A93FD2 /* UISplitViewController.swift */; };
 		BE09E86F83C4C87E0C1209BA /* Pods_Cryptocurrency_monitor_widget.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B24CCD9F49DA85AEAC5AA79 /* Pods_Cryptocurrency_monitor_widget.framework */; };
 		CAB6423711272B09BACBCB78 /* Pods_Crypto_monitor_Watch_Extension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 767BAC04F27D5A468B750C19 /* Pods_Crypto_monitor_Watch_Extension.framework */; };
 		D41841D00AC7E52EE7B4400F /* Pods_Coin.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F91D764A862E2B7E34DE4862 /* Pods_Coin.framework */; };
@@ -208,6 +209,7 @@
 		767BAC04F27D5A468B750C19 /* Pods_Crypto_monitor_Watch_Extension.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Crypto_monitor_Watch_Extension.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8B24CCD9F49DA85AEAC5AA79 /* Pods_Cryptocurrency_monitor_widget.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Cryptocurrency_monitor_widget.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9320A7CF324B6EF07C919266 /* Pods-Cryptocurrency monitor widget.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Cryptocurrency monitor widget.release.xcconfig"; path = "Pods/Target Support Files/Pods-Cryptocurrency monitor widget/Pods-Cryptocurrency monitor widget.release.xcconfig"; sourceTree = "<group>"; };
+		B1397B9720C41DD100A93FD2 /* UISplitViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UISplitViewController.swift; sourceTree = "<group>"; };
 		BDAC7D2115AEFD5FBEBFD26F /* Pods_CryptoCurrency_iOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CryptoCurrency_iOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C27B03F01E034C8D5D922198 /* Pods-Crypto monitor Watch Extension.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Crypto monitor Watch Extension.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Crypto monitor Watch Extension/Pods-Crypto monitor Watch Extension.debug.xcconfig"; sourceTree = "<group>"; };
 		C982DDD457B6A5B7E2931C96 /* Pods-CryptoCurrency iOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CryptoCurrency iOS.debug.xcconfig"; path = "Pods/Target Support Files/Pods-CryptoCurrency iOS/Pods-CryptoCurrency iOS.debug.xcconfig"; sourceTree = "<group>"; };
@@ -576,6 +578,7 @@
 			isa = PBXGroup;
 			children = (
 				FBFA2A8320AC397D00B11B17 /* Notification.swift */,
+				B1397B9720C41DD100A93FD2 /* UISplitViewController.swift */,
 				FBFA2A8520ACD94000B11B17 /* Array.swift */,
 			);
 			name = Extensions;
@@ -747,7 +750,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0830;
-				LastUpgradeCheck = 0920;
+				LastUpgradeCheck = 0940;
 				ORGANIZATIONNAME = "Mialin Valentyn";
 				TargetAttributes = {
 					FB99B4891F2FEF1F007C0235 = {
@@ -1133,6 +1136,7 @@
 				FB466DDA1F2D479200D771C9 /* SettingTableViewController.swift in Sources */,
 				FBD5ABE51F214CFA003A3AAC /* AddTableViewController.swift in Sources */,
 				FBA28AD020097C31009EDB84 /* CurrentCurrencyTableViewCell.swift in Sources */,
+				B1397B9820C41DD100A93FD2 /* UISplitViewController.swift in Sources */,
 				FB670CE61F16D900005761CF /* CryptocurrencyInfoViewController.swift in Sources */,
 				FB3EF7FC2024CB5F00EB1C31 /* ReviewRequest.swift in Sources */,
 				FB5326CB1F254A9400D9C498 /* AddTableViewCell.swift in Sources */,
@@ -1490,6 +1494,7 @@
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
@@ -1497,6 +1502,7 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
@@ -1548,6 +1554,7 @@
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
@@ -1555,6 +1562,7 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
