@@ -13,16 +13,17 @@ import SwiftyJSON
 
 
 class ChartRequest {
+    typealias CompletionHandler = (_ success: Bool) -> Void
     
-    static func cancelRequest(url: String = "https://graphs2.coinmarketcap.com/currencies/")  {
+    static func cancelRequest(url: String = "https://graphs2.coinmarketcap.com/currencies/", completionHandler: @escaping CompletionHandler) {
         Alamofire.SessionManager.default.session.getTasksWithCompletionHandler { dataTasks, _, _ in
-            dataTasks.forEach
-                {
+            dataTasks.forEach {
                     if ($0.originalRequest?.url?.absoluteString.range(of: url) != nil)
                     {
                         $0.cancel()
                     }
             }
+            completionHandler(true)
         }
     }
     
@@ -36,44 +37,45 @@ class ChartRequest {
             url += String(Int(of.timeIntervalSince1970)) + "000/" + String(Int(NSDate().timeIntervalSince1970)) + "000/"
         }
         
-        cancelRequest()
-        
-        Alamofire.SessionManager.default.request(url).validate().responseJSON { response in
-            
-            switch response.result {
-            case .success(let value):
-
-                let json = JSON(value)
-                
-                var market_cap_by_available_supply = [Chart]()
-                var price_btc = [Chart]()
-                var price_usd = [Chart]()
-                var volume_usd = [Chart]()
-                
-                for item in json["market_cap_by_available_supply"].arrayValue {
-                    market_cap_by_available_supply.append(Chart(timestamp: item[0].doubleValue, value: item[1].doubleValue))
+        cancelRequest { (success) in
+            if success {
+                Alamofire.SessionManager.default.request(url).validate().responseJSON { response in
+                    
+                    switch response.result {
+                    case .success(let value):
+                        
+                        let json = JSON(value)
+                        
+                        var market_cap_by_available_supply = [Chart]()
+                        var price_btc = [Chart]()
+                        var price_usd = [Chart]()
+                        var volume_usd = [Chart]()
+                        
+                        for item in json["market_cap_by_available_supply"].arrayValue {
+                            market_cap_by_available_supply.append(Chart(timestamp: item[0].doubleValue, value: item[1].doubleValue))
+                        }
+                        for item in json["price_btc"].arrayValue {
+                            price_btc.append(Chart(timestamp: item[0].doubleValue, value: item[1].doubleValue))
+                        }
+                        for item in json["price_usd"].arrayValue {
+                            price_usd.append(Chart(timestamp: item[0].doubleValue, value: item[1].doubleValue))
+                        }
+                        for item in json["volume_usd"].arrayValue {
+                            volume_usd.append(Chart(timestamp: item[0].doubleValue, value: item[1].doubleValue))
+                        }
+                        
+                        currencyCharts = CurrencyCharts(market_cap_by_available_supply: market_cap_by_available_supply,
+                                                        price_btc: price_btc,
+                                                        price_usd: price_usd,
+                                                        volume_usd: volume_usd)
+                        
+                    case .failure(let errorFailure):
+                        error = errorFailure
+                    }
+                    completion(currencyCharts, error)
                 }
-                for item in json["price_btc"].arrayValue {
-                    price_btc.append(Chart(timestamp: item[0].doubleValue, value: item[1].doubleValue))
-                }
-                for item in json["price_usd"].arrayValue {
-                    price_usd.append(Chart(timestamp: item[0].doubleValue, value: item[1].doubleValue))
-                }
-                for item in json["volume_usd"].arrayValue {
-                    volume_usd.append(Chart(timestamp: item[0].doubleValue, value: item[1].doubleValue))
-                }
-                
-                currencyCharts = CurrencyCharts(market_cap_by_available_supply: market_cap_by_available_supply,
-                                                price_btc: price_btc,
-                                                price_usd: price_usd,
-                                                volume_usd: volume_usd)
-                
-            case .failure(let errorFailure):
-                error = errorFailure
             }
-            completion(currencyCharts, error)
         }
-        
     }
     
     
@@ -86,26 +88,29 @@ class ChartRequest {
         
         let configuration = URLSessionConfiguration.default
         configuration.urlCache = nil
-        let  sessionManager = Alamofire.SessionManager(configuration: configuration)
         
-        
-        sessionManager.request(url).validate().responseJSON { response in
-            
-            switch response.result {
-            case .success(let value):
-                let json = JSON(value)
-                
-                let timestamp = json["price_usd"].arrayValue
-                
-                if !timestamp.isEmpty {
-                    minDate = NSDate(timeIntervalSince1970: TimeInterval(timestamp[0][0].doubleValue / 1000)) as Date?
+        cancelRequest { (success) in
+            if success {
+                let  sessionManager = Alamofire.SessionManager(configuration: configuration)
+                sessionManager.request(url).validate().responseJSON { response in
+                    
+                    switch response.result {
+                    case .success(let value):
+                        let json = JSON(value)
+                        
+                        let timestamp = json["price_usd"].arrayValue
+                        
+                        if !timestamp.isEmpty {
+                            minDate = NSDate(timeIntervalSince1970: TimeInterval(timestamp[0][0].doubleValue / 1000)) as Date?
+                        }
+                        
+                    case .failure(let errorFailure):
+                        error = errorFailure
+                    }
+                    completion(minDate , error)
+                    sessionManager.session.invalidateAndCancel()
                 }
-                
-            case .failure(let errorFailure):
-                error = errorFailure
             }
-            completion(minDate , error)
-            sessionManager.session.invalidateAndCancel()
         }
     }
 }

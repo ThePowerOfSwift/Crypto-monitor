@@ -38,7 +38,6 @@ class CoinTableViewController: UITableViewController {
                                                 CoinTableViewController.ubiquitousKeyValueStoreDidChange),
                                                name: NSUbiquitousKeyValueStore.didChangeExternallyNotification,
                                                object: keyStore)
-        NotificationCenter.default.addObserver(self, selector: #selector(self.showTickerID(_:)), name: .openTickerID, object: nil)
         
         //Navigation Item
         let editBarButton = UIBarButtonItem.init(barButtonSystemItem: .edit, target: self, action: #selector(edit))
@@ -98,23 +97,26 @@ class CoinTableViewController: UITableViewController {
         }
     }
     
-    @objc func showTickerID(_ notification: NSNotification) {
+    func showTickerID(tickerID : String) {
+        guard let tickerIndex = tickers?.index(where: {$0.id == tickerID}), tickers != nil else { return }
+        let ticker = tickers![tickerIndex]
+        coinDelegate?.coinSelected(ticker)
         
-        if let tickerID = notification.userInfo?["tickerID"] as? String {
-            guard let tickerIndex = tickers?.index(where: {$0.id == tickerID}), tickers != nil else { return }
-            let ticker = tickers![tickerIndex]
-            coinDelegate?.coinSelected(ticker)
-            
-            let keyStore = NSUbiquitousKeyValueStore ()
-            keyStore.set(ticker, forKey: "selectDefaultItemID")
-            keyStore.synchronize()
-            
-            if let detailViewController = coinDelegate as? CryptocurrencyInfoViewController,
-                let detailNavigationController = detailViewController.navigationController {
-                splitViewController?.showDetailViewController(detailNavigationController, sender: nil)
-            }
+        let keyStore = NSUbiquitousKeyValueStore ()
+        keyStore.set(ticker, forKey: "selectDefaultItemID")
+        keyStore.synchronize()
+        
+        if let detailViewController = coinDelegate as? CryptocurrencyInfoViewController,
+            let detailNavigationController = detailViewController.navigationController {
+            splitViewController?.showDetailViewController(detailNavigationController, sender: nil)
         }
     }
+    
+    func emptyTicker() {
+        self.navigationController?.popViewController(animated: false)
+        self.performSegue(withIdentifier: "add", sender: nil)
+    }
+    
     
     func loadCache() {
         DispatchQueue.global(qos: .userInitiated).async {
@@ -275,9 +277,7 @@ class CoinTableViewController: UITableViewController {
                 self.refreshControl?.endRefreshing()
             }
         }
-        
-        guard self.tickers != nil && self.tickers?.isEmpty != nil else { return }
-        
+
         let userDefaults = UserDefaults(suiteName: "group.mialin.valentyn.crypto.monitor")
         if let lastUpdate = userDefaults?.object(forKey: "lastUpdate") as? NSDate {
             DispatchQueue.main.async {
@@ -290,6 +290,8 @@ class CoinTableViewController: UITableViewController {
 
             if UIDevice.current.userInterfaceIdiom == .pad,
                 !self.selectDefaultItem {
+                guard self.tickers != nil && self.tickers?.isEmpty != true else { return }
+                
                 let keyStore = NSUbiquitousKeyValueStore()
                 if let tickerID = keyStore.object(forKey: "selectDefaultItemID") as? String,
                     let index = self.tickers?.index(where: {$0.id == tickerID})
@@ -306,7 +308,11 @@ class CoinTableViewController: UITableViewController {
     
     private func loadTicker() {
         DispatchQueue.global(qos: .utility).async {
-            guard let idArray = SettingsUserDefaults.getIdArray() else {return}
+            guard let idArray = SettingsUserDefaults.getIdArray() else {
+                self.tickers = [Ticker]()
+                SettingsUserDefaults.setUserDefaults(ticher: [Ticker](), lastUpdate: nil)
+                return
+            }
             
             if idArray.isEmpty {
                 self.tickers = [Ticker]()
@@ -320,7 +326,7 @@ class CoinTableViewController: UITableViewController {
                         
                         self?.tickers = tickers
                         self?.cryptocurrencyView()
-                        SettingsUserDefaults.setUserDefaults(ticher: tickers)
+                        SettingsUserDefaults.setUserDefaults(ticher: tickers, idArray: idArray)
                         self?.updateApplicationContext(id: idArray)
                         self?.indexItem(ticker: tickers)
                     case .failure(let error ):

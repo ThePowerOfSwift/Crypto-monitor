@@ -94,6 +94,9 @@ class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
         
         paymentButton.imageView?.contentMode = .scaleAspectFit
         paymentButton.setImage(#imageLiteral(resourceName: "changellyLogo"), for: .normal)
+        
+         viewCryptocurrencyInfo()
+           loadTicker()
     }
     
     private func getMinDateCharts() {
@@ -136,24 +139,25 @@ class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
-        viewCryptocurrencyInfo()
+      //  viewCryptocurrencyInfo()
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(true)
-        loadTicker()
+       // loadTicker()
     //    loadlineView()
     }
     
     override func viewDidDisappear(_ animated: Bool) {
-        ChartRequest.cancelRequest()
+        ChartRequest.cancelRequest { _ in
+        }
     }
     
     //Unlock
     @objc func applicationWillEnterForeground(notification : NSNotification) {
         print("applicationWillEnterForeground")
-        loadTicker()
-        loadlineView()
+//        loadTicker()
+//        loadlineView()
     }
     
     @objc func newCurrentCurrency(notification : NSNotification) {

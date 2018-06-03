@@ -9,8 +9,6 @@
 import UIKit
 import CryptoCurrency
 
-//var getTickerAll = [Ticker]()
-
 class AddTableViewController: UITableViewController {
     
     let searchController = UISearchController(searchResultsController: nil)
@@ -62,9 +60,6 @@ class AddTableViewController: UITableViewController {
     }
     
     @objc func loadTicker() {
-        self.tableView.setContentOffset(CGPoint(x: 0, y: -self.refreshControl!.frame.size.height - self.topLayoutGuide.length), animated: true)
-        self.refreshControl!.beginRefreshing()
-
         CryptoCurrencyKit.fetchTickers() { [weak self] (response) in
             switch response {
             case .success(let tickers):

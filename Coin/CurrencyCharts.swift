@@ -8,7 +8,7 @@
 
 import Foundation
 
-class Chart: Codable {
+struct Chart: Codable {
     var timestamp:Double
     var item:Double
     
@@ -18,7 +18,7 @@ class Chart: Codable {
     }
 }
 
-class CurrencyCharts: Codable {
+struct CurrencyCharts: Codable {
     var market_cap_by_available_supply:[Chart]
     var price_btc:[Chart]
     var price_usd:[Chart]

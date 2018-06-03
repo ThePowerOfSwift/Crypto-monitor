@@ -31,6 +31,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         masterViewController.coinDelegate = detailViewController
         
+        
         detailViewController.navigationItem.leftItemsSupplementBackButton = true
         detailViewController.navigationItem.leftBarButtonItem = splitViewController.displayModeButtonItem
         
@@ -60,17 +61,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, continue userActivity: NSUserActivity, restorationHandler: @escaping ([Any]?) -> Void) -> Bool {
         if userActivity.activityType == CSSearchableItemActionType {
             if let tickerID = userActivity.userInfo?[CSSearchableItemActivityIdentifier] as? String {
-                let tickerIdDict:[String: String] = ["tickerID": tickerID]
-                NotificationCenter.default.post(name: .openTickerID, object: nil, userInfo: tickerIdDict)
+                guard let masterViewController = CoinTableViewController() else { return true }
+                masterViewController.showTickerID(tickerID: tickerID)
             }
         }
         return true
     }
-
+    
 
 
     func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any] = [:]) -> Bool {
         // When you type customSchemeExample://red in the search bar in Safari
+        
+        guard let masterViewController = CoinTableViewController() else { return true }
         
         if let urlComponents =  NSURLComponents(url: url, resolvingAgainstBaseURL: false) {
             if let queryItems = urlComponents.queryItems as [NSURLQueryItem]?{
@@ -79,11 +82,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                     switch queryItem.name {
                     case "id":
                         if let tickerID = queryItem.value {
-                            let tickerIdDict:[String: String] = ["tickerID": tickerID]
-                            NotificationCenter.default.post(name: .openTickerID, object: nil, userInfo: tickerIdDict)
+                            masterViewController.showTickerID(tickerID: tickerID)
                         }
                     case "add":
-                        showViewControllet(withIdentifier: "CoinTableViewControllerID")
+                        masterViewController.emptyTicker()
                     default:
                         break
                     }
@@ -91,16 +93,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
         }        
         return true
-    }
-
-    func showViewControllet(withIdentifier: String){
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        
-        let detailController = storyboard.instantiateViewController(withIdentifier: withIdentifier)// as! CryptocurrencyInfoViewController
-        (self.window?.rootViewController as! UINavigationController).popToRootViewController(animated: false)
-        self.window?.rootViewController?.dismiss(animated: false, completion: nil)
-        (self.window?.rootViewController as! UINavigationController).pushViewController(detailController, animated: false)
-
     }
 
     func application(_ application: UIApplication,
@@ -135,6 +127,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func applicationWillTerminate(_ application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+    }
+    
+    private func CoinTableViewController() -> CoinTableViewController? {
+        guard let splitViewController = window?.rootViewController as? UISplitViewController,
+            let leftNavController = splitViewController.viewControllers.first as? UINavigationController,
+            let masterViewController = leftNavController.topViewController as? CoinTableViewController else { return nil }
+        return masterViewController
     }
 }
 

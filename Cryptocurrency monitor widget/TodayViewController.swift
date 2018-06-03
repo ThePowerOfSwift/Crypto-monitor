@@ -42,6 +42,7 @@ class TodayViewController: UIViewController, UITableViewDataSource, UITableViewD
     
     func widgetPerformUpdate(completionHandler: (@escaping (NCUpdateResult) -> Void)) {
         var idArray:[String]?
+        
         let userDefaults = UserDefaults(suiteName: "group.mialin.valentyn.crypto.monitor")
         if  let idArrayUserDefaults = userDefaults?.array(forKey: "id") as? [String] {
             idArray = idArrayUserDefaults
@@ -74,6 +75,8 @@ class TodayViewController: UIViewController, UITableViewDataSource, UITableViewD
     
     
     func cryptocurrencyView(ticker: [Ticker]) {
+        print(ticker.count)
+        print(ticker.isEmpty)
         self.emptyButton.isHidden = !ticker.isEmpty
         self.cryptocurrency = ticker
         
