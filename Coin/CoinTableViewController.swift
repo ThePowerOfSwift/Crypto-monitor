@@ -11,14 +11,8 @@ import WatchConnectivity
 import Alamofire
 import CryptoCurrency
 
-
-var watchSession : WCSession?
-
-protocol CoinDelegate: class {
-    func coinSelected(_ ticker: Ticker)
-}
-
 class CoinTableViewController: UITableViewController {
+    weak var watchSession : WCSession?
     
     var tickers:[Ticker]?
     weak var coinDelegate: CoinDelegate?
@@ -50,7 +44,10 @@ class CoinTableViewController: UITableViewController {
         
         tableView.tableFooterView = UIView()
         
-        Review().showReview()
+        #if RELEASE
+          Review.showReview()
+        #endif
+      
         
         // Set up and activate your session early here!
         if(WCSession.isSupported()){
@@ -81,7 +78,7 @@ class CoinTableViewController: UITableViewController {
     
 
 
-    @objc func applicationWillEnterForeground(notification : NSNotification) {
+    @objc private func applicationWillEnterForeground(notification : NSNotification) {
         if self.viewIfLoaded?.window != nil {
             DispatchQueue.global(qos: .utility).async {
                 print("unlock")
@@ -91,21 +88,23 @@ class CoinTableViewController: UITableViewController {
         }
     }
     
-    @IBAction func refresh(_ sender: UIRefreshControl) {
+    @IBAction private func refresh(_ sender: UIRefreshControl) {
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) {
             self.loadTicker()
         }
     }
     
     func showTickerID(tickerID : String) {
-        guard let tickerIndex = tickers?.index(where: {$0.id == tickerID}), tickers != nil else { return }
-        let ticker = tickers![tickerIndex]
+        guard let tickers = tickers else { return }
+        guard let ticker = tickers.first(where: {$0.id == tickerID}) else { return }
+        
         coinDelegate?.coinSelected(ticker)
         
-        let keyStore = NSUbiquitousKeyValueStore ()
-        keyStore.set(ticker, forKey: "selectDefaultItemID")
-        keyStore.synchronize()
-        
+        if let app = UIApplication.shared.delegate as? AppDelegate, let window = app.window {
+            guard let splitViewController = window.rootViewController as? UISplitViewController,
+                let leftNavController = splitViewController.viewControllers.first as? UINavigationController,
+                ((leftNavController.topViewController as? CoinTableViewController) != nil) else { return }
+        }
         if let detailViewController = coinDelegate as? CryptocurrencyInfoViewController,
             let detailNavigationController = detailViewController.navigationController {
             splitViewController?.showDetailViewController(detailNavigationController, sender: nil)
@@ -123,6 +122,77 @@ class CoinTableViewController: UITableViewController {
             if let cacheTicker = SettingsUserDefaults.loadcacheTicker() {
                 self.tickers = cacheTicker
                 self.cryptocurrencyView()
+            }
+        }
+    }
+    
+    private func loadTicker() {
+        DispatchQueue.global(qos: .utility).async {
+            guard let idArray = SettingsUserDefaults.getIdArray() else {
+                self.tickers = [Ticker]()
+                SettingsUserDefaults.setUserDefaults(ticher: [Ticker](), lastUpdate: nil)
+                return
+            }
+            
+            if idArray.isEmpty {
+                self.tickers = [Ticker]()
+                SettingsUserDefaults.setUserDefaults(ticher: [Ticker](), lastUpdate: nil)
+            }
+            else{
+                
+                CryptoCurrencyKit.fetchTickers(idArray: idArray) { [weak self] (response) in
+                    switch response {
+                    case .success(let tickers):
+                        
+                        self?.tickers = tickers
+                        self?.cryptocurrencyView()
+                        SettingsUserDefaults.setUserDefaults(ticher: tickers, idArray: idArray)
+                        self?.updateApplicationContext(id: idArray)
+                        self?.indexItem(ticker: tickers)
+                    case .failure(let error ):
+                        DispatchQueue.main.async {
+                            UIView.animate(withDuration: 0.25) {
+                                self?.refreshControl?.endRefreshing()
+                            }
+                        }
+                        self?.errorAlert(error: error)
+                    }
+                }
+            }
+        }
+    }
+    
+    private func cryptocurrencyView() {
+        DispatchQueue.main.async {
+            UIView.animate(withDuration: 0.25) {
+                self.refreshControl?.endRefreshing()
+            }
+        }
+        
+        let userDefaults = UserDefaults(suiteName: "group.mialin.valentyn.crypto.monitor")
+        if let lastUpdate = userDefaults?.object(forKey: "lastUpdate") as? NSDate {
+            DispatchQueue.main.async {
+                self.refreshControl?.attributedTitle = NSAttributedString(string: self.dateToString(date: lastUpdate))
+            }
+        }
+        
+        DispatchQueue.main.async {
+            self.tableView.reloadData()
+            
+            if UIDevice.current.userInterfaceIdiom == .pad,
+                !self.selectDefaultItem {
+                guard self.tickers != nil && self.tickers?.isEmpty != true else { return }
+                
+                let keyStore = NSUbiquitousKeyValueStore()
+                if let tickerID = keyStore.object(forKey: "selectDefaultItemID") as? String,
+                    let index = self.tickers?.index(where: {$0.id == tickerID})
+                {
+                    self.coinDelegate?.coinSelected(self.tickers![index])
+                }
+                else{
+                    self.coinDelegate?.coinSelected(self.tickers![0])
+                }
+                self.selectDefaultItem = true
             }
         }
     }
@@ -194,18 +264,19 @@ class CoinTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath){
-        if tickers != nil {
-            let ticker = tickers![indexPath.row]
-            coinDelegate?.coinSelected(ticker)
-            
+        guard let tickers = tickers else { return }
+        let ticker = tickers[indexPath.row]
+        coinDelegate?.coinSelected(ticker)
+        
+        if let detailViewController = coinDelegate as? CryptocurrencyInfoViewController,
+            let detailNavigationController = detailViewController.navigationController {
+            splitViewController?.showDetailViewController(detailNavigationController, sender: nil)
+        }
+        
+        DispatchQueue.global(qos: .utility).async {
             let keyStore = NSUbiquitousKeyValueStore ()
             keyStore.set(ticker.id, forKey: "selectDefaultItemID")
             keyStore.synchronize()
-            
-            if let detailViewController = coinDelegate as? CryptocurrencyInfoViewController,
-                let detailNavigationController = detailViewController.navigationController {
-                splitViewController?.showDetailViewController(detailNavigationController, sender: nil)
-            }
         }
     }
     
@@ -251,6 +322,8 @@ class CoinTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
         DispatchQueue.global(qos: .utility).async {
+            guard self.tickers != nil else { return }
+            
             let keyStore = NSUbiquitousKeyValueStore()
             if var idArray = keyStore.array(forKey: "id") as? [String] {
                 if let index = idArray.index(of: self.tickers![sourceIndexPath.row].id){
@@ -265,82 +338,14 @@ class CoinTableViewController: UITableViewController {
                     keyStore.synchronize()
                     
                     self.updateApplicationContext(id: idArray)
-                    
                 }
             }
         }
     }
     
-    private func cryptocurrencyView() {
-        DispatchQueue.main.async {
-            UIView.animate(withDuration: 0.25) {
-                self.refreshControl?.endRefreshing()
-            }
-        }
-
-        let userDefaults = UserDefaults(suiteName: "group.mialin.valentyn.crypto.monitor")
-        if let lastUpdate = userDefaults?.object(forKey: "lastUpdate") as? NSDate {
-            DispatchQueue.main.async {
-                self.refreshControl?.attributedTitle = NSAttributedString(string: self.dateToString(date: lastUpdate))
-            }
-        }
-        
-        DispatchQueue.main.async {
-            self.tableView.reloadData()
-
-            if UIDevice.current.userInterfaceIdiom == .pad,
-                !self.selectDefaultItem {
-                guard self.tickers != nil && self.tickers?.isEmpty != true else { return }
-                
-                let keyStore = NSUbiquitousKeyValueStore()
-                if let tickerID = keyStore.object(forKey: "selectDefaultItemID") as? String,
-                    let index = self.tickers?.index(where: {$0.id == tickerID})
-                {
-                    self.coinDelegate?.coinSelected(self.tickers![index])
-                }
-                else{
-                    self.coinDelegate?.coinSelected(self.tickers![0])
-                }
-                self.selectDefaultItem = true
-            }
-        }
-    }
     
-    private func loadTicker() {
-        DispatchQueue.global(qos: .utility).async {
-            guard let idArray = SettingsUserDefaults.getIdArray() else {
-                self.tickers = [Ticker]()
-                SettingsUserDefaults.setUserDefaults(ticher: [Ticker](), lastUpdate: nil)
-                return
-            }
-            
-            if idArray.isEmpty {
-                self.tickers = [Ticker]()
-                SettingsUserDefaults.setUserDefaults(ticher: [Ticker](), lastUpdate: nil)
-            }
-            else{
-                
-                CryptoCurrencyKit.fetchTickers(idArray: idArray) { [weak self] (response) in
-                    switch response {
-                    case .success(let tickers):
-                        
-                        self?.tickers = tickers
-                        self?.cryptocurrencyView()
-                        SettingsUserDefaults.setUserDefaults(ticher: tickers, idArray: idArray)
-                        self?.updateApplicationContext(id: idArray)
-                        self?.indexItem(ticker: tickers)
-                    case .failure(let error ):
-                        DispatchQueue.main.async {
-                            UIView.animate(withDuration: 0.25) {
-                                self?.refreshControl?.endRefreshing()
-                            }
-                        }
-                        self?.errorAlert(error: error)
-                    }
-                }
-            }
-        }
-    }
+    
+  
     
     func fetch(_ completion: () -> Void) {
         loadTicker()
@@ -366,7 +371,7 @@ class CoinTableViewController: UITableViewController {
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "Setting"), style: UIBarButtonItemStyle.plain, target: self, action: #selector(settingsShow))
     }
 
-    @objc func reload(_ sender:UIButton) {
+    @objc private func reload(_ sender:UIButton) {
         loadTicker()
     }
     
@@ -378,14 +383,14 @@ class CoinTableViewController: UITableViewController {
         }
     }
  
-    @objc func settingsShow(_ sender:UIButton) {
+    @objc private func settingsShow(_ sender:UIButton) {
         self.performSegue(withIdentifier: "settingSegue", sender: nil)
     }
     
-    @objc func addShow(_ sender:UIButton) {
+    @objc private func addShow(_ sender:UIButton) {
         self.performSegue(withIdentifier: "add", sender: nil)
     }
-
+    
     
     private func dateToString(date : NSDate) -> String {
         let formatter = DateFormatter()
@@ -396,28 +401,25 @@ class CoinTableViewController: UITableViewController {
     
     //MARK: - iCloud sync
     @objc func ubiquitousKeyValueStoreDidChange(notification: NSNotification) {
-        DispatchQueue.global(qos: .background).async {
-            let keyStore = NSUbiquitousKeyValueStore ()
-            let idKeyStore = keyStore.array(forKey: "id") as? [String]
-            let userDefaults = UserDefaults(suiteName: "group.mialin.valentyn.crypto.monitor")
-            let idUserDefaults = userDefaults?.array(forKey: "id") as? [String]
-            if idKeyStore != nil && idUserDefaults != nil {
-                if idKeyStore! != idUserDefaults! {
-                    self.loadTicker()
-                    print("************loadTicker ************")
-                }
-                else{
-                    self.loadCache()
-                    print("************ loadCache ************ ")
-                }
+        let keyStore = NSUbiquitousKeyValueStore ()
+        let idKeyStore = keyStore.array(forKey: "id") as? [String]
+        let userDefaults = UserDefaults(suiteName: "group.mialin.valentyn.crypto.monitor")
+        let idUserDefaults = userDefaults?.array(forKey: "id") as? [String]
+        if idKeyStore != nil && idUserDefaults != nil {
+            if idKeyStore! != idUserDefaults! {
+                self.loadTicker()
+                print("************loadTicker ************")
             }
-            
-            if let idKeyStore = idKeyStore {
-                self.updateApplicationContext(id: idKeyStore)
+            else{
+              //  self.loadCache()
+                print("************ loadCache ************ ")
             }
-            
-            print("iCloud key-value-store change detected")
         }
+        
+        if let idKeyStore = idKeyStore {
+            self.updateApplicationContext(id: idKeyStore)
+        }
+        print("iCloud key-value-store change detected")
     }
 }
 

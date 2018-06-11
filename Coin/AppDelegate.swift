@@ -16,20 +16,21 @@ import StoreKit
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
+    weak var masterViewController: CoinTableViewController?
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         
         //SplitViewController
         guard let splitViewController = window?.rootViewController as? UISplitViewController,
             let leftNavController = splitViewController.viewControllers.first as? UINavigationController,
-            let masterViewController = leftNavController.topViewController as? CoinTableViewController,
             let rightNavController = splitViewController.viewControllers.last as? UINavigationController,
             let detailViewController = rightNavController.topViewController as? CryptocurrencyInfoViewController
             else { fatalError() }
         
         splitViewController.preferredDisplayMode = .allVisible
         
-        masterViewController.coinDelegate = detailViewController
+        self.masterViewController = leftNavController.topViewController as? CoinTableViewController
+        self.masterViewController?.coinDelegate = detailViewController
         
         
         detailViewController.navigationItem.leftItemsSupplementBackButton = true
@@ -49,7 +50,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Load IAP
         IAPHandler.shared.requestProducts()
         
-        Review().IncrementAppRuns()
+        Review.IncrementAppRuns()
 
         // NetworkActivityIndicatorManager
         NetworkActivityIndicatorManager.shared.isEnabled = true
@@ -61,8 +62,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, continue userActivity: NSUserActivity, restorationHandler: @escaping ([Any]?) -> Void) -> Bool {
         if userActivity.activityType == CSSearchableItemActionType {
             if let tickerID = userActivity.userInfo?[CSSearchableItemActivityIdentifier] as? String {
-                guard let masterViewController = CoinTableViewController() else { return true }
-                masterViewController.showTickerID(tickerID: tickerID)
+                let keyStore = NSUbiquitousKeyValueStore ()
+                keyStore.set(tickerID, forKey: "selectDefaultItemID")
+                keyStore.synchronize()
+               // guard let masterViewController = CoinTableViewController() else { return true }
+                self.masterViewController?.showTickerID(tickerID: tickerID)
             }
         }
         return true
@@ -73,7 +77,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any] = [:]) -> Bool {
         // When you type customSchemeExample://red in the search bar in Safari
         
-        guard let masterViewController = CoinTableViewController() else { return true }
+     //   guard let masterViewController = CoinTableViewController() else { return true }
         
         if let urlComponents =  NSURLComponents(url: url, resolvingAgainstBaseURL: false) {
             if let queryItems = urlComponents.queryItems as [NSURLQueryItem]?{
@@ -82,10 +86,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                     switch queryItem.name {
                     case "id":
                         if let tickerID = queryItem.value {
-                            masterViewController.showTickerID(tickerID: tickerID)
+                            let keyStore = NSUbiquitousKeyValueStore ()
+                            keyStore.set(tickerID, forKey: "selectDefaultItemID")
+                            keyStore.synchronize()
+                            
+                            self.masterViewController?.showTickerID(tickerID: tickerID)
                         }
                     case "add":
-                        masterViewController.emptyTicker()
+                        self.masterViewController?.emptyTicker()
                     default:
                         break
                     }
@@ -129,11 +137,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
     
-    private func CoinTableViewController() -> CoinTableViewController? {
-        guard let splitViewController = window?.rootViewController as? UISplitViewController,
-            let leftNavController = splitViewController.viewControllers.first as? UINavigationController,
-            let masterViewController = leftNavController.topViewController as? CoinTableViewController else { return nil }
-        return masterViewController
-    }
+//    private func CoinTableViewController() -> CoinTableViewController? {
+//        guard let splitViewController = window?.rootViewController as? UISplitViewController,
+//            let leftNavController = splitViewController.viewControllers.first as? UINavigationController,
+//            let masterViewController = leftNavController.topViewController as? CoinTableViewController else { return nil }
+//        return masterViewController
+//    }
 }
 

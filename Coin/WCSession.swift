@@ -37,7 +37,7 @@ extension CoinTableViewController: WCSessionDelegate {
                     let currentCurrency = SettingsUserDefaults.getCurrentCurrency().rawValue
                     
                     let context = ["id" : id, "percentChange" : percentChange, "CurrentCurrency" : currentCurrency] as [String : Any]
-                    try watchSession?.updateApplicationContext(context)
+                    try self.watchSession?.updateApplicationContext(context)
                     
                 } catch let error as NSError {
                     print("Error: \(error.description)")

@@ -53,50 +53,46 @@ class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
         self.navigationItem.leftItemsSupplementBackButton = true
         self.navigationItem.leftBarButtonItem = splitViewController?.displayModeButtonItem
         
-        if let split = self.splitViewController {
-            let controllers = split.viewControllers
-            self.coinTableViewController = controllers[controllers.count - 1] as? CoinTableViewController
-        }
-        
-        self.coinTableViewController?.coinDelegate = self
-        
-        NotificationCenter.default.addObserver(self, selector: #selector(applicationWillEnterForeground), name:NSNotification.Name.UIApplicationWillEnterForeground, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(newCurrentCurrency), name: .newCurrentCurrency, object: nil)
-        
         //Notification
-        let keyStore = NSUbiquitousKeyValueStore()
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(
-                                                self.ubiquitousKeyValueStoreDidChange),
-                                               name: NSUbiquitousKeyValueStore.didChangeExternallyNotification,
-                                               object: keyStore)
-        
+        NotificationCenter.default.addObserver(self, selector: #selector(newCurrentCurrency), name: .newCurrentCurrency, object: nil)
+
         // percent change view
-        oneHourChangeView.layer.cornerRadius = 3
-        oneHourChangeView.layer.masksToBounds = true
-        dayChangeView.layer.cornerRadius = 3
-        dayChangeView.layer.masksToBounds = true
-        weekChangeView.layer.cornerRadius = 3
-        weekChangeView.layer.masksToBounds = true
+        oneHourChangeView?.layer.cornerRadius = 3
+        oneHourChangeView?.layer.masksToBounds = true
+        dayChangeView?.layer.cornerRadius = 3
+        dayChangeView?.layer.masksToBounds = true
+        weekChangeView?.layer.cornerRadius = 3
+        weekChangeView?.layer.masksToBounds = true
         
-        lineChartView.isHidden = true
-        lineChartView.delegate = self
-        lineChartView.chartDescription?.enabled = false
-        lineChartView.gridBackgroundColor = UIColor.darkGray
-        lineChartView.noDataText = NSLocalizedString("No data load", comment: "lineChartView noDataText")
+        lineChartView?.isHidden = true
+        lineChartView?.delegate = self
+        lineChartView?.chartDescription?.enabled = false
+        lineChartView?.gridBackgroundColor = UIColor.darkGray
+        lineChartView?.noDataText = NSLocalizedString("No data load", comment: "lineChartView noDataText")
         
-        lineChartView.leftAxis.enabled = false
-        lineChartView.legend.enabled = false
-        lineChartView.scaleYEnabled = false
+        lineChartView?.leftAxis.enabled = false
+        lineChartView?.legend.enabled = false
+        lineChartView?.scaleYEnabled = false
         
-        selectSegmentedControl.selectedSegmentIndex = Int(keyStore.longLong(forKey: "typeChart"))
-        zoomSegmentedControl.selectedSegmentIndex = Int(keyStore.longLong(forKey: "zoomChart"))
+        let keyStore = NSUbiquitousKeyValueStore()
+        selectSegmentedControl?.selectedSegmentIndex = Int(keyStore.longLong(forKey: "typeChart"))
+        zoomSegmentedControl?.selectedSegmentIndex = Int(keyStore.longLong(forKey: "zoomChart"))
         
-        paymentButton.imageView?.contentMode = .scaleAspectFit
-        paymentButton.setImage(#imageLiteral(resourceName: "changellyLogo"), for: .normal)
-        
-         viewCryptocurrencyInfo()
-           loadTicker()
+        paymentButton?.imageView?.contentMode = .scaleAspectFit
+        paymentButton?.setImage(#imageLiteral(resourceName: "changellyLogo"), for: .normal)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        lineChartView?.clear()
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        ChartRequest.cancelRequest { _ in }
+    }
+
+    @objc func newCurrentCurrency(notification : NSNotification) {
+        loadTicker()
     }
     
     private func getMinDateCharts() {
@@ -137,39 +133,7 @@ class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
         })
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(true)
-      //  viewCryptocurrencyInfo()
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(true)
-       // loadTicker()
-    //    loadlineView()
-    }
-    
-    override func viewDidDisappear(_ animated: Bool) {
-        ChartRequest.cancelRequest { _ in
-        }
-    }
-    
-    //Unlock
-    @objc func applicationWillEnterForeground(notification : NSNotification) {
-        print("applicationWillEnterForeground")
-//        loadTicker()
-//        loadlineView()
-    }
-    
-    @objc func newCurrentCurrency(notification : NSNotification) {
-        loadTicker()
-    }
-    
-    //iCloud Value Store
-    @objc func ubiquitousKeyValueStoreDidChange(notification: NSNotification) {
-        print("ubiquitousKeyValueStoreDidChange")
-    //    loadTicker()
-    //    loadlineView()
-    }
+
     
     func zoomSelectedSegment(index: Int){
         var index = index
@@ -184,7 +148,7 @@ class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
         }
     }
     
-    func loadTicker() {
+    private func loadTicker() {
         guard let ticker = ticker else { return }
         
         startRefreshActivityIndicator()
@@ -200,10 +164,7 @@ class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
                 if let ticker = tickers.first(where: {$0.id == ticker.id}) {
                     self?.ticker = ticker
                 }
-                
-                DispatchQueue.main.async() {
-                    self?.viewCryptocurrencyInfo()
-                }
+                self?.viewCryptocurrencyInfo()
                 print("success")
             case .failure(let error):
                 self?.errorAlert(error: error)
@@ -212,47 +173,48 @@ class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
         }
     }
     
-    func viewCryptocurrencyInfo() {
-        refreshBarButtonItem()
-
-        
-        if let ticker = ticker {
+    private func viewCryptocurrencyInfo() {
+        DispatchQueue.main.async() {
+            self.refreshBarButtonItem()
             
-            // title
-            self.navigationItem.title = ticker.symbol
-            
-            let money = SettingsUserDefaults.getCurrentCurrency()
-            
-            nameLabel?.text = ticker.name
-
-            priceUsdLabel?.text = ticker.priceToString(for: .usd)
-            priceBtcLabel?.text = ticker.priceBtcToString()
-            
-            if money == .usd || money == .btc {
-                priceConvertLabel?.text = ""
+            if let ticker = self.ticker {
+                
+                // title
+                self.navigationItem.title = ticker.symbol
+                
+                let money = SettingsUserDefaults.getCurrentCurrency()
+                
+                self.nameLabel?.text = ticker.name
+                
+                self.priceUsdLabel?.text = ticker.priceToString(for: .usd)
+                self.priceBtcLabel?.text = ticker.priceBtcToString()
+                
+                if money == .usd || money == .btc {
+                    self.priceConvertLabel?.text = ""
+                }
+                else{
+                    self.priceConvertLabel?.text = ticker.priceToString(for: money)
+                }
+                
+                // 1h
+                self.oneHourChangeLabel?.text = ticker.percentChange1h != nil ? "\(ticker.percentChange1h!)%" : "-"
+                self.backgroundColorView(view:  self.oneHourChangeView, percentChange: ticker.percentChange1h)
+                // 24h
+                self.dayChangeLabel?.text = ticker.percentChange24h != nil ? "\(ticker.percentChange24h!)%" : "-"
+                self.backgroundColorView(view:  self.dayChangeView, percentChange: ticker.percentChange24h)
+                // 7d
+                self.weekChangeLabel?.text = ticker.percentChange7d != nil ? "\(ticker.percentChange7d!)%" : "-"
+                self.backgroundColorView(view:  self.weekChangeView, percentChange: ticker.percentChange7d)
+                
+                self.rankLabel?.text = String(ticker.rank)
+                
+                self.marketcapLabel?.text = ticker.marketCapToString(for: money, maximumFractionDigits: 10)
+                self.volumeLabel?.text = ticker.volumeToString(for: money, maximumFractionDigits: 10)
             }
-            else{
-               priceConvertLabel?.text = ticker.priceToString(for: money)
-            }
-            
-            // 1h
-            oneHourChangeLabel?.text = ticker.percentChange1h != nil ? "\(ticker.percentChange1h!)%" : "-"
-            backgroundColorView(view: oneHourChangeView, percentChange: ticker.percentChange1h)
-            // 24h
-            dayChangeLabel?.text = ticker.percentChange24h != nil ? "\(ticker.percentChange24h!)%" : "-"
-            backgroundColorView(view: dayChangeView, percentChange: ticker.percentChange24h)
-            // 7d
-            weekChangeLabel?.text = ticker.percentChange7d != nil ? "\(ticker.percentChange7d!)%" : "-"
-            backgroundColorView(view: weekChangeView, percentChange: ticker.percentChange7d)
-            
-            rankLabel?.text = String(ticker.rank)
-            
-            marketcapLabel?.text = ticker.marketCapToString(for: money, maximumFractionDigits: 10)
-            volumeLabel?.text = ticker.volumeToString(for: money, maximumFractionDigits: 10)
         }
     }
     
-    func backgroundColorView(view: UIView?, percentChange: Double?) {
+    private func backgroundColorView(view: UIView?, percentChange: Double?) {
         guard let view = view else {
             return
         }
@@ -270,7 +232,7 @@ class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
     }
     
     
-    func loadlineView() {
+    private func loadlineView() {
         guard let ticker = ticker else { return }
         guard self.minDate != nil else { self.lineView();  return }
         
@@ -292,41 +254,41 @@ class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
         let dateFormatter = DateFormatter()
         dateFormatter.locale = Locale.current
         
-        switch zoomSegmentedControl.selectedSegmentIndex {
+        switch zoomSegmentedControl?.selectedSegmentIndex {
         case 0:
             of = userCalendar.date(byAdding: .day, value: -1, to: Date())! as NSDate
             xAxis?.labelCount = 5
             dateFormatter.setLocalizedDateFormatFromTemplate("HH:mm")
-            lineChartView.viewPortHandler.setMaximumScaleX(4.0)
+            lineChartView?.viewPortHandler.setMaximumScaleX(4.0)
         case 1:
             of = userCalendar.date(byAdding: .weekOfYear, value: -1, to: Date())! as NSDate
             xAxis?.labelCount = 7
             dateFormatter.setLocalizedDateFormatFromTemplate("dd.MM")
-            lineChartView.viewPortHandler.setMaximumScaleX(1.5)
+            lineChartView?.viewPortHandler.setMaximumScaleX(1.5)
         case 2:
             of = userCalendar.date(byAdding: .month, value: -1, to: Date())! as NSDate
             xAxis?.labelCount = 5
             dateFormatter.setLocalizedDateFormatFromTemplate("dd.MM")
-            lineChartView.viewPortHandler.setMaximumScaleX(1.5)
+            lineChartView?.viewPortHandler.setMaximumScaleX(1.5)
         case 3:
             of = userCalendar.date(byAdding: .month, value: -3, to: Date())! as NSDate
             xAxis?.labelCount = 5
             dateFormatter.setLocalizedDateFormatFromTemplate("dd.MM")
-            lineChartView.viewPortHandler.setMaximumScaleX(1.5)
+            lineChartView?.viewPortHandler.setMaximumScaleX(1.5)
         case 4:
             of = userCalendar.date(byAdding: .year, value: -1, to: Date())! as NSDate
             xAxis?.labelCount = 6
             dateFormatter.setLocalizedDateFormatFromTemplate("MMM")
-            lineChartView.viewPortHandler.setMaximumScaleX(1.75)
+            lineChartView?.viewPortHandler.setMaximumScaleX(1.75)
         case 5:
             of = Calendar.current.date(from: userCalendar.dateComponents([.year], from: Date()))! as NSDate
             xAxis?.labelCount = 6
             dateFormatter.setLocalizedDateFormatFromTemplate("MMM")
-            lineChartView.viewPortHandler.setMaximumScaleX(1.0)
+            lineChartView?.viewPortHandler.setMaximumScaleX(1.0)
         case 6:
             xAxis?.labelCount = 5
             dateFormatter.setLocalizedDateFormatFromTemplate("MM.yy")
-            lineChartView.viewPortHandler.setMaximumScaleX(3.0)
+            lineChartView?.viewPortHandler.setMaximumScaleX(3.0)
         default:
             break
         }
@@ -339,7 +301,7 @@ class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
                 if let currencyCharts = currencyCharts {
                     self?.currencyCharts = currencyCharts
                     DispatchQueue.main.async() {
-                        self?.lineChartView.zoom(scaleX: 0.0, scaleY: 0.0, x: 0.0, y: 0.0)
+                        self?.lineChartView?.zoom(scaleX: 0.0, scaleY: 0.0, x: 0.0, y: 0.0)
                         self?.lineView()
                     }
                 }
@@ -351,8 +313,8 @@ class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
         
     }
     
-    func lineView() {
-        lineChartView.isHidden = false
+    private func lineView() {
+        lineChartView?.isHidden = false
         lineChartActivityIndicator.isHidden = true
         LineChartErrorView.isHidden = true
         
@@ -391,10 +353,10 @@ class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
                 set1.fillAlpha = 1.0
                 set1.drawFilledEnabled = true // Draw the Gradient
                 
-                lineChartView.animate(yAxisDuration: 2.0)
+                lineChartView?.animate(yAxisDuration: 2.0)
             }
             else{
-                lineChartView.animate(xAxisDuration: 2.0)
+                lineChartView?.animate(xAxisDuration: 2.0)
             }
             
             //3 - create an array to store our LineChartDataSets
@@ -406,11 +368,11 @@ class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
             //  data.setValueTextColor(UIColor.white)
             
             //5 - finally set our data
-            self.lineChartView.data = data
+            self.lineChartView?.data = data
         }
     }
     
-    func refreshBarButtonItem(){
+    private func refreshBarButtonItem(){
         let refreshBarButton = UIBarButtonItem.init(barButtonSystemItem: .refresh, target: self, action: #selector(refresh))
         self.navigationItem.rightBarButtonItem = refreshBarButton
     }
@@ -420,7 +382,7 @@ class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
         loadlineView()
     }
     
-    func startRefreshActivityIndicator() {
+    private func startRefreshActivityIndicator() {
         let activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView.init(activityIndicatorStyle: .gray)
         activityIndicator.color = UIColor(red:0.00, green:0.48, blue:1.00, alpha:1.0)
         let refreshBarButton = UIBarButtonItem(customView: activityIndicator)
@@ -430,14 +392,14 @@ class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
     
     @IBAction func selectIindexChanged(_ sender: UISegmentedControl) {
         let keyStore = NSUbiquitousKeyValueStore ()
-        keyStore.set(selectSegmentedControl.selectedSegmentIndex, forKey: "typeChart")
+        keyStore.set(selectSegmentedControl?.selectedSegmentIndex, forKey: "typeChart")
         keyStore.synchronize()
         lineView()
     }
     
     @IBAction func indexChanged(_ sender: UISegmentedControl) {
         let keyStore = NSUbiquitousKeyValueStore ()
-        keyStore.set(zoomSegmentedControl.selectedSegmentIndex, forKey: "zoomChart")
+        keyStore.set(zoomSegmentedControl?.selectedSegmentIndex, forKey: "zoomChart")
         keyStore.synchronize()
         loadlineView()
     }

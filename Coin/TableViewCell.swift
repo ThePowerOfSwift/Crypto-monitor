@@ -24,8 +24,6 @@ class CoinTableViewCell: UITableViewCell {
 }
 
 class HeaderTableViewCell: UITableViewCell {
-    
     @IBOutlet weak var dataCurrencyLabel: UILabel!
     @IBOutlet weak var priceLabel: UILabel!
-    
 }

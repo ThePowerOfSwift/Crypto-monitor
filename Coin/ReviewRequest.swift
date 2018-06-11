@@ -14,10 +14,10 @@ import StoreKit
 
 class Review {
     
-    private let runIncrementerSetting = "numberOfRuns"  // UserDefauls dictionary key where we store number of runs
-    private let minimumRunCount = 5                     // Minimum number of runs that we should have until we ask for review
+    static private let runIncrementerSetting = "numberOfRuns"  // UserDefauls dictionary key where we store number of runs
+    static private let minimumRunCount = 5                     // Minimum number of runs that we should have until we ask for review
     
-    public func IncrementAppRuns() {                   // counter for number of runs for the app. You can call this from App Delegate
+    static public func IncrementAppRuns() {                   // counter for number of runs for the app. You can call this from App Delegate
         
         let usD = UserDefaults()
         let runs = getRunCounts() + 1
@@ -26,7 +26,7 @@ class Review {
         
     }
     
-    public func showReview() {
+    static public func showReview() {
         
         let runs = getRunCounts()
         print("Show Review")
@@ -44,7 +44,7 @@ class Review {
         }
     }
     
-    private func getRunCounts () -> Int {               // Reads number of runs from UserDefaults and returns it.
+    static private func getRunCounts () -> Int {               // Reads number of runs from UserDefaults and returns it.
         
         let usD = UserDefaults()
         let savedRuns = usD.value(forKey: runIncrementerSetting)
