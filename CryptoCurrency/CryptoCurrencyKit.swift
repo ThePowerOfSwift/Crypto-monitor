@@ -99,12 +99,10 @@ extension CryptoCurrencyKit {
     }
     
     static func requestA<T>(urlRequest: URLRequest, idArray: [String]?, response: ((_ r: Response<T>) -> Void)?) {
-        print("requestA")
+
         Alamofire.SessionManager.default.request(urlRequest).validate().responseData { res in
             switch res.result {
             case .success(let responseData):
-                print("Validation Successful getTicker2")
-                
                 let decoder = JSONDecoder()
                 do {
                     let objects = try decoder.decode([T].self, from: responseData)
