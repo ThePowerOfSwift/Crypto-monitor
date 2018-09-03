@@ -32,7 +32,7 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate {
         }
         
         if let currentCurrency = applicationContext["CurrentCurrency"] as? String {
-            SettingsUserDefaults.setCurrentCurrency(money: CryptoCurrencyKit.Money(rawValue: currentCurrency)!)
+            SettingsUserDefaults.setCurrentCurrency(money: Money(rawValue: currentCurrency)!)
         }
         
         if let id = applicationContext["id"] as? [String] {
@@ -85,7 +85,7 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate {
 
     private func viewCache() {
         if let cacheTicker = SettingsUserDefaults.loadcacheTicker() {
-            self.tableView(ticker: cacheTicker)
+            self.tableViewLoad(ticker: cacheTicker)
         }
     }
     
@@ -93,13 +93,17 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate {
         print("load")
         if let idArray = UserDefaults().array(forKey: "id") as? [String],  !idArray.isEmpty {
                 CryptoCurrencyKit.fetchTickers(idArray: idArray) { [weak self] (response) in
+                    guard let strongSelf = self else {
+                        return
+                    }
+                    
                     switch response {
                     case .success(let tickers):
                         SettingsUserDefaults.setUserDefaults(ticher: tickers)
                         DispatchQueue.main.async() {
-                            self?.tableView(ticker: tickers)
-                            self?.reloadTimeline()
+                            strongSelf.tableViewLoad(ticker: tickers)
                         }
+                        strongSelf.reloadTimeline()
                         print("success")
                     case .failure(let error):
                         print("failure \(error.localizedDescription)")
@@ -113,9 +117,14 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate {
             cryptocurrencyTable.setHidden(true)
             emptyGroup.setHidden(false)
         }
-        WKExtension.shared().scheduleBackgroundRefresh(withPreferredDate: Date(timeIntervalSinceNow: timeIntervalRefresh), userInfo: nil) { (error: Error?) in
-            if let error = error {
-                print("Error occurred while scheduling background refresh: \(error.localizedDescription)")
+        
+        let fireDate = Date(timeIntervalSinceNow: 60 * 45)
+        // optional, any SecureCoding compliant data can be passed here
+        let userInfo = ["reason" : "background update"] as NSDictionary
+        
+        WKExtension.shared().scheduleBackgroundRefresh(withPreferredDate: fireDate, userInfo: userInfo) { (error) in
+            if (error == nil) {
+                print("successfully scheduled background task, use the crown to send the app to the background and wait for handle:BackgroundTasks to fire.")
             }
         }
     }
@@ -125,7 +134,7 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate {
         complicationServer.activeComplications?.forEach(complicationServer.reloadTimeline)
     }
     
-    private func tableView(ticker: [Ticker])  {
+    private func tableViewLoad(ticker: [Ticker]) {
         if !ticker.isEmpty{
             cryptocurrencyTable.setHidden(false)
             emptyGroup.setHidden(true)
@@ -141,8 +150,6 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate {
             emptyGroup.setHidden(false)
         }
     }
-    
-    
     
     //MARK: Actions
     @IBAction func oneHourSelected() {

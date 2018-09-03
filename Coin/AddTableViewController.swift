@@ -34,7 +34,7 @@ class AddTableViewController: UITableViewController {
         searchController.searchBar.keyboardType = .asciiCapable
         
         // Setting refresh control
-        self.refreshControl?.addTarget(self, action: #selector(loadTicker), for: UIControlEvents.valueChanged)
+        self.refreshControl?.addTarget(self, action: #selector(loadTicker), for: UIControl.Event.valueChanged)
         
         if let idArrayUserDefaults = SettingsUserDefaults.getIdArray(){
             self.idArray = idArrayUserDefaults
@@ -131,7 +131,7 @@ class AddTableViewController: UITableViewController {
                 let messageString = ticker.name + NSLocalizedString(" has already been added to favorites.", comment: "Title message")
                 
                 let alert = UIAlertController(title: NSLocalizedString("Added", comment: "Title alert"), message: messageString, preferredStyle: .alert)
-                alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler: nil))
+                alert.addAction(UIAlertAction(title: "Ok", style: UIAlertAction.Style.default, handler: nil))
                 self.present(alert, animated: true, completion: nil)
             }
         }
@@ -150,7 +150,7 @@ class AddTableViewController: UITableViewController {
     func errorAlert(error: Error) {
         if (error as NSError).code != -999 {
             let alert = UIAlertController(title: nil, message: error.localizedDescription, preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler: nil))
+            alert.addAction(UIAlertAction(title: "Ok", style: UIAlertAction.Style.default, handler: nil))
             self.present(alert, animated: true, completion: nil)
         }
     }

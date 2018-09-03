@@ -44,7 +44,8 @@ class Review {
         }
     }
     
-    static private func getRunCounts () -> Int {               // Reads number of runs from UserDefaults and returns it.
+    static private func getRunCounts () -> Int {
+        // Reads number of runs from UserDefaults and returns it.
         
         let usD = UserDefaults()
         let savedRuns = usD.value(forKey: runIncrementerSetting)

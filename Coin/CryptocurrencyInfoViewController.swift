@@ -25,7 +25,6 @@ class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var priceUsdLabel: UILabel!
     
-    
     @IBOutlet weak var oneHourChangeView: UIView!
     @IBOutlet weak var oneHourChangeLabel: UILabel!
     @IBOutlet weak var dayChangeView: UIView!
@@ -47,6 +46,7 @@ class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
     var minDate: Date?
     var coinTableViewController: CoinTableViewController? = nil
     
+    //MARK: - LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -55,8 +55,30 @@ class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
         
         //Notification
         NotificationCenter.default.addObserver(self, selector: #selector(newCurrentCurrency), name: .newCurrentCurrency, object: nil)
+        
+        let keyStore = NSUbiquitousKeyValueStore()
+        selectSegmentedControl?.selectedSegmentIndex = Int(keyStore.longLong(forKey: "typeChart"))
+        zoomSegmentedControl?.selectedSegmentIndex = Int(keyStore.longLong(forKey: "zoomChart"))
+        
+        paymentButton?.imageView?.contentMode = .scaleAspectFit
+        paymentButton?.setImage(#imageLiteral(resourceName: "changellyLogo"), for: .normal)
+    }
+ 
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        self.navigationItem.title = ticker?.symbol
+        lineChartView?.clear()
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        ChartRequest.cancelRequest { _ in }
+    }
 
-        // percent change view
+    @objc func newCurrentCurrency(notification : NSNotification) {
+        loadTicker()
+    }
+    
+    private func percentChangeView() {
         oneHourChangeView?.layer.cornerRadius = 3
         oneHourChangeView?.layer.masksToBounds = true
         dayChangeView?.layer.cornerRadius = 3
@@ -73,26 +95,6 @@ class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
         lineChartView?.leftAxis.enabled = false
         lineChartView?.legend.enabled = false
         lineChartView?.scaleYEnabled = false
-        
-        let keyStore = NSUbiquitousKeyValueStore()
-        selectSegmentedControl?.selectedSegmentIndex = Int(keyStore.longLong(forKey: "typeChart"))
-        zoomSegmentedControl?.selectedSegmentIndex = Int(keyStore.longLong(forKey: "zoomChart"))
-        
-        paymentButton?.imageView?.contentMode = .scaleAspectFit
-        paymentButton?.setImage(#imageLiteral(resourceName: "changellyLogo"), for: .normal)
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(true)
-        lineChartView?.clear()
-    }
-    
-    override func viewDidDisappear(_ animated: Bool) {
-        ChartRequest.cancelRequest { _ in }
-    }
-
-    @objc func newCurrentCurrency(notification : NSNotification) {
-        loadTicker()
     }
     
     private func getMinDateCharts() {
@@ -133,9 +135,7 @@ class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
         })
     }
     
-
-    
-    func zoomSelectedSegment(index: Int){
+    private func zoomSelectedSegment(index: Int){
         var index = index
         
         if self.zoomSegmentedControl.selectedSegmentIndex >= index && self.zoomSegmentedControl.selectedSegmentIndex <= 4 {
@@ -157,18 +157,18 @@ class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
         guard let idArray = keyStore.array(forKey: "id") as? [String] else { return }
         
         CryptoCurrencyKit.fetchTickers(idArray: idArray) { [weak self] (response) in
+            guard let strongSelf = self else { return }
+            
             switch response {
             case .success(let tickers):
                 SettingsUserDefaults.setUserDefaults(ticher: tickers)
                 
                 if let ticker = tickers.first(where: {$0.id == ticker.id}) {
-                    self?.ticker = ticker
+                    strongSelf.ticker = ticker
                 }
-                self?.viewCryptocurrencyInfo()
-                print("success")
+                strongSelf.viewCryptocurrencyInfo()
             case .failure(let error):
-                self?.errorAlert(error: error)
-                print("failure")
+                strongSelf.errorAlert(error: error)
             }
         }
     }
@@ -177,64 +177,63 @@ class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
         DispatchQueue.main.async() {
             self.refreshBarButtonItem()
             
-            if let ticker = self.ticker {
-                
-                // title
-                self.navigationItem.title = ticker.symbol
-                
-                let money = SettingsUserDefaults.getCurrentCurrency()
-                
-                self.nameLabel?.text = ticker.name
-                
-                self.priceUsdLabel?.text = ticker.priceToString(for: .usd)
-                self.priceBtcLabel?.text = ticker.priceBtcToString()
-                
-                if money == .usd || money == .btc {
-                    self.priceConvertLabel?.text = ""
-                }
-                else{
-                    self.priceConvertLabel?.text = ticker.priceToString(for: money)
-                }
-                
-                // 1h
-                self.oneHourChangeLabel?.text = ticker.percentChange1h != nil ? "\(ticker.percentChange1h!)%" : "-"
-                self.backgroundColorView(view:  self.oneHourChangeView, percentChange: ticker.percentChange1h)
-                // 24h
-                self.dayChangeLabel?.text = ticker.percentChange24h != nil ? "\(ticker.percentChange24h!)%" : "-"
-                self.backgroundColorView(view:  self.dayChangeView, percentChange: ticker.percentChange24h)
-                // 7d
-                self.weekChangeLabel?.text = ticker.percentChange7d != nil ? "\(ticker.percentChange7d!)%" : "-"
-                self.backgroundColorView(view:  self.weekChangeView, percentChange: ticker.percentChange7d)
-                
-                self.rankLabel?.text = String(ticker.rank)
-                
-                self.marketcapLabel?.text = ticker.marketCapToString(for: money, maximumFractionDigits: 10)
-                self.volumeLabel?.text = ticker.volumeToString(for: money, maximumFractionDigits: 10)
+            guard let ticker = self.ticker else { return }
+            
+            // title
+            self.navigationItem.title = ticker.symbol
+            
+            let money = SettingsUserDefaults.getCurrentCurrency()
+            
+            self.nameLabel?.text = ticker.name
+            
+            self.priceUsdLabel?.text = ticker.priceToString(for: .usd)
+            self.priceBtcLabel?.text = ticker.priceBtcToString()
+            
+            if money == .usd || money == .btc {
+                self.priceConvertLabel?.text = ""
             }
+            else{
+                self.priceConvertLabel?.text = ticker.priceToString(for: money)
+            }
+            
+            // 1h
+            self.oneHourChangeLabel?.text = ticker.percentChange1h != nil ? "\(ticker.percentChange1h!)%" : "-"
+            self.backgroundColorView(view:  self.oneHourChangeView, percentChange: ticker.percentChange1h)
+            // 24h
+            self.dayChangeLabel?.text = ticker.percentChange24h != nil ? "\(ticker.percentChange24h!)%" : "-"
+            self.backgroundColorView(view:  self.dayChangeView, percentChange: ticker.percentChange24h)
+            // 7d
+            self.weekChangeLabel?.text = ticker.percentChange7d != nil ? "\(ticker.percentChange7d!)%" : "-"
+            self.backgroundColorView(view:  self.weekChangeView, percentChange: ticker.percentChange7d)
+            
+            self.rankLabel?.text = String(ticker.rank)
+            
+            self.marketcapLabel?.text = ticker.marketCapToString(for: money, maximumFractionDigits: 10)
+            self.volumeLabel?.text = ticker.volumeToString(for: money, maximumFractionDigits: 10)
         }
     }
     
     private func backgroundColorView(view: UIView?, percentChange: Double?) {
-        guard let view = view else {
+        guard let view = view else { return }
+        guard let percentChange = percentChange else {
+            view.backgroundColor = .orange
             return
         }
-        if let percentChange = percentChange{
-            if percentChange >= 0 {
-                view.backgroundColor = UIColor(red:0.30, green:0.85, blue:0.39, alpha:1.0)
-            }
-            else{
-                view.backgroundColor = UIColor(red:1.00, green:0.23, blue:0.18, alpha:1.0)
-            }
+        
+        if percentChange >= 0 {
+            view.backgroundColor = UIColor(red:0.30, green:0.85, blue:0.39, alpha:1.0)
         }
         else{
-            view.backgroundColor = .orange
+            view.backgroundColor = UIColor(red:1.00, green:0.23, blue:0.18, alpha:1.0)
         }
     }
     
-    
     private func loadlineView() {
         guard let ticker = ticker else { return }
-        guard self.minDate != nil else { self.lineView();  return }
+        guard self.minDate != nil else {
+            self.lineView()
+            return
+        }
         
         lineChartView?.isHidden = true
         lineChartActivityIndicator?.isHidden = false
@@ -297,17 +296,18 @@ class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
         xAxis?.valueFormatter = ChartXAxisFormatter(dateFormatter: dateFormatter)
         
         ChartRequest.getCurrencyCharts(id: ticker.id, of: of, completion: { [weak self] (currencyCharts: CurrencyCharts?, error: Error?) in
+            guard let strongSelf = self else { return }
             if error == nil {
                 if let currencyCharts = currencyCharts {
-                    self?.currencyCharts = currencyCharts
+                    strongSelf.currencyCharts = currencyCharts
                     DispatchQueue.main.async() {
-                        self?.lineChartView?.zoom(scaleX: 0.0, scaleY: 0.0, x: 0.0, y: 0.0)
-                        self?.lineView()
+                        strongSelf.lineChartView?.zoom(scaleX: 0.0, scaleY: 0.0, x: 0.0, y: 0.0)
+                        strongSelf.lineView()
                     }
                 }
             }
             else{
-                self?.lineChartErrorView(error: error!)
+                strongSelf.lineChartErrorView(error: error!)
             }
         })
         
@@ -428,7 +428,7 @@ class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
     func errorAlert(error: Error) {
         if (error as NSError).code != -999 {
             let alert = UIAlertController(title: nil, message: error.localizedDescription, preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler: nil))
+            alert.addAction(UIAlertAction(title: "Ok", style: UIAlertAction.Style.default, handler: nil))
             self.present(alert, animated: true, completion: nil)
         }
     }

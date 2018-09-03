@@ -27,7 +27,7 @@ class RateChangePeriodCell: UITableViewCell {
 
 class CurrencySettingsCell: UITableViewCell {
     @IBOutlet weak var symbol: UILabel!
-    var money: CryptoCurrencyKit.Money?{
+    var money: Money?{
         didSet {
             guard let money = money else { return }
             symbol.text = money.flag + " " + money.rawValue

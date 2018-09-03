@@ -95,24 +95,6 @@ public struct Ticker {
         case priceRUB = "price_rub"
         case volumeRUB24h = "24h_volume_rub"
         case marketCapRUB = "market_cap_rub"
-        
-        /*  case priceAUD = "price_aud"
-         case volumeAUD24h = "24h_volume_aud"
-         case marketCapAUD = "market_cap_aud"
-         
-         case priceBRL = "price_brl"
-         case volumeBRL24h = "24h_volume_brl"
-         case marketCapBRL = "market_cap_brl"
-         
-         */
-        
-        
-        /*
-         case priceAUD = "price_"
-         case volumeAUD24h = "24h_volume_"
-         case marketCapAUD = "market_cap_"
-         */
-        
     }
 }
 
@@ -123,7 +105,7 @@ extension Ticker: Equatable {
 }
 
 extension Ticker {
-    public func price(for money: CryptoCurrencyKit.Money) -> Double? {
+    public func price(for money: Money) -> Double? {
         switch money {
         case .cny:
             return priceCNY
@@ -144,7 +126,7 @@ extension Ticker {
         }
     }
     
-    public func volume24h(for money: CryptoCurrencyKit.Money) -> Double? {
+    public func volume24h(for money: Money) -> Double? {
         switch money {
         case .cny:
             return volumeCNY24h
@@ -165,7 +147,7 @@ extension Ticker {
         }
     }
     
-    public func marketCap(for money: CryptoCurrencyKit.Money) -> Double? {
+    public func marketCap(for money: Money) -> Double? {
         switch money {
         case .cny:
             return marketCapCNY
@@ -186,11 +168,10 @@ extension Ticker {
         }
     }
     
-    func formatterCurrency(for money: CryptoCurrencyKit.Money, maximumFractionDigits: Int) -> NumberFormatter {
+    func formatterCurrency(for money: Money, maximumFractionDigits: Int) -> NumberFormatter {
         let formatterCurrency = NumberFormatter()
         formatterCurrency.numberStyle = .currency
         formatterCurrency.currencyCode = money.rawValue
-        //formatterCurrency.locale = Locale(identifier: "en_US")
         formatterCurrency.locale  = Locale.current
         formatterCurrency.maximumFractionDigits = maximumFractionDigits
         formatterCurrency.nilSymbol = "-"
@@ -219,7 +200,7 @@ extension Ticker {
         return formatterCurrency(for: .btc, maximumFractionDigits: 8).string(for: priceBTC)!
     }
     
-    public func priceToString(for money: CryptoCurrencyKit.Money) -> String {
+    public func priceToString(for money: Money) -> String {
         guard let price = price(for: money) else { return "-" }
     /*    if price > 0.01 {
             let formatter = formatterCurrency(for: money, maximumFractionDigits: 2)
@@ -231,35 +212,21 @@ extension Ticker {
       //  }
     }
     
-    public func marketCapToString(for money: CryptoCurrencyKit.Money, maximumFractionDigits: Int) -> String {
-        let  marketCap = self.marketCap(for: money)
+    public func marketCapToString(for money: Money, maximumFractionDigits: Int) -> String {
+        guard let marketCap = self.marketCap(for: money) else { return "-" }
         
-        if let marketCap = marketCap {
-            let formatterCurrency = self.formatterCurrency(for: money, maximumFractionDigits: maximumFractionDigits)
-            return formatterCurrency.string(from: NSNumber(value: marketCap))!
-        }
-        else{
-            return "-"
-        }
+        let formatterCurrency = self.formatterCurrency(for: money, maximumFractionDigits: maximumFractionDigits)
+        return formatterCurrency.string(from: NSNumber(value: marketCap))!
     }
     
-    public func volumeToString(for money: CryptoCurrencyKit.Money, maximumFractionDigits: Int) -> String {
-        let volume = self.volume24h(for: money)
+    public func volumeToString(for money: Money, maximumFractionDigits: Int) -> String {
+        guard let volume = self.volume24h(for: money) else { return "-" }
         
-        if let volume = volume {
-            let formatterCurrency = self.formatterCurrency(for: money, maximumFractionDigits: maximumFractionDigits)
-            return formatterCurrency.string(from: NSNumber(value: volume))!
-        }
-        else{
-            return "-"
-        }
+        let formatterCurrency = self.formatterCurrency(for: money, maximumFractionDigits: maximumFractionDigits)
+        return formatterCurrency.string(from: NSNumber(value: volume))!
     }
-    
-    
-    
-    
-    public func priceCurrency() -> String {
 
+    public func priceCurrency() -> String {
         let currency =  SettingsUserDefaults.getCurrentCurrency()
         
         switch currency {
@@ -280,7 +247,6 @@ extension Ticker {
     
     
     public func percentChangeCurrent() -> String {
-        var percentChange:Double?
         #if os(iOS)
             let dd = NSUbiquitousKeyValueStore().longLong(forKey: "percentChange")
         #endif
@@ -288,6 +254,8 @@ extension Ticker {
         #if os(watchOS)
             let dd = UserDefaults().integer(forKey: "percentChange")
         #endif
+        
+        var percentChange: Double?
         
         switch dd {
         case 0:
@@ -307,32 +275,6 @@ extension Ticker {
             return "-"
         }
     }
-    
-    /*
-     func percentChangeCurrent() -> String {
-     var percentChange:String?
-     switch UserDefaults().integer(forKey: "percentChange") {
-     case 0:
-     percentChange = percent_change_1h
-     case 1:
-     percentChange = percent_change_24h
-     case 2:
-     percentChange = percent_change_7d
-     default:
-     break
-     }
-     
-     if let percentChange = percentChange {
-     return percentChange
-     }
-     else{
-     return "-"
-     }
-     }
-     */
-    
-    
-    
 }
 
 extension Ticker: Encodable {

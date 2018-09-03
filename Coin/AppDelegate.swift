@@ -18,7 +18,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
     weak var masterViewController: CoinTableViewController?
 
-    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
         //SplitViewController
         guard let splitViewController = window?.rootViewController as? UISplitViewController,
@@ -59,7 +59,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
 
-    func application(_ application: UIApplication, continue userActivity: NSUserActivity, restorationHandler: @escaping ([Any]?) -> Void) -> Bool {
+    private func application(_ application: UIApplication, continue userActivity: NSUserActivity, restorationHandler: @escaping ([Any]?) -> Void) -> Bool {
         if userActivity.activityType == CSSearchableItemActionType {
             if let tickerID = userActivity.userInfo?[CSSearchableItemActivityIdentifier] as? String {
                 let keyStore = NSUbiquitousKeyValueStore ()
@@ -74,10 +74,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
 
 
-    func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any] = [:]) -> Bool {
+    func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
         // When you type customSchemeExample://red in the search bar in Safari
-        
-     //   guard let masterViewController = CoinTableViewController() else { return true }
         
         if let urlComponents =  NSURLComponents(url: url, resolvingAgainstBaseURL: false) {
             if let queryItems = urlComponents.queryItems as [NSURLQueryItem]?{
@@ -136,12 +134,5 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationWillTerminate(_ application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
-    
-//    private func CoinTableViewController() -> CoinTableViewController? {
-//        guard let splitViewController = window?.rootViewController as? UISplitViewController,
-//            let leftNavController = splitViewController.viewControllers.first as? UINavigationController,
-//            let masterViewController = leftNavController.topViewController as? CoinTableViewController else { return nil }
-//        return masterViewController
-//    }
 }
 

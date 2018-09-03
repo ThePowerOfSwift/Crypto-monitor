@@ -26,7 +26,7 @@
 		FB27C53E200AD72D00DB2907 /* Ticker.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB27C53C200AD72D00DB2907 /* Ticker.swift */; };
 		FB2F889D1FEBFA32003B62CF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FB2F889B1FEBFA32003B62CF /* Main.storyboard */; };
 		FB2F88A01FEBFABD003B62CF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FB2F889E1FEBFABD003B62CF /* LaunchScreen.storyboard */; };
-		FB2F88A81FEBFB28003B62CF /* CoinTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB2F88A71FEBFB28003B62CF /* CoinTableViewController.swift */; };
+		FB2F88A81FEBFB28003B62CF /* CoinTableVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB2F88A71FEBFB28003B62CF /* CoinTableVC.swift */; };
 		FB2F88AA1FEBFB30003B62CF /* TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB2F88A91FEBFB30003B62CF /* TableViewCell.swift */; };
 		FB2F88AD1FEBFB78003B62CF /* Interface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FB2F88AB1FEBFB78003B62CF /* Interface.storyboard */; };
 		FB2F88B01FEBFBC2003B62CF /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FB2F88AE1FEBFBC2003B62CF /* MainInterface.storyboard */; };
@@ -267,7 +267,7 @@
 		FB27C53C200AD72D00DB2907 /* Ticker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Ticker.swift; sourceTree = "<group>"; };
 		FB2F889C1FEBFA32003B62CF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		FB2F889F1FEBFABD003B62CF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
-		FB2F88A71FEBFB28003B62CF /* CoinTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoinTableViewController.swift; sourceTree = "<group>"; };
+		FB2F88A71FEBFB28003B62CF /* CoinTableVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoinTableVC.swift; sourceTree = "<group>"; };
 		FB2F88A91FEBFB30003B62CF /* TableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewCell.swift; sourceTree = "<group>"; };
 		FB2F88AC1FEBFB78003B62CF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Interface.storyboard; sourceTree = "<group>"; };
 		FB2F88AF1FEBFBC2003B62CF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainInterface.storyboard; sourceTree = "<group>"; };
@@ -441,6 +441,22 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		B1817F56213DE0E80073CDC7 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				FB27C53C200AD72D00DB2907 /* Ticker.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		B1817F57213DE21C0073CDC7 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				FB2F88A91FEBFB30003B62CF /* TableViewCell.swift */,
+			);
+			name = Cells;
+			sourceTree = "<group>";
+		};
 		FB565C461F421ADF004EA42F /* AddTable */ = {
 			isa = PBXGroup;
 			children = (
@@ -450,14 +466,15 @@
 			name = AddTable;
 			sourceTree = "<group>";
 		};
-		FB757A1E20A861CF004B40FB /* Main */ = {
+		FB757A1E20A861CF004B40FB /* View */ = {
 			isa = PBXGroup;
 			children = (
-				FB2F88A71FEBFB28003B62CF /* CoinTableViewController.swift */,
+				FB2F88A71FEBFB28003B62CF /* CoinTableVC.swift */,
+				FB3EF7F92024941E00EB1C31 /* DZNEmptyData.swift */,
 				FBFA2A8A20ACE12A00B11B17 /* WCSession.swift */,
-				FB2F88A91FEBFB30003B62CF /* TableViewCell.swift */,
+				B1817F57213DE21C0073CDC7 /* Cells */,
 			);
-			name = Main;
+			name = View;
 			sourceTree = "<group>";
 		};
 		FB99B48D1F2FEF1F007C0235 /* Cryptocurrency monitor widget */ = {
@@ -542,12 +559,11 @@
 				FB2F88F51FEC07CB003B62CF /* InfoPlist.strings */,
 				FB9592531F20B8AB00F9F74B /* Coin.entitlements */,
 				FBB2CC9B1F155CF800D800FD /* AppDelegate.swift */,
-				FB757A1E20A861CF004B40FB /* Main */,
+				FB757A1E20A861CF004B40FB /* View */,
 				FB670CE51F16D900005761CF /* CryptocurrencyInfoViewController.swift */,
 				FB466DD91F2D479200D771C9 /* SettingTableViewController.swift */,
 				FB6528672020945B004CE9D4 /* IAPHandler.swift */,
 				FB3EF7F420248E2500EB1C31 /* Spotlight.swift */,
-				FB3EF7F92024941E00EB1C31 /* DZNEmptyData.swift */,
 				FB3EF7FB2024CB5F00EB1C31 /* ReviewRequest.swift */,
 				FBA28AD120097C38009EDB84 /* CurrentCurrency */,
 				FBFA2A8720ACDB4800B11B17 /* Charts */,
@@ -569,7 +585,7 @@
 				FBBE490E2008F5A300277014 /* CryptoCurrency.h */,
 				FBBE49302008FD7300277014 /* CryptoCurrencyKit.swift */,
 				FB20D0E120090DD70007305C /* SettingsUserDefaults.swift */,
-				FB27C53C200AD72D00DB2907 /* Ticker.swift */,
+				B1817F56213DE0E80073CDC7 /* Model */,
 				FBBE490F2008F5A300277014 /* info-iOS.plist */,
 				FBBE49202008F5E700277014 /* info-watchOS.plist */,
 			);
@@ -1132,7 +1148,7 @@
 				FB6528682020945B004CE9D4 /* IAPHandler.swift in Sources */,
 				FBFA2A8B20ACE12A00B11B17 /* WCSession.swift in Sources */,
 				FB3EF7FA2024941E00EB1C31 /* DZNEmptyData.swift in Sources */,
-				FB2F88A81FEBFB28003B62CF /* CoinTableViewController.swift in Sources */,
+				FB2F88A81FEBFB28003B62CF /* CoinTableVC.swift in Sources */,
 				FBFA2A8420AC397D00B11B17 /* Notification.swift in Sources */,
 				FBFA2A8620ACD94000B11B17 /* Array.swift in Sources */,
 				FBA28ACA200959BC009EDB84 /* ChartRequest.swift in Sources */,
@@ -1377,7 +1393,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_SWIFT3_OBJC_INFERENCE = Off;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 			};
 			name = Debug;
 		};
@@ -1395,7 +1411,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_SWIFT3_OBJC_INFERENCE = Off;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 			};
 			name = Release;
 		};
@@ -1414,7 +1430,7 @@
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
 				SWIFT_SWIFT3_OBJC_INFERENCE = Off;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = 4;
 				WATCHOS_DEPLOYMENT_TARGET = 4.0;
 			};
@@ -1435,7 +1451,7 @@
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
 				SWIFT_SWIFT3_OBJC_INFERENCE = Off;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = 4;
 				WATCHOS_DEPLOYMENT_TARGET = 4.0;
 			};
@@ -1456,7 +1472,7 @@
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
 				SWIFT_SWIFT3_OBJC_INFERENCE = On;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = 4;
 				WATCHOS_DEPLOYMENT_TARGET = 4.0;
 			};
@@ -1477,7 +1493,7 @@
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
 				SWIFT_SWIFT3_OBJC_INFERENCE = On;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = 4;
 				WATCHOS_DEPLOYMENT_TARGET = 4.0;
 			};
@@ -1539,7 +1555,7 @@
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 			};
 			name = Debug;
 		};
@@ -1593,7 +1609,7 @@
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = RELEASE;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-Osize";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -1625,7 +1641,7 @@
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Off;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -1657,7 +1673,7 @@
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Off;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
@@ -1688,7 +1704,7 @@
 				PRODUCT_NAME = CryptoCurrency;
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
@@ -1720,7 +1736,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = mialin.CryptoCurrency;
 				PRODUCT_NAME = CryptoCurrency;
 				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
@@ -1754,7 +1770,7 @@
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = 4;
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
@@ -1788,7 +1804,7 @@
 				PRODUCT_NAME = CryptoCurrency;
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = 4;
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";

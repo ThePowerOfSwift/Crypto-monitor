@@ -98,7 +98,7 @@ public class SettingsUserDefaults{
     }
     
     
-    public static func setCurrentCurrency(money: CryptoCurrencyKit.Money) {
+    public static func setCurrentCurrency(money: Money) {
         #if os(iOS)
             let keyStore = NSUbiquitousKeyValueStore()
         #endif
@@ -112,7 +112,7 @@ public class SettingsUserDefaults{
     }
     
     
-    public static func getCurrentCurrency() ->  CryptoCurrencyKit.Money {
+    public static func getCurrentCurrency() ->  Money {
         #if os(iOS)
             let keyStore = NSUbiquitousKeyValueStore()
             if !keyStore.bool(forKey: "converPriceCurrencyToCurrentCurrency"){
@@ -134,17 +134,15 @@ public class SettingsUserDefaults{
         #endif
         
         #if os(iOS)
-            guard let currentCurrencyString = NSUbiquitousKeyValueStore().string(forKey: "CurrentCurrency") else { return CryptoCurrencyKit.Money.usd }
+            guard let currentCurrencyString = NSUbiquitousKeyValueStore().string(forKey: "CurrentCurrency") else { return Money.usd }
         #endif
         
         #if os(watchOS)
-            guard let currentCurrencyString = UserDefaults().string(forKey: "CurrentCurrency") else { return CryptoCurrencyKit.Money.usd }
+            guard let currentCurrencyString = UserDefaults().string(forKey: "CurrentCurrency") else { return Money.usd }
         #endif
         
-        guard let currentCurrency = CryptoCurrencyKit.Money(rawValue: currentCurrencyString) else { return CryptoCurrencyKit.Money.usd }
+        guard let currentCurrency = Money(rawValue: currentCurrencyString) else { return Money.usd }
         return currentCurrency
     }
-    
-    
 }
 

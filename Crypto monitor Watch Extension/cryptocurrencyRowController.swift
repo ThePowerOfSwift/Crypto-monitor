@@ -30,8 +30,10 @@ class cryptocurrencyRowController: NSObject {
     }
     
     private func backgroundColorView(percentChange: String?) {
-        if let percentChange = percentChange{
-            if Float(percentChange)! >= 0 {
+
+        if let percentChangeString = percentChange,
+            let percentChange = Float(percentChangeString) {
+            if percentChange >= 0 {
                 cellMainGroup.setBackgroundColor(UIColor(red:0.02, green:0.87, blue:0.44, alpha:0.86))
             }
             else{

@@ -23,9 +23,8 @@ class CoinTableViewController: UITableViewController {
         super.viewDidLoad()
         
         splitViewController?.delegate = self
-
         //Notification
-        NotificationCenter.default.addObserver(self, selector: #selector(applicationWillEnterForeground), name:NSNotification.Name.UIApplicationWillEnterForeground, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(applicationWillEnterForeground), name:NSNotification.Name.NSExtensionHostWillEnterForeground, object: nil)
         let keyStore = NSUbiquitousKeyValueStore()
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(
@@ -36,7 +35,7 @@ class CoinTableViewController: UITableViewController {
         //Navigation Item
         let editBarButton = UIBarButtonItem.init(barButtonSystemItem: .edit, target: self, action: #selector(edit))
         self.navigationItem.rightBarButtonItem = editBarButton
-        self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "Setting"), style: UIBarButtonItemStyle.plain, target: self, action: #selector(settingsShow))
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "Setting"), style: UIBarButtonItem.Style.plain, target: self, action: #selector(settingsShow))
         
         // Setting DZNEmptyData
         tableView.emptyDataSetSource = self
@@ -280,7 +279,7 @@ class CoinTableViewController: UITableViewController {
         }
     }
     
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         DispatchQueue.global(qos: .utility).async {
             if editingStyle == .delete{
                 let keyStore = NSUbiquitousKeyValueStore ()
@@ -313,11 +312,11 @@ class CoinTableViewController: UITableViewController {
     
     
     
-    override func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCellEditingStyle {
+    override func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
         if (self.tableView.isEditing) {
-            return UITableViewCellEditingStyle.delete
+            return UITableViewCell.EditingStyle.delete
         }
-        return UITableViewCellEditingStyle.none
+        return UITableViewCell.EditingStyle.none
     }
     
     override func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
@@ -368,7 +367,7 @@ class CoinTableViewController: UITableViewController {
         let editBarButton = UIBarButtonItem.init(barButtonSystemItem: .edit, target: self, action: #selector(edit))
         self.navigationItem.rightBarButtonItem = editBarButton
         
-        self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "Setting"), style: UIBarButtonItemStyle.plain, target: self, action: #selector(settingsShow))
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "Setting"), style: UIBarButtonItem.Style.plain, target: self, action: #selector(settingsShow))
     }
 
     @objc private func reload(_ sender:UIButton) {
@@ -378,7 +377,7 @@ class CoinTableViewController: UITableViewController {
     func errorAlert(error: Error) {
         if (error as NSError).code != -999 {
             let alert = UIAlertController(title: nil, message: error.localizedDescription, preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler: nil))
+            alert.addAction(UIAlertAction(title: "Ok", style: UIAlertAction.Style.default, handler: nil))
             self.present(alert, animated: true, completion: nil)
         }
     }

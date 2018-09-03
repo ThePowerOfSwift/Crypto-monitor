@@ -11,29 +11,32 @@ import CryptoCurrency
 
 class CurrentCurrencyTableVC: UITableViewController {
 
-    var money: [CryptoCurrencyKit.Money] = CryptoCurrencyKit.Money.allValues
-
+    var money: [Money]?
     
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
+    //MARK: - LifeCycle
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        self.money = Money.allCases
         self.tableView?.reloadData()
     }
 
+
     // MARK: - Table view data source
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return money.count
+        return money?.count ?? 0
     }
  
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "currentSymbol", for: indexPath) as! CurrentCurrencyTableViewCell
         let row = indexPath.row
         
-        cell.symbol.text = money[row].flag + " " + money[row].rawValue
+        
+        cell.symbol.text = money![row].flag + " " + money![row].rawValue
         
         let currentCurrency = SettingsUserDefaults.getCurrentCurrency()
         
-        if money[row].rawValue == currentCurrency.rawValue {
+        if money![row].rawValue == currentCurrency.rawValue {
             cell.accessoryType = .checkmark
         }
         else{
@@ -44,7 +47,7 @@ class CurrentCurrencyTableVC: UITableViewController {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let row = indexPath.row
-        SettingsUserDefaults.setCurrentCurrency(money: CryptoCurrencyKit.Money(rawValue: money[row].rawValue)!)
+        SettingsUserDefaults.setCurrentCurrency(money: Money(rawValue: money![row].rawValue)!)
         NotificationCenter.default.post(name: .newCurrentCurrency, object: nil, userInfo: nil)
         _ = navigationController?.popViewController(animated: true)
     }

@@ -9,7 +9,7 @@
 import WatchKit
 import CryptoCurrency
 
-let timeIntervalRefresh = TimeInterval(30 * 60)
+//let timeIntervalRefresh = TimeInterval(30 * 60)
 
 class ExtensionDelegate: NSObject, WKExtensionDelegate, URLSessionDownloadDelegate, URLSessionDelegate {
     
@@ -17,18 +17,17 @@ class ExtensionDelegate: NSObject, WKExtensionDelegate, URLSessionDownloadDelega
     
     func applicationDidFinishLaunching() {
         // Perform any final initialization of your application.
-        WKExtension.shared().scheduleBackgroundRefresh(withPreferredDate: Date(timeIntervalSinceNow: timeIntervalRefresh), userInfo: nil) { (error: Error?) in
-            if let error = error {
-                print("Error occurred while scheduling background refresh: \(error.localizedDescription)")
-            }
-        }
+        scheduleBackgroundRefresh(in: 60 * 45)
     }
     
     func applicationDidBecomeActive() {
         // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+        print("applicationDidBecomeActive")
+     //   scheduleBackgroundRefresh(in: 3 * 60)
     }
     
     func applicationWillResignActive() {
+        print("applicationWillResignActive")
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
         // Use this method to pause ongoing tasks, disable timers, etc.
     }
@@ -42,25 +41,9 @@ class ExtensionDelegate: NSObject, WKExtensionDelegate, URLSessionDownloadDelega
             case let backgroundTask as WKApplicationRefreshBackgroundTask:
                 // Be sure to complete the background task once you’re done.
                 print("backgroundTask \(Date())")
+                scheduleURLSession()
+                scheduleBackgroundRefresh(in: 60 * 45)
                 
-                let config = URLSessionConfiguration.background(withIdentifier: "asdfghjkl")
-                
-                config.waitsForConnectivity = true
-                config.sessionSendsLaunchEvents = true
-                let session = URLSession(configuration: config, delegate: self, delegateQueue: nil)
-                
-                var urlString = "https://api.coinmarketcap.com/v1/ticker/"
-                urlString.append("?convert=\(SettingsUserDefaults.getCurrentCurrency().rawValue)")
-                urlString.append("&limit=0")
-                
-                let task = session.downloadTask(with: URL(string: urlString)!)
-                task.resume()
-                
-                WKExtension.shared().scheduleBackgroundRefresh(withPreferredDate: Date(timeIntervalSinceNow: timeIntervalRefresh), userInfo: nil) { (error: Error?) in
-                    if let error = error {
-                        print("Error occurred while scheduling background refresh: \(error.localizedDescription)")
-                    }
-                }
                 self.savedTask = backgroundTask
             //  backgroundTask.setTaskCompletedWithSnapshot(false)
             case let snapshotTask as WKSnapshotRefreshBackgroundTask:
@@ -82,9 +65,45 @@ class ExtensionDelegate: NSObject, WKExtensionDelegate, URLSessionDownloadDelega
         }
     }
     
+    func scheduleURLSession() {
+        print("scheduleURLSession")
+        var urlString = "https://api.coinmarketcap.com/v1/ticker/"
+        urlString.append("?convert=\(SettingsUserDefaults.getCurrentCurrency().rawValue)")
+        urlString.append("&limit=0")
+        
+        
+        if let url = URL(string: urlString) {
+            let backgroundConfigObject = URLSessionConfiguration.background(withIdentifier: NSUUID().uuidString)
+            backgroundConfigObject.sessionSendsLaunchEvents = true
+            backgroundConfigObject.timeoutIntervalForResource = 60
+            let backgroundSession = URLSession(configuration: backgroundConfigObject, delegate: self, delegateQueue: nil)
+            
+            let task = backgroundSession.downloadTask(with: url)
+            task.resume()
+        } else {
+            print("Url error")
+        }
+    }
+    
+    func scheduleBackgroundRefresh(in seconds: TimeInterval) {
+        let fireDate = Date(timeIntervalSinceNow: seconds)
+        print("scheduleBackgroundRefresh \(fireDate)")
+        // optional, any SecureCoding compliant data can be passed here
+        let userInfo = ["reason" : "background update"] as NSDictionary
+        
+        WKExtension.shared().scheduleBackgroundRefresh(withPreferredDate: fireDate, userInfo: userInfo) { (error) in
+            if (error == nil) {
+                print("successfully scheduled background task, use the crown to send the app to the background and wait for handle:BackgroundTasks to fire.")
+            }
+        }
+    }
+    
     //MARK: Delegate methods
     
     func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didFinishDownloadingTo location: URL) {
+        print("urlSession")
+        
+        
         guard let httpResponse = downloadTask.response as? HTTPURLResponse,
             (200...299).contains(httpResponse.statusCode) else {
                 print ("server error")
@@ -103,7 +122,7 @@ class ExtensionDelegate: NSObject, WKExtensionDelegate, URLSessionDownloadDelega
                             tickerFilterArray.append(json)
                         }
                     }
-                    
+                   // print(tickerFilterArray)
                     SettingsUserDefaults.setUserDefaults(ticher: tickerFilterArray)
                     DispatchQueue.main.async {
                         let complicationServer = CLKComplicationServer.sharedInstance()
@@ -123,12 +142,17 @@ class ExtensionDelegate: NSObject, WKExtensionDelegate, URLSessionDownloadDelega
     }
 
     func urlSession(_ session: URLSession, task: URLSessionTask, didCompleteWithError error: Error?) {
-        DispatchQueue.main.async {
-            if let error = error {
-                print("Error: \(error)")
-            }
-        }
+        print("Session did complete")
     }
+    
+//    func urlSession(_ session: URLSession, task: URLSessionTask, didCompleteWithError error: Error?) {
+//        DispatchQueue.main.async {
+//            print("Session did complete")
+//            if let error = error {
+//                print("Error: \(error)")
+//            }
+//        }
+//    }
 }
 
 

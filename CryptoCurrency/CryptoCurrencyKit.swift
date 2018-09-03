@@ -42,9 +42,7 @@ public struct CryptoCurrencyKit {
         }
     }
 }
-
-extension CryptoCurrencyKit {
-    public enum Money: String {
+    public enum Money: String, CaseIterable {
         case usd = "USD"
         case eur = "EUR"
         case btc = "BTC"
@@ -57,11 +55,11 @@ extension CryptoCurrencyKit {
         public var flag: String {
             switch self {
             case .usd:
-                return "🇺🇸" //💵
+                return "🇺🇸"
             case .eur:
-                return "🇪🇺" //💶
+                return "🇪🇺"
             case .btc:
-                return "🌍" //🌐
+                return "🌍"
             case .gbp:
                 return "🇬🇧"
             case .jpy:
@@ -74,23 +72,7 @@ extension CryptoCurrencyKit {
                 return "🇷🇺"
             }
         }
-        
-        public static var allValues: [Money] {
-            return [.usd,
-                    .eur,
-                    .btc,
-                    .gbp,
-                    .jpy,
-                    .cny,
-                    .hkd,
-                    .rub]
-        }
-        
-        public static var allRawValues: [String] {
-            return allValues.map { $0.rawValue }
-        }
     }
-}
 
 extension CryptoCurrencyKit {
     public enum Response<T: Codable> {
