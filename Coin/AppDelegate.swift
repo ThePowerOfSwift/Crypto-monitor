@@ -16,7 +16,7 @@ import StoreKit
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-    weak var masterViewController: CoinTableViewController?
+    weak var masterViewController: MainVC?
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
@@ -29,7 +29,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         splitViewController.preferredDisplayMode = .allVisible
         
-        self.masterViewController = leftNavController.topViewController as? CoinTableViewController
+        self.masterViewController = leftNavController.topViewController as? MainVC
         self.masterViewController?.coinDelegate = detailViewController
         
         

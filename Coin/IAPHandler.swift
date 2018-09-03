@@ -31,8 +31,6 @@ class IAPHandler: NSObject {
     static let shared = IAPHandler()
     fileprivate var productsRequestCompletionHandler: ProductsRequestCompletionHandler?
     
-
-
     let coffee_ID = "mialin.Coin.coffee"
     let croissant_ID = "mialin.Coin.Croissant"
     let macBook_ID = "mialin.Coin.MacBook"

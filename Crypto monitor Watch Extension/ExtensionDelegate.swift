@@ -9,15 +9,13 @@
 import WatchKit
 import CryptoCurrency
 
-//let timeIntervalRefresh = TimeInterval(30 * 60)
-
 class ExtensionDelegate: NSObject, WKExtensionDelegate, URLSessionDownloadDelegate, URLSessionDelegate {
     
     var savedTask:WKRefreshBackgroundTask?
     
     func applicationDidFinishLaunching() {
         // Perform any final initialization of your application.
-        scheduleBackgroundRefresh(in: 60 * 45)
+        BackgroundRefresh.schedule()
     }
     
     func applicationDidBecomeActive() {
@@ -42,7 +40,7 @@ class ExtensionDelegate: NSObject, WKExtensionDelegate, URLSessionDownloadDelega
                 // Be sure to complete the background task once you’re done.
                 print("backgroundTask \(Date())")
                 scheduleURLSession()
-                scheduleBackgroundRefresh(in: 60 * 45)
+                BackgroundRefresh.schedule()
                 
                 self.savedTask = backgroundTask
             //  backgroundTask.setTaskCompletedWithSnapshot(false)
@@ -85,21 +83,7 @@ class ExtensionDelegate: NSObject, WKExtensionDelegate, URLSessionDownloadDelega
         }
     }
     
-    func scheduleBackgroundRefresh(in seconds: TimeInterval) {
-        let fireDate = Date(timeIntervalSinceNow: seconds)
-        print("scheduleBackgroundRefresh \(fireDate)")
-        // optional, any SecureCoding compliant data can be passed here
-        let userInfo = ["reason" : "background update"] as NSDictionary
-        
-        WKExtension.shared().scheduleBackgroundRefresh(withPreferredDate: fireDate, userInfo: userInfo) { (error) in
-            if (error == nil) {
-                print("successfully scheduled background task, use the crown to send the app to the background and wait for handle:BackgroundTasks to fire.")
-            }
-        }
-    }
-    
     //MARK: Delegate methods
-    
     func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didFinishDownloadingTo location: URL) {
         print("urlSession")
         
@@ -144,15 +128,6 @@ class ExtensionDelegate: NSObject, WKExtensionDelegate, URLSessionDownloadDelega
     func urlSession(_ session: URLSession, task: URLSessionTask, didCompleteWithError error: Error?) {
         print("Session did complete")
     }
-    
-//    func urlSession(_ session: URLSession, task: URLSessionTask, didCompleteWithError error: Error?) {
-//        DispatchQueue.main.async {
-//            print("Session did complete")
-//            if let error = error {
-//                print("Error: \(error)")
-//            }
-//        }
-//    }
 }
 
 

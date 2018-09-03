@@ -10,7 +10,7 @@ import MobileCoreServices
 import CoreSpotlight
 import CryptoCurrency
 
-extension CoinTableViewController {
+extension MainVC {
     
     override func updateUserActivityState(_ activity: NSUserActivity) {
         DispatchQueue.global(qos: .background).async {

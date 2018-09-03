@@ -8,7 +8,7 @@
 import DZNEmptyDataSet
 
 // MARK: - Deal with the empty data set
-extension CoinTableViewController: DZNEmptyDataSetSource, DZNEmptyDataSetDelegate {
+extension MainVC: DZNEmptyDataSetSource, DZNEmptyDataSetDelegate {
     //Add title for empty dataset
     func title(forEmptyDataSet scrollView: UIScrollView!) -> NSAttributedString! {
         let str = NSLocalizedString("No cryptocurrencies", comment: "No cryptocurrencies")

@@ -11,7 +11,7 @@ import CryptoCurrency
 import WatchConnectivity
 
 //MARK: - WCSession
-extension CoinTableViewController: WCSessionDelegate {
+extension MainVC: WCSessionDelegate {
     /** Called when all delegate callbacks for the previously selected watch has occurred. The session can be re-activated for the now selected watch using activateSession. */
     func sessionDidDeactivate(_ session: WCSession) {
         

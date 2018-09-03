@@ -44,7 +44,7 @@ class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
     var currencyCharts: CurrencyCharts?
     let userCalendar = Calendar.current
     var minDate: Date?
-    var coinTableViewController: CoinTableViewController? = nil
+    var coinTableViewController: MainVC? = nil
     
     //MARK: - LifeCycle
     override func viewDidLoad() {

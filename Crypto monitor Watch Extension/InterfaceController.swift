@@ -117,16 +117,7 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate {
             cryptocurrencyTable.setHidden(true)
             emptyGroup.setHidden(false)
         }
-        
-        let fireDate = Date(timeIntervalSinceNow: 60 * 45)
-        // optional, any SecureCoding compliant data can be passed here
-        let userInfo = ["reason" : "background update"] as NSDictionary
-        
-        WKExtension.shared().scheduleBackgroundRefresh(withPreferredDate: fireDate, userInfo: userInfo) { (error) in
-            if (error == nil) {
-                print("successfully scheduled background task, use the crown to send the app to the background and wait for handle:BackgroundTasks to fire.")
-            }
-        }
+        BackgroundRefresh.schedule()
     }
     
     private func reloadTimeline(){
@@ -175,6 +166,5 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate {
         viewCache()
         updateApplicationContext()
     }
-    
 }
 

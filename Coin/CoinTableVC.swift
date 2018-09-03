@@ -11,7 +11,7 @@ import WatchConnectivity
 import Alamofire
 import CryptoCurrency
 
-class CoinTableViewController: UITableViewController {
+class MainVC: UITableViewController {
     weak var watchSession : WCSession?
     
     var tickers:[Ticker]?
@@ -28,7 +28,7 @@ class CoinTableViewController: UITableViewController {
         let keyStore = NSUbiquitousKeyValueStore()
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(
-                                                CoinTableViewController.ubiquitousKeyValueStoreDidChange),
+                                                MainVC.ubiquitousKeyValueStoreDidChange),
                                                name: NSUbiquitousKeyValueStore.didChangeExternallyNotification,
                                                object: keyStore)
         
@@ -102,7 +102,7 @@ class CoinTableViewController: UITableViewController {
         if let app = UIApplication.shared.delegate as? AppDelegate, let window = app.window {
             guard let splitViewController = window.rootViewController as? UISplitViewController,
                 let leftNavController = splitViewController.viewControllers.first as? UINavigationController,
-                ((leftNavController.topViewController as? CoinTableViewController) != nil) else { return }
+                ((leftNavController.topViewController as? MainVC) != nil) else { return }
         }
         if let detailViewController = coinDelegate as? CryptocurrencyInfoViewController,
             let detailNavigationController = detailViewController.navigationController {
@@ -422,7 +422,7 @@ class CoinTableViewController: UITableViewController {
     }
 }
 
-extension CoinTableViewController: UISplitViewControllerDelegate {
+extension MainVC: UISplitViewControllerDelegate {
     func splitViewController(_ splitViewController: UISplitViewController, collapseSecondary secondaryViewController: UIViewController, onto primaryViewController: UIViewController) -> Bool {
         return true
     }

@@ -56,11 +56,12 @@ class TodayViewController: UIViewController, UITableViewDataSource, UITableViewD
         
         if let idArray = idArray {
             CryptoCurrencyKit.fetchTickers(idArray: idArray) { [weak self] (response) in
+                guard let strongSelf = self else { return }
                 switch response {
                 case .success(let tickers):
                     SettingsUserDefaults.setUserDefaults(ticher: tickers)
                     DispatchQueue.main.async() {
-                        self?.cryptocurrencyView(ticker: tickers)
+                        strongSelf.cryptocurrencyView(ticker: tickers)
                     }
                     completionHandler(NCUpdateResult.newData)
                 case .failure:
@@ -75,8 +76,6 @@ class TodayViewController: UIViewController, UITableViewDataSource, UITableViewD
     
     
     func cryptocurrencyView(ticker: [Ticker]) {
-        print(ticker.count)
-        print(ticker.isEmpty)
         self.emptyButton.isHidden = !ticker.isEmpty
         self.cryptocurrency = ticker
         

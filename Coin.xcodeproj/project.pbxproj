@@ -11,6 +11,7 @@
 		9DE27A505546C1A6FAC652B0 /* Pods_CryptoCurrency_watchOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 46520A5B8ACF1A943782EBA4 /* Pods_CryptoCurrency_watchOS.framework */; };
 		B1397B9820C41DD100A93FD2 /* UISplitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1397B9720C41DD100A93FD2 /* UISplitViewController.swift */; };
 		B1798B0D20CC51F1004A2309 /* protocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1798B0C20CC51F1004A2309 /* protocol.swift */; };
+		B1817F5E213DE7BA0073CDC7 /* BackgroundRefresh.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1817F5D213DE7BA0073CDC7 /* BackgroundRefresh.swift */; };
 		BE09E86F83C4C87E0C1209BA /* Pods_Cryptocurrency_monitor_widget.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B24CCD9F49DA85AEAC5AA79 /* Pods_Cryptocurrency_monitor_widget.framework */; };
 		CAB6423711272B09BACBCB78 /* Pods_Crypto_monitor_Watch_Extension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 767BAC04F27D5A468B750C19 /* Pods_Crypto_monitor_Watch_Extension.framework */; };
 		D41841D00AC7E52EE7B4400F /* Pods_Coin.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F91D764A862E2B7E34DE4862 /* Pods_Coin.framework */; };
@@ -212,6 +213,7 @@
 		9320A7CF324B6EF07C919266 /* Pods-Cryptocurrency monitor widget.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Cryptocurrency monitor widget.release.xcconfig"; path = "Pods/Target Support Files/Pods-Cryptocurrency monitor widget/Pods-Cryptocurrency monitor widget.release.xcconfig"; sourceTree = "<group>"; };
 		B1397B9720C41DD100A93FD2 /* UISplitViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UISplitViewController.swift; sourceTree = "<group>"; };
 		B1798B0C20CC51F1004A2309 /* protocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = protocol.swift; sourceTree = "<group>"; };
+		B1817F5D213DE7BA0073CDC7 /* BackgroundRefresh.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundRefresh.swift; sourceTree = "<group>"; };
 		BDAC7D2115AEFD5FBEBFD26F /* Pods_CryptoCurrency_iOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CryptoCurrency_iOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C27B03F01E034C8D5D922198 /* Pods-Crypto monitor Watch Extension.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Crypto monitor Watch Extension.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Crypto monitor Watch Extension/Pods-Crypto monitor Watch Extension.debug.xcconfig"; sourceTree = "<group>"; };
 		C982DDD457B6A5B7E2931C96 /* Pods-CryptoCurrency iOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CryptoCurrency iOS.debug.xcconfig"; path = "Pods/Target Support Files/Pods-CryptoCurrency iOS/Pods-CryptoCurrency iOS.debug.xcconfig"; sourceTree = "<group>"; };
@@ -457,6 +459,53 @@
 			name = Cells;
 			sourceTree = "<group>";
 		};
+		B1817F58213DE51E0073CDC7 /* MainVC */ = {
+			isa = PBXGroup;
+			children = (
+				FB2F88A71FEBFB28003B62CF /* CoinTableVC.swift */,
+				FB3EF7F92024941E00EB1C31 /* DZNEmptyData.swift */,
+				FBFA2A8A20ACE12A00B11B17 /* WCSession.swift */,
+				FB3EF7F420248E2500EB1C31 /* Spotlight.swift */,
+				B1817F57213DE21C0073CDC7 /* Cells */,
+			);
+			name = MainVC;
+			sourceTree = "<group>";
+		};
+		B1817F59213DE5B80073CDC7 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				FB6528672020945B004CE9D4 /* IAPHandler.swift */,
+				FB3EF7FB2024CB5F00EB1C31 /* ReviewRequest.swift */,
+			);
+			name = Services;
+			sourceTree = "<group>";
+		};
+		B1817F5A213DE5CD0073CDC7 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				FBA28ACF20097C31009EDB84 /* CurrentCurrencyTableViewCell.swift */,
+			);
+			name = Cells;
+			sourceTree = "<group>";
+		};
+		B1817F5B213DE6040073CDC7 /* CryptocurrencyInfo */ = {
+			isa = PBXGroup;
+			children = (
+				FB670CE51F16D900005761CF /* CryptocurrencyInfoViewController.swift */,
+				FBFA2A8720ACDB4800B11B17 /* Charts */,
+			);
+			name = CryptocurrencyInfo;
+			sourceTree = "<group>";
+		};
+		B1817F5C213DE67E0073CDC7 /* Setting */ = {
+			isa = PBXGroup;
+			children = (
+				FB466DD91F2D479200D771C9 /* SettingTableViewController.swift */,
+				FBA28AD120097C38009EDB84 /* CurrentCurrency */,
+			);
+			name = Setting;
+			sourceTree = "<group>";
+		};
 		FB565C461F421ADF004EA42F /* AddTable */ = {
 			isa = PBXGroup;
 			children = (
@@ -469,10 +518,12 @@
 		FB757A1E20A861CF004B40FB /* View */ = {
 			isa = PBXGroup;
 			children = (
-				FB2F88A71FEBFB28003B62CF /* CoinTableVC.swift */,
-				FB3EF7F92024941E00EB1C31 /* DZNEmptyData.swift */,
-				FBFA2A8A20ACE12A00B11B17 /* WCSession.swift */,
-				B1817F57213DE21C0073CDC7 /* Cells */,
+				B1817F58213DE51E0073CDC7 /* MainVC */,
+				B1817F5B213DE6040073CDC7 /* CryptocurrencyInfo */,
+				FB565C461F421ADF004EA42F /* AddTable */,
+				B1817F5C213DE67E0073CDC7 /* Setting */,
+				FB2F889B1FEBFA32003B62CF /* Main.storyboard */,
+				FB2F889E1FEBFABD003B62CF /* LaunchScreen.storyboard */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -494,7 +545,7 @@
 			isa = PBXGroup;
 			children = (
 				FBA28ACD20097AA6009EDB84 /* CurrentCurrencyTableVC.swift */,
-				FBA28ACF20097C31009EDB84 /* CurrentCurrencyTableViewCell.swift */,
+				B1817F5A213DE5CD0073CDC7 /* Cells */,
 			);
 			name = CurrentCurrency;
 			sourceTree = "<group>";
@@ -519,6 +570,7 @@
 				FBB0098C1F4E37AF000B1298 /* cryptocurrencyRowController.swift */,
 				FBBF266D1F5AD2CD0050BED7 /* ComplicationController.swift */,
 				FBB0097B1F4E3292000B1298 /* ExtensionDelegate.swift */,
+				B1817F5D213DE7BA0073CDC7 /* BackgroundRefresh.swift */,
 				FB623FAE1F67464900C99460 /* Assets.xcassets */,
 				FBB0097F1F4E3292000B1298 /* Info.plist */,
 			);
@@ -560,17 +612,8 @@
 				FB9592531F20B8AB00F9F74B /* Coin.entitlements */,
 				FBB2CC9B1F155CF800D800FD /* AppDelegate.swift */,
 				FB757A1E20A861CF004B40FB /* View */,
-				FB670CE51F16D900005761CF /* CryptocurrencyInfoViewController.swift */,
-				FB466DD91F2D479200D771C9 /* SettingTableViewController.swift */,
-				FB6528672020945B004CE9D4 /* IAPHandler.swift */,
-				FB3EF7F420248E2500EB1C31 /* Spotlight.swift */,
-				FB3EF7FB2024CB5F00EB1C31 /* ReviewRequest.swift */,
-				FBA28AD120097C38009EDB84 /* CurrentCurrency */,
-				FBFA2A8720ACDB4800B11B17 /* Charts */,
-				FB565C461F421ADF004EA42F /* AddTable */,
+				B1817F59213DE5B80073CDC7 /* Services */,
 				FBFA2A8220AC395A00B11B17 /* Extensions */,
-				FB2F889B1FEBFA32003B62CF /* Main.storyboard */,
-				FB2F889E1FEBFABD003B62CF /* LaunchScreen.storyboard */,
 				FBB2CCA21F155CF800D800FD /* Assets.xcassets */,
 				FBB2CCA71F155CF800D800FD /* Info.plist */,
 			);
@@ -1136,6 +1179,7 @@
 				FBB0097C1F4E3292000B1298 /* ExtensionDelegate.swift in Sources */,
 				FBB0098D1F4E37AF000B1298 /* cryptocurrencyRowController.swift in Sources */,
 				FBBF266E1F5AD2CD0050BED7 /* ComplicationController.swift in Sources */,
+				B1817F5E213DE7BA0073CDC7 /* BackgroundRefresh.swift in Sources */,
 				FBB0097A1F4E3292000B1298 /* InterfaceController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
