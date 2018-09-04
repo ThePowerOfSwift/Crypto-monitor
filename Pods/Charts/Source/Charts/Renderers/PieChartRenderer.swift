@@ -426,7 +426,7 @@ open class PieChartRenderer: DataRenderer
                             text: valueText,
                             point: labelPoint,
                             align: align,
-                            attributes: [NSAttributedString.Key.font: valueFont, NSAttributedString.Key.foregroundColor: valueTextColor]
+                            attributes: [NSAttributedStringKey.font: valueFont, NSAttributedStringKey.foregroundColor: valueTextColor]
                         )
                         
                         if j < data.entryCount && pe?.label != nil
@@ -437,8 +437,8 @@ open class PieChartRenderer: DataRenderer
                                 point: CGPoint(x: labelPoint.x, y: labelPoint.y + lineHeight),
                                 align: align,
                                 attributes: [
-                                    NSAttributedString.Key.font: entryLabelFont ?? valueFont,
-                                    NSAttributedString.Key.foregroundColor: entryLabelColor ?? valueTextColor]
+                                    NSAttributedStringKey.font: entryLabelFont ?? valueFont,
+                                    NSAttributedStringKey.foregroundColor: entryLabelColor ?? valueTextColor]
                             )
                         }
                     }
@@ -452,8 +452,8 @@ open class PieChartRenderer: DataRenderer
                                 point: CGPoint(x: labelPoint.x, y: labelPoint.y + lineHeight / 2.0),
                                 align: align,
                                 attributes: [
-                                    NSAttributedString.Key.font: entryLabelFont ?? valueFont,
-                                    NSAttributedString.Key.foregroundColor: entryLabelColor ?? valueTextColor]
+                                    NSAttributedStringKey.font: entryLabelFont ?? valueFont,
+                                    NSAttributedStringKey.foregroundColor: entryLabelColor ?? valueTextColor]
                             )
                         }
                     }
@@ -464,7 +464,7 @@ open class PieChartRenderer: DataRenderer
                             text: valueText,
                             point: CGPoint(x: labelPoint.x, y: labelPoint.y + lineHeight / 2.0),
                             align: align,
-                            attributes: [NSAttributedString.Key.font: valueFont, NSAttributedString.Key.foregroundColor: valueTextColor]
+                            attributes: [NSAttributedStringKey.font: valueFont, NSAttributedStringKey.foregroundColor: valueTextColor]
                         )
                     }
                 }
@@ -482,7 +482,7 @@ open class PieChartRenderer: DataRenderer
                             text: valueText,
                             point: CGPoint(x: x, y: y),
                             align: .center,
-                            attributes: [NSAttributedString.Key.font: valueFont, NSAttributedString.Key.foregroundColor: valueTextColor]
+                            attributes: [NSAttributedStringKey.font: valueFont, NSAttributedStringKey.foregroundColor: valueTextColor]
                         )
                         
                         if j < data.entryCount && pe?.label != nil
@@ -493,8 +493,8 @@ open class PieChartRenderer: DataRenderer
                                 point: CGPoint(x: x, y: y + lineHeight),
                                 align: .center,
                                 attributes: [
-                                    NSAttributedString.Key.font: entryLabelFont ?? valueFont,
-                                    NSAttributedString.Key.foregroundColor: entryLabelColor ?? valueTextColor]
+                                    NSAttributedStringKey.font: entryLabelFont ?? valueFont,
+                                    NSAttributedStringKey.foregroundColor: entryLabelColor ?? valueTextColor]
                             )
                         }
                     }
@@ -508,8 +508,8 @@ open class PieChartRenderer: DataRenderer
                                 point: CGPoint(x: x, y: y + lineHeight / 2.0),
                                 align: .center,
                                 attributes: [
-                                    NSAttributedString.Key.font: entryLabelFont ?? valueFont,
-                                    NSAttributedString.Key.foregroundColor: entryLabelColor ?? valueTextColor]
+                                    NSAttributedStringKey.font: entryLabelFont ?? valueFont,
+                                    NSAttributedStringKey.foregroundColor: entryLabelColor ?? valueTextColor]
                             )
                         }
                     }
@@ -520,7 +520,7 @@ open class PieChartRenderer: DataRenderer
                             text: valueText,
                             point: CGPoint(x: x, y: y + lineHeight / 2.0),
                             align: .center,
-                            attributes: [NSAttributedString.Key.font: valueFont, NSAttributedString.Key.foregroundColor: valueTextColor]
+                            attributes: [NSAttributedStringKey.font: valueFont, NSAttributedStringKey.foregroundColor: valueTextColor]
                         )
                     }
                 }

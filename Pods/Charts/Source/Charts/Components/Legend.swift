@@ -167,7 +167,7 @@ open class Legend: ComponentBase
             guard let label = entry.label
                 else { continue }
             
-            let size = (label as NSString!).size(withAttributes: [NSAttributedString.Key.font: font])
+            let size = (label as NSString!).size(withAttributes: [NSAttributedStringKey.font: font])
             
             if size.width > maxW
             {
@@ -256,7 +256,7 @@ open class Legend: ComponentBase
                 
                 if label != nil
                 {
-                    let size = (label as NSString!).size(withAttributes: [NSAttributedString.Key.font: labelFont])
+                    let size = (label as NSString!).size(withAttributes: [NSAttributedStringKey.font: labelFont])
                     
                     if drawingForm && !wasStacked
                     {
@@ -315,7 +315,7 @@ open class Legend: ComponentBase
             
             // Start calculating layout
             
-            let labelAttrs = [NSAttributedString.Key.font: labelFont]
+            let labelAttrs = [NSAttributedStringKey.font: labelFont]
             var maxLineWidth: CGFloat = 0.0
             var currentLineWidth: CGFloat = 0.0
             var requiredWidth: CGFloat = 0.0

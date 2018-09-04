@@ -42,7 +42,7 @@ public struct CryptoCurrencyKit {
         }
     }
 }
-    public enum Money: String, CaseIterable {
+    public enum Money: String {
         case usd = "USD"
         case eur = "EUR"
         case btc = "BTC"
@@ -71,6 +71,21 @@ public struct CryptoCurrencyKit {
             case .rub:
                 return "🇷🇺"
             }
+        }
+        
+        public static var allValues: [Money] {
+            return [.usd,
+                    .eur,
+                    .btc,
+                    .gbp,
+                    .jpy,
+                    .cny,
+                    .hkd,
+                    .rub]
+        }
+        
+        public static var allRawValues: [String] {
+            return allValues.map { $0.rawValue }
         }
     }
 

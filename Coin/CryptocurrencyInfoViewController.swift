@@ -56,6 +56,8 @@ class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
         //Notification
         NotificationCenter.default.addObserver(self, selector: #selector(newCurrentCurrency), name: .newCurrentCurrency, object: nil)
         
+        percentChangeView()
+        
         let keyStore = NSUbiquitousKeyValueStore()
         selectSegmentedControl?.selectedSegmentIndex = Int(keyStore.longLong(forKey: "typeChart"))
         zoomSegmentedControl?.selectedSegmentIndex = Int(keyStore.longLong(forKey: "zoomChart"))
@@ -253,7 +255,7 @@ class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
         let dateFormatter = DateFormatter()
         dateFormatter.locale = Locale.current
         
-        switch zoomSegmentedControl?.selectedSegmentIndex {
+        switch zoomSegmentedControl.selectedSegmentIndex {
         case 0:
             of = userCalendar.date(byAdding: .day, value: -1, to: Date())! as NSDate
             xAxis?.labelCount = 5
@@ -428,7 +430,7 @@ class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
     func errorAlert(error: Error) {
         if (error as NSError).code != -999 {
             let alert = UIAlertController(title: nil, message: error.localizedDescription, preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "Ok", style: UIAlertAction.Style.default, handler: nil))
+            alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler: nil))
             self.present(alert, animated: true, completion: nil)
         }
     }

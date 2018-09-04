@@ -17,7 +17,7 @@ class CurrentCurrencyTableVC: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.money = Money.allCases
+        self.money = Money.allValues
         self.tableView?.reloadData()
     }
 
