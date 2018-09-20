@@ -80,19 +80,19 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		B11A8EA521527E6900D0EFE9 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = FBB2CC901F155CF800D800FD /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = FBB009731F4E3292000B1298;
+			remoteInfo = "Crypto monitor Watch Extension";
+		};
 		FB20D0DF2008FECD0007305C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = FBB2CC901F155CF800D800FD /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = FBBE490B2008F5A200277014;
 			remoteInfo = "CryptoCurrency iOS";
-		};
-		FB23520B1F72B7070055E59B /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = FBB2CC901F155CF800D800FD /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = FBB009671F4E3292000B1298;
-			remoteInfo = "Crypto monitor Watch";
 		};
 		FB99B4941F2FEF1F007C0235 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -108,26 +108,12 @@
 			remoteGlobalIDString = FBBE491C2008F5E700277014;
 			remoteInfo = "CryptoCurrency watchOS";
 		};
-		FBB009761F4E3292000B1298 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = FBB2CC901F155CF800D800FD /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = FBB009731F4E3292000B1298;
-			remoteInfo = "Crypto monitor Watch Extension";
-		};
 		FBB009801F4E3292000B1298 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = FBB2CC901F155CF800D800FD /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = FBB009671F4E3292000B1298;
 			remoteInfo = "Crypto monitor Watch";
-		};
-		FBBE49222008F5E700277014 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = FBB2CC901F155CF800D800FD /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = FBBE491C2008F5E700277014;
-			remoteInfo = "CryptoCurrency watchOS";
 		};
 /* End PBXContainerItemProxy section */
 
@@ -703,8 +689,8 @@
 			buildRules = (
 			);
 			dependencies = (
+				B11A8EA621527E6900D0EFE9 /* PBXTargetDependency */,
 				FBA6D950200C3E1900B9F3EE /* PBXTargetDependency */,
-				FBB009771F4E3292000B1298 /* PBXTargetDependency */,
 			);
 			name = "Crypto monitor Watch";
 			productName = "Crypto monitor Watch";
@@ -727,8 +713,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				FB23520C1F72B7070055E59B /* PBXTargetDependency */,
-				FBBE49232008F5E700277014 /* PBXTargetDependency */,
 			);
 			name = "Crypto monitor Watch Extension";
 			productName = "Crypto monitor Watch Extension";
@@ -929,8 +913,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FB2F88AD1FEBFB78003B62CF /* Interface.storyboard in Resources */,
 				FB2F88E91FEC07C9003B62CF /* InfoPlist.strings in Resources */,
+				FB2F88AD1FEBFB78003B62CF /* Interface.storyboard in Resources */,
 				FBB0096E1F4E3292000B1298 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -939,9 +923,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FB2F88E41FEC07C8003B62CF /* InfoPlist.strings in Resources */,
 				FB623FAF1F67464900C99460 /* Assets.xcassets in Resources */,
 				FB2F88EE1FEC07CA003B62CF /* Localizable.strings in Resources */,
-				FB2F88E41FEC07C8003B62CF /* InfoPlist.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1230,15 +1214,15 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		B11A8EA621527E6900D0EFE9 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = FBB009731F4E3292000B1298 /* Crypto monitor Watch Extension */;
+			targetProxy = B11A8EA521527E6900D0EFE9 /* PBXContainerItemProxy */;
+		};
 		FB20D0E02008FECD0007305C /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = FBBE490B2008F5A200277014 /* CryptoCurrency iOS */;
 			targetProxy = FB20D0DF2008FECD0007305C /* PBXContainerItemProxy */;
-		};
-		FB23520C1F72B7070055E59B /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = FBB009671F4E3292000B1298 /* Crypto monitor Watch */;
-			targetProxy = FB23520B1F72B7070055E59B /* PBXContainerItemProxy */;
 		};
 		FB99B4951F2FEF1F007C0235 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -1250,20 +1234,10 @@
 			target = FBBE491C2008F5E700277014 /* CryptoCurrency watchOS */;
 			targetProxy = FBA6D94F200C3E1900B9F3EE /* PBXContainerItemProxy */;
 		};
-		FBB009771F4E3292000B1298 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = FBB009731F4E3292000B1298 /* Crypto monitor Watch Extension */;
-			targetProxy = FBB009761F4E3292000B1298 /* PBXContainerItemProxy */;
-		};
 		FBB009811F4E3292000B1298 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = FBB009671F4E3292000B1298 /* Crypto monitor Watch */;
 			targetProxy = FBB009801F4E3292000B1298 /* PBXContainerItemProxy */;
-		};
-		FBBE49232008F5E700277014 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = FBBE491C2008F5E700277014 /* CryptoCurrency watchOS */;
-			targetProxy = FBBE49222008F5E700277014 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 

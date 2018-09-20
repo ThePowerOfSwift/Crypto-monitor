@@ -51,6 +51,7 @@ public struct CryptoCurrencyKit {
         case cny = "CNY"
         case hkd = "HKD"
         case rub = "RUB"
+        case cad = "CAD"
         
         public var flag: String {
             switch self {
@@ -70,6 +71,8 @@ public struct CryptoCurrencyKit {
                 return "🇭🇰"
             case .rub:
                 return "🇷🇺"
+            case .cad:
+                return "🇨🇦"
             }
         }
         
@@ -81,7 +84,8 @@ public struct CryptoCurrencyKit {
                     .jpy,
                     .cny,
                     .hkd,
-                    .rub]
+                    .rub,
+                    .cad]
         }
         
         public static var allRawValues: [String] {

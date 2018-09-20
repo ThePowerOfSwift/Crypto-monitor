@@ -36,14 +36,13 @@ class ExtensionDelegate: NSObject, WKExtensionDelegate, URLSessionDownloadDelega
             // Use a switch statement to check the task type
             
             switch task {
-            case let backgroundTask as WKApplicationRefreshBackgroundTask:
+            case _ as WKApplicationRefreshBackgroundTask:
                 // Be sure to complete the background task once you’re done.
                 print("backgroundTask \(Date())")
-                scheduleURLSession()
+                beginDownloadTask()
                 BackgroundRefresh.schedule()
                 
-                self.savedTask = backgroundTask
-            //  backgroundTask.setTaskCompletedWithSnapshot(false)
+                self.savedTask = task
             case let snapshotTask as WKSnapshotRefreshBackgroundTask:
                 print("snapshotTask \(Date())")
                 snapshotTask.setTaskCompleted(restoredDefaultState: true, estimatedSnapshotExpiration: Date.distantFuture, userInfo: nil)
@@ -63,7 +62,7 @@ class ExtensionDelegate: NSObject, WKExtensionDelegate, URLSessionDownloadDelega
         }
     }
     
-    func scheduleURLSession() {
+    func beginDownloadTask() {
         print("scheduleURLSession")
         var urlString = "https://api.coinmarketcap.com/v1/ticker/"
         urlString.append("?convert=\(SettingsUserDefaults.getCurrentCurrency().rawValue)")
@@ -73,7 +72,7 @@ class ExtensionDelegate: NSObject, WKExtensionDelegate, URLSessionDownloadDelega
         if let url = URL(string: urlString) {
             let backgroundConfigObject = URLSessionConfiguration.background(withIdentifier: NSUUID().uuidString)
             backgroundConfigObject.sessionSendsLaunchEvents = true
-            backgroundConfigObject.timeoutIntervalForResource = 60
+            backgroundConfigObject.timeoutIntervalForRequest = 6.0
             let backgroundSession = URLSession(configuration: backgroundConfigObject, delegate: self, delegateQueue: nil)
             
             let task = backgroundSession.downloadTask(with: url)
@@ -85,15 +84,15 @@ class ExtensionDelegate: NSObject, WKExtensionDelegate, URLSessionDownloadDelega
     
     //MARK: Delegate methods
     func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didFinishDownloadingTo location: URL) {
-        print("urlSession")
-        
-        
+        print("!!! urlSession")
+
+
         guard let httpResponse = downloadTask.response as? HTTPURLResponse,
             (200...299).contains(httpResponse.statusCode) else {
                 print ("server error")
                 return
         }
-        
+
         do {
             let data = try Data(contentsOf: location)
             if let idArray = UserDefaults().array(forKey: "id") as? [String], !idArray.isEmpty {
@@ -106,13 +105,14 @@ class ExtensionDelegate: NSObject, WKExtensionDelegate, URLSessionDownloadDelega
                             tickerFilterArray.append(json)
                         }
                     }
-                   // print(tickerFilterArray)
+                    print(tickerFilterArray)
                     SettingsUserDefaults.setUserDefaults(ticher: tickerFilterArray)
                     DispatchQueue.main.async {
                         let complicationServer = CLKComplicationServer.sharedInstance()
                         complicationServer.activeComplications?.forEach(complicationServer.reloadTimeline)
                     }
                     self.savedTask?.setTaskCompletedWithSnapshot(true)
+                    self.savedTask = nil
                 } catch {
                     print("error trying to convert data to JSON")
                     print(error)
@@ -122,6 +122,7 @@ class ExtensionDelegate: NSObject, WKExtensionDelegate, URLSessionDownloadDelega
         catch{
             print("error read file")
             self.savedTask?.setTaskCompletedWithSnapshot(false)
+            self.savedTask = nil
         }
     }
 

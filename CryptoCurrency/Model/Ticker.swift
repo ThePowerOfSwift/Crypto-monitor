@@ -51,6 +51,10 @@ public struct Ticker {
     public let volumeRUB24h: Double?
     public let marketCapRUB: Double?
     
+    public let priceCAD: Double?
+    public let volumeCAD24h: Double?
+    public let marketCapCAD: Double?
+    
     enum CodingKeys: String, CodingKey {
         case id
         case name
@@ -95,6 +99,10 @@ public struct Ticker {
         case priceRUB = "price_rub"
         case volumeRUB24h = "24h_volume_rub"
         case marketCapRUB = "market_cap_rub"
+        
+        case priceCAD = "price_cad"
+        case volumeCAD24h = "24h_volume_cad"
+        case marketCapCAD = "market_cap_cad"
     }
 }
 
@@ -123,6 +131,8 @@ extension Ticker {
             return priceBTC
         case .rub:
             return priceRUB
+        case .cad:
+            return priceCAD
         }
     }
     
@@ -144,6 +154,8 @@ extension Ticker {
             return volumeBTC24h
         case .rub:
             return volumeRUB24h
+        case .cad:
+            return volumeCAD24h
         }
     }
     
@@ -165,6 +177,8 @@ extension Ticker {
             return marketCapBTC
         case .rub:
             return marketCapRUB
+        case .cad:
+            return marketCapCAD
         }
     }
     
@@ -314,6 +328,9 @@ extension Ticker: Encodable {
         try container.encode(doubleToString(double: priceRUB), forKey: .priceRUB)
         try container.encode(doubleToString(double: volumeRUB24h), forKey: .volumeRUB24h)
         try container.encode(doubleToString(double: marketCapRUB), forKey: .marketCapRUB)
+        try container.encode(doubleToString(double: priceCAD), forKey: .priceCAD)
+        try container.encode(doubleToString(double: volumeCAD24h), forKey: .volumeCAD24h)
+        try container.encode(doubleToString(double: marketCapCAD), forKey: .marketCapCAD)
     }
     
     func doubleToString(double: Double?) -> String? {
@@ -334,7 +351,8 @@ extension Ticker {
                 priceJPY: Double?, volumeJPY24h: Double?, marketCapJPY: Double?,
                 priceCNY: Double?, volumeCNY24h: Double?, marketCapCNY: Double?,
                 priceHKD: Double?, volumeHKD24h: Double?, marketCapHKD: Double?,
-                priceRUB: Double?, volumeRUB24h: Double?, marketCapRUB: Double?
+                priceRUB: Double?, volumeRUB24h: Double?, marketCapRUB: Double?,
+                priceCAD: Double?, volumeCAD24h: Double?, marketCapCAD: Double?
         
         ) {
         self.init(id: id, symbol: symbol, name: name, rank: rank, availableSupply: availableSupply, totalSupply: totalSupply, percentChange1h: percentChange1h, percentChange24h: percentChange24h, percentChange7d: percentChange7d, lastUpdated: lastUpdated, priceBTC: priceBTC, volumeBTC24h: volumeBTC24h, marketCapBTC: marketCapBTC,
@@ -344,7 +362,8 @@ extension Ticker {
                   priceJPY: priceJPY, volumeJPY24h: volumeJPY24h, marketCapJPY: marketCapJPY,
                   priceCNY: priceCNY, volumeCNY24h: volumeCNY24h, marketCapCNY: marketCapCNY,
                   priceHKD: priceHKD, volumeHKD24h: volumeHKD24h, marketCapHKD: marketCapHKD,
-                  priceRUB: priceRUB, volumeRUB24h: volumeRUB24h, marketCapRUB: marketCapRUB)
+                  priceRUB: priceRUB, volumeRUB24h: volumeRUB24h, marketCapRUB: marketCapRUB,
+                  priceCAD: priceCAD, volumeCAD24h: volumeCAD24h, marketCapCAD: marketCapCAD)
     }
 }
 
@@ -516,6 +535,22 @@ extension Ticker: Decodable {
             marketCapRUB = Double(marketCapRUBTemp)
         } else {
             marketCapRUB = nil
+        }
+
+        if let priceCADTemp = try? values.decode(String.self, forKey: .priceCAD) {
+            priceCAD = Double(priceCADTemp)
+        } else {
+            priceCAD = nil
+        }
+        if let volumeCAD24hTemp = try? values.decode(String.self, forKey: .volumeCAD24h) {
+            volumeCAD24h = Double(volumeCAD24hTemp)
+        } else {
+            volumeCAD24h = nil
+        }
+        if let marketCapCADTemp = try? values.decode(String.self, forKey: .marketCapCAD) {
+            marketCapCAD = Double(marketCapCADTemp)
+        } else {
+            marketCapCAD = nil
         }
     }
 }
