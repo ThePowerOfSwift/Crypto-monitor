@@ -11,6 +11,9 @@ import Charts
 import CryptoCurrency
 import Alamofire
 import CoreSpotlight
+import Intents
+import IntentsUI
+import os.log
 
 class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
     
@@ -64,12 +67,37 @@ class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
         
         paymentButton?.imageView?.contentMode = .scaleAspectFit
         paymentButton?.setImage(#imageLiteral(resourceName: "changellyLogo"), for: .normal)
+        
+    
+        
     }
  
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         self.navigationItem.title = ticker?.symbol
         lineChartView?.clear()
+        
+        if #available(iOS 12.0, *) {
+            let addShortcutButton = INUIAddVoiceShortcutButton(style: .whiteOutline)
+            
+            let activity = NSUserActivity(activityType: "Valentyn.Mialin.crypto.monitor.show-currency")
+            activity.title = NSLocalizedString("Show the \(String(describing: ticker?.name)) rate", comment: "")
+            activity.userInfo = ["tickerID" : ticker?.id ?? "bitcoin"] // 3
+            activity.isEligibleForSearch = true // 4
+            activity.isEligibleForPrediction = true // 5
+            activity.persistentIdentifier = NSUserActivityPersistentIdentifier("Valentyn.Mialin.crypto.monitor.show-currency") // 6
+            view.userActivity = activity // 7
+            activity.becomeCurrent() // 8
+            
+            addShortcutButton.shortcut = INShortcut(userActivity: activity)
+            addShortcutButton.delegate = self
+            
+            addShortcutButton.translatesAutoresizingMaskIntoConstraints = false
+            
+            self.view.addSubview(addShortcutButton)
+            self.view.centerXAnchor.constraint(equalTo: addShortcutButton.centerXAnchor).isActive = true
+            self.view.centerYAnchor.constraint(equalTo: addShortcutButton.centerYAnchor).isActive = true
+        }
     }
     
     override func viewDidDisappear(_ animated: Bool) {
@@ -200,13 +228,13 @@ class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
             
             // 1h
             self.oneHourChangeLabel?.text = ticker.percentChange1h != nil ? "\(ticker.percentChange1h!)%" : "-"
-            self.backgroundColorView(view:  self.oneHourChangeView, percentChange: ticker.percentChange1h)
+            PercentChangeView.backgroundColor(view:  self.oneHourChangeView, percentChange: ticker.percentChange1h)
             // 24h
             self.dayChangeLabel?.text = ticker.percentChange24h != nil ? "\(ticker.percentChange24h!)%" : "-"
-            self.backgroundColorView(view:  self.dayChangeView, percentChange: ticker.percentChange24h)
+            PercentChangeView.backgroundColor(view:  self.dayChangeView, percentChange: ticker.percentChange24h)
             // 7d
             self.weekChangeLabel?.text = ticker.percentChange7d != nil ? "\(ticker.percentChange7d!)%" : "-"
-            self.backgroundColorView(view:  self.weekChangeView, percentChange: ticker.percentChange7d)
+            PercentChangeView.backgroundColor(view:  self.weekChangeView, percentChange: ticker.percentChange7d)
             
             self.rankLabel?.text = String(ticker.rank)
             
@@ -215,20 +243,7 @@ class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
         }
     }
     
-    private func backgroundColorView(view: UIView?, percentChange: Double?) {
-        guard let view = view else { return }
-        guard let percentChange = percentChange else {
-            view.backgroundColor = .orange
-            return
-        }
-        
-        if percentChange >= 0 {
-            view.backgroundColor = UIColor(red:0.30, green:0.85, blue:0.39, alpha:1.0)
-        }
-        else{
-            view.backgroundColor = UIColor(red:1.00, green:0.23, blue:0.18, alpha:1.0)
-        }
-    }
+   
     
     private func loadlineView() {
         guard let ticker = ticker else { return }
@@ -385,7 +400,7 @@ class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
     }
     
     private func startRefreshActivityIndicator() {
-        let activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView.init(activityIndicatorStyle: .gray)
+        let activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView.init(style: .gray)
         activityIndicator.color = UIColor(red:0.00, green:0.48, blue:1.00, alpha:1.0)
         let refreshBarButton = UIBarButtonItem(customView: activityIndicator)
         self.navigationItem.rightBarButtonItem = refreshBarButton
@@ -412,14 +427,17 @@ class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
         if let languageCode = Locale.current.languageCode {
             switch languageCode {
             case "ar", "es", "fr", "de", "pt", "vi", "hi", "ja", "ko", "cn", "en", "ru":
-                UIApplication.shared.open(URL(string: "https://\(languageCode).changelly.com/?ref_id=\(redId)")!, options: [:], completionHandler: nil)
+                UIApplication.shared.open(URL(string: "https://\(languageCode).changelly.com/?ref_id=\(redId)")!, options: convertToUIApplicationOpenExternalURLOptionsKeyDictionary([:]), completionHandler: nil)
             default :
-                UIApplication.shared.open(URL(string: "https://changelly.com/?ref_id=\(redId)")!, options: [:], completionHandler: nil)
+                UIApplication.shared.open(URL(string: "https://changelly.com/?ref_id=\(redId)")!, options: convertToUIApplicationOpenExternalURLOptionsKeyDictionary([:]), completionHandler: nil)
             }
         }
         else{
-            UIApplication.shared.open(URL(string: "https://changelly.com/?ref_id=\(redId)")!, options: [:], completionHandler: nil)
+            UIApplication.shared.open(URL(string: "https://changelly.com/?ref_id=\(redId)")!, options: convertToUIApplicationOpenExternalURLOptionsKeyDictionary([:]), completionHandler: nil)
         }
+    }
+    
+    @IBAction func buttonAction(sender: UIButton) {
     }
 
     @objc func reload(_ sender:UIButton) {
@@ -430,7 +448,7 @@ class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
     func errorAlert(error: Error) {
         if (error as NSError).code != -999 {
             let alert = UIAlertController(title: nil, message: error.localizedDescription, preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler: nil))
+            alert.addAction(UIAlertAction(title: "Ok", style: UIAlertAction.Style.default, handler: nil))
             self.present(alert, animated: true, completion: nil)
         }
     }
@@ -453,9 +471,61 @@ extension CryptocurrencyInfoViewController: CoinDelegate {
         loadTicker()
         getMinDateCharts()
     }
-
 }
 
+@available(iOS 12.0, *)
+extension CryptocurrencyInfoViewController: INUIAddVoiceShortcutButtonDelegate {
+    
+    func present(_ addVoiceShortcutViewController: INUIAddVoiceShortcutViewController, for addVoiceShortcutButton: INUIAddVoiceShortcutButton) {
+        addVoiceShortcutViewController.delegate = self
+        present(addVoiceShortcutViewController, animated: true, completion: nil)
+    }
+    
+    /// - Tag: edit_phrase
+    func present(_ editVoiceShortcutViewController: INUIEditVoiceShortcutViewController, for addVoiceShortcutButton: INUIAddVoiceShortcutButton) {
+        editVoiceShortcutViewController.delegate = self
+        present(editVoiceShortcutViewController, animated: true, completion: nil)
+    }
+}
+@available(iOS 12.0, *)
+extension CryptocurrencyInfoViewController: INUIAddVoiceShortcutViewControllerDelegate {
+    
+    func addVoiceShortcutViewController(_ controller: INUIAddVoiceShortcutViewController,
+                                        didFinishWith voiceShortcut: INVoiceShortcut?,
+                                        error: Error?) {
+        if let error = error as NSError? {
+            os_log("Error adding voice shortcut: %@", log: OSLog.default, type: .error, error)
+        }
+        
+        controller.dismiss(animated: true, completion: nil)
+    }
+    
+    func addVoiceShortcutViewControllerDidCancel(_ controller: INUIAddVoiceShortcutViewController) {
+        controller.dismiss(animated: true, completion: nil)
+    }
+}
+@available(iOS 12.0, *)
+extension CryptocurrencyInfoViewController: INUIEditVoiceShortcutViewControllerDelegate {
+    
+    func editVoiceShortcutViewController(_ controller: INUIEditVoiceShortcutViewController,
+                                         didUpdate voiceShortcut: INVoiceShortcut?,
+                                         error: Error?) {
+        if let error = error as NSError? {
+            os_log("Error adding voice shortcut: %@", log: OSLog.default, type: .error, error)
+        }
+        
+        controller.dismiss(animated: true, completion: nil)
+    }
+    
+    func editVoiceShortcutViewController(_ controller: INUIEditVoiceShortcutViewController,
+                                         didDeleteVoiceShortcutWithIdentifier deletedVoiceShortcutIdentifier: UUID) {
+        controller.dismiss(animated: true, completion: nil)
+    }
+    
+    func editVoiceShortcutViewControllerDidCancel(_ controller: INUIEditVoiceShortcutViewController) {
+        controller.dismiss(animated: true, completion: nil)
+    }
+}
 
 class ChartXAxisFormatter: NSObject {
     fileprivate var dateFormatter: DateFormatter?
@@ -475,4 +545,9 @@ extension ChartXAxisFormatter: IAxisValueFormatter {
         let date = Date(timeIntervalSince1970: value )
         return dateFormatter.string(from: date)
     }
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertToUIApplicationOpenExternalURLOptionsKeyDictionary(_ input: [String: Any]) -> [UIApplication.OpenExternalURLOptionsKey: Any] {
+	return Dictionary(uniqueKeysWithValues: input.map { key, value in (UIApplication.OpenExternalURLOptionsKey(rawValue: key), value)})
 }

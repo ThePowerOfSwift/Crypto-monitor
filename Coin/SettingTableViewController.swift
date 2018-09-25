@@ -75,7 +75,7 @@ class writeReviewCell: UITableViewCell {
 
 class CoinMarketCapCell: UITableViewCell {
     @IBAction func coinMarketCapAction(_ sender: Any) {
-        UIApplication.shared.open(URL(string: "https://coinmarketcap.com")!, options: [:], completionHandler: nil)
+        UIApplication.shared.open(URL(string: "https://coinmarketcap.com")!, options: convertToUIApplicationOpenExternalURLOptionsKeyDictionary([:]), completionHandler: nil)
     }
 }
 
@@ -189,4 +189,9 @@ class SettingTableViewController: UITableViewController {
             return tableView.dequeueReusableCell(withIdentifier: "rateChangePeriodCell", for: indexPath)
         }
     }
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertToUIApplicationOpenExternalURLOptionsKeyDictionary(_ input: [String: Any]) -> [UIApplication.OpenExternalURLOptionsKey: Any] {
+	return Dictionary(uniqueKeysWithValues: input.map { key, value in (UIApplication.OpenExternalURLOptionsKey(rawValue: key), value)})
 }

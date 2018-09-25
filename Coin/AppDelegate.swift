@@ -18,7 +18,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
     weak var masterViewController: MainVC?
 
-    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
         //SplitViewController
         guard let splitViewController = window?.rootViewController as? UISplitViewController,
@@ -59,7 +59,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
 
-    func application(_ application: UIApplication, continue userActivity: NSUserActivity, restorationHandler: @escaping ([Any]?) -> Void) -> Bool {
+    func application(_ application: UIApplication, continue userActivity: NSUserActivity, restorationHandler: @escaping ([UIUserActivityRestoring]?) -> Void) -> Bool {
+        
+        
         if userActivity.activityType == CSSearchableItemActionType {
             if let tickerID = userActivity.userInfo?[CSSearchableItemActivityIdentifier] as? String {
                 let keyStore = NSUbiquitousKeyValueStore ()
@@ -74,7 +76,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
 
 
-    func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any] = [:]) -> Bool {
+    func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
         // When you type customSchemeExample://red in the search bar in Safari
         
         if let urlComponents =  NSURLComponents(url: url, resolvingAgainstBaseURL: false) {

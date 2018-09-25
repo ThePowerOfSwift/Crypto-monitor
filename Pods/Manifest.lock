@@ -1,27 +1,35 @@
 PODS:
-  - Alamofire (4.6.0)
-  - AlamofireNetworkActivityIndicator (2.2.0):
-    - Alamofire (~> 4.5)
-  - Charts (3.0.5):
-    - Charts/Core (= 3.0.5)
-  - Charts/Core (3.0.5)
+  - Alamofire (4.7.3)
+  - AlamofireNetworkActivityIndicator (2.3.0):
+    - Alamofire (~> 4.7)
+  - Charts (3.2.0):
+    - Charts/Core (= 3.2.0)
+  - Charts/Core (3.2.0)
   - DZNEmptyDataSet (1.8.1)
-  - SwiftyJSON (4.0.0)
+  - SwiftyJSON (4.1.0)
 
 DEPENDENCIES:
-  - Alamofire (~> 4.5)
-  - AlamofireNetworkActivityIndicator (~> 2.2)
-  - Charts (~> 3.0.4)
+  - Alamofire
+  - AlamofireNetworkActivityIndicator
+  - Charts
   - DZNEmptyDataSet
   - SwiftyJSON
 
+SPEC REPOS:
+  https://github.com/cocoapods/specs.git:
+    - Alamofire
+    - AlamofireNetworkActivityIndicator
+    - Charts
+    - DZNEmptyDataSet
+    - SwiftyJSON
+
 SPEC CHECKSUMS:
-  Alamofire: f41a599bd63041760b26d393ec1069d9d7b917f4
-  AlamofireNetworkActivityIndicator: 81e1630e7cfed22a4e4e82a174c59e651dc4f8ca
-  Charts: 45cdc985b764c838b35ee47eb1365d15735f6d1a
+  Alamofire: c7287b6e5d7da964a70935e5db17046b7fde6568
+  AlamofireNetworkActivityIndicator: 18346ff6d770d9513d0ac6f2d99706f40f93dbaa
+  Charts: 680c8328bd5e90cb14f67e00d2176f3113d19141
   DZNEmptyDataSet: 9525833b9e68ac21c30253e1d3d7076cc828eaa7
-  SwiftyJSON: 070dabdcb1beb81b247c65ffa3a79dbbfb3b48aa
+  SwiftyJSON: c29297daf073d2aa016295d5809cdd68045c39b3
 
-PODFILE CHECKSUM: 2efeb982f7c586ff723b0aa060e843b7bb371850
+PODFILE CHECKSUM: be3a16c6dfb061a91e84f0edf23603c7631712ba
 
-COCOAPODS: 1.2.1
+COCOAPODS: 1.5.3

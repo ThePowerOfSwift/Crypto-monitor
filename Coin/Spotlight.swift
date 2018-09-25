@@ -9,6 +9,8 @@ import UIKit
 import MobileCoreServices
 import CoreSpotlight
 import CryptoCurrency
+import Intents
+import os.log
 
 extension MainVC {
     
@@ -39,6 +41,28 @@ extension MainVC {
                 
                 let searchableItem = CSSearchableItem(uniqueIdentifier: ticker.id, domainIdentifier: "mialin.Coin", attributeSet: searchableItemAttributeSet)
                 searchableItems.append(searchableItem)
+                
+                if #available(iOS 12.0, *) {
+                    let intent = ShowRateIntent()
+                    intent.id = ticker.id
+                //    intent.name = ticker.name
+                    
+                    let interaction = INInteraction(intent: intent, response: nil)
+                    
+                    // The order identifier is used to match with the donation so the interaction
+                    // can be deleted if a soup is removed from the menu.
+                    //interaction.identifier = order.identifier.uuidString
+                    
+                    interaction.donate { (error) in
+                        if error != nil {
+                            if let error = error as NSError? {
+                                os_log("Interaction donation failed: %@", log: OSLog.default, type: .error, error)
+                            }
+                        } else {
+                            os_log("Successfully donated interaction")
+                        }
+                    }
+                }
             }
             
             CSSearchableIndex.default().indexSearchableItems(searchableItems) { error in
@@ -48,6 +72,7 @@ extension MainVC {
                     print("Search item successfully indexed!")
                 }
             }
+   
         }
     }
     

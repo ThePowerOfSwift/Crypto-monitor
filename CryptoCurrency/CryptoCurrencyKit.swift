@@ -3,7 +3,7 @@ import Alamofire
 
 public struct CryptoCurrencyKit {
     
-    public static func fetchTickers(idArray: [String]? = nil, limit: Int? = 0, response: ((_ r: Response<Ticker>) -> Void)?) {
+    public static func fetchTickers(idArray: [String]? = nil, limit: Int? = 0, response: ((_ r: ResponseA<Ticker>) -> Void)?) {
         DispatchQueue .global (qos: .utility) .async {
             var urlString = "https://api.coinmarketcap.com/v1/ticker/"
             let convert = SettingsUserDefaults.getCurrentCurrency()
@@ -14,7 +14,7 @@ public struct CryptoCurrencyKit {
             let url = URL(string: urlString)!
             let urlRequest = URLRequest(url: url)
             
-            let closure: ((Response<Ticker>) -> Void)? = { r in
+            let closure: ((ResponseA<Ticker>) -> Void)? = { r in
                 switch r {
                 case .success(let data):
                     var tickerFilterArray = [Ticker]()
@@ -29,91 +29,81 @@ public struct CryptoCurrencyKit {
                         tickerFilterArray = data
                     }
                     DispatchQueue.main.async {
-                        response?(Response.success(tickerFilterArray))
+                        response?(ResponseA.success(tickerFilterArray))
                     }
                 case .failure(let error):
                     print(error.localizedDescription)
                     DispatchQueue.main.async {
-                        response?(Response.failure(error: error))
+                        response?(ResponseA.failure(error: error))
                     }
                 }
             }
             requestA(urlRequest: urlRequest, idArray: idArray, response: closure)
         }
     }
-}
-    public enum Money: String {
-        case usd = "USD"
-        case eur = "EUR"
-        case btc = "BTC"
-        case gbp = "GBP"
-        case jpy = "JPY"
-        case cny = "CNY"
-        case hkd = "HKD"
-        case rub = "RUB"
-        case cad = "CAD"
-        
-        public var flag: String {
-            switch self {
-            case .usd:
-                return "🇺🇸"
-            case .eur:
-                return "🇪🇺"
-            case .btc:
-                return "🌍"
-            case .gbp:
-                return "🇬🇧"
-            case .jpy:
-                return "🇯🇵"
-            case .cny:
-                return "🇨🇳"
-            case .hkd:
-                return "🇭🇰"
-            case .rub:
-                return "🇷🇺"
-            case .cad:
-                return "🇨🇦"
+    
+    public static func fetchTicker(coinName: String, response: ((_ r: ResponseD<Ticker>) -> Void)?) {
+        var urlString = "https://api.coinmarketcap.com/v1/ticker/"
+        urlString.append(coinName)
+        let convert = SettingsUserDefaults.getCurrentCurrency()
+        urlString.append("/?convert=\(convert.rawValue)")
+        let urlRequest = URLRequest(url: URL(string: urlString)!)
+        let closure: ((ResponseA<Ticker>) -> Void)? = { r in
+            switch r {
+            case .success(let data):
+                response?(ResponseD.success(data[0]))
+            case .failure(let error):
+                response?(ResponseD.failure(error: error))
             }
         }
-        
-        public static var allValues: [Money] {
-            return [.usd,
-                    .eur,
-                    .btc,
-                    .gbp,
-                    .jpy,
-                    .cny,
-                    .hkd,
-                    .rub,
-                    .cad]
-        }
-        
-        public static var allRawValues: [String] {
-            return allValues.map { $0.rawValue }
-        }
+        requestA(urlRequest: urlRequest, idArray: nil, response: closure)
     }
+}
+
 
 extension CryptoCurrencyKit {
-    public enum Response<T: Codable> {
+    public enum ResponseD<T: Codable> {
+        case failure(error: Error)
+        case success(T)
+    }
+    
+    public enum ResponseA<T: Codable> {
         case failure(error: Error)
         case success([T])
     }
     
-    static func requestA<T>(urlRequest: URLRequest, idArray: [String]?, response: ((_ r: Response<T>) -> Void)?) {
+    static func requestA<T>(urlRequest: URLRequest, idArray: [String]?, response: ((_ r: ResponseA<T>) -> Void)?) {
 
-        Alamofire.SessionManager.default.request(urlRequest).validate().responseData { res in
-            switch res.result {
+        Alamofire.SessionManager.default.request(urlRequest).validate().responseData { dataResponse in
+            switch dataResponse.result {
             case .success(let responseData):
                 let decoder = JSONDecoder()
                 do {
                     let objects = try decoder.decode([T].self, from: responseData)
-                    response?(Response.success(objects))
+                    response?(ResponseA.success(objects))
                 } catch let decodeE {
-                    response?(Response.failure(error: decodeE))
+                    response?(ResponseA.failure(error: decodeE))
                 }
             case .failure(let error):
-                response?(Response.failure(error: error))
+                response?(ResponseA.failure(error: error))
             }
         }
+    }
+    
+    static func requestD<T>(urlRequest: URLRequest, response: ((_ r: ResponseD<T>) -> Void)?) {
+        URLSession.shared.dataTask(with: urlRequest) { (data, _, error) in
+            DispatchQueue.main.async {
+                if let data = data {
+                    do {
+                        let object = try JSONDecoder().decode(T.self, from: data)
+                        response?(ResponseD.success(object))
+                    } catch let decodeE {
+                        response?(ResponseD.failure(error: decodeE))
+                    }
+                } else if let error = error {
+                    response?(ResponseD.failure(error: error))
+                }
+            }
+            }.resume()
     }
 }

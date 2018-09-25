@@ -10,9 +10,22 @@
 		243CE4380C79FE662D02B686 /* Pods_Coin.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C1682E57A8EE16ECC1CCEB6A /* Pods_Coin.framework */; };
 		701ACC25AC283D53A63463B0 /* Pods_Cryptocurrency_monitor_widget.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CC54D9EE46CDDFB769967BA3 /* Pods_Cryptocurrency_monitor_widget.framework */; };
 		75E29C56B14A60C3C9045D33 /* Pods_Crypto_monitor_Watch_Extension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B76E69BF0FD2EAFA8C43B896 /* Pods_Crypto_monitor_Watch_Extension.framework */; };
+		B10AC91C2158383700FDA793 /* Money.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10AC91A215837F000FDA793 /* Money.swift */; };
+		B10AC91D2158383800FDA793 /* Money.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10AC91A215837F000FDA793 /* Money.swift */; };
+		B10AC91E2158FD0A00FDA793 /* Intents.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = B18B53322153E95A00788C8F /* Intents.intentdefinition */; };
+		B10AC91F2158FD0B00FDA793 /* Intents.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = B18B53322153E95A00788C8F /* Intents.intentdefinition */; };
+		B10AC921215907FA00FDA793 /* ShowRateIntentHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10AC920215907FA00FDA793 /* ShowRateIntentHandler.swift */; };
 		B1397B9820C41DD100A93FD2 /* UISplitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1397B9720C41DD100A93FD2 /* UISplitViewController.swift */; };
+		B16FBA0521594E130056AA2A /* backgroundColorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B16FBA0221594DEB0056AA2A /* backgroundColorView.swift */; };
 		B1798B0D20CC51F1004A2309 /* protocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1798B0C20CC51F1004A2309 /* protocol.swift */; };
 		B1817F5E213DE7BA0073CDC7 /* BackgroundRefresh.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1817F5D213DE7BA0073CDC7 /* BackgroundRefresh.swift */; };
+		B18B53162153E89200788C8F /* IntentHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = B18B53152153E89200788C8F /* IntentHandler.swift */; };
+		B18B531E2153E89300788C8F /* IntentsUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B18B531D2153E89300788C8F /* IntentsUI.framework */; };
+		B18B53212153E89300788C8F /* IntentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B18B53202153E89300788C8F /* IntentViewController.swift */; };
+		B18B53242153E89300788C8F /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B18B53222153E89300788C8F /* MainInterface.storyboard */; };
+		B18B53282153E89300788C8F /* IntentsExtensionsUI.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = B18B531C2153E89200788C8F /* IntentsExtensionsUI.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		B18B532B2153E89300788C8F /* IntentsExtensions.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = B18B53132153E89200788C8F /* IntentsExtensions.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		B18B53332153E95A00788C8F /* Intents.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = B18B53322153E95A00788C8F /* Intents.intentdefinition */; };
 		CDE2A83035700307661C64FF /* Pods_CryptoCurrency_watchOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9B6037294BA1290219707A89 /* Pods_CryptoCurrency_watchOS.framework */; };
 		D7025B6537039D2C8FE292AC /* Pods_CryptoCurrency_iOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6958851BF09A132E3E9D9894 /* Pods_CryptoCurrency_iOS.framework */; };
 		FB18375A200D028A001C6358 /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FB18375B200D028A001C6358 /* Alamofire.framework */; };
@@ -87,6 +100,20 @@
 			remoteGlobalIDString = FBB009731F4E3292000B1298;
 			remoteInfo = "Crypto monitor Watch Extension";
 		};
+		B18B53262153E89300788C8F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = FBB2CC901F155CF800D800FD /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = B18B531B2153E89200788C8F;
+			remoteInfo = IntentsExtensionsUI;
+		};
+		B18B53292153E89300788C8F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = FBB2CC901F155CF800D800FD /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = B18B53122153E89200788C8F;
+			remoteInfo = IntentsExtensions;
+		};
 		FB20D0DF2008FECD0007305C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = FBB2CC901F155CF800D800FD /* Project object */;
@@ -134,6 +161,8 @@
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
+				B18B53282153E89300788C8F /* IntentsExtensionsUI.appex in Embed App Extensions */,
+				B18B532B2153E89300788C8F /* IntentsExtensions.appex in Embed App Extensions */,
 				FB99B4961F2FEF1F007C0235 /* Cryptocurrency monitor widget.appex in Embed App Extensions */,
 			);
 			name = "Embed App Extensions";
@@ -196,9 +225,22 @@
 		787080756104BE65CE6C6166 /* Pods-Coin.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Coin.release.xcconfig"; path = "Pods/Target Support Files/Pods-Coin/Pods-Coin.release.xcconfig"; sourceTree = "<group>"; };
 		941A30B556FB3AC94F86D869 /* Pods-Cryptocurrency monitor widget.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Cryptocurrency monitor widget.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Cryptocurrency monitor widget/Pods-Cryptocurrency monitor widget.debug.xcconfig"; sourceTree = "<group>"; };
 		9B6037294BA1290219707A89 /* Pods_CryptoCurrency_watchOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CryptoCurrency_watchOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		B10AC91A215837F000FDA793 /* Money.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Money.swift; sourceTree = "<group>"; };
+		B10AC920215907FA00FDA793 /* ShowRateIntentHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowRateIntentHandler.swift; sourceTree = "<group>"; };
 		B1397B9720C41DD100A93FD2 /* UISplitViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UISplitViewController.swift; sourceTree = "<group>"; };
+		B16FBA0221594DEB0056AA2A /* backgroundColorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = backgroundColorView.swift; sourceTree = "<group>"; };
+		B178833E21599C9100996174 /* IntentsExtensions.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = IntentsExtensions.entitlements; sourceTree = "<group>"; };
 		B1798B0C20CC51F1004A2309 /* protocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = protocol.swift; sourceTree = "<group>"; };
 		B1817F5D213DE7BA0073CDC7 /* BackgroundRefresh.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundRefresh.swift; sourceTree = "<group>"; };
+		B18B53132153E89200788C8F /* IntentsExtensions.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = IntentsExtensions.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		B18B53152153E89200788C8F /* IntentHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntentHandler.swift; sourceTree = "<group>"; };
+		B18B53172153E89200788C8F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B18B531C2153E89200788C8F /* IntentsExtensionsUI.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = IntentsExtensionsUI.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		B18B531D2153E89300788C8F /* IntentsUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IntentsUI.framework; path = System/Library/Frameworks/IntentsUI.framework; sourceTree = SDKROOT; };
+		B18B53202153E89300788C8F /* IntentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntentViewController.swift; sourceTree = "<group>"; };
+		B18B53232153E89300788C8F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainInterface.storyboard; sourceTree = "<group>"; };
+		B18B53252153E89300788C8F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B18B53322153E95A00788C8F /* Intents.intentdefinition */ = {isa = PBXFileReference; lastKnownFileType = file.intentdefinition; path = Intents.intentdefinition; sourceTree = "<group>"; };
 		B76E69BF0FD2EAFA8C43B896 /* Pods_Crypto_monitor_Watch_Extension.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Crypto_monitor_Watch_Extension.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C1682E57A8EE16ECC1CCEB6A /* Pods_Coin.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Coin.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C53BF15FD4F7AC08E7CACF38 /* Pods-Crypto monitor Watch Extension.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Crypto monitor Watch Extension.release.xcconfig"; path = "Pods/Target Support Files/Pods-Crypto monitor Watch Extension/Pods-Crypto monitor Watch Extension.release.xcconfig"; sourceTree = "<group>"; };
@@ -333,6 +375,21 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		B18B53102153E89200788C8F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B18B53192153E89200788C8F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B18B531E2153E89300788C8F /* IntentsUI.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		FB99B4871F2FEF1F007C0235 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -404,6 +461,7 @@
 				6958851BF09A132E3E9D9894 /* Pods_CryptoCurrency_iOS.framework */,
 				9B6037294BA1290219707A89 /* Pods_CryptoCurrency_watchOS.framework */,
 				CC54D9EE46CDDFB769967BA3 /* Pods_Cryptocurrency_monitor_widget.framework */,
+				B18B531D2153E89300788C8F /* IntentsUI.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -429,6 +487,7 @@
 			isa = PBXGroup;
 			children = (
 				FB27C53C200AD72D00DB2907 /* Ticker.swift */,
+				B10AC91A215837F000FDA793 /* Money.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -486,6 +545,27 @@
 				FBA28AD120097C38009EDB84 /* CurrentCurrency */,
 			);
 			name = Setting;
+			sourceTree = "<group>";
+		};
+		B18B53142153E89200788C8F /* IntentsExtensions */ = {
+			isa = PBXGroup;
+			children = (
+				B178833E21599C9100996174 /* IntentsExtensions.entitlements */,
+				B18B53152153E89200788C8F /* IntentHandler.swift */,
+				B10AC920215907FA00FDA793 /* ShowRateIntentHandler.swift */,
+				B18B53172153E89200788C8F /* Info.plist */,
+			);
+			path = IntentsExtensions;
+			sourceTree = "<group>";
+		};
+		B18B531F2153E89300788C8F /* IntentsExtensionsUI */ = {
+			isa = PBXGroup;
+			children = (
+				B18B53202153E89300788C8F /* IntentViewController.swift */,
+				B18B53222153E89300788C8F /* MainInterface.storyboard */,
+				B18B53252153E89300788C8F /* Info.plist */,
+			);
+			path = IntentsExtensionsUI;
 			sourceTree = "<group>";
 		};
 		FB565C461F421ADF004EA42F /* AddTable */ = {
@@ -562,11 +642,14 @@
 		FBB2CC8F1F155CF800D800FD = {
 			isa = PBXGroup;
 			children = (
+				B18B53322153E95A00788C8F /* Intents.intentdefinition */,
 				FBB2CC9A1F155CF800D800FD /* Coin */,
 				FB99B48D1F2FEF1F007C0235 /* Cryptocurrency monitor widget */,
 				FBB009691F4E3292000B1298 /* Crypto monitor Watch */,
 				FBB009781F4E3292000B1298 /* Crypto monitor Watch Extension */,
 				FBBE492B2008F69600277014 /* CryptoCurrency */,
+				B18B53142153E89200788C8F /* IntentsExtensions */,
+				B18B531F2153E89300788C8F /* IntentsExtensionsUI */,
 				FBB2CC991F155CF800D800FD /* Products */,
 				731467F8FA5309E32222B93E /* Frameworks */,
 				A1BE45F0153061689ADF72DC /* Pods */,
@@ -582,6 +665,8 @@
 				FBB009741F4E3292000B1298 /* Crypto monitor Watch Extension.appex */,
 				FBBE490C2008F5A200277014 /* CryptoCurrency.framework */,
 				FBBE491D2008F5E700277014 /* CryptoCurrency.framework */,
+				B18B53132153E89200788C8F /* IntentsExtensions.appex */,
+				B18B531C2153E89200788C8F /* IntentsExtensionsUI.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -610,6 +695,7 @@
 				FBBE490E2008F5A300277014 /* CryptoCurrency.h */,
 				FBBE49302008FD7300277014 /* CryptoCurrencyKit.swift */,
 				FB20D0E120090DD70007305C /* SettingsUserDefaults.swift */,
+				B16FBA0221594DEB0056AA2A /* backgroundColorView.swift */,
 				B1817F56213DE0E80073CDC7 /* Model */,
 				FBBE490F2008F5A300277014 /* info-iOS.plist */,
 				FBBE49202008F5E700277014 /* info-watchOS.plist */,
@@ -659,6 +745,40 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
+		B18B53122153E89200788C8F /* IntentsExtensions */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B18B532F2153E89300788C8F /* Build configuration list for PBXNativeTarget "IntentsExtensions" */;
+			buildPhases = (
+				B18B530F2153E89200788C8F /* Sources */,
+				B18B53102153E89200788C8F /* Frameworks */,
+				B18B53112153E89200788C8F /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = IntentsExtensions;
+			productName = IntentsExtensions;
+			productReference = B18B53132153E89200788C8F /* IntentsExtensions.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
+		B18B531B2153E89200788C8F /* IntentsExtensionsUI */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B18B532C2153E89300788C8F /* Build configuration list for PBXNativeTarget "IntentsExtensionsUI" */;
+			buildPhases = (
+				B18B53182153E89200788C8F /* Sources */,
+				B18B53192153E89200788C8F /* Frameworks */,
+				B18B531A2153E89200788C8F /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = IntentsExtensionsUI;
+			productName = IntentsExtensionsUI;
+			productReference = B18B531C2153E89200788C8F /* IntentsExtensionsUI.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 		FB99B4891F2FEF1F007C0235 /* Cryptocurrency monitor widget */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = FB99B4991F2FEF1F007C0235 /* Build configuration list for PBXNativeTarget "Cryptocurrency monitor widget" */;
@@ -667,7 +787,6 @@
 				FB99B4861F2FEF1F007C0235 /* Sources */,
 				FB99B4871F2FEF1F007C0235 /* Frameworks */,
 				FB99B4881F2FEF1F007C0235 /* Resources */,
-				FB134FBA9BA4B0D73D361B42 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -708,7 +827,6 @@
 				FB23520D1F72B7070055E59B /* Embed Watch Content */,
 				FBBE49292008F5E700277014 /* Embed Frameworks */,
 				CF368E51894DB7AE4065B918 /* [CP] Embed Pods Frameworks */,
-				5DDD4DF982E2471B8E211B04 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -731,7 +849,6 @@
 				FB9E8E0E1F30621B000D72C0 /* Embed Frameworks */,
 				FBB0098A1F4E3292000B1298 /* Embed Watch Content */,
 				817C9484A7A51B619FD33022 /* [CP] Embed Pods Frameworks */,
-				B5B1A31CB7D2C0BC40B5245A /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -739,6 +856,8 @@
 				FB99B4951F2FEF1F007C0235 /* PBXTargetDependency */,
 				FBB009811F4E3292000B1298 /* PBXTargetDependency */,
 				FB20D0E02008FECD0007305C /* PBXTargetDependency */,
+				B18B53272153E89300788C8F /* PBXTargetDependency */,
+				B18B532A2153E89300788C8F /* PBXTargetDependency */,
 			);
 			name = Coin;
 			productName = Coin;
@@ -754,7 +873,6 @@
 				FBBE49082008F5A200277014 /* Frameworks */,
 				FBBE49092008F5A200277014 /* Headers */,
 				FBBE490A2008F5A200277014 /* Resources */,
-				DEB5D5A191B906FC8460AC37 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -774,7 +892,6 @@
 				FBBE49192008F5E700277014 /* Frameworks */,
 				FBBE491A2008F5E700277014 /* Headers */,
 				FBBE491B2008F5E700277014 /* Resources */,
-				265E75CB23D9D22772CE1ABB /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -791,14 +908,35 @@
 		FBB2CC901F155CF800D800FD /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 0830;
+				LastSwiftUpdateCheck = 1000;
 				LastUpgradeCheck = 0940;
 				ORGANIZATIONNAME = "Mialin Valentyn";
 				TargetAttributes = {
+					B18B53122153E89200788C8F = {
+						CreatedOnToolsVersion = 10.0;
+						DevelopmentTeam = M6RU8K5R5C;
+						ProvisioningStyle = Automatic;
+						SystemCapabilities = {
+							com.apple.ApplicationGroups.iOS = {
+								enabled = 1;
+							};
+							com.apple.Push = {
+								enabled = 0;
+							};
+							com.apple.iCloud = {
+								enabled = 1;
+							};
+						};
+					};
+					B18B531B2153E89200788C8F = {
+						CreatedOnToolsVersion = 10.0;
+						DevelopmentTeam = M6RU8K5R5C;
+						ProvisioningStyle = Automatic;
+					};
 					FB99B4891F2FEF1F007C0235 = {
 						CreatedOnToolsVersion = 8.3.3;
 						DevelopmentTeam = M6RU8K5R5C;
-						LastSwiftMigration = 0900;
+						LastSwiftMigration = 1000;
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.ApplicationGroups.iOS = {
@@ -823,7 +961,7 @@
 					FBB009731F4E3292000B1298 = {
 						CreatedOnToolsVersion = 8.3.3;
 						DevelopmentTeam = M6RU8K5R5C;
-						LastSwiftMigration = 0900;
+						LastSwiftMigration = 1000;
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.ApplicationGroups.iOS = {
@@ -840,7 +978,7 @@
 					FBB2CC971F155CF800D800FD = {
 						CreatedOnToolsVersion = 8.3;
 						DevelopmentTeam = M6RU8K5R5C;
-						LastSwiftMigration = 0900;
+						LastSwiftMigration = 1000;
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.ApplicationGroups.iOS = {
@@ -855,6 +993,9 @@
 							com.apple.Push = {
 								enabled = 0;
 							};
+							com.apple.Siri = {
+								enabled = 1;
+							};
 							com.apple.iCloud = {
 								enabled = 1;
 							};
@@ -863,13 +1004,13 @@
 					FBBE490B2008F5A200277014 = {
 						CreatedOnToolsVersion = 9.2;
 						DevelopmentTeam = M6RU8K5R5C;
-						LastSwiftMigration = 0920;
+						LastSwiftMigration = 1000;
 						ProvisioningStyle = Automatic;
 					};
 					FBBE491C2008F5E700277014 = {
 						CreatedOnToolsVersion = 9.2;
 						DevelopmentTeam = M6RU8K5R5C;
-						LastSwiftMigration = 0920;
+						LastSwiftMigration = 1000;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -895,11 +1036,28 @@
 				FBB009731F4E3292000B1298 /* Crypto monitor Watch Extension */,
 				FBBE490B2008F5A200277014 /* CryptoCurrency iOS */,
 				FBBE491C2008F5E700277014 /* CryptoCurrency watchOS */,
+				B18B53122153E89200788C8F /* IntentsExtensions */,
+				B18B531B2153E89200788C8F /* IntentsExtensionsUI */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		B18B53112153E89200788C8F /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B18B531A2153E89200788C8F /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B18B53242153E89300788C8F /* MainInterface.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		FB99B4881F2FEF1F007C0235 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -966,43 +1124,16 @@
 			files = (
 			);
 			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
 			);
 			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Cryptocurrency monitor widget-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
-			showEnvVarsInLog = 0;
-		};
-		265E75CB23D9D22772CE1ABB /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-CryptoCurrency watchOS/Pods-CryptoCurrency watchOS-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		5DDD4DF982E2471B8E211B04 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Crypto monitor Watch Extension/Pods-Crypto monitor Watch Extension-resources.sh\"\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
 		761E4AEB8AD150297A666E40 /* [CP] Check Pods Manifest.lock */ = {
@@ -1011,13 +1142,16 @@
 			files = (
 			);
 			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
 			);
 			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-CryptoCurrency iOS-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
 		817C9484A7A51B619FD33022 /* [CP] Embed Pods Frameworks */ = {
@@ -1026,9 +1160,20 @@
 			files = (
 			);
 			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-Coin/Pods-Coin-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/Alamofire-iOS/Alamofire.framework",
+				"${BUILT_PRODUCTS_DIR}/AlamofireNetworkActivityIndicator/AlamofireNetworkActivityIndicator.framework",
+				"${BUILT_PRODUCTS_DIR}/Charts/Charts.framework",
+				"${BUILT_PRODUCTS_DIR}/DZNEmptyDataSet/DZNEmptyDataSet.framework",
+				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AlamofireNetworkActivityIndicator.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Charts.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DZNEmptyDataSet.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -1041,28 +1186,16 @@
 			files = (
 			);
 			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
 			);
 			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Crypto monitor Watch Extension-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
-			showEnvVarsInLog = 0;
-		};
-		B5B1A31CB7D2C0BC40B5245A /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Coin/Pods-Coin-resources.sh\"\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
 		BC29724E55DBFA087E4DC3AC /* [CP] Check Pods Manifest.lock */ = {
@@ -1071,13 +1204,16 @@
 			files = (
 			);
 			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
 			);
 			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-CryptoCurrency watchOS-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
 		C223192A9152689A3B25E3E5 /* [CP] Check Pods Manifest.lock */ = {
@@ -1086,13 +1222,16 @@
 			files = (
 			);
 			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
 			);
 			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Coin-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
 		CF368E51894DB7AE4065B918 /* [CP] Embed Pods Frameworks */ = {
@@ -1101,48 +1240,40 @@
 			files = (
 			);
 			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-Crypto monitor Watch Extension/Pods-Crypto monitor Watch Extension-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/Alamofire-watchOS/Alamofire.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Crypto monitor Watch Extension/Pods-Crypto monitor Watch Extension-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		DEB5D5A191B906FC8460AC37 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-CryptoCurrency iOS/Pods-CryptoCurrency iOS-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		FB134FBA9BA4B0D73D361B42 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Cryptocurrency monitor widget/Pods-Cryptocurrency monitor widget-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		B18B530F2153E89200788C8F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B10AC921215907FA00FDA793 /* ShowRateIntentHandler.swift in Sources */,
+				B10AC91E2158FD0A00FDA793 /* Intents.intentdefinition in Sources */,
+				B18B53162153E89200788C8F /* IntentHandler.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B18B53182153E89200788C8F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B10AC91F2158FD0B00FDA793 /* Intents.intentdefinition in Sources */,
+				B18B53212153E89300788C8F /* IntentViewController.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		FB99B4861F2FEF1F007C0235 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1168,6 +1299,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B18B53332153E95A00788C8F /* Intents.intentdefinition in Sources */,
 				FBA28ACE20097AA6009EDB84 /* CurrentCurrencyTableVC.swift in Sources */,
 				FB6528682020945B004CE9D4 /* IAPHandler.swift in Sources */,
 				FBFA2A8B20ACE12A00B11B17 /* WCSession.swift in Sources */,
@@ -1195,8 +1327,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B16FBA0521594E130056AA2A /* backgroundColorView.swift in Sources */,
 				FBBE49342008FD7300277014 /* CryptoCurrencyKit.swift in Sources */,
 				FB27C53D200AD72D00DB2907 /* Ticker.swift in Sources */,
+				B10AC91C2158383700FDA793 /* Money.swift in Sources */,
 				FB20D0E220090DD70007305C /* SettingsUserDefaults.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1207,6 +1341,7 @@
 			files = (
 				FBBE49352008FD7300277014 /* CryptoCurrencyKit.swift in Sources */,
 				FB27C53E200AD72D00DB2907 /* Ticker.swift in Sources */,
+				B10AC91D2158383800FDA793 /* Money.swift in Sources */,
 				FB20D0E320090DD70007305C /* SettingsUserDefaults.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1218,6 +1353,16 @@
 			isa = PBXTargetDependency;
 			target = FBB009731F4E3292000B1298 /* Crypto monitor Watch Extension */;
 			targetProxy = B11A8EA521527E6900D0EFE9 /* PBXContainerItemProxy */;
+		};
+		B18B53272153E89300788C8F /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = B18B531B2153E89200788C8F /* IntentsExtensionsUI */;
+			targetProxy = B18B53262153E89300788C8F /* PBXContainerItemProxy */;
+		};
+		B18B532A2153E89300788C8F /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = B18B53122153E89200788C8F /* IntentsExtensions */;
+			targetProxy = B18B53292153E89300788C8F /* PBXContainerItemProxy */;
 		};
 		FB20D0E02008FECD0007305C /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -1242,6 +1387,14 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
+		B18B53222153E89300788C8F /* MainInterface.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				B18B53232153E89300788C8F /* Base */,
+			);
+			name = MainInterface.storyboard;
+			sourceTree = "<group>";
+		};
 		FB2F889B1FEBFA32003B62CF /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -1393,6 +1546,104 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		B18B532D2153E89300788C8F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = M6RU8K5R5C;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = IntentsExtensionsUI/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = mialin.Coin.IntentsExtensionsUI;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		B18B532E2153E89300788C8F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = M6RU8K5R5C;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = IntentsExtensionsUI/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = mialin.Coin.IntentsExtensionsUI;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		B18B53302153E89300788C8F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_ENTITLEMENTS = IntentsExtensions/IntentsExtensions.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = M6RU8K5R5C;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = IntentsExtensions/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = mialin.Coin.IntentsExtensions;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		B18B53312153E89300788C8F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_ENTITLEMENTS = IntentsExtensions/IntentsExtensions.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = M6RU8K5R5C;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = IntentsExtensions/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = mialin.Coin.IntentsExtensions;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 		FB99B4971F2FEF1F007C0235 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 941A30B556FB3AC94F86D869 /* Pods-Cryptocurrency monitor widget.debug.xcconfig */;
@@ -1406,8 +1657,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = mialin.Coin.widget;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
-				SWIFT_SWIFT3_OBJC_INFERENCE = Off;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 			};
 			name = Debug;
 		};
@@ -1424,8 +1674,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = mialin.Coin.widget;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
-				SWIFT_SWIFT3_OBJC_INFERENCE = Off;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 			};
 			name = Release;
 		};
@@ -1443,8 +1692,7 @@
 				PRODUCT_NAME = "${TARGET_NAME}";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
-				SWIFT_SWIFT3_OBJC_INFERENCE = Off;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = 4;
 				WATCHOS_DEPLOYMENT_TARGET = 4.0;
 			};
@@ -1464,8 +1712,7 @@
 				PRODUCT_NAME = "${TARGET_NAME}";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
-				SWIFT_SWIFT3_OBJC_INFERENCE = Off;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = 4;
 				WATCHOS_DEPLOYMENT_TARGET = 4.0;
 			};
@@ -1654,8 +1901,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				SWIFT_SWIFT3_OBJC_INFERENCE = Off;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -1686,8 +1932,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				SWIFT_SWIFT3_OBJC_INFERENCE = Off;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
@@ -1718,7 +1963,7 @@
 				PRODUCT_NAME = CryptoCurrency;
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
@@ -1750,7 +1995,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = mialin.CryptoCurrency;
 				PRODUCT_NAME = CryptoCurrency;
 				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
@@ -1784,7 +2029,7 @@
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = 4;
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
@@ -1818,7 +2063,7 @@
 				PRODUCT_NAME = CryptoCurrency;
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = 4;
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
@@ -1829,6 +2074,24 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		B18B532C2153E89300788C8F /* Build configuration list for PBXNativeTarget "IntentsExtensionsUI" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B18B532D2153E89300788C8F /* Debug */,
+				B18B532E2153E89300788C8F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		B18B532F2153E89300788C8F /* Build configuration list for PBXNativeTarget "IntentsExtensions" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B18B53302153E89300788C8F /* Debug */,
+				B18B53312153E89300788C8F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		FB99B4991F2FEF1F007C0235 /* Build configuration list for PBXNativeTarget "Cryptocurrency monitor widget" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
