@@ -112,7 +112,7 @@ public class SettingsUserDefaults{
     }
     
     
-    public static func getCurrentCurrency() ->  Money {
+    public static func getCurrentCurrency() -> Money {
         #if os(iOS)
             let keyStore = NSUbiquitousKeyValueStore()
             if !keyStore.bool(forKey: "converPriceCurrencyToCurrentCurrency"){
@@ -130,7 +130,7 @@ public class SettingsUserDefaults{
                 keyStore.removeObject(forKey: "priceCurrency")
                 keyStore.set(true, forKey: "converPriceCurrencyToCurrentCurrency")
                 keyStore.synchronize()
-            }
+        }
         #endif
         
         #if os(iOS)
@@ -138,11 +138,10 @@ public class SettingsUserDefaults{
         #endif
         
         #if os(watchOS)
-            guard let currentCurrencyString = UserDefaults().string(forKey: "CurrentCurrency") else { return Money.usd }
+        guard let currentCurrencyString = UserDefaults().string(forKey: "CurrentCurrency") else { return Money.usd }
         #endif
         
-        guard let currentCurrency = Money(rawValue: currentCurrencyString) else { return Money.usd }
-        return currentCurrency
+        return Money(rawValue: currentCurrencyString) ??  Money.usd
     }
 }
 

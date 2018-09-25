@@ -14,7 +14,7 @@
             <objects>
                 <viewController id="ObA-dk-sSI" customClass="IntentViewController" customModule="IntentsExtensionsUI" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="zMn-AG-sqS">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="130"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="100"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YPq-nf-kFQ">
@@ -24,7 +24,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="VM4-ok-gMe">
-                                <rect key="frame" x="8" y="84" width="304" height="30"/>
+                                <rect key="frame" x="8" y="54" width="304" height="30"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="u9g-nv-6cB">
                                         <rect key="frame" x="0.0" y="0.0" width="101.5" height="30"/>
@@ -158,22 +158,16 @@
                                 </constraints>
                             </stackView>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="4E8-2g-JNe">
-                                <rect key="frame" x="160" y="8" width="152" height="68"/>
+                                <rect key="frame" x="160" y="8" width="152" height="41"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="price label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aEx-9z-CYW">
-                                        <rect key="frame" x="0.0" y="0.0" width="152" height="22.5"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="152" height="20.5"/>
                                         <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="price label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rU1-lA-0lJ">
-                                        <rect key="frame" x="0.0" y="22.5" width="152" height="23"/>
-                                        <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
-                                        <nil key="textColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="price label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TdI-Mu-2Le">
-                                        <rect key="frame" x="0.0" y="45.5" width="152" height="22.5"/>
+                                        <rect key="frame" x="0.0" y="20.5" width="152" height="20.5"/>
                                         <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
@@ -185,7 +179,6 @@
                         <constraints>
                             <constraint firstItem="VM4-ok-gMe" firstAttribute="leading" secondItem="4PN-XC-lEE" secondAttribute="leading" constant="8" id="4Og-jx-49N"/>
                             <constraint firstItem="YPq-nf-kFQ" firstAttribute="trailing" secondItem="4PN-XC-lEE" secondAttribute="centerX" constant="8" id="PFF-Df-Cm8"/>
-                            <constraint firstItem="VM4-ok-gMe" firstAttribute="top" secondItem="4E8-2g-JNe" secondAttribute="bottom" constant="8" id="Y3L-Dc-FyW"/>
                             <constraint firstItem="4E8-2g-JNe" firstAttribute="leading" secondItem="zMn-AG-sqS" secondAttribute="centerX" id="Zgu-1C-vGJ"/>
                             <constraint firstItem="4PN-XC-lEE" firstAttribute="trailing" secondItem="4E8-2g-JNe" secondAttribute="trailing" constant="8" id="ggh-ip-ZEN"/>
                             <constraint firstAttribute="trailing" secondItem="VM4-ok-gMe" secondAttribute="trailing" constant="8" id="hfz-YS-WKe"/>
@@ -197,7 +190,7 @@
                         <viewLayoutGuide key="safeArea" id="4PN-XC-lEE"/>
                     </view>
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-                    <size key="freeformSize" width="320" height="130"/>
+                    <size key="freeformSize" width="320" height="100"/>
                     <connections>
                         <outlet property="dayChangeLabel" destination="VIR-ez-asy" id="u5X-hh-cYd"/>
                         <outlet property="dayChangeView" destination="akL-Ht-4Jr" id="Ipe-x0-PJr"/>
@@ -205,7 +198,6 @@
                         <outlet property="oneHourChangeLabel" destination="WZ9-3d-H1e" id="FC5-jR-Dcu"/>
                         <outlet property="oneHourChangeView" destination="5bk-8L-WER" id="bAB-Th-cJq"/>
                         <outlet property="priceBtcLabel" destination="rU1-lA-0lJ" id="b8a-Q8-Vix"/>
-                        <outlet property="priceConvertLabel" destination="TdI-Mu-2Le" id="VTd-47-1eQ"/>
                         <outlet property="priceUsdLabel" destination="aEx-9z-CYW" id="ynl-xv-RBg"/>
                         <outlet property="weekChangeLabel" destination="afJ-EB-QCr" id="A8X-rk-n7m"/>
                         <outlet property="weekChangeView" destination="NK0-EC-pgO" id="jfB-gZ-xxE"/>
@@ -213,6 +205,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="X47-rx-isc" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="53" y="132"/>
         </scene>
     </scenes>
 </document>

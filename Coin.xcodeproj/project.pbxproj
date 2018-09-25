@@ -15,6 +15,8 @@
 		B10AC91E2158FD0A00FDA793 /* Intents.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = B18B53322153E95A00788C8F /* Intents.intentdefinition */; };
 		B10AC91F2158FD0B00FDA793 /* Intents.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = B18B53322153E95A00788C8F /* Intents.intentdefinition */; };
 		B10AC921215907FA00FDA793 /* ShowRateIntentHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10AC920215907FA00FDA793 /* ShowRateIntentHandler.swift */; };
+		B123CE31215AD7D9001F8247 /* CryptoCurrency.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FBBE490C2008F5A200277014 /* CryptoCurrency.framework */; };
+		B123CE32215AD7DF001F8247 /* CryptoCurrency.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FBBE490C2008F5A200277014 /* CryptoCurrency.framework */; };
 		B1397B9820C41DD100A93FD2 /* UISplitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1397B9720C41DD100A93FD2 /* UISplitViewController.swift */; };
 		B16FBA0521594E130056AA2A /* backgroundColorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B16FBA0221594DEB0056AA2A /* backgroundColorView.swift */; };
 		B1798B0D20CC51F1004A2309 /* protocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1798B0C20CC51F1004A2309 /* protocol.swift */; };
@@ -227,6 +229,7 @@
 		9B6037294BA1290219707A89 /* Pods_CryptoCurrency_watchOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CryptoCurrency_watchOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B10AC91A215837F000FDA793 /* Money.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Money.swift; sourceTree = "<group>"; };
 		B10AC920215907FA00FDA793 /* ShowRateIntentHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowRateIntentHandler.swift; sourceTree = "<group>"; };
+		B123CE33215ADDDC001F8247 /* IntentsExtensionsUI.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = IntentsExtensionsUI.entitlements; sourceTree = "<group>"; };
 		B1397B9720C41DD100A93FD2 /* UISplitViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UISplitViewController.swift; sourceTree = "<group>"; };
 		B16FBA0221594DEB0056AA2A /* backgroundColorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = backgroundColorView.swift; sourceTree = "<group>"; };
 		B178833E21599C9100996174 /* IntentsExtensions.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = IntentsExtensions.entitlements; sourceTree = "<group>"; };
@@ -379,6 +382,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B123CE31215AD7D9001F8247 /* CryptoCurrency.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -386,6 +390,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B123CE32215AD7DF001F8247 /* CryptoCurrency.framework in Frameworks */,
 				B18B531E2153E89300788C8F /* IntentsUI.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -561,6 +566,7 @@
 		B18B531F2153E89300788C8F /* IntentsExtensionsUI */ = {
 			isa = PBXGroup;
 			children = (
+				B123CE33215ADDDC001F8247 /* IntentsExtensionsUI.entitlements */,
 				B18B53202153E89300788C8F /* IntentViewController.swift */,
 				B18B53222153E89300788C8F /* MainInterface.storyboard */,
 				B18B53252153E89300788C8F /* Info.plist */,
@@ -932,6 +938,11 @@
 						CreatedOnToolsVersion = 10.0;
 						DevelopmentTeam = M6RU8K5R5C;
 						ProvisioningStyle = Automatic;
+						SystemCapabilities = {
+							com.apple.ApplicationGroups.iOS = {
+								enabled = 1;
+							};
+						};
 					};
 					FB99B4891F2FEF1F007C0235 = {
 						CreatedOnToolsVersion = 8.3.3;
@@ -1552,6 +1563,7 @@
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_ENTITLEMENTS = IntentsExtensionsUI/IntentsExtensionsUI.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
@@ -1576,6 +1588,7 @@
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_ENTITLEMENTS = IntentsExtensionsUI/IntentsExtensionsUI.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;

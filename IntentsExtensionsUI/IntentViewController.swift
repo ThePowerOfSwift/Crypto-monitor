@@ -14,7 +14,6 @@ class IntentViewController: UIViewController, INUIHostedViewControlling {
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var priceUsdLabel: UILabel!
     @IBOutlet weak var priceBtcLabel: UILabel!
-    @IBOutlet weak var priceConvertLabel: UILabel!
     
     @IBOutlet weak var oneHourChangeView: UIView!
     @IBOutlet weak var oneHourChangeLabel: UILabel!
@@ -46,7 +45,6 @@ class IntentViewController: UIViewController, INUIHostedViewControlling {
             
             self.priceUsdLabel?.text = response.priceUSD
             self.priceBtcLabel?.text = response.priceBTC
-            self.priceConvertLabel?.text = response.priceConvert
 
             // 1h
             self.oneHourChangeLabel?.text = percentChangeToString(percentChange: response.percentChange1h)
@@ -63,7 +61,7 @@ class IntentViewController: UIViewController, INUIHostedViewControlling {
     
     private var desiredSize: CGSize {
         let width = self.extensionContext?.hostedViewMaximumAllowedSize.width ?? 320
-        return CGSize(width: width, height: 140)
+        return CGSize(width: width, height: 100)
     }
     
     private func percentChangeToString(percentChange: NSNumber?) -> String {
