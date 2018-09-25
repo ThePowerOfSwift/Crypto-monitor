@@ -397,7 +397,7 @@
                                 <rect key="frame" x="0.0" y="64" width="375" height="187"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" axis="vertical" alignment="top" translatesAutoresizingMaskIntoConstraints="NO" id="kps-3F-WJX">
-                                        <rect key="frame" x="8" y="24" width="294" height="61.5"/>
+                                        <rect key="frame" x="8" y="24" width="11" height="61.5"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="$" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="tIF-uW-0Bc">
                                                 <rect key="frame" x="0.0" y="0.0" width="11" height="20.5"/>
@@ -629,37 +629,6 @@
                                         <color key="textColor" red="0.24996298551559448" green="0.54893195629119873" blue="0.80046439170837402" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="roundedRect" adjustsImageSizeForAccessibilityContentSizeCategory="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WVM-8J-Hzj">
-                                        <rect key="frame" x="310" y="32" width="57" height="46"/>
-                                        <fontDescription key="fontDescription" style="UICTFontTextStyleFootnote"/>
-                                        <state key="normal" title="Buy / Sell Instantly"/>
-                                        <attributedString key="userComments">
-                                            <fragment content="changelly">
-                                                <attributes>
-                                                    <font key="NSFont" metaFont="smallSystem"/>
-                                                    <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
-                                                </attributes>
-                                            </fragment>
-                                        </attributedString>
-                                        <userDefinedRuntimeAttributes>
-                                            <userDefinedRuntimeAttribute type="number" keyPath="titleLabel.textAlignment">
-                                                <integer key="value" value="1"/>
-                                            </userDefinedRuntimeAttribute>
-                                            <userDefinedRuntimeAttribute type="number" keyPath="titleLabel.numberOfLines">
-                                                <integer key="value" value="0"/>
-                                            </userDefinedRuntimeAttribute>
-                                        </userDefinedRuntimeAttributes>
-                                        <connections>
-                                            <action selector="paymentButton:" destination="2Ah-xt-ZDa" eventType="touchUpInside" id="2Kh-z6-x3P"/>
-                                        </connections>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="h8S-Wr-wRB">
-                                        <rect key="frame" x="315" y="8" width="46" height="30"/>
-                                        <state key="normal" title="Button"/>
-                                        <connections>
-                                            <action selector="buttonActionWithSender:" destination="2Ah-xt-ZDa" eventType="touchUpInside" id="y5X-gZ-03E"/>
-                                        </connections>
-                                    </button>
                                 </subviews>
                                 <constraints>
                                     <constraint firstItem="DVA-ym-8wz" firstAttribute="top" secondItem="h7U-wg-rFJ" secondAttribute="bottom" constant="4" id="8Yy-RS-4RT"/>
@@ -668,15 +637,10 @@
                                     <constraint firstItem="Uee-wn-agM" firstAttribute="top" secondItem="h7U-wg-rFJ" secondAttribute="bottom" constant="4" id="N9F-Zn-cld"/>
                                     <constraint firstAttribute="trailing" secondItem="Uee-wn-agM" secondAttribute="trailing" constant="8" id="Ozy-ug-4qL"/>
                                     <constraint firstItem="kps-3F-WJX" firstAttribute="leading" secondItem="xUV-qV-bOc" secondAttribute="leading" constant="8" id="PkS-cO-5LB"/>
-                                    <constraint firstItem="WVM-8J-Hzj" firstAttribute="leading" secondItem="kps-3F-WJX" secondAttribute="trailing" constant="8" id="QM6-3W-Qy0"/>
                                     <constraint firstItem="HzE-Tk-7no" firstAttribute="centerX" secondItem="xUV-qV-bOc" secondAttribute="centerX" id="TRF-lC-hq0"/>
-                                    <constraint firstAttribute="trailing" secondItem="WVM-8J-Hzj" secondAttribute="trailing" constant="8" id="XlE-nE-UVn"/>
-                                    <constraint firstItem="h8S-Wr-wRB" firstAttribute="top" secondItem="xUV-qV-bOc" secondAttribute="top" constant="8" id="adY-ri-qEW"/>
                                     <constraint firstItem="kps-3F-WJX" firstAttribute="top" secondItem="HzE-Tk-7no" secondAttribute="bottom" id="bat-Oc-DHr"/>
                                     <constraint firstItem="h7U-wg-rFJ" firstAttribute="leading" secondItem="xUV-qV-bOc" secondAttribute="leading" constant="4" id="cch-ic-I2q"/>
-                                    <constraint firstItem="WVM-8J-Hzj" firstAttribute="centerY" secondItem="kps-3F-WJX" secondAttribute="centerY" id="fj9-xD-wfl"/>
                                     <constraint firstItem="Uee-wn-agM" firstAttribute="leading" secondItem="DVA-ym-8wz" secondAttribute="trailing" constant="8" id="gCL-6x-MVd"/>
-                                    <constraint firstAttribute="trailing" secondItem="h8S-Wr-wRB" secondAttribute="trailing" constant="14" id="hv5-5P-ek9"/>
                                     <constraint firstAttribute="height" constant="187" id="jgX-3B-MDA"/>
                                     <constraint firstItem="h7U-wg-rFJ" firstAttribute="top" secondItem="kps-3F-WJX" secondAttribute="bottom" constant="4" id="jyR-sA-Jce"/>
                                     <constraint firstAttribute="trailing" secondItem="h7U-wg-rFJ" secondAttribute="trailing" constant="4" id="lDy-c6-b59"/>
@@ -789,7 +753,6 @@
                         <outlet property="nameLabel" destination="HzE-Tk-7no" id="zhH-9n-mpK"/>
                         <outlet property="oneHourChangeLabel" destination="qvM-fr-xLG" id="yzj-yc-4jV"/>
                         <outlet property="oneHourChangeView" destination="Obg-oR-F8H" id="XYf-xu-Sif"/>
-                        <outlet property="paymentButton" destination="WVM-8J-Hzj" id="Wve-Mg-FoY"/>
                         <outlet property="priceBtcLabel" destination="TDq-tP-BrO" id="VcU-p9-o7e"/>
                         <outlet property="priceConvertLabel" destination="8Nk-dX-NRl" id="AT2-I5-Yea"/>
                         <outlet property="priceUsdLabel" destination="tIF-uW-0Bc" id="WfS-pL-ZLP"/>

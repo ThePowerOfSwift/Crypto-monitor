@@ -41,7 +41,6 @@ class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
     @IBOutlet weak var marketcapLabel: UILabel!
     @IBOutlet weak var volumeLabel: UILabel!
     
-    @IBOutlet weak var paymentButton: UIButton!
     
     var ticker : Ticker?
     var currencyCharts: CurrencyCharts?
@@ -64,12 +63,6 @@ class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
         let keyStore = NSUbiquitousKeyValueStore()
         selectSegmentedControl?.selectedSegmentIndex = Int(keyStore.longLong(forKey: "typeChart"))
         zoomSegmentedControl?.selectedSegmentIndex = Int(keyStore.longLong(forKey: "zoomChart"))
-        
-        paymentButton?.imageView?.contentMode = .scaleAspectFit
-        paymentButton?.setImage(#imageLiteral(resourceName: "changellyLogo"), for: .normal)
-        
-    
-        
     }
  
     override func viewWillAppear(_ animated: Bool) {
@@ -419,25 +412,6 @@ class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
         keyStore.set(zoomSegmentedControl?.selectedSegmentIndex, forKey: "zoomChart")
         keyStore.synchronize()
         loadlineView()
-    }
-    
-    @IBAction func paymentButton(_ sender: UIButton) {
-        
-        let redId = "faad5a8c967f"
-        if let languageCode = Locale.current.languageCode {
-            switch languageCode {
-            case "ar", "es", "fr", "de", "pt", "vi", "hi", "ja", "ko", "cn", "en", "ru":
-                UIApplication.shared.open(URL(string: "https://\(languageCode).changelly.com/?ref_id=\(redId)")!, options: convertToUIApplicationOpenExternalURLOptionsKeyDictionary([:]), completionHandler: nil)
-            default :
-                UIApplication.shared.open(URL(string: "https://changelly.com/?ref_id=\(redId)")!, options: convertToUIApplicationOpenExternalURLOptionsKeyDictionary([:]), completionHandler: nil)
-            }
-        }
-        else{
-            UIApplication.shared.open(URL(string: "https://changelly.com/?ref_id=\(redId)")!, options: convertToUIApplicationOpenExternalURLOptionsKeyDictionary([:]), completionHandler: nil)
-        }
-    }
-    
-    @IBAction func buttonAction(sender: UIButton) {
     }
 
     @objc func reload(_ sender:UIButton) {
