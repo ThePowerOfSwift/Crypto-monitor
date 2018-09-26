@@ -126,36 +126,33 @@ class MainVC: UITableViewController {
     }
     
     private func loadTicker() {
-        DispatchQueue.global(qos: .utility).async {
-            guard let idArray = SettingsUserDefaults.getIdArray() else {
-                self.tickers = [Ticker]()
-                SettingsUserDefaults.setUserDefaults(ticher: [Ticker](), lastUpdate: nil)
-                return
-            }
-            
-            if idArray.isEmpty {
-                self.tickers = [Ticker]()
-                SettingsUserDefaults.setUserDefaults(ticher: [Ticker](), lastUpdate: nil)
-            }
-            else{
-                
-                CryptoCurrencyKit.fetchTickers(idArray: idArray) { [weak self] (response) in
-                    switch response {
-                    case .success(let tickers):
-                        
-                        self?.tickers = tickers
-                        self?.cryptocurrencyView()
-                        SettingsUserDefaults.setUserDefaults(ticher: tickers, idArray: idArray)
-                        self?.updateApplicationContext(id: idArray)
-                        self?.indexItem(ticker: tickers)
-                    case .failure(let error ):
-                        DispatchQueue.main.async {
-                            UIView.animate(withDuration: 0.25) {
-                                self?.refreshControl?.endRefreshing()
-                            }
+        guard let idArray = SettingsUserDefaults.getIdArray() else {
+            self.tickers = [Ticker]()
+            SettingsUserDefaults.setUserDefaults(ticher: [Ticker](), lastUpdate: nil)
+            return
+        }
+        
+        if idArray.isEmpty {
+            self.tickers = [Ticker]()
+            SettingsUserDefaults.setUserDefaults(ticher: [Ticker](), lastUpdate: nil)
+        }
+        else{
+            CryptoCurrencyKit.fetchTickers(idArray: idArray) { [weak self] (response) in
+                switch response {
+                case .success(let tickers):
+                    
+                    self?.tickers = tickers
+                    self?.cryptocurrencyView()
+                    SettingsUserDefaults.setUserDefaults(ticher: tickers, idArray: idArray)
+                    self?.updateApplicationContext(id: idArray)
+                    self?.indexItem(ticker: tickers)
+                case .failure(let error ):
+                    DispatchQueue.main.async {
+                        UIView.animate(withDuration: 0.25) {
+                            self?.refreshControl?.endRefreshing()
                         }
-                        self?.errorAlert(error: error)
                     }
+                    self?.errorAlert(error: error)
                 }
             }
         }
@@ -208,7 +205,6 @@ class MainVC: UITableViewController {
         if let ticker = tickers {
             
             cell.coinNameLabel.text = ticker[row].name
-            
             cell.priceCoinLabel.text = ticker[row].priceCurrency()
             
             let percentChange = ticker[row].percentChangeCurrent()

@@ -418,6 +418,9 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                         </subviews>
+                                        <constraints>
+                                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="50" id="p20-V1-zuI"/>
+                                        </constraints>
                                     </stackView>
                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="h7U-wg-rFJ">
                                         <rect key="frame" x="4" y="89.5" width="367" height="30"/>
@@ -755,6 +758,7 @@
                         <outlet property="oneHourChangeView" destination="Obg-oR-F8H" id="XYf-xu-Sif"/>
                         <outlet property="priceBtcLabel" destination="TDq-tP-BrO" id="VcU-p9-o7e"/>
                         <outlet property="priceConvertLabel" destination="8Nk-dX-NRl" id="AT2-I5-Yea"/>
+                        <outlet property="priceStackView" destination="kps-3F-WJX" id="nzF-vT-OSJ"/>
                         <outlet property="priceUsdLabel" destination="tIF-uW-0Bc" id="WfS-pL-ZLP"/>
                         <outlet property="rankLabel" destination="xBz-zq-Jrg" id="joS-tm-Whb"/>
                         <outlet property="selectSegmentedControl" destination="Y3q-Wh-tVv" id="5hQ-nF-rxJ"/>
@@ -852,7 +856,7 @@
         <!--Navigation Controller-->
         <scene sceneID="eDk-yp-15h">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="OlT-mu-tp2" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="cryptocurrencyInfoNavigationController" automaticallyAdjustsScrollViewInsets="NO" useStoryboardIdentifierAsRestorationIdentifier="YES" id="OlT-mu-tp2" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="LEY-Jo-l1l">
                         <rect key="frame" x="0.0" y="20" width="375" height="44"/>

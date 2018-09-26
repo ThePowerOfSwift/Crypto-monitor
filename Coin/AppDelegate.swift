@@ -61,17 +61,30 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, continue userActivity: NSUserActivity, restorationHandler: @escaping ([UIUserActivityRestoring]?) -> Void) -> Bool {
         
+        print(userActivity.activityType)
         
         if userActivity.activityType == CSSearchableItemActionType {
-            if let tickerID = userActivity.userInfo?[CSSearchableItemActivityIdentifier] as? String {
-                let keyStore = NSUbiquitousKeyValueStore ()
-                keyStore.set(tickerID, forKey: "selectDefaultItemID")
-                keyStore.synchronize()
-               // guard let masterViewController = CoinTableViewController() else { return true }
-                self.masterViewController?.showTickerID(tickerID: tickerID)
+            if let id = userActivity.userInfo?[CSSearchableItemActivityIdentifier] as? String {
+                showTicker(tickerID: id)
+            }
+        } else{
+            if #available(iOS 12.0, *) {
+                if userActivity.activityType == "Valentyn.Mialin.crypto.monitor.show-currency" {
+                    if let intent = userActivity.interaction?.intent as? ShowRateIntent,
+                        let id = intent.id{
+                        showTicker(tickerID: id)
+                    }
+                }
             }
         }
         return true
+    }
+    
+    private func showTicker(tickerID: String) {
+        let keyStore = NSUbiquitousKeyValueStore()
+        keyStore.set(tickerID, forKey: "selectDefaultItemID")
+        keyStore.synchronize()
+        self.masterViewController?.showTickerID(tickerID: tickerID)
     }
     
 

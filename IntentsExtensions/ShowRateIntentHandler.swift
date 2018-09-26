@@ -16,7 +16,7 @@ public class ShowRateIntentHandler: NSObject, ShowRateIntentHandling {
         // ...
         
         print(intent.id ?? "name error")
-      completion(ShowRateIntentResponse(code: ShowRateIntentResponseCode.ready, userActivity: nil))
+        completion(ShowRateIntentResponse(code: ShowRateIntentResponseCode.ready, userActivity: nil))
     }
     
     

@@ -24,9 +24,9 @@ class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
     
     @IBOutlet weak var zoomSegmentedControl: UISegmentedControl!
     @IBOutlet weak var selectSegmentedControl: UISegmentedControl!
-
+    
     @IBOutlet weak var nameLabel: UILabel!
-    @IBOutlet weak var priceUsdLabel: UILabel!
+    
     
     @IBOutlet weak var oneHourChangeView: UIView!
     @IBOutlet weak var oneHourChangeLabel: UILabel!
@@ -35,19 +35,26 @@ class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
     @IBOutlet weak var weekChangeView: UIView!
     @IBOutlet weak var weekChangeLabel: UILabel!
     
+    @IBOutlet weak var priceStackView: UIStackView!
+    @IBOutlet weak var priceUsdLabel: UILabel!
     @IBOutlet weak var priceBtcLabel: UILabel!
     @IBOutlet weak var priceConvertLabel: UILabel!
+    
     @IBOutlet weak var rankLabel: UILabel!
     @IBOutlet weak var marketcapLabel: UILabel!
     @IBOutlet weak var volumeLabel: UILabel!
     
     
-    var ticker : Ticker?
+    var ticker : Ticker? {
+        didSet {
+            //loadViewIfNeeded()
+            viewCryptocurrencyInfo()
+        }
+    }
     var currencyCharts: CurrencyCharts?
     let userCalendar = Calendar.current
     var minDate: Date?
-    var coinTableViewController: MainVC? = nil
-    
+
     //MARK: - LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -63,40 +70,52 @@ class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
         let keyStore = NSUbiquitousKeyValueStore()
         selectSegmentedControl?.selectedSegmentIndex = Int(keyStore.longLong(forKey: "typeChart"))
         zoomSegmentedControl?.selectedSegmentIndex = Int(keyStore.longLong(forKey: "zoomChart"))
+        
+        
+        
+     
     }
- 
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         self.navigationItem.title = ticker?.symbol
-        lineChartView?.clear()
-        
+        //lineChartView?.clear()
         if #available(iOS 12.0, *) {
+            let intent = ShowRateIntent()
+            intent.id = ticker!.id
+            
+            
             let addShortcutButton = INUIAddVoiceShortcutButton(style: .whiteOutline)
-            
-            let activity = NSUserActivity(activityType: "Valentyn.Mialin.crypto.monitor.show-currency")
-            activity.title = NSLocalizedString("Show the \(String(describing: ticker?.name)) rate", comment: "")
-            activity.userInfo = ["tickerID" : ticker?.id ?? "bitcoin"] // 3
-            activity.isEligibleForSearch = true // 4
-            activity.isEligibleForPrediction = true // 5
-            activity.persistentIdentifier = NSUserActivityPersistentIdentifier("Valentyn.Mialin.crypto.monitor.show-currency") // 6
-            view.userActivity = activity // 7
-            activity.becomeCurrent() // 8
-            
-            addShortcutButton.shortcut = INShortcut(userActivity: activity)
+            addShortcutButton.shortcut = INShortcut(intent: intent)
             addShortcutButton.delegate = self
+            addShortcutButton.tag = 99
             
             addShortcutButton.translatesAutoresizingMaskIntoConstraints = false
             
+            
             self.view.addSubview(addShortcutButton)
-            self.view.centerXAnchor.constraint(equalTo: addShortcutButton.centerXAnchor).isActive = true
-            self.view.centerYAnchor.constraint(equalTo: addShortcutButton.centerYAnchor).isActive = true
+            
+            
+            
+            self.view.addSubview(addShortcutButton)
+            
+            self.view.rightAnchor.constraint(equalTo: addShortcutButton.rightAnchor, constant: 8.0).isActive = true
+            self.priceStackView.centerYAnchor.constraint(equalTo: addShortcutButton.centerYAnchor).isActive = true
         }
+        
     }
     
     override func viewDidDisappear(_ animated: Bool) {
         ChartRequest.cancelRequest { _ in }
+        lineChartView?.clear()
+        
+        for view in self.view.subviews {
+            if view.tag == 99 {
+                view.removeFromSuperview()
+            }
+        }
     }
-
+    
     @objc func newCurrentCurrency(notification : NSNotification) {
         loadTicker()
     }
@@ -172,28 +191,27 @@ class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
     }
     
     private func loadTicker() {
-        guard let ticker = ticker else { return }
-        
-        startRefreshActivityIndicator()
-        
-        let keyStore = NSUbiquitousKeyValueStore()
-        guard let idArray = keyStore.array(forKey: "id") as? [String] else { return }
-        
-        CryptoCurrencyKit.fetchTickers(idArray: idArray) { [weak self] (response) in
-            guard let strongSelf = self else { return }
+       // DispatchQueue .global (qos: .userInitiated) .async {
+            guard let ticker = self.ticker else { return }
             
-            switch response {
-            case .success(let tickers):
-                SettingsUserDefaults.setUserDefaults(ticher: tickers)
-                
-                if let ticker = tickers.first(where: {$0.id == ticker.id}) {
-                    strongSelf.ticker = ticker
+            self.startRefreshActivityIndicator()
+            
+            let keyStore = NSUbiquitousKeyValueStore()
+            guard let idArray = keyStore.array(forKey: "id") as? [String] else { return }
+            
+            CryptoCurrencyKit.fetchTickers(idArray: idArray) { [weak self] (response) in
+                switch response {
+                case .success(let tickers):
+                    SettingsUserDefaults.setUserDefaults(ticher: tickers)
+                    
+                    if let ticker = tickers.first(where: {$0.id == ticker.id}) {
+                        self?.ticker = ticker
+                    }
+                case .failure(let error):
+                    self?.errorAlert(error: error)
                 }
-                strongSelf.viewCryptocurrencyInfo()
-            case .failure(let error):
-                strongSelf.errorAlert(error: error)
             }
-        }
+       // }
     }
     
     private func viewCryptocurrencyInfo() {
@@ -236,8 +254,6 @@ class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
         }
     }
     
-   
-    
     private func loadlineView() {
         guard let ticker = ticker else { return }
         guard self.minDate != nil else {
@@ -245,9 +261,9 @@ class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
             return
         }
         
-        lineChartView?.isHidden = true
-        lineChartActivityIndicator?.isHidden = false
-        LineChartErrorView?.isHidden = true
+        self.lineChartView?.isHidden = true
+        self.lineChartActivityIndicator?.isHidden = false
+        self.LineChartErrorView?.isHidden = true
         
         var of: NSDate?
         
@@ -263,41 +279,41 @@ class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
         let dateFormatter = DateFormatter()
         dateFormatter.locale = Locale.current
         
-        switch zoomSegmentedControl.selectedSegmentIndex {
+        switch self.zoomSegmentedControl.selectedSegmentIndex {
         case 0:
-            of = userCalendar.date(byAdding: .day, value: -1, to: Date())! as NSDate
+            of = self.userCalendar.date(byAdding: .day, value: -1, to: Date())! as NSDate
             xAxis?.labelCount = 5
             dateFormatter.setLocalizedDateFormatFromTemplate("HH:mm")
-            lineChartView?.viewPortHandler.setMaximumScaleX(4.0)
+            self.lineChartView?.viewPortHandler.setMaximumScaleX(4.0)
         case 1:
-            of = userCalendar.date(byAdding: .weekOfYear, value: -1, to: Date())! as NSDate
+            of = self.userCalendar.date(byAdding: .weekOfYear, value: -1, to: Date())! as NSDate
             xAxis?.labelCount = 7
             dateFormatter.setLocalizedDateFormatFromTemplate("dd.MM")
-            lineChartView?.viewPortHandler.setMaximumScaleX(1.5)
+            self.lineChartView?.viewPortHandler.setMaximumScaleX(1.5)
         case 2:
-            of = userCalendar.date(byAdding: .month, value: -1, to: Date())! as NSDate
+            of = self.userCalendar.date(byAdding: .month, value: -1, to: Date())! as NSDate
             xAxis?.labelCount = 5
             dateFormatter.setLocalizedDateFormatFromTemplate("dd.MM")
-            lineChartView?.viewPortHandler.setMaximumScaleX(1.5)
+            self.lineChartView?.viewPortHandler.setMaximumScaleX(1.5)
         case 3:
-            of = userCalendar.date(byAdding: .month, value: -3, to: Date())! as NSDate
+            of = self.userCalendar.date(byAdding: .month, value: -3, to: Date())! as NSDate
             xAxis?.labelCount = 5
             dateFormatter.setLocalizedDateFormatFromTemplate("dd.MM")
-            lineChartView?.viewPortHandler.setMaximumScaleX(1.5)
+            self.lineChartView?.viewPortHandler.setMaximumScaleX(1.5)
         case 4:
-            of = userCalendar.date(byAdding: .year, value: -1, to: Date())! as NSDate
+            of = self.userCalendar.date(byAdding: .year, value: -1, to: Date())! as NSDate
             xAxis?.labelCount = 6
             dateFormatter.setLocalizedDateFormatFromTemplate("MMM")
-            lineChartView?.viewPortHandler.setMaximumScaleX(1.75)
+            self.lineChartView?.viewPortHandler.setMaximumScaleX(1.75)
         case 5:
-            of = Calendar.current.date(from: userCalendar.dateComponents([.year], from: Date()))! as NSDate
+            of = Calendar.current.date(from: self.userCalendar.dateComponents([.year], from: Date()))! as NSDate
             xAxis?.labelCount = 6
             dateFormatter.setLocalizedDateFormatFromTemplate("MMM")
-            lineChartView?.viewPortHandler.setMaximumScaleX(1.0)
+            self.lineChartView?.viewPortHandler.setMaximumScaleX(1.0)
         case 6:
             xAxis?.labelCount = 5
             dateFormatter.setLocalizedDateFormatFromTemplate("MM.yy")
-            lineChartView?.viewPortHandler.setMaximumScaleX(3.0)
+            self.lineChartView?.viewPortHandler.setMaximumScaleX(3.0)
         default:
             break
         }
@@ -311,8 +327,8 @@ class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
                 if let currencyCharts = currencyCharts {
                     strongSelf.currencyCharts = currencyCharts
                     DispatchQueue.main.async() {
-                        strongSelf.lineChartView?.zoom(scaleX: 0.0, scaleY: 0.0, x: 0.0, y: 0.0)
                         strongSelf.lineView()
+                        strongSelf.lineChartView?.zoom(scaleX: 0.0, scaleY: 0.0, x: 0.0, y: 0.0)
                     }
                 }
             }
@@ -320,65 +336,72 @@ class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
                 strongSelf.lineChartErrorView(error: error!)
             }
         })
-        
     }
     
     private func lineView() {
-        lineChartView?.isHidden = false
-        lineChartActivityIndicator.isHidden = true
-        LineChartErrorView.isHidden = true
         
-        if let currencyCharts = self.currencyCharts {
-            // Creating an array of data entries
-            var yVals1 = [ChartDataEntry]()
-            var char = [Chart]()
-            
-            switch selectSegmentedControl.selectedSegmentIndex {
+        self.lineChartView?.isHidden = false
+        self.lineChartActivityIndicator.isHidden = true
+        self.LineChartErrorView.isHidden = true
+        
+        let selectedSegmentIndex = self.selectSegmentedControl.selectedSegmentIndex
+        
+        
+        DispatchQueue .global (qos: .userInitiated) .async {
+            if let currencyCharts = self.currencyCharts {
+                // Creating an array of data entries
+                var yVals1 = [ChartDataEntry]()
+                var char = [Chart]()
                 
-            case 0:
-                char = currencyCharts.market_cap_by_available_supply
-            case 1:
-                char = currencyCharts.price_usd
-            case 2:
-                char = currencyCharts.price_btc
-            case 3:
-                char = currencyCharts.volume_usd
-            default:
-                break
-            }
-            
-            for i in char {
-                yVals1.append(ChartDataEntry(x: Double(Int(i.timestamp / 1000)), y: Double(i.item)))
-            }
-            
-            // Create a data set with our array
-            let set1 = LineChartDataSet(values: yVals1, label: nil)
-            set1.drawValuesEnabled = false // Убрать надписи
-            set1.drawCirclesEnabled = false
-            set1.setColor(UIColor.black) // color line
-            set1.highlightEnabled = false
-            
-            if selectSegmentedControl.selectedSegmentIndex == 3 || selectSegmentedControl.selectedSegmentIndex == 0 {
-                set1.fill = Fill.fillWithColor(.black)
-                set1.fillAlpha = 1.0
-                set1.drawFilledEnabled = true // Draw the Gradient
+                switch selectedSegmentIndex  {
+                    
+                case 0:
+                    char = currencyCharts.market_cap_by_available_supply
+                case 1:
+                    char = currencyCharts.price_usd
+                case 2:
+                    char = currencyCharts.price_btc
+                case 3:
+                    char = currencyCharts.volume_usd
+                default:
+                    break
+                }
                 
-                lineChartView?.animate(yAxisDuration: 2.0)
+                for i in char {
+                    yVals1.append(ChartDataEntry(x: Double(Int(i.timestamp / 1000)), y: Double(i.item)))
+                }
+                
+                // Create a data set with our array
+                let set1 = LineChartDataSet(values: yVals1, label: nil)
+                set1.drawValuesEnabled = false // Убрать надписи
+                set1.drawCirclesEnabled = false
+                set1.setColor(UIColor.black) // color line
+                set1.highlightEnabled = false
+                
+                if selectedSegmentIndex == 3 || selectedSegmentIndex == 0 {
+                    set1.fill = Fill.fillWithColor(.black)
+                    set1.fillAlpha = 1.0
+                    set1.drawFilledEnabled = true // Draw the Gradient
+                    
+                    self.lineChartView?.animate(yAxisDuration: 2.0)
+                }
+                else{
+                    self.lineChartView?.animate(xAxisDuration: 2.0)
+                }
+                
+                //3 - create an array to store our LineChartDataSets
+                var dataSets : [LineChartDataSet] = [LineChartDataSet]()
+                dataSets.append(set1)
+                
+                //4 - pass our months in for our x-axis label value along with our dataSets
+                let data: LineChartData = LineChartData(dataSets: dataSets)
+                //  data.setValueTextColor(UIColor.white)
+                
+                //5 - finally set our data
+                DispatchQueue.main.async() {
+                    self.lineChartView?.data = data
+                }
             }
-            else{
-                lineChartView?.animate(xAxisDuration: 2.0)
-            }
-            
-            //3 - create an array to store our LineChartDataSets
-            var dataSets : [LineChartDataSet] = [LineChartDataSet]()
-            dataSets.append(set1)
-            
-            //4 - pass our months in for our x-axis label value along with our dataSets
-            let data: LineChartData = LineChartData(dataSets: dataSets)
-            //  data.setValueTextColor(UIColor.white)
-            
-            //5 - finally set our data
-            self.lineChartView?.data = data
         }
     }
     
@@ -387,7 +410,7 @@ class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
         self.navigationItem.rightBarButtonItem = refreshBarButton
     }
     
-    @objc func refresh() {
+    @objc private func refresh() {
         loadTicker()
         loadlineView()
     }
@@ -401,19 +424,23 @@ class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
     }
     
     @IBAction func selectIindexChanged(_ sender: UISegmentedControl) {
-        let keyStore = NSUbiquitousKeyValueStore ()
-        keyStore.set(selectSegmentedControl?.selectedSegmentIndex, forKey: "typeChart")
-        keyStore.synchronize()
+        DispatchQueue .global (qos: .utility) .async {
+            let keyStore = NSUbiquitousKeyValueStore ()
+            keyStore.set(self.selectSegmentedControl?.selectedSegmentIndex, forKey: "typeChart")
+            keyStore.synchronize()
+        }
         lineView()
     }
     
     @IBAction func indexChanged(_ sender: UISegmentedControl) {
-        let keyStore = NSUbiquitousKeyValueStore ()
-        keyStore.set(zoomSegmentedControl?.selectedSegmentIndex, forKey: "zoomChart")
-        keyStore.synchronize()
+        DispatchQueue .global (qos: .utility) .async {
+            let keyStore = NSUbiquitousKeyValueStore ()
+            keyStore.set(self.zoomSegmentedControl?.selectedSegmentIndex, forKey: "zoomChart")
+            keyStore.synchronize()
+        }
         loadlineView()
     }
-
+    
     @objc func reload(_ sender:UIButton) {
         refresh()
     }
@@ -426,7 +453,7 @@ class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
             self.present(alert, animated: true, completion: nil)
         }
     }
-
+    
     func lineChartErrorView(error: Error) {
         if (error as NSError).code != -999 {
             DispatchQueue.main.async() {
@@ -441,87 +468,14 @@ class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
 extension CryptocurrencyInfoViewController: CoinDelegate {
     func coinSelected(_ ticker: Ticker) {
         self.ticker = ticker
+             loadViewIfNeeded()
         viewCryptocurrencyInfo()
         loadTicker()
         getMinDateCharts()
     }
 }
 
-@available(iOS 12.0, *)
-extension CryptocurrencyInfoViewController: INUIAddVoiceShortcutButtonDelegate {
-    
-    func present(_ addVoiceShortcutViewController: INUIAddVoiceShortcutViewController, for addVoiceShortcutButton: INUIAddVoiceShortcutButton) {
-        addVoiceShortcutViewController.delegate = self
-        present(addVoiceShortcutViewController, animated: true, completion: nil)
-    }
-    
-    /// - Tag: edit_phrase
-    func present(_ editVoiceShortcutViewController: INUIEditVoiceShortcutViewController, for addVoiceShortcutButton: INUIAddVoiceShortcutButton) {
-        editVoiceShortcutViewController.delegate = self
-        present(editVoiceShortcutViewController, animated: true, completion: nil)
-    }
-}
-@available(iOS 12.0, *)
-extension CryptocurrencyInfoViewController: INUIAddVoiceShortcutViewControllerDelegate {
-    
-    func addVoiceShortcutViewController(_ controller: INUIAddVoiceShortcutViewController,
-                                        didFinishWith voiceShortcut: INVoiceShortcut?,
-                                        error: Error?) {
-        if let error = error as NSError? {
-            os_log("Error adding voice shortcut: %@", log: OSLog.default, type: .error, error)
-        }
-        
-        controller.dismiss(animated: true, completion: nil)
-    }
-    
-    func addVoiceShortcutViewControllerDidCancel(_ controller: INUIAddVoiceShortcutViewController) {
-        controller.dismiss(animated: true, completion: nil)
-    }
-}
-@available(iOS 12.0, *)
-extension CryptocurrencyInfoViewController: INUIEditVoiceShortcutViewControllerDelegate {
-    
-    func editVoiceShortcutViewController(_ controller: INUIEditVoiceShortcutViewController,
-                                         didUpdate voiceShortcut: INVoiceShortcut?,
-                                         error: Error?) {
-        if let error = error as NSError? {
-            os_log("Error adding voice shortcut: %@", log: OSLog.default, type: .error, error)
-        }
-        
-        controller.dismiss(animated: true, completion: nil)
-    }
-    
-    func editVoiceShortcutViewController(_ controller: INUIEditVoiceShortcutViewController,
-                                         didDeleteVoiceShortcutWithIdentifier deletedVoiceShortcutIdentifier: UUID) {
-        controller.dismiss(animated: true, completion: nil)
-    }
-    
-    func editVoiceShortcutViewControllerDidCancel(_ controller: INUIEditVoiceShortcutViewController) {
-        controller.dismiss(animated: true, completion: nil)
-    }
-}
-
-class ChartXAxisFormatter: NSObject {
-    fileprivate var dateFormatter: DateFormatter?
-    convenience init(dateFormatter: DateFormatter) {
-        self.init()
-        self.dateFormatter = dateFormatter
-    }
-}
-
-extension ChartXAxisFormatter: IAxisValueFormatter {
-    
-    func stringForValue(_ value: Double, axis: AxisBase?) -> String {
-        guard let dateFormatter = dateFormatter
-            else {
-                return ""
-        }
-        let date = Date(timeIntervalSince1970: value )
-        return dateFormatter.string(from: date)
-    }
-}
-
 // Helper function inserted by Swift 4.2 migrator.
 fileprivate func convertToUIApplicationOpenExternalURLOptionsKeyDictionary(_ input: [String: Any]) -> [UIApplication.OpenExternalURLOptionsKey: Any] {
-	return Dictionary(uniqueKeysWithValues: input.map { key, value in (UIApplication.OpenExternalURLOptionsKey(rawValue: key), value)})
+    return Dictionary(uniqueKeysWithValues: input.map { key, value in (UIApplication.OpenExternalURLOptionsKey(rawValue: key), value)})
 }

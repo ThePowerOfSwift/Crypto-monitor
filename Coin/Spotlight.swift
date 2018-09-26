@@ -46,13 +46,13 @@ extension MainVC {
                     let intent = ShowRateIntent()
                     intent.id = ticker.id
                 //    intent.name = ticker.name
-                    
+
                     let interaction = INInteraction(intent: intent, response: nil)
-                    
+
                     // The order identifier is used to match with the donation so the interaction
                     // can be deleted if a soup is removed from the menu.
                     //interaction.identifier = order.identifier.uuidString
-                    
+
                     interaction.donate { (error) in
                         if error != nil {
                             if let error = error as NSError? {
@@ -62,7 +62,8 @@ extension MainVC {
                             os_log("Successfully donated interaction")
                         }
                     }
-                }
+//                //    INVoiceShortcutCenter.shared.setShortcutSuggestions(intent)
+               }
             }
             
             CSSearchableIndex.default().indexSearchableItems(searchableItems) { error in

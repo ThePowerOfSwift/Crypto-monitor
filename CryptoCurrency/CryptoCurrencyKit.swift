@@ -28,14 +28,11 @@ public struct CryptoCurrencyKit {
                     else{
                         tickerFilterArray = data
                     }
-                    DispatchQueue.main.async {
                         response?(ResponseA.success(tickerFilterArray))
-                    }
                 case .failure(let error):
                     print(error.localizedDescription)
-                    DispatchQueue.main.async {
                         response?(ResponseA.failure(error: error))
-                    }
+                    
                 }
             }
             requestA(urlRequest: urlRequest, idArray: idArray, response: closure)

@@ -27,21 +27,6 @@
 			<string>ShowRate</string>
 			<key>INIntentParameterCombinations</key>
 			<dict>
-				<key></key>
-				<dict>
-					<key>INIntentParameterCombinationIsPrimary</key>
-					<false/>
-					<key>INIntentParameterCombinationSubtitle</key>
-					<string></string>
-					<key>INIntentParameterCombinationSubtitleID</key>
-					<string>cuWI4l</string>
-					<key>INIntentParameterCombinationSupportsBackgroundExecution</key>
-					<true/>
-					<key>INIntentParameterCombinationTitle</key>
-					<string>Show rate ${name}</string>
-					<key>INIntentParameterCombinationTitleID</key>
-					<string>fXAwFt</string>
-				</dict>
 				<key>id</key>
 				<dict>
 					<key>INIntentParameterCombinationIsPrimary</key>
@@ -171,18 +156,6 @@
 						<false/>
 						<key>INIntentResponseParameterTag</key>
 						<integer>11</integer>
-						<key>INIntentResponseParameterType</key>
-						<string>String</string>
-					</dict>
-					<dict>
-						<key>INIntentResponseParameterDisplayPriority</key>
-						<integer>7</integer>
-						<key>INIntentResponseParameterName</key>
-						<string>priceConvert</string>
-						<key>INIntentResponseParameterSupportsMultipleValues</key>
-						<false/>
-						<key>INIntentResponseParameterTag</key>
-						<integer>12</integer>
 						<key>INIntentResponseParameterType</key>
 						<string>String</string>
 					</dict>
