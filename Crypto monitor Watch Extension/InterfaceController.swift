@@ -142,7 +142,7 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate {
         }
     }
     
-    //MARK: Actions
+    //MARK: - Actions
     @IBAction func oneHourSelected() {
         let userDefaults = UserDefaults()
         userDefaults.set(0, forKey: "percentChange")

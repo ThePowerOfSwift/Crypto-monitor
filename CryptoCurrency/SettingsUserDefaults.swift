@@ -73,6 +73,13 @@ public class SettingsUserDefaults{
         userDefaults?.synchronize()
     }
     
+    #if os(iOS)
+    public static func getLastUpdate() -> NSDate? {
+        let userDefaults = UserDefaults(suiteName: "group.mialin.valentyn.crypto.monitor")
+        return userDefaults?.object(forKey: "lastUpdate") as? NSDate
+    }
+    #endif
+    
     public static func loadcacheTicker() -> ([Ticker]?){
         let userDefaults: UserDefaults?
         #if os(iOS)

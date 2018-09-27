@@ -64,55 +64,24 @@ class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
         
         //Notification
         NotificationCenter.default.addObserver(self, selector: #selector(newCurrentCurrency), name: .newCurrentCurrency, object: nil)
+                NotificationCenter.default.addObserver(self, selector: #selector(willEnterForeground(_:)), name: UIApplication.willEnterForegroundNotification, object: nil)
         
         percentChangeView()
         
         let keyStore = NSUbiquitousKeyValueStore()
         selectSegmentedControl?.selectedSegmentIndex = Int(keyStore.longLong(forKey: "typeChart"))
         zoomSegmentedControl?.selectedSegmentIndex = Int(keyStore.longLong(forKey: "zoomChart"))
-        
-        
-        
-     
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         self.navigationItem.title = ticker?.symbol
-        //lineChartView?.clear()
-        if #available(iOS 12.0, *) {
-            let intent = ShowRateIntent()
-            intent.id = ticker!.id
-            
-            
-            let addShortcutButton = INUIAddVoiceShortcutButton(style: .whiteOutline)
-            addShortcutButton.shortcut = INShortcut(intent: intent)
-            addShortcutButton.delegate = self
-            addShortcutButton.tag = 99
-            
-            addShortcutButton.translatesAutoresizingMaskIntoConstraints = false
-            
-            
-            self.view.addSubview(addShortcutButton)
-            
-            
-            
-            self.view.addSubview(addShortcutButton)
-            
-            self.view.rightAnchor.constraint(equalTo: addShortcutButton.rightAnchor, constant: 8.0).isActive = true
-            self.priceStackView.centerYAnchor.constraint(equalTo: addShortcutButton.centerYAnchor).isActive = true
-        }
-        
     }
     
-    override func viewDidDisappear(_ animated: Bool) {
-        ChartRequest.cancelRequest { _ in }
-        lineChartView?.clear()
-        
-        for view in self.view.subviews {
-            if view.tag == 99 {
-                view.removeFromSuperview()
-            }
+    //MARK: - Notification
+    @objc func willEnterForeground(_ notification: NSNotification!) {
+        if (navigationController?.visibleViewController as? CryptocurrencyInfoViewController) != nil {
+            refresh()
         }
     }
     
@@ -169,7 +138,6 @@ class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
                         }
                     }
                 }
-                strongSelf.loadlineView()
             }
             else{
                 strongSelf.lineChartErrorView(error: error!)
@@ -191,11 +159,11 @@ class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
     }
     
     private func loadTicker() {
-       // DispatchQueue .global (qos: .userInitiated) .async {
-            guard let ticker = self.ticker else { return }
-            
-            self.startRefreshActivityIndicator()
-            
+        guard let ticker = self.ticker else { return }
+        
+        self.startRefreshActivityIndicator()
+        
+        DispatchQueue .global (qos: .userInitiated) .async {
             let keyStore = NSUbiquitousKeyValueStore()
             guard let idArray = keyStore.array(forKey: "id") as? [String] else { return }
             
@@ -208,12 +176,16 @@ class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
                         self?.ticker = ticker
                     }
                 case .failure(let error):
-                    self?.errorAlert(error: error)
-                }
+                    DispatchQueue.main.async() {
+                        self?.refreshBarButtonItem()
+                        
+                    }
+                self?.errorAlert(error: error)
             }
-       // }
+        }
     }
-    
+}
+
     private func viewCryptocurrencyInfo() {
         DispatchQueue.main.async() {
             self.refreshBarButtonItem()
@@ -256,10 +228,6 @@ class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
     
     private func loadlineView() {
         guard let ticker = ticker else { return }
-        guard self.minDate != nil else {
-            self.lineView()
-            return
-        }
         
         self.lineChartView?.isHidden = true
         self.lineChartActivityIndicator?.isHidden = false
@@ -279,7 +247,7 @@ class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
         let dateFormatter = DateFormatter()
         dateFormatter.locale = Locale.current
         
-        switch self.zoomSegmentedControl.selectedSegmentIndex {
+        switch self.zoomSegmentedControl?.selectedSegmentIndex {
         case 0:
             of = self.userCalendar.date(byAdding: .day, value: -1, to: Date())! as NSDate
             xAxis?.labelCount = 5
@@ -339,13 +307,7 @@ class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
     }
     
     private func lineView() {
-        
-        self.lineChartView?.isHidden = false
-        self.lineChartActivityIndicator.isHidden = true
-        self.LineChartErrorView.isHidden = true
-        
         let selectedSegmentIndex = self.selectSegmentedControl.selectedSegmentIndex
-        
         
         DispatchQueue .global (qos: .userInitiated) .async {
             if let currencyCharts = self.currencyCharts {
@@ -399,6 +361,10 @@ class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
                 
                 //5 - finally set our data
                 DispatchQueue.main.async() {
+                    self.lineChartView?.isHidden = false
+                    self.lineChartActivityIndicator.isHidden = true
+                    self.LineChartErrorView.isHidden = true
+                    
                     self.lineChartView?.data = data
                 }
             }
@@ -416,17 +382,20 @@ class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
     }
     
     private func startRefreshActivityIndicator() {
-        let activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView.init(style: .gray)
-        activityIndicator.color = UIColor(red:0.00, green:0.48, blue:1.00, alpha:1.0)
-        let refreshBarButton = UIBarButtonItem(customView: activityIndicator)
-        self.navigationItem.rightBarButtonItem = refreshBarButton
-        activityIndicator.startAnimating()
+        DispatchQueue.main.async() {
+            let activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView.init(style: .gray)
+            activityIndicator.color = UIColor(red:0.00, green:0.48, blue:1.00, alpha:1.0)
+            let refreshBarButton = UIBarButtonItem(customView: activityIndicator)
+            self.navigationItem.rightBarButtonItem = refreshBarButton
+            activityIndicator.startAnimating()
+        }
     }
     
     @IBAction func selectIindexChanged(_ sender: UISegmentedControl) {
+        let selectSegmentedControl = self.selectSegmentedControl?.selectedSegmentIndex
         DispatchQueue .global (qos: .utility) .async {
             let keyStore = NSUbiquitousKeyValueStore ()
-            keyStore.set(self.selectSegmentedControl?.selectedSegmentIndex, forKey: "typeChart")
+            keyStore.set(selectSegmentedControl, forKey: "typeChart")
             keyStore.synchronize()
         }
         lineView()
@@ -441,8 +410,27 @@ class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
         loadlineView()
     }
     
-    @objc func reload(_ sender:UIButton) {
-        refresh()
+    //MARK: - Siri Shortcut
+    @available(iOS 12.0, *)
+    private func addVoiceShortcutButton() {
+        let intent = ShowRateIntent()
+        intent.id = self.ticker!.id
+        intent.name = self.ticker!.name
+        
+        let addShortcutButton = INUIAddVoiceShortcutButton(style: .whiteOutline)
+        addShortcutButton.shortcut = INShortcut(intent: intent)
+        addShortcutButton.delegate = self
+        addShortcutButton.tag = 99
+        
+        addShortcutButton.translatesAutoresizingMaskIntoConstraints = false
+        for view in self.view.subviews {
+            if view.tag == 99 {
+                view.removeFromSuperview()
+            }
+        }
+        self.view.addSubview(addShortcutButton)
+        self.view.rightAnchor.constraint(equalTo: addShortcutButton.rightAnchor, constant: 8.0).isActive = true
+        self.priceStackView.centerYAnchor.constraint(equalTo: addShortcutButton.centerYAnchor).isActive = true
     }
     
     //MARK: - ErrorSubview
@@ -468,9 +456,13 @@ class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
 extension CryptocurrencyInfoViewController: CoinDelegate {
     func coinSelected(_ ticker: Ticker) {
         self.ticker = ticker
-             loadViewIfNeeded()
-        viewCryptocurrencyInfo()
+      //       loadViewIfNeeded()
+        self.lineChartView?.clear()
+        if #available(iOS 12.0, *) {
+            addVoiceShortcutButton()
+        }
         loadTicker()
+        loadlineView()
         getMinDateCharts()
     }
 }

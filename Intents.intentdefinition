@@ -22,25 +22,25 @@
 			<key>INIntentDescriptionID</key>
 			<string>izv9nb</string>
 			<key>INIntentLastParameterTag</key>
-			<integer>3</integer>
+			<integer>4</integer>
 			<key>INIntentName</key>
 			<string>ShowRate</string>
 			<key>INIntentParameterCombinations</key>
 			<dict>
-				<key>id</key>
+				<key>name,id</key>
 				<dict>
 					<key>INIntentParameterCombinationIsPrimary</key>
 					<false/>
 					<key>INIntentParameterCombinationSubtitle</key>
 					<string></string>
 					<key>INIntentParameterCombinationSubtitleID</key>
-					<string>ZjZv7D</string>
+					<string>qXJNwi</string>
 					<key>INIntentParameterCombinationSupportsBackgroundExecution</key>
 					<true/>
 					<key>INIntentParameterCombinationTitle</key>
-					<string>Show rate ${id}</string>
+					<string>Show rate ${name}</string>
 					<key>INIntentParameterCombinationTitleID</key>
-					<string>IKcWs7</string>
+					<string>SZhcwT</string>
 				</dict>
 			</dict>
 			<key>INIntentParameters</key>
@@ -54,6 +54,18 @@
 					<false/>
 					<key>INIntentParameterTag</key>
 					<integer>2</integer>
+					<key>INIntentParameterType</key>
+					<string>String</string>
+				</dict>
+				<dict>
+					<key>INIntentParameterDisplayPriority</key>
+					<integer>2</integer>
+					<key>INIntentParameterName</key>
+					<string>name</string>
+					<key>INIntentParameterSupportsMultipleValues</key>
+					<false/>
+					<key>INIntentParameterTag</key>
+					<integer>4</integer>
 					<key>INIntentParameterType</key>
 					<string>String</string>
 				</dict>

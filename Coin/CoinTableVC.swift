@@ -11,10 +11,17 @@ import WatchConnectivity
 import Alamofire
 import CryptoCurrency
 
-class MainVC: UITableViewController {
+class MainVC: UITableViewController  {
     weak var watchSession : WCSession?
     
-    var tickers:[Ticker]?
+    var tickers: [Ticker]? {
+        didSet{
+            DispatchQueue.main.async {
+                self.cryptocurrencyView()
+            }
+        }
+    }
+    
     weak var coinDelegate: CoinDelegate?
     var selectDefaultItem = false
 
@@ -24,13 +31,15 @@ class MainVC: UITableViewController {
         
         splitViewController?.delegate = self
         //Notification
-        NotificationCenter.default.addObserver(self, selector: #selector(applicationWillEnterForeground), name:NSNotification.Name.NSExtensionHostWillEnterForeground, object: nil)
         let keyStore = NSUbiquitousKeyValueStore()
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(
                                                 MainVC.ubiquitousKeyValueStoreDidChange),
                                                name: NSUbiquitousKeyValueStore.didChangeExternallyNotification,
                                                object: keyStore)
+
+        NotificationCenter.default.addObserver(self, selector: #selector(didEnterBackground(_:)), name: UIApplication.didEnterBackgroundNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(willEnterForeground(_:)), name: UIApplication.willEnterForegroundNotification, object: nil)
         
         //Navigation Item
         let editBarButton = UIBarButtonItem.init(barButtonSystemItem: .edit, target: self, action: #selector(edit))
@@ -55,10 +64,11 @@ class MainVC: UITableViewController {
             watchSession!.activate()
         }
     }
+    
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
-        print("viewWillAppear")
+        CryptoCurrencyKit.cancelAllRequests()
         loadCache()
     }
     
@@ -66,50 +76,44 @@ class MainVC: UITableViewController {
         super.viewDidAppear(true)
         print("viewDidAppear")
         DispatchQueue.global(qos: .background).async {
-            let keyStore = NSUbiquitousKeyValueStore()
-            let idKeyStore = keyStore.array(forKey: "id") as? [String]
-            if let idKeyStore = idKeyStore {
+            if let idKeyStore = SettingsUserDefaults.getIdArray() {
                 self.updateApplicationContext(id: idKeyStore)
             }
         }
         loadTicker()
     }
     
-
-
-    @objc private func applicationWillEnterForeground(notification : NSNotification) {
-        if self.viewIfLoaded?.window != nil {
-            DispatchQueue.global(qos: .utility).async {
-                print("unlock")
-                self.loadCache()
+    //MARK: - Notification
+    // iCloud
+    @objc func ubiquitousKeyValueStoreDidChange(notification: NSNotification) {
+        let keyStore = NSUbiquitousKeyValueStore ()
+        let idKeyStore = keyStore.array(forKey: "id") as? [String]
+        let userDefaults = UserDefaults(suiteName: "group.mialin.valentyn.crypto.monitor")
+        let idUserDefaults = userDefaults?.array(forKey: "id") as? [String]
+        if idKeyStore != nil && idUserDefaults != nil {
+            if idKeyStore! != idUserDefaults! {
                 self.loadTicker()
             }
         }
+        
+        if let idKeyStore = idKeyStore {
+            self.updateApplicationContext(id: idKeyStore)
+        }
     }
     
-    @IBAction private func refresh(_ sender: UIRefreshControl) {
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) {
+    @objc func didEnterBackground(_ notification: NSNotification!) {
+        print("Background")
+        CryptoCurrencyKit.cancelAllRequests()
+    }
+    
+    @objc func willEnterForeground(_ notification: NSNotification!) {
+        print("unlock")
+        if (navigationController?.visibleViewController as? MainVC) != nil || UIDevice.current.userInterfaceIdiom == .pad {
+            self.loadCache()
             self.loadTicker()
         }
     }
-    
-    func showTickerID(tickerID : String) {
-        guard let tickers = tickers else { return }
-        guard let ticker = tickers.first(where: {$0.id == tickerID}) else { return }
-        
-        coinDelegate?.coinSelected(ticker)
-        
-        if let app = UIApplication.shared.delegate as? AppDelegate, let window = app.window {
-            guard let splitViewController = window.rootViewController as? UISplitViewController,
-                let leftNavController = splitViewController.viewControllers.first as? UINavigationController,
-                ((leftNavController.topViewController as? MainVC) != nil) else { return }
-        }
-        if let detailViewController = coinDelegate as? CryptocurrencyInfoViewController,
-            let detailNavigationController = detailViewController.navigationController {
-            splitViewController?.showDetailViewController(detailNavigationController, sender: nil)
-        }
-    }
-    
+
     func emptyTicker() {
         self.navigationController?.popViewController(animated: false)
         self.performSegue(withIdentifier: "add", sender: nil)
@@ -120,76 +124,62 @@ class MainVC: UITableViewController {
         DispatchQueue.global(qos: .userInitiated).async {
             if let cacheTicker = SettingsUserDefaults.loadcacheTicker() {
                 self.tickers = cacheTicker
-                self.cryptocurrencyView()
             }
         }
     }
     
     private func loadTicker() {
-        guard let idArray = SettingsUserDefaults.getIdArray() else {
-            self.tickers = [Ticker]()
-            SettingsUserDefaults.setUserDefaults(ticher: [Ticker](), lastUpdate: nil)
-            return
+        guard let idArray = SettingsUserDefaults.getIdArray(),
+            !idArray.isEmpty else {
+                self.tickers = [Ticker]()
+                SettingsUserDefaults.setUserDefaults(ticher: [Ticker](), lastUpdate: nil)
+                return
         }
         
-        if idArray.isEmpty {
-            self.tickers = [Ticker]()
-            SettingsUserDefaults.setUserDefaults(ticher: [Ticker](), lastUpdate: nil)
-        }
-        else{
-            CryptoCurrencyKit.fetchTickers(idArray: idArray) { [weak self] (response) in
-                switch response {
-                case .success(let tickers):
-                    
-                    self?.tickers = tickers
-                    self?.cryptocurrencyView()
-                    SettingsUserDefaults.setUserDefaults(ticher: tickers, idArray: idArray)
-                    self?.updateApplicationContext(id: idArray)
-                    self?.indexItem(ticker: tickers)
-                case .failure(let error ):
-                    DispatchQueue.main.async {
-                        UIView.animate(withDuration: 0.25) {
-                            self?.refreshControl?.endRefreshing()
-                        }
+        CryptoCurrencyKit.fetchTickers(idArray: idArray) { [weak self] (response) in
+            switch response {
+            case .success(let tickers):
+                
+                self?.tickers = tickers
+                SettingsUserDefaults.setUserDefaults(ticher: tickers, idArray: idArray)
+                self?.updateApplicationContext(id: idArray)
+                SearchableIndex.indexItem(ticker: tickers)
+            case .failure(let error ):
+                DispatchQueue.main.async {
+                    UIView.animate(withDuration: 0.25) {
+                        self?.refreshControl?.endRefreshing()
                     }
-                    self?.errorAlert(error: error)
                 }
+                self?.errorAlert(error: error)
             }
         }
     }
     
     private func cryptocurrencyView() {
-        DispatchQueue.main.async {
-            UIView.animate(withDuration: 0.25) {
-                self.refreshControl?.endRefreshing()
-            }
+        UIView.animate(withDuration: 0.25) {
+            self.refreshControl?.endRefreshing()
         }
         
-        let userDefaults = UserDefaults(suiteName: "group.mialin.valentyn.crypto.monitor")
-        if let lastUpdate = userDefaults?.object(forKey: "lastUpdate") as? NSDate {
-            DispatchQueue.main.async {
-                self.refreshControl?.attributedTitle = NSAttributedString(string: self.dateToString(date: lastUpdate))
-            }
+        if let lastUpdate = SettingsUserDefaults.getLastUpdate() {
+            self.refreshControl?.attributedTitle = NSAttributedString(string: self.dateToString(date: lastUpdate))
         }
         
-        DispatchQueue.main.async {
-            self.tableView.reloadData()
+        self.tableView.reloadData()
+        
+        if UIDevice.current.userInterfaceIdiom == .pad,
+            !self.selectDefaultItem {
+            guard self.tickers != nil && self.tickers?.isEmpty != true else { return }
             
-            if UIDevice.current.userInterfaceIdiom == .pad,
-                !self.selectDefaultItem {
-                guard self.tickers != nil && self.tickers?.isEmpty != true else { return }
-                
-                let keyStore = NSUbiquitousKeyValueStore()
-                if let tickerID = keyStore.object(forKey: "selectDefaultItemID") as? String,
-                    let index = self.tickers?.index(where: {$0.id == tickerID})
-                {
-                    self.coinDelegate?.coinSelected(self.tickers![index])
-                }
-                else{
-                    self.coinDelegate?.coinSelected(self.tickers![0])
-                }
-                self.selectDefaultItem = true
+            let keyStore = NSUbiquitousKeyValueStore()
+            if let tickerID = keyStore.object(forKey: "selectDefaultItemID") as? String,
+                let index = self.tickers?.index(where: {$0.id == tickerID})
+            {
+                self.coinDelegate?.coinSelected(self.tickers![index])
             }
+            else{
+                self.coinDelegate?.coinSelected(self.tickers![0])
+            }
+            self.selectDefaultItem = true
         }
     }
 
@@ -267,7 +257,6 @@ class MainVC: UITableViewController {
             let detailNavigationController = detailViewController.navigationController {
             splitViewController?.showDetailViewController(detailNavigationController, sender: nil)
         }
-        
         DispatchQueue.global(qos: .utility).async {
             let keyStore = NSUbiquitousKeyValueStore ()
             keyStore.set(ticker.id, forKey: "selectDefaultItemID")
@@ -283,7 +272,7 @@ class MainVC: UITableViewController {
                 if var idArray = keyStore.array(forKey: "id") as? [String] {
                     if let index = idArray.index(of: self.tickers![indexPath.row].id){
                         idArray.remove(at: index)
-                        self.deindexItem(identifier: self.tickers![indexPath.row].id)
+                        SearchableIndex.deindexItem(identifier: self.tickers![indexPath.row].id)
                         self.tickers!.remove(at: indexPath.row)
                         
                         // set UserDefaults
@@ -301,7 +290,6 @@ class MainVC: UITableViewController {
                         self.updateApplicationContext(id: idArray)
                     }
                 }
-                self.cryptocurrencyView()
             }
         }
     }
@@ -338,13 +326,11 @@ class MainVC: UITableViewController {
         }
     }
     
-    
-    
-  
-    
-    func fetch(_ completion: () -> Void) {
-        loadTicker()
-        completion()
+    //MARK: - Actions
+    @IBAction private func refresh(_ sender: UIRefreshControl) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) {
+            self.loadTicker()
+        }
     }
     
     @objc private func edit(_ sender: Any) {
@@ -365,9 +351,13 @@ class MainVC: UITableViewController {
         
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "Setting"), style: UIBarButtonItem.Style.plain, target: self, action: #selector(settingsShow))
     }
-
-    @objc private func reload(_ sender:UIButton) {
-        loadTicker()
+    
+    @objc private func settingsShow(_ sender:UIButton) {
+        self.performSegue(withIdentifier: "settingSegue", sender: nil)
+    }
+    
+    @objc private func addShow(_ sender:UIButton) {
+        self.performSegue(withIdentifier: "add", sender: nil)
     }
     
     func errorAlert(error: Error) {
@@ -378,13 +368,7 @@ class MainVC: UITableViewController {
         }
     }
  
-    @objc private func settingsShow(_ sender:UIButton) {
-        self.performSegue(withIdentifier: "settingSegue", sender: nil)
-    }
-    
-    @objc private func addShow(_ sender:UIButton) {
-        self.performSegue(withIdentifier: "add", sender: nil)
-    }
+
     
     
     private func dateToString(date : NSDate) -> String {
@@ -394,28 +378,24 @@ class MainVC: UITableViewController {
         return formatter.string(from: date as Date)
     }
     
-    //MARK: - iCloud sync
-    @objc func ubiquitousKeyValueStoreDidChange(notification: NSNotification) {
-        let keyStore = NSUbiquitousKeyValueStore ()
-        let idKeyStore = keyStore.array(forKey: "id") as? [String]
-        let userDefaults = UserDefaults(suiteName: "group.mialin.valentyn.crypto.monitor")
-        let idUserDefaults = userDefaults?.array(forKey: "id") as? [String]
-        if idKeyStore != nil && idUserDefaults != nil {
-            if idKeyStore! != idUserDefaults! {
-                self.loadTicker()
-                print("************loadTicker ************")
-            }
-            else{
-              //  self.loadCache()
-                print("************ loadCache ************ ")
-            }
-        }
+    //MARK: - Continue userActivity
+    func showTickerID(tickerID : String) {
+        guard let tickers = tickers else { return }
+        guard let ticker = tickers.first(where: {$0.id == tickerID}) else { return }
         
-        if let idKeyStore = idKeyStore {
-            self.updateApplicationContext(id: idKeyStore)
+        coinDelegate?.coinSelected(ticker)
+        
+        if let app = UIApplication.shared.delegate as? AppDelegate, let window = app.window {
+            guard let splitViewController = window.rootViewController as? UISplitViewController,
+                let leftNavController = splitViewController.viewControllers.first as? UINavigationController,
+                ((leftNavController.topViewController as? MainVC) != nil) else { return }
         }
-        print("iCloud key-value-store change detected")
+        if let detailViewController = coinDelegate as? CryptocurrencyInfoViewController,
+            let detailNavigationController = detailViewController.navigationController {
+            splitViewController?.showDetailViewController(detailNavigationController, sender: nil)
+        }
     }
+
 }
 
 extension MainVC: UISplitViewControllerDelegate {
