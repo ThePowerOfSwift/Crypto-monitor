@@ -69,8 +69,8 @@ class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
         percentChangeView()
         
         let keyStore = NSUbiquitousKeyValueStore()
-        selectSegmentedControl?.selectedSegmentIndex = Int(keyStore.longLong(forKey: "typeChart"))
-        zoomSegmentedControl?.selectedSegmentIndex = Int(keyStore.longLong(forKey: "zoomChart"))
+        selectSegmentedControl?.selectedSegmentIndex = SettingsUserDefaults.getTypeChart()
+        zoomSegmentedControl?.selectedSegmentIndex = SettingsUserDefaults.getZoomChart()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -81,6 +81,7 @@ class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
     //MARK: - Notification
     @objc func willEnterForeground(_ notification: NSNotification!) {
         if (navigationController?.visibleViewController as? CryptocurrencyInfoViewController) != nil {
+            print("unlock 2 ")
             refresh()
         }
     }
@@ -392,21 +393,14 @@ class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
     }
     
     @IBAction func selectIindexChanged(_ sender: UISegmentedControl) {
-        let selectSegmentedControl = self.selectSegmentedControl?.selectedSegmentIndex
-        DispatchQueue .global (qos: .utility) .async {
-            let keyStore = NSUbiquitousKeyValueStore ()
-            keyStore.set(selectSegmentedControl, forKey: "typeChart")
-            keyStore.synchronize()
-        }
+        guard let index = self.selectSegmentedControl?.selectedSegmentIndex else { return }
+        SettingsUserDefaults.setTypeChart(segmentIndex: index)
         lineView()
     }
     
     @IBAction func indexChanged(_ sender: UISegmentedControl) {
-        DispatchQueue .global (qos: .utility) .async {
-            let keyStore = NSUbiquitousKeyValueStore ()
-            keyStore.set(self.zoomSegmentedControl?.selectedSegmentIndex, forKey: "zoomChart")
-            keyStore.synchronize()
-        }
+        guard let index = self.zoomSegmentedControl?.selectedSegmentIndex else { return }
+        SettingsUserDefaults.setZoomChart(segmentIndex: index)
         loadlineView()
     }
     
@@ -456,7 +450,7 @@ class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
 extension CryptocurrencyInfoViewController: CoinDelegate {
     func coinSelected(_ ticker: Ticker) {
         self.ticker = ticker
-      //       loadViewIfNeeded()
+      //  loadViewIfNeeded()
         self.lineChartView?.clear()
         if #available(iOS 12.0, *) {
             addVoiceShortcutButton()

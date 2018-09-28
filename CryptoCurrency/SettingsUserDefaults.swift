@@ -74,6 +74,35 @@ public class SettingsUserDefaults{
     }
     
     #if os(iOS)
+    //MARK: -  Zoom Chart
+    public static func setZoomChart(segmentIndex: Int) {
+        DispatchQueue .global (qos: .utility) .async {
+            let keyStore = NSUbiquitousKeyValueStore ()
+            keyStore.set(segmentIndex, forKey: "zoomChart")
+            keyStore.synchronize()
+        }
+    }
+    
+    public static func getZoomChart() -> Int {
+        let keyStore = NSUbiquitousKeyValueStore()
+        return Int(keyStore.longLong(forKey: "zoomChart"))
+    }
+    
+    //MARK: -  Type Chart
+    public static func getTypeChart() -> Int {
+        let keyStore = NSUbiquitousKeyValueStore()
+        return Int(keyStore.longLong(forKey: "typeChart"))
+    }
+    
+    public static func setTypeChart(segmentIndex: Int) {
+        DispatchQueue .global (qos: .utility) .async {
+            let keyStore = NSUbiquitousKeyValueStore ()
+            keyStore.set(segmentIndex, forKey: "typeChart")
+            keyStore.synchronize()
+        }
+    }
+    
+    //MARK: -  Last Update
     public static func getLastUpdate() -> NSDate? {
         let userDefaults = UserDefaults(suiteName: "group.mialin.valentyn.crypto.monitor")
         return userDefaults?.object(forKey: "lastUpdate") as? NSDate
@@ -104,7 +133,7 @@ public class SettingsUserDefaults{
         return cacheTicker
     }
     
-    
+    //MARK: -  Current Currency
     public static func setCurrentCurrency(money: Money) {
         #if os(iOS)
             let keyStore = NSUbiquitousKeyValueStore()
@@ -141,7 +170,7 @@ public class SettingsUserDefaults{
         #endif
         
         #if os(iOS)
-            guard let currentCurrencyString = NSUbiquitousKeyValueStore().string(forKey: "CurrentCurrency") else { return Money.usd }
+        guard let currentCurrencyString = NSUbiquitousKeyValueStore().string(forKey: "CurrentCurrency") else { return Money.usd }
         #endif
         
         #if os(watchOS)
