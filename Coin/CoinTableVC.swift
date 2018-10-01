@@ -92,7 +92,17 @@ class MainVC: UITableViewController  {
         let idUserDefaults = userDefaults?.array(forKey: "id") as? [String]
         if idKeyStore != nil && idUserDefaults != nil {
             if idKeyStore! != idUserDefaults! {
-                self.loadTicker()
+                if #available(iOS 12.0, *) {
+                    Interaction.deleteAll()
+                    self.loadTicker {
+                        if let cacheTicker = SettingsUserDefaults.loadcacheTicker() {
+                            Interaction.donate(tickers: cacheTicker)
+                        }
+                    }
+                }
+                else{
+                    self.loadTicker()
+                }
             }
         }
         
@@ -128,7 +138,7 @@ class MainVC: UITableViewController  {
         }
     }
     
-    private func loadTicker() {
+    private func loadTicker(completion: (()->())? = nil) {
         guard let idArray = SettingsUserDefaults.getIdArray(),
             !idArray.isEmpty else {
                 self.tickers = [Ticker]()
@@ -141,9 +151,8 @@ class MainVC: UITableViewController  {
             case .success(let tickers):
                 
                 self?.tickers = tickers
-                SettingsUserDefaults.setUserDefaults(ticher: tickers, idArray: idArray)
                 self?.updateApplicationContext(id: idArray)
-                SearchableIndex.indexItem(ticker: tickers)
+                SearchableIndex.indexItem(tickers: tickers)
             case .failure(let error ):
                 DispatchQueue.main.async {
                     UIView.animate(withDuration: 0.25) {
@@ -155,14 +164,19 @@ class MainVC: UITableViewController  {
         }
     }
     
-    private func cryptocurrencyView() {
-        UIView.animate(withDuration: 0.25) {
-            self.refreshControl?.endRefreshing()
-        }
-        
+    fileprivate func lastUpdate() {
         if let lastUpdate = SettingsUserDefaults.getLastUpdate() {
             self.refreshControl?.attributedTitle = NSAttributedString(string: self.dateToString(date: lastUpdate))
         }
+    }
+    
+    private func cryptocurrencyView() {
+        if self.refreshControl?.isRefreshing ?? false  {
+            UIView.animate(withDuration: 0.25) {
+                self.refreshControl?.endRefreshing()
+            }
+        }
+        lastUpdate()
         
         self.tableView.reloadData()
         
@@ -270,10 +284,12 @@ class MainVC: UITableViewController  {
                 let keyStore = NSUbiquitousKeyValueStore ()
                 
                 if var idArray = keyStore.array(forKey: "id") as? [String] {
-                    if let index = idArray.index(of: self.tickers![indexPath.row].id){
+                    let row = indexPath.row
+                    let ticker = self.tickers![row]
+                    if let index = idArray.index(of: ticker.id){
                         idArray.remove(at: index)
-                        SearchableIndex.deindexItem(identifier: self.tickers![indexPath.row].id)
-                        self.tickers!.remove(at: indexPath.row)
+                        SearchableIndex.deindexItem(identifier: ticker.id)
+                        self.tickers!.remove(at: row)
                         
                         // set UserDefaults
                         SettingsUserDefaults.setUserDefaults(ticher: self.tickers!, idArray: idArray, lastUpdate: nil)
@@ -286,6 +302,11 @@ class MainVC: UITableViewController  {
                             keyStore.set(idArray, forKey: "id")
                         }
                         keyStore.synchronize()
+                        
+                        // set Interaction
+                        if #available(iOS 12.0, *) {
+                            Interaction.delete(ticker: ticker)
+                        }
                         
                         self.updateApplicationContext(id: idArray)
                     }
@@ -396,6 +417,12 @@ class MainVC: UITableViewController  {
         }
     }
 
+}
+
+extension MainVC: CoinsDelegate {
+    func coins(_ tickers: [Ticker]) {
+        self.tickers = tickers
+    }
 }
 
 extension MainVC: UISplitViewControllerDelegate {

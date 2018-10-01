@@ -99,7 +99,6 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate {
                     
                     switch response {
                     case .success(let tickers):
-                        SettingsUserDefaults.setUserDefaults(ticher: tickers)
                         DispatchQueue.main.async() {
                             strongSelf.tableViewLoad(ticker: tickers)
                         }

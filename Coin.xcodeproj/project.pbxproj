@@ -15,6 +15,7 @@
 		B10AC91E2158FD0A00FDA793 /* Intents.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = B18B53322153E95A00788C8F /* Intents.intentdefinition */; };
 		B10AC91F2158FD0B00FDA793 /* Intents.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = B18B53322153E95A00788C8F /* Intents.intentdefinition */; };
 		B10AC921215907FA00FDA793 /* ShowRateIntentHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10AC920215907FA00FDA793 /* ShowRateIntentHandler.swift */; };
+		B1108D26215EDEF1006A7CA8 /* Interaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1108D25215EDEF1006A7CA8 /* Interaction.swift */; };
 		B123CE31215AD7D9001F8247 /* CryptoCurrency.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FBBE490C2008F5A200277014 /* CryptoCurrency.framework */; };
 		B123CE32215AD7DF001F8247 /* CryptoCurrency.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FBBE490C2008F5A200277014 /* CryptoCurrency.framework */; };
 		B1397B9820C41DD100A93FD2 /* UISplitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1397B9720C41DD100A93FD2 /* UISplitViewController.swift */; };
@@ -231,6 +232,7 @@
 		9B6037294BA1290219707A89 /* Pods_CryptoCurrency_watchOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CryptoCurrency_watchOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B10AC91A215837F000FDA793 /* Money.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Money.swift; sourceTree = "<group>"; };
 		B10AC920215907FA00FDA793 /* ShowRateIntentHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowRateIntentHandler.swift; sourceTree = "<group>"; };
+		B1108D25215EDEF1006A7CA8 /* Interaction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Interaction.swift; sourceTree = "<group>"; };
 		B123CE33215ADDDC001F8247 /* IntentsExtensionsUI.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = IntentsExtensionsUI.entitlements; sourceTree = "<group>"; };
 		B1397B9720C41DD100A93FD2 /* UISplitViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UISplitViewController.swift; sourceTree = "<group>"; };
 		B16FBA0221594DEB0056AA2A /* backgroundColorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = backgroundColorView.swift; sourceTree = "<group>"; };
@@ -516,6 +518,7 @@
 				FB3EF7F92024941E00EB1C31 /* DZNEmptyData.swift */,
 				FBFA2A8A20ACE12A00B11B17 /* WCSession.swift */,
 				FB3EF7F420248E2500EB1C31 /* Spotlight.swift */,
+				B1108D25215EDEF1006A7CA8 /* Interaction.swift */,
 				B1817F57213DE21C0073CDC7 /* Cells */,
 			);
 			name = MainVC;
@@ -1328,6 +1331,7 @@
 				FBA28ACA200959BC009EDB84 /* ChartRequest.swift in Sources */,
 				FB466DDA1F2D479200D771C9 /* SettingTableViewController.swift in Sources */,
 				FBD5ABE51F214CFA003A3AAC /* AddTableViewController.swift in Sources */,
+				B1108D26215EDEF1006A7CA8 /* Interaction.swift in Sources */,
 				FBA28AD020097C31009EDB84 /* CurrentCurrencyTableViewCell.swift in Sources */,
 				B1397B9820C41DD100A93FD2 /* UISplitViewController.swift in Sources */,
 				FB670CE61F16D900005761CF /* CryptocurrencyInfoViewController.swift in Sources */,

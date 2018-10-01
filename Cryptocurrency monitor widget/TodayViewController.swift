@@ -59,7 +59,6 @@ class TodayViewController: UIViewController, UITableViewDataSource, UITableViewD
                 guard let strongSelf = self else { return }
                 switch response {
                 case .success(let tickers):
-                    SettingsUserDefaults.setUserDefaults(ticher: tickers)
                     DispatchQueue.main.async() {
                         strongSelf.cryptocurrencyView(ticker: tickers)
                     }

@@ -54,6 +54,8 @@ class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
     var currencyCharts: CurrencyCharts?
     let userCalendar = Calendar.current
     var minDate: Date?
+    
+     weak var coinsDelegate: CoinsDelegate?
 
     //MARK: - LifeCycle
     override func viewDidLoad() {
@@ -68,7 +70,6 @@ class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
         
         percentChangeView()
         
-        let keyStore = NSUbiquitousKeyValueStore()
         selectSegmentedControl?.selectedSegmentIndex = SettingsUserDefaults.getTypeChart()
         zoomSegmentedControl?.selectedSegmentIndex = SettingsUserDefaults.getZoomChart()
     }
@@ -171,8 +172,9 @@ class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
             CryptoCurrencyKit.fetchTickers(idArray: idArray) { [weak self] (response) in
                 switch response {
                 case .success(let tickers):
-                    SettingsUserDefaults.setUserDefaults(ticher: tickers)
-                    
+                    DispatchQueue.main.async() {
+                    self?.coinsDelegate?.coins(tickers)
+                    }
                     if let ticker = tickers.first(where: {$0.id == ticker.id}) {
                         self?.ticker = ticker
                     }

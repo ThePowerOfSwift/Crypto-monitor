@@ -28,10 +28,11 @@ public struct CryptoCurrencyKit {
                     else{
                         tickerFilterArray = data
                     }
-                        response?(ResponseA.success(tickerFilterArray))
+                    SettingsUserDefaults.setUserDefaults(ticher: tickerFilterArray, idArray: idArray)
+                    response?(ResponseA.success(tickerFilterArray))
                 case .failure(let error):
                     print(error.localizedDescription)
-                        response?(ResponseA.failure(error: error))
+                    response?(ResponseA.failure(error: error))
                     
                 }
             }

@@ -31,7 +31,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         self.masterViewController = leftNavController.topViewController as? MainVC
         self.masterViewController?.coinDelegate = detailViewController
-        
+        detailViewController.coinsDelegate = masterViewController
         
         detailViewController.navigationItem.leftItemsSupplementBackButton = true
         detailViewController.navigationItem.leftBarButtonItem = splitViewController.displayModeButtonItem

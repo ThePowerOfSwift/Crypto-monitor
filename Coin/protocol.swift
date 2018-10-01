@@ -12,3 +12,7 @@ import CryptoCurrency
 protocol CoinDelegate: class {
     func coinSelected(_ ticker: Ticker)
 }
+
+protocol CoinsDelegate: class {
+    func coins(_ tickers: [Ticker])
+}
