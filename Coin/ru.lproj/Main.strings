@@ -4,27 +4,12 @@
 /* Class = "UINavigationItem"; title = "Settings"; ObjectID = "DTw-zY-pjb"; */
 "DTw-zY-pjb.title" = "Настройки";
 
+/* Class = "UINavigationItem"; title = "Add"; ObjectID = "fra-i8-hjZ"; */
+"fra-i8-hjZ.title" = "Добавить";
+
 /* Class = "UIButton"; normalTitle = "Write a Review"; ObjectID = "J3x-cK-ObU"; */
 "J3x-cK-ObU.normalTitle" = "Написать отзыв";
 
 /* Class = "UILabel"; text = "Price"; ObjectID = "U2u-l5-f1g"; */
 "U2u-l5-f1g.text" = "Цена";
-
-/* Class = "UIButton"; normalTitle = "Buy / Sell Instantly"; ObjectID = "WVM-8J-Hzj"; Note = "changelly"; */
-"WVM-8J-Hzj.normalTitle" = "Купить / продать\nмгновенно";
-
-/* (No Comment) */
-"a5a-yk-s2O.title" = "Настройки";
-
-/* Class = "UINavigationItem"; title = "Add"; ObjectID = "fra-i8-hjZ"; */
-"fra-i8-hjZ.title" = "Добавить";
-
-/* (No Comment) */
-"tyt-ZY-uLd.headerTitle" = "Цена";
-
-/* (No Comment) */
-"uMW-aC-8Ll.headerTitle" = "Период изменения курса";
-
-/* (No Comment) */
-"yeO-1L-1gs.headerTitle" = "Источник данных";
 

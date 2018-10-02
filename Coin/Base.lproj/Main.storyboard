@@ -419,6 +419,12 @@
                                             </label>
                                         </subviews>
                                         <constraints>
+                                            <constraint firstAttribute="trailing" secondItem="tIF-uW-0Bc" secondAttribute="trailing" id="CU5-pP-4st"/>
+                                            <constraint firstItem="tIF-uW-0Bc" firstAttribute="leading" secondItem="kps-3F-WJX" secondAttribute="leading" id="DVx-CG-6Wc"/>
+                                            <constraint firstItem="8Nk-dX-NRl" firstAttribute="leading" secondItem="kps-3F-WJX" secondAttribute="leading" id="DaF-3e-YzP"/>
+                                            <constraint firstAttribute="trailing" secondItem="8Nk-dX-NRl" secondAttribute="trailing" id="Ge9-2F-jf9"/>
+                                            <constraint firstAttribute="trailing" secondItem="TDq-tP-BrO" secondAttribute="trailing" id="YSV-PN-h7v"/>
+                                            <constraint firstItem="TDq-tP-BrO" firstAttribute="leading" secondItem="kps-3F-WJX" secondAttribute="leading" id="aoI-vo-A1O"/>
                                             <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="50" id="p20-V1-zuI"/>
                                         </constraints>
                                     </stackView>

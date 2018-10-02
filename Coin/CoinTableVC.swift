@@ -388,10 +388,7 @@ class MainVC: UITableViewController  {
             self.present(alert, animated: true, completion: nil)
         }
     }
- 
 
-    
-    
     private func dateToString(date : NSDate) -> String {
         let formatter = DateFormatter()
         formatter.dateFormat = "dd.MM.yyyy HH:mm:ss"

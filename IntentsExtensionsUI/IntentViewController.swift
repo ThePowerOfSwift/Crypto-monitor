@@ -34,12 +34,12 @@ class IntentViewController: UIViewController, INUIHostedViewControlling {
     func configureView(for parameters: Set<INParameter>, of interaction: INInteraction, interactiveBehavior: INUIInteractiveBehavior, context: INUIHostedViewContext, completion: @escaping (Bool, Set<INParameter>, CGSize) -> Void) {
         // Do configuration here, including preparing views and calculating a desired size for presentation.
         
-        guard interaction.intent is ShowRateIntent else {
+        guard interaction.intent is ShowPriceIntent else {
             completion(false, Set(), .zero)
             return
         }
         
-        if let response = interaction.intentResponse as? ShowRateIntentResponse {
+        if let response = interaction.intentResponse as? ShowPriceIntentResponse {
             
             self.nameLabel?.text = response.name
             

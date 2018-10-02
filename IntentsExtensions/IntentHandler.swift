@@ -13,7 +13,7 @@ import Intents
 class IntentHandler: INExtension{
     
     override func handler(for intent: INIntent) -> Any {
-        guard intent is ShowRateIntent else {
+        guard intent is ShowPriceIntent else {
             fatalError("Unhandled intent type: \(intent)")
         }
         return ShowRateIntentHandler()

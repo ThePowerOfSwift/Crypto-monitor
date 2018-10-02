@@ -44,7 +44,7 @@
 	<string></string>
 	<key>NSUserActivityTypes</key>
 	<array>
-		<string>ShowRateIntent</string>
+		<string>ShowPriceIntent</string>
 		<string>Valentyn.Mialin.crypto.monitor.Activity</string>
 		<string>Valentyn.Mialin.crypto.monitor.show-currency</string>
 	</array>

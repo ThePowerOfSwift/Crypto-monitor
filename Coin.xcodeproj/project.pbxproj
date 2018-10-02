@@ -12,10 +12,11 @@
 		75E29C56B14A60C3C9045D33 /* Pods_Crypto_monitor_Watch_Extension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B76E69BF0FD2EAFA8C43B896 /* Pods_Crypto_monitor_Watch_Extension.framework */; };
 		B10AC91C2158383700FDA793 /* Money.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10AC91A215837F000FDA793 /* Money.swift */; };
 		B10AC91D2158383800FDA793 /* Money.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10AC91A215837F000FDA793 /* Money.swift */; };
-		B10AC91E2158FD0A00FDA793 /* Intents.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = B18B53322153E95A00788C8F /* Intents.intentdefinition */; };
-		B10AC91F2158FD0B00FDA793 /* Intents.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = B18B53322153E95A00788C8F /* Intents.intentdefinition */; };
 		B10AC921215907FA00FDA793 /* ShowRateIntentHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10AC920215907FA00FDA793 /* ShowRateIntentHandler.swift */; };
 		B1108D26215EDEF1006A7CA8 /* Interaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1108D25215EDEF1006A7CA8 /* Interaction.swift */; };
+		B1108D2721627330006A7CA8 /* Intents.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = B1108D2B21627331006A7CA8 /* Intents.intentdefinition */; };
+		B1108D2821627330006A7CA8 /* Intents.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = B1108D2B21627331006A7CA8 /* Intents.intentdefinition */; };
+		B1108D2921627331006A7CA8 /* Intents.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = B1108D2B21627331006A7CA8 /* Intents.intentdefinition */; };
 		B123CE31215AD7D9001F8247 /* CryptoCurrency.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FBBE490C2008F5A200277014 /* CryptoCurrency.framework */; };
 		B123CE32215AD7DF001F8247 /* CryptoCurrency.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FBBE490C2008F5A200277014 /* CryptoCurrency.framework */; };
 		B1397B9820C41DD100A93FD2 /* UISplitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1397B9720C41DD100A93FD2 /* UISplitViewController.swift */; };
@@ -28,7 +29,6 @@
 		B18B53242153E89300788C8F /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B18B53222153E89300788C8F /* MainInterface.storyboard */; };
 		B18B53282153E89300788C8F /* IntentsExtensionsUI.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = B18B531C2153E89200788C8F /* IntentsExtensionsUI.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		B18B532B2153E89300788C8F /* IntentsExtensions.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = B18B53132153E89200788C8F /* IntentsExtensions.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		B18B53332153E95A00788C8F /* Intents.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = B18B53322153E95A00788C8F /* Intents.intentdefinition */; };
 		B1ED5B9E215C0E4C00184C37 /* VoiceShortcut.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1ED5B9D215C0E4C00184C37 /* VoiceShortcut.swift */; };
 		B1ED5BA0215C15D000184C37 /* ChartXAxisFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1ED5B9F215C15D000184C37 /* ChartXAxisFormatter.swift */; };
 		CDE2A83035700307661C64FF /* Pods_CryptoCurrency_watchOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9B6037294BA1290219707A89 /* Pods_CryptoCurrency_watchOS.framework */; };
@@ -233,6 +233,11 @@
 		B10AC91A215837F000FDA793 /* Money.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Money.swift; sourceTree = "<group>"; };
 		B10AC920215907FA00FDA793 /* ShowRateIntentHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowRateIntentHandler.swift; sourceTree = "<group>"; };
 		B1108D25215EDEF1006A7CA8 /* Interaction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Interaction.swift; sourceTree = "<group>"; };
+		B1108D2A21627331006A7CA8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.intentdefinition; name = Base; path = Base.lproj/Intents.intentdefinition; sourceTree = "<group>"; };
+		B1108D2D21627336006A7CA8 /* uk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = uk; path = uk.lproj/Intents.strings; sourceTree = "<group>"; };
+		B1108D2F21627338006A7CA8 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Intents.strings; sourceTree = "<group>"; };
+		B1108D3121627339006A7CA8 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Intents.strings; sourceTree = "<group>"; };
+		B1108D332162733C006A7CA8 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Intents.strings; sourceTree = "<group>"; };
 		B123CE33215ADDDC001F8247 /* IntentsExtensionsUI.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = IntentsExtensionsUI.entitlements; sourceTree = "<group>"; };
 		B1397B9720C41DD100A93FD2 /* UISplitViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UISplitViewController.swift; sourceTree = "<group>"; };
 		B16FBA0221594DEB0056AA2A /* backgroundColorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = backgroundColorView.swift; sourceTree = "<group>"; };
@@ -247,7 +252,6 @@
 		B18B53202153E89300788C8F /* IntentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntentViewController.swift; sourceTree = "<group>"; };
 		B18B53232153E89300788C8F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainInterface.storyboard; sourceTree = "<group>"; };
 		B18B53252153E89300788C8F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		B18B53322153E95A00788C8F /* Intents.intentdefinition */ = {isa = PBXFileReference; lastKnownFileType = file.intentdefinition; path = Intents.intentdefinition; sourceTree = "<group>"; };
 		B1ED5B9D215C0E4C00184C37 /* VoiceShortcut.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoiceShortcut.swift; sourceTree = "<group>"; };
 		B1ED5B9F215C15D000184C37 /* ChartXAxisFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartXAxisFormatter.swift; sourceTree = "<group>"; };
 		B76E69BF0FD2EAFA8C43B896 /* Pods_Crypto_monitor_Watch_Extension.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Crypto_monitor_Watch_Extension.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -494,6 +498,28 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		B1108D3421637EB5006A7CA8 /* Shared */ = {
+			isa = PBXGroup;
+			children = (
+				B1108D2B21627331006A7CA8 /* Intents.intentdefinition */,
+				FB3EF7F420248E2500EB1C31 /* Spotlight.swift */,
+				B1108D25215EDEF1006A7CA8 /* Interaction.swift */,
+			);
+			name = Shared;
+			sourceTree = "<group>";
+		};
+		B1108D3521637F9B006A7CA8 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				FB9592531F20B8AB00F9F74B /* Coin.entitlements */,
+				FB2F889B1FEBFA32003B62CF /* Main.storyboard */,
+				FB2F889E1FEBFABD003B62CF /* LaunchScreen.storyboard */,
+				FBB2CCA21F155CF800D800FD /* Assets.xcassets */,
+				FBB2CCA71F155CF800D800FD /* Info.plist */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
 		B1817F56213DE0E80073CDC7 /* Model */ = {
 			isa = PBXGroup;
 			children = (
@@ -517,8 +543,6 @@
 				FB2F88A71FEBFB28003B62CF /* CoinTableVC.swift */,
 				FB3EF7F92024941E00EB1C31 /* DZNEmptyData.swift */,
 				FBFA2A8A20ACE12A00B11B17 /* WCSession.swift */,
-				FB3EF7F420248E2500EB1C31 /* Spotlight.swift */,
-				B1108D25215EDEF1006A7CA8 /* Interaction.swift */,
 				B1817F57213DE21C0073CDC7 /* Cells */,
 			);
 			name = MainVC;
@@ -591,17 +615,16 @@
 			name = AddTable;
 			sourceTree = "<group>";
 		};
-		FB757A1E20A861CF004B40FB /* View */ = {
+		FB757A1E20A861CF004B40FB /* UI */ = {
 			isa = PBXGroup;
 			children = (
+				FBB2CC9B1F155CF800D800FD /* AppDelegate.swift */,
 				B1817F58213DE51E0073CDC7 /* MainVC */,
 				B1817F5B213DE6040073CDC7 /* CryptocurrencyInfo */,
 				FB565C461F421ADF004EA42F /* AddTable */,
 				B1817F5C213DE67E0073CDC7 /* Setting */,
-				FB2F889B1FEBFA32003B62CF /* Main.storyboard */,
-				FB2F889E1FEBFABD003B62CF /* LaunchScreen.storyboard */,
 			);
-			name = View;
+			name = UI;
 			sourceTree = "<group>";
 		};
 		FB99B48D1F2FEF1F007C0235 /* Cryptocurrency monitor widget */ = {
@@ -656,7 +679,6 @@
 		FBB2CC8F1F155CF800D800FD = {
 			isa = PBXGroup;
 			children = (
-				B18B53322153E95A00788C8F /* Intents.intentdefinition */,
 				FBB2CC9A1F155CF800D800FD /* Coin */,
 				FB99B48D1F2FEF1F007C0235 /* Cryptocurrency monitor widget */,
 				FBB009691F4E3292000B1298 /* Crypto monitor Watch */,
@@ -690,13 +712,11 @@
 			children = (
 				FB2F88FA1FEC07CC003B62CF /* Localizable.strings */,
 				FB2F88F51FEC07CB003B62CF /* InfoPlist.strings */,
-				FB9592531F20B8AB00F9F74B /* Coin.entitlements */,
-				FBB2CC9B1F155CF800D800FD /* AppDelegate.swift */,
-				FB757A1E20A861CF004B40FB /* View */,
+				FB757A1E20A861CF004B40FB /* UI */,
+				B1108D3521637F9B006A7CA8 /* Resources */,
+				B1108D3421637EB5006A7CA8 /* Shared */,
 				B1817F59213DE5B80073CDC7 /* Services */,
 				FBFA2A8220AC395A00B11B17 /* Extensions */,
-				FBB2CCA21F155CF800D800FD /* Assets.xcassets */,
-				FBB2CCA71F155CF800D800FD /* Info.plist */,
 			);
 			path = Coin;
 			sourceTree = "<group>";
@@ -1044,6 +1064,8 @@
 				de,
 				en,
 				fr,
+				uk,
+				ru,
 			);
 			mainGroup = FBB2CC8F1F155CF800D800FD;
 			productRefGroup = FBB2CC991F155CF800D800FD /* Products */;
@@ -1280,7 +1302,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B10AC921215907FA00FDA793 /* ShowRateIntentHandler.swift in Sources */,
-				B10AC91E2158FD0A00FDA793 /* Intents.intentdefinition in Sources */,
+				B1108D2821627330006A7CA8 /* Intents.intentdefinition in Sources */,
 				B18B53162153E89200788C8F /* IntentHandler.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1289,7 +1311,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B10AC91F2158FD0B00FDA793 /* Intents.intentdefinition in Sources */,
+				B1108D2921627331006A7CA8 /* Intents.intentdefinition in Sources */,
 				B18B53212153E89300788C8F /* IntentViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1319,7 +1341,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B18B53332153E95A00788C8F /* Intents.intentdefinition in Sources */,
+				B1108D2721627330006A7CA8 /* Intents.intentdefinition in Sources */,
 				FBA28ACE20097AA6009EDB84 /* CurrentCurrencyTableVC.swift in Sources */,
 				FB6528682020945B004CE9D4 /* IAPHandler.swift in Sources */,
 				FBFA2A8B20ACE12A00B11B17 /* WCSession.swift in Sources */,
@@ -1410,6 +1432,18 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
+		B1108D2B21627331006A7CA8 /* Intents.intentdefinition */ = {
+			isa = PBXVariantGroup;
+			children = (
+				B1108D2A21627331006A7CA8 /* Base */,
+				B1108D2D21627336006A7CA8 /* uk */,
+				B1108D2F21627338006A7CA8 /* ru */,
+				B1108D3121627339006A7CA8 /* fr */,
+				B1108D332162733C006A7CA8 /* de */,
+			);
+			name = Intents.intentdefinition;
+			sourceTree = "<group>";
+		};
 		B18B53222153E89300788C8F /* MainInterface.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (

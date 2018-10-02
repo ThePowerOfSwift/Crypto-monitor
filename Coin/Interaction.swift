@@ -14,7 +14,7 @@ import os.log
 class Interaction {
     static func donate(tickers: [Ticker]) {
         for ticker in tickers{
-            let intent = ShowRateIntent()
+            let intent = ShowPriceIntent()
             intent.id = ticker.id
             intent.name = ticker.name
             

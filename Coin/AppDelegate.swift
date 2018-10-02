@@ -70,7 +70,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         } else{
             if #available(iOS 12.0, *) {
                 if userActivity.activityType == "Valentyn.Mialin.crypto.monitor.show-currency" {
-                    if let intent = userActivity.interaction?.intent as? ShowRateIntent,
+                    if let intent = userActivity.interaction?.intent as? ShowPriceIntent,
                         let id = intent.id{
                         showTicker(tickerID: id)
                     }

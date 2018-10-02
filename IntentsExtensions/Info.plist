@@ -26,13 +26,13 @@
 		<dict>
 			<key>IntentsRestrictedWhileLocked</key>
 			<array>
-				<string>ShowRateIntent</string>
+				<string>ShowPriceIntent</string>
 			</array>
 			<key>IntentsRestrictedWhileProtectedDataUnavailable</key>
 			<array/>
 			<key>IntentsSupported</key>
 			<array>
-				<string>ShowRateIntent</string>
+				<string>ShowPriceIntent</string>
 			</array>
 		</dict>
 		<key>NSExtensionPointIdentifier</key>

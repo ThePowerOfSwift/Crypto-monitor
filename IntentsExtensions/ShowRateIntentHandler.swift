@@ -9,18 +9,18 @@
 import Foundation
 import CryptoCurrency
 
-public class ShowRateIntentHandler: NSObject, ShowRateIntentHandling {
+public class ShowRateIntentHandler: NSObject, ShowPriceIntentHandling {
     
-    public func confirm(intent: ShowRateIntent, completion: @escaping (ShowRateIntentResponse) -> Void) {
+    public func confirm(intent: ShowPriceIntent, completion: @escaping (ShowPriceIntentResponse) -> Void) {
         // Различные проверки на доступность действия
         // ...
         
         print(intent.id ?? "name error")
-        completion(ShowRateIntentResponse(code: ShowRateIntentResponseCode.ready, userActivity: nil))
+        completion(ShowPriceIntentResponse(code: ShowPriceIntentResponseCode.ready, userActivity: nil))
     }
     
     
-    public func handle(intent: ShowRateIntent, completion: @escaping (ShowRateIntentResponse) -> Void) {
+    public func handle(intent: ShowPriceIntent, completion: @escaping (ShowPriceIntentResponse) -> Void) {
         // Код с выполнением действия
         // ...
         
@@ -31,7 +31,7 @@ public class ShowRateIntentHandler: NSObject, ShowRateIntentHandling {
             switch response {
             case .success(let ticker):
                 DispatchQueue.main.async {
-                    let response = ShowRateIntentResponse(code: .success, userActivity: nil)
+                    let response = ShowPriceIntentResponse(code: .success, userActivity: nil)
                     response.name = ticker.name
                     response.priceUSD = ticker.priceToString(for: .usd)
                     response.priceBTC = ticker.priceBtcToString()
@@ -43,7 +43,7 @@ public class ShowRateIntentHandler: NSObject, ShowRateIntentHandling {
                 }
             case .failure:
                 DispatchQueue.main.async {
-                    let response = ShowRateIntentResponse(code: .failure, userActivity: nil)
+                    let response = ShowPriceIntentResponse(code: .failure, userActivity: nil)
                     completion(response)
                 }
             }

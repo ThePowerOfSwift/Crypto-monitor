@@ -18,13 +18,13 @@
 			<key>INIntentCategory</key>
 			<string>information</string>
 			<key>INIntentDescription</key>
-			<string>show rate</string>
+			<string>show price</string>
 			<key>INIntentDescriptionID</key>
 			<string>izv9nb</string>
 			<key>INIntentLastParameterTag</key>
 			<integer>4</integer>
 			<key>INIntentName</key>
-			<string>ShowRate</string>
+			<string>ShowPrice</string>
 			<key>INIntentParameterCombinations</key>
 			<dict>
 				<key>name,id</key>
@@ -38,7 +38,7 @@
 					<key>INIntentParameterCombinationSupportsBackgroundExecution</key>
 					<true/>
 					<key>INIntentParameterCombinationTitle</key>
-					<string>Show rate ${name}</string>
+					<string>${name} price</string>
 					<key>INIntentParameterCombinationTitleID</key>
 					<string>SZhcwT</string>
 				</dict>
@@ -176,7 +176,7 @@
 			<key>INIntentRestrictions</key>
 			<integer>1</integer>
 			<key>INIntentTitle</key>
-			<string>Show rate</string>
+			<string>Show price</string>
 			<key>INIntentTitleID</key>
 			<string>32oUmR</string>
 			<key>INIntentType</key>

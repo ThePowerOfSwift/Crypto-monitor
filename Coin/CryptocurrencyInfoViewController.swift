@@ -409,7 +409,7 @@ class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
     //MARK: - Siri Shortcut
     @available(iOS 12.0, *)
     private func addVoiceShortcutButton() {
-        let intent = ShowRateIntent()
+        let intent = ShowPriceIntent()
         intent.id = self.ticker!.id
         intent.name = self.ticker!.name
         
@@ -427,6 +427,7 @@ class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
         self.view.addSubview(addShortcutButton)
         self.view.rightAnchor.constraint(equalTo: addShortcutButton.rightAnchor, constant: 8.0).isActive = true
         self.priceStackView.centerYAnchor.constraint(equalTo: addShortcutButton.centerYAnchor).isActive = true
+        self.priceStackView.rightAnchor.constraint(equalTo: addShortcutButton.leftAnchor, constant: -8.0).isActive = true
     }
     
     //MARK: - ErrorSubview
@@ -452,7 +453,6 @@ class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
 extension CryptocurrencyInfoViewController: CoinDelegate {
     func coinSelected(_ ticker: Ticker) {
         self.ticker = ticker
-      //  loadViewIfNeeded()
         self.lineChartView?.clear()
         if #available(iOS 12.0, *) {
             addVoiceShortcutButton()
