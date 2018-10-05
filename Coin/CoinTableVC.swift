@@ -92,17 +92,7 @@ class MainVC: UITableViewController  {
         let idUserDefaults = userDefaults?.array(forKey: "id") as? [String]
         if idKeyStore != nil && idUserDefaults != nil {
             if idKeyStore! != idUserDefaults! {
-                if #available(iOS 12.0, *) {
-                    Interaction.deleteAll()
-                    self.loadTicker {
-                        if let cacheTicker = SettingsUserDefaults.loadcacheTicker() {
-                            Interaction.donate(tickers: cacheTicker)
-                        }
-                    }
-                }
-                else{
-                    self.loadTicker()
-                }
+                self.loadTicker()
             }
         }
         
@@ -153,6 +143,11 @@ class MainVC: UITableViewController  {
                 self?.tickers = tickers
                 self?.updateApplicationContext(id: idArray)
                 SearchableIndex.indexItem(tickers: tickers)
+                if #available(iOS 12.0, *) {
+                    DispatchQueue.main.async {
+                        Interaction.donate(tickers: tickers)
+                    }
+                }
             case .failure(let error ):
                 DispatchQueue.main.async {
                     UIView.animate(withDuration: 0.25) {

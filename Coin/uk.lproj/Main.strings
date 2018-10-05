@@ -4,24 +4,9 @@
 /* Class = "UINavigationItem"; title = "Settings"; ObjectID = "DTw-zY-pjb"; */
 "DTw-zY-pjb.title" = "Налаштування";
 
-/* Class = "UIButton"; normalTitle = "Write a Review"; ObjectID = "J3x-cK-ObU"; */
-"J3x-cK-ObU.normalTitle" = "Написати відгук";
-
-/* Class = "UIButton"; normalTitle = "Buy / Sell Instantly"; ObjectID = "WVM-8J-Hzj"; Note = "changelly"; */
-"WVM-8J-Hzj.normalTitle" = "Купуйте / продавайте миттєво";
-
-/* (No Comment) */
-"a5a-yk-s2O.title" = "Налаштування";
-
 /* Class = "UINavigationItem"; title = "Add"; ObjectID = "fra-i8-hjZ"; */
 "fra-i8-hjZ.title" = "Додати";
 
-/* (No Comment) */
-"tyt-ZY-uLd.headerTitle" = "Ціна";
-
-/* (No Comment) */
-"uMW-aC-8Ll.headerTitle" = "Період зміни курсу";
-
-/* (No Comment) */
-"yeO-1L-1gs.headerTitle" = "Джерело даних";
+/* Class = "UIButton"; normalTitle = "Write a Review"; ObjectID = "J3x-cK-ObU"; */
+"J3x-cK-ObU.normalTitle" = "Написати відгук";
 

@@ -1,6 +1,6 @@
-/* Class = "WKInterfaceLabel"; text = "Add cryptocurrency"; ObjectID = "WcL-Ln-Nim"; */
-"WcL-Ln-Nim.text" = "Ajouter une crypto-monnaie";
-
 /* Class = "WKInterfaceLabel"; text = "You can add cryptocurrency from the \"Crypto monitor\" program on the iPhone."; ObjectID = "hgi-x4-0sf"; */
 "hgi-x4-0sf.text" = "Vous pouvez ajouter cryptomonnaie du programme \"Crypto monitor\" sur l'iPhone.";
+
+/* Class = "WKInterfaceLabel"; text = "Add cryptocurrency"; ObjectID = "WcL-Ln-Nim"; */
+"WcL-Ln-Nim.text" = "Ajouter une crypto-monnaie";
 

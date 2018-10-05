@@ -25,14 +25,14 @@
 /* Purchases are disabled in your device! */
 "Purchases are disabled in your device!" = "Les achats sont désactivés sur votre appareil!";
 
+/* purchasing */
+"purchasing..." = "achat...";
+
 /* Rate change period */
 "Rate change period" = "Période de changement de taux";
 
 /* Review */
 "Review" = "la revue";
-
-/* purchasing */
-"purchasing..." = "achat...";
 
 /* tip jar */
 "tip jar" = "pourboires";

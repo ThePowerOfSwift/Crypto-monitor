@@ -6,7 +6,7 @@ PODS:
     - Charts/Core (= 3.2.0)
   - Charts/Core (3.2.0)
   - DZNEmptyDataSet (1.8.1)
-  - SwiftyJSON (4.1.0)
+  - SwiftyJSON (4.2.0)
 
 DEPENDENCIES:
   - Alamofire
@@ -28,7 +28,7 @@ SPEC CHECKSUMS:
   AlamofireNetworkActivityIndicator: 18346ff6d770d9513d0ac6f2d99706f40f93dbaa
   Charts: 680c8328bd5e90cb14f67e00d2176f3113d19141
   DZNEmptyDataSet: 9525833b9e68ac21c30253e1d3d7076cc828eaa7
-  SwiftyJSON: c29297daf073d2aa016295d5809cdd68045c39b3
+  SwiftyJSON: c4bcba26dd9ec7a027fc8eade48e2c911f229e96
 
 PODFILE CHECKSUM: be3a16c6dfb061a91e84f0edf23603c7631712ba
 

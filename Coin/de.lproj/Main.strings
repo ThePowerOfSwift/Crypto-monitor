@@ -4,24 +4,9 @@
 /* Class = "UINavigationItem"; title = "Settings"; ObjectID = "DTw-zY-pjb"; */
 "DTw-zY-pjb.title" = "Einstellungen";
 
-/* Class = "UIButton"; normalTitle = "Write a Review"; ObjectID = "J3x-cK-ObU"; */
-"J3x-cK-ObU.normalTitle" = "Eine Rezension schreiben";
-
-/* Class = "UIButton"; normalTitle = "Buy / Sell Instantly"; ObjectID = "WVM-8J-Hzj"; Note = "changelly"; */
-"WVM-8J-Hzj.normalTitle" = "Sofort kaufen / verkaufen";
-
-/* (No Comment) */
-"a5a-yk-s2O.title" = "Einstellungen";
-
 /* Class = "UINavigationItem"; title = "Add"; ObjectID = "fra-i8-hjZ"; */
 "fra-i8-hjZ.title" = "Hinzufügen";
 
-/* (No Comment) */
-"tyt-ZY-uLd.headerTitle" = "Preis";
-
-/* (No Comment) */
-"uMW-aC-8Ll.headerTitle" = "Rate Änderungszeitraum";
-
-/* (No Comment) */
-"yeO-1L-1gs.headerTitle" = "Datenquelle";
+/* Class = "UIButton"; normalTitle = "Write a Review"; ObjectID = "J3x-cK-ObU"; */
+"J3x-cK-ObU.normalTitle" = "Eine Rezension schreiben";
 

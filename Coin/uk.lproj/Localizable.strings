@@ -25,6 +25,9 @@
 /* Purchases are disabled in your device! */
 "Purchases are disabled in your device!" = "Покупки відключені на вашому пристрої!";
 
+/* purchasing */
+"purchasing..." = "покупка...";
+
 /* Rate change period */
 "Rate change period" = "Період зміни курсу";
 
@@ -33,9 +36,6 @@
 
 /* Thank you! */
 "Thank you!" = "";
-
-/* purchasing */
-"purchasing..." = "покупка...";
 
 /* tip jar */
 "tip jar" = "Підтримка розробників";
