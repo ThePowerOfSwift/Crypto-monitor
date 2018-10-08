@@ -14,6 +14,7 @@ class IntentViewController: UIViewController, INUIHostedViewControlling {
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var priceUsdLabel: UILabel!
     @IBOutlet weak var priceBtcLabel: UILabel!
+    @IBOutlet weak var priceConvertLabel: UILabel!
     
     @IBOutlet weak var oneHourChangeView: UIView!
     @IBOutlet weak var oneHourChangeLabel: UILabel!
@@ -45,6 +46,14 @@ class IntentViewController: UIViewController, INUIHostedViewControlling {
             
             self.priceUsdLabel?.text = response.priceUSD
             self.priceBtcLabel?.text = response.priceBTC
+            let money = response.money
+            if money == "USD" || money == "BTC" {
+                self.priceConvertLabel?.isHidden = true
+            }
+            else{
+                self.priceConvertLabel?.text = response.priceConvert
+                self.priceConvertLabel?.isHidden = false
+            }
 
             // 1h
             self.oneHourChangeLabel?.text = percentChangeToString(percentChange: response.percentChange1h)

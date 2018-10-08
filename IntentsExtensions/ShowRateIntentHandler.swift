@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import Intents
 import CryptoCurrency
 
 public class ShowRateIntentHandler: NSObject, ShowPriceIntentHandling {
@@ -14,8 +15,6 @@ public class ShowRateIntentHandler: NSObject, ShowPriceIntentHandling {
     public func confirm(intent: ShowPriceIntent, completion: @escaping (ShowPriceIntentResponse) -> Void) {
         // Различные проверки на доступность действия
         // ...
-        
-        print(intent.id ?? "name error")
         completion(ShowPriceIntentResponse(code: ShowPriceIntentResponseCode.ready, userActivity: nil))
     }
     
@@ -24,7 +23,6 @@ public class ShowRateIntentHandler: NSObject, ShowPriceIntentHandling {
         // Код с выполнением действия
         // ...
         
-        print(SettingsUserDefaults.getCurrentCurrency())
         CryptoCurrencyKit.fetchTicker(coinName: intent.id!) { response in
             //  guard let strongSelf = self else { return }
             let userActivity = NSUserActivity(activityType: "Valentyn.Mialin.crypto.monitor.show-currency")
@@ -35,9 +33,11 @@ public class ShowRateIntentHandler: NSObject, ShowPriceIntentHandling {
                     response.name = ticker.name
                     response.priceUSD = ticker.priceToString(for: .usd)
                     response.priceBTC = ticker.priceBtcToString()
+                    response.priceConvert = ticker.priceCurrency()
                     response.percentChange1h = NSNumber(value: ticker.percentChange1h ?? 0)
                     response.percentChange24h = NSNumber(value: ticker.percentChange24h ?? 0)
                     response.percentChange7d = NSNumber(value: ticker.percentChange7d ?? 0)
+                    response.money = SettingsUserDefaults.getCurrentCurrency().rawValue
                     response.userActivity = userActivity
                     completion(response)
                 }

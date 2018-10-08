@@ -96,7 +96,7 @@
 					</dict>
 				</array>
 				<key>INIntentResponseLastParameterTag</key>
-				<integer>12</integer>
+				<integer>19</integer>
 				<key>INIntentResponseParameters</key>
 				<array>
 					<dict>
@@ -168,6 +168,30 @@
 						<false/>
 						<key>INIntentResponseParameterTag</key>
 						<integer>11</integer>
+						<key>INIntentResponseParameterType</key>
+						<string>String</string>
+					</dict>
+					<dict>
+						<key>INIntentResponseParameterDisplayPriority</key>
+						<integer>7</integer>
+						<key>INIntentResponseParameterName</key>
+						<string>priceConvert</string>
+						<key>INIntentResponseParameterSupportsMultipleValues</key>
+						<false/>
+						<key>INIntentResponseParameterTag</key>
+						<integer>13</integer>
+						<key>INIntentResponseParameterType</key>
+						<string>String</string>
+					</dict>
+					<dict>
+						<key>INIntentResponseParameterDisplayPriority</key>
+						<integer>8</integer>
+						<key>INIntentResponseParameterName</key>
+						<string>money</string>
+						<key>INIntentResponseParameterSupportsMultipleValues</key>
+						<false/>
+						<key>INIntentResponseParameterTag</key>
+						<integer>19</integer>
 						<key>INIntentResponseParameterType</key>
 						<string>String</string>
 					</dict>
