@@ -38,7 +38,7 @@
 					<key>INIntentParameterCombinationSupportsBackgroundExecution</key>
 					<true/>
 					<key>INIntentParameterCombinationTitle</key>
-					<string>${name} price</string>
+					<string>Get ${name} price</string>
 					<key>INIntentParameterCombinationTitleID</key>
 					<string>SZhcwT</string>
 				</dict>
@@ -86,7 +86,7 @@
 					</dict>
 					<dict>
 						<key>INIntentResponseCodeFormatString</key>
-						<string></string>
+						<string>${priceConvert}</string>
 						<key>INIntentResponseCodeFormatStringID</key>
 						<string>5DV4Mm</string>
 						<key>INIntentResponseCodeName</key>

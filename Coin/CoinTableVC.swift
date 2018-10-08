@@ -257,6 +257,14 @@ class MainVC: UITableViewController  {
         return 20
     }
     
+    fileprivate func selectDefaultItemID(_ id: String) {
+        DispatchQueue.global(qos: .utility).async {
+            let keyStore = NSUbiquitousKeyValueStore ()
+            keyStore.set(id, forKey: "selectDefaultItemID")
+            keyStore.synchronize()
+        }
+    }
+    
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath){
         guard let tickers = tickers else { return }
         let ticker = tickers[indexPath.row]
@@ -266,11 +274,7 @@ class MainVC: UITableViewController  {
             let detailNavigationController = detailViewController.navigationController {
             splitViewController?.showDetailViewController(detailNavigationController, sender: nil)
         }
-        DispatchQueue.global(qos: .utility).async {
-            let keyStore = NSUbiquitousKeyValueStore ()
-            keyStore.set(ticker.id, forKey: "selectDefaultItemID")
-            keyStore.synchronize()
-        }
+        selectDefaultItemID(ticker.id)
     }
     
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
@@ -395,6 +399,7 @@ class MainVC: UITableViewController  {
     func showTickerID(tickerID : String) {
         guard let tickers = tickers else { return }
         guard let ticker = tickers.first(where: {$0.id == tickerID}) else { return }
+        selectDefaultItemID(ticker.id)
         
         coinDelegate?.coinSelected(ticker)
         
