@@ -29,6 +29,10 @@
 		B18B53242153E89300788C8F /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B18B53222153E89300788C8F /* MainInterface.storyboard */; };
 		B18B53282153E89300788C8F /* IntentsExtensionsUI.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = B18B531C2153E89200788C8F /* IntentsExtensionsUI.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		B18B532B2153E89300788C8F /* IntentsExtensions.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = B18B53132153E89200788C8F /* IntentsExtensions.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		B1D5D0BE216CD087009E54C2 /* Coins.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1D5D0BC216CCE9E009E54C2 /* Coins.swift */; };
+		B1D5D0BF216CD088009E54C2 /* Coins.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1D5D0BC216CCE9E009E54C2 /* Coins.swift */; };
+		B1D5D0C1216D3D05009E54C2 /* Coingecko.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1D5D0C0216D3D05009E54C2 /* Coingecko.swift */; };
+		B1D5D0C2216D3D05009E54C2 /* Coingecko.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1D5D0C0216D3D05009E54C2 /* Coingecko.swift */; };
 		B1ED5B9E215C0E4C00184C37 /* VoiceShortcut.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1ED5B9D215C0E4C00184C37 /* VoiceShortcut.swift */; };
 		B1ED5BA0215C15D000184C37 /* ChartXAxisFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1ED5B9F215C15D000184C37 /* ChartXAxisFormatter.swift */; };
 		CDE2A83035700307661C64FF /* Pods_CryptoCurrency_watchOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9B6037294BA1290219707A89 /* Pods_CryptoCurrency_watchOS.framework */; };
@@ -252,6 +256,8 @@
 		B18B53202153E89300788C8F /* IntentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntentViewController.swift; sourceTree = "<group>"; };
 		B18B53232153E89300788C8F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainInterface.storyboard; sourceTree = "<group>"; };
 		B18B53252153E89300788C8F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B1D5D0BC216CCE9E009E54C2 /* Coins.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coins.swift; sourceTree = "<group>"; };
+		B1D5D0C0216D3D05009E54C2 /* Coingecko.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coingecko.swift; sourceTree = "<group>"; };
 		B1ED5B9D215C0E4C00184C37 /* VoiceShortcut.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoiceShortcut.swift; sourceTree = "<group>"; };
 		B1ED5B9F215C15D000184C37 /* ChartXAxisFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartXAxisFormatter.swift; sourceTree = "<group>"; };
 		B76E69BF0FD2EAFA8C43B896 /* Pods_Crypto_monitor_Watch_Extension.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Crypto_monitor_Watch_Extension.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -524,6 +530,7 @@
 			isa = PBXGroup;
 			children = (
 				FB27C53C200AD72D00DB2907 /* Ticker.swift */,
+				B1D5D0BC216CCE9E009E54C2 /* Coins.swift */,
 				B10AC91A215837F000FDA793 /* Money.swift */,
 			);
 			path = Model;
@@ -730,6 +737,7 @@
 				FBBE49302008FD7300277014 /* CryptoCurrencyKit.swift */,
 				FB20D0E120090DD70007305C /* SettingsUserDefaults.swift */,
 				B16FBA0221594DEB0056AA2A /* backgroundColorView.swift */,
+				B1D5D0C0216D3D05009E54C2 /* Coingecko.swift */,
 				B1817F56213DE0E80073CDC7 /* Model */,
 				FBBE490F2008F5A300277014 /* info-iOS.plist */,
 				FBBE49202008F5E700277014 /* info-watchOS.plist */,
@@ -1210,6 +1218,7 @@
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-Coin/Pods-Coin-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Alamofire-iOS/Alamofire.framework",
+				"${BUILT_PRODUCTS_DIR}/AlamofireImage/AlamofireImage.framework",
 				"${BUILT_PRODUCTS_DIR}/AlamofireNetworkActivityIndicator/AlamofireNetworkActivityIndicator.framework",
 				"${BUILT_PRODUCTS_DIR}/Charts/Charts.framework",
 				"${BUILT_PRODUCTS_DIR}/DZNEmptyDataSet/DZNEmptyDataSet.framework",
@@ -1218,6 +1227,7 @@
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AlamofireImage.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AlamofireNetworkActivityIndicator.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Charts.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DZNEmptyDataSet.framework",
@@ -1380,6 +1390,8 @@
 			files = (
 				B16FBA0521594E130056AA2A /* backgroundColorView.swift in Sources */,
 				FBBE49342008FD7300277014 /* CryptoCurrencyKit.swift in Sources */,
+				B1D5D0C1216D3D05009E54C2 /* Coingecko.swift in Sources */,
+				B1D5D0BF216CD088009E54C2 /* Coins.swift in Sources */,
 				FB27C53D200AD72D00DB2907 /* Ticker.swift in Sources */,
 				B10AC91C2158383700FDA793 /* Money.swift in Sources */,
 				FB20D0E220090DD70007305C /* SettingsUserDefaults.swift in Sources */,
@@ -1390,9 +1402,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B1D5D0C2216D3D05009E54C2 /* Coingecko.swift in Sources */,
 				FBBE49352008FD7300277014 /* CryptoCurrencyKit.swift in Sources */,
 				FB27C53E200AD72D00DB2907 /* Ticker.swift in Sources */,
 				B10AC91D2158383800FDA793 /* Money.swift in Sources */,
+				B1D5D0BE216CD087009E54C2 /* Coins.swift in Sources */,
 				FB20D0E320090DD70007305C /* SettingsUserDefaults.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

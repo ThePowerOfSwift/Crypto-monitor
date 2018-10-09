@@ -14,7 +14,7 @@ import CryptoCurrency
 class MainVC: UITableViewController  {
     weak var watchSession : WCSession?
     
-    var tickers: [Ticker]? {
+    var coins: Coins? {
         didSet{
             DispatchQueue.main.async {
                 self.cryptocurrencyView()
@@ -121,33 +121,33 @@ class MainVC: UITableViewController  {
     
     
     func loadCache() {
-        DispatchQueue.global(qos: .userInitiated).async {
-            if let cacheTicker = SettingsUserDefaults.loadcacheTicker() {
-                self.tickers = cacheTicker
-            }
-        }
+//        DispatchQueue.global(qos: .userInitiated).async {
+//            if let cacheTicker = SettingsUserDefaults.loadcacheTicker() {
+//                self.tickers = cacheTicker
+//            }
+//        }
     }
     
     private func loadTicker(completion: (()->())? = nil) {
         guard let idArray = SettingsUserDefaults.getIdArray(),
             !idArray.isEmpty else {
-                self.tickers = [Ticker]()
-                SettingsUserDefaults.setUserDefaults(ticher: [Ticker](), lastUpdate: nil)
+                self.coins = nil
+               // SettingsUserDefaults.setUserDefaults(ticher: [Ticker](), lastUpdate: nil)
                 return
         }
         
-        CryptoCurrencyKit.fetchTickers(idArray: idArray) { [weak self] (response) in
+        Coingecko.getCoinsMarkets(ids: ["bitcoin","litecoin","ethereum"], vsCurrency: .usd) { [weak self] (response) in
             switch response {
-            case .success(let tickers):
+            case .success(let coins):
                 
-                self?.tickers = tickers
+                self?.coins = coins
                 self?.updateApplicationContext(id: idArray)
-                SearchableIndex.indexItem(tickers: tickers)
-                if #available(iOS 12.0, *) {
-                    DispatchQueue.main.async {
-                        Interaction.donate(tickers: tickers)
-                    }
-                }
+//                SearchableIndex.indexItem(tickers: tickers)
+//                if #available(iOS 12.0, *) {
+//                    DispatchQueue.main.async {
+//                        Interaction.donate(tickers: tickers)
+//                    }
+//                }
             case .failure(let error ):
                 DispatchQueue.main.async {
                     UIView.animate(withDuration: 0.25) {
@@ -157,6 +157,29 @@ class MainVC: UITableViewController  {
                 self?.errorAlert(error: error)
             }
         }
+        
+        
+//        CryptoCurrencyKit.fetchTickers(idArray: idArray) { [weak self] (response) in
+//            switch response {
+//            case .success(let tickers):
+//
+//                self?.tickers = tickers
+//                self?.updateApplicationContext(id: idArray)
+//                SearchableIndex.indexItem(tickers: tickers)
+//                if #available(iOS 12.0, *) {
+//                    DispatchQueue.main.async {
+//                        Interaction.donate(tickers: tickers)
+//                    }
+//                }
+//            case .failure(let error ):
+//                DispatchQueue.main.async {
+//                    UIView.animate(withDuration: 0.25) {
+//                        self?.refreshControl?.endRefreshing()
+//                    }
+//                }
+//                self?.errorAlert(error: error)
+//            }
+//        }
     }
     
     fileprivate func lastUpdate() {
@@ -175,73 +198,40 @@ class MainVC: UITableViewController  {
         
         self.tableView.reloadData()
         
-        if UIDevice.current.userInterfaceIdiom == .pad,
-            !self.selectDefaultItem {
-            guard self.tickers != nil && self.tickers?.isEmpty != true else { return }
-            
-            let keyStore = NSUbiquitousKeyValueStore()
-            if let tickerID = keyStore.object(forKey: "selectDefaultItemID") as? String,
-                let index = self.tickers?.index(where: {$0.id == tickerID})
-            {
-                self.coinDelegate?.coinSelected(self.tickers![index])
-            }
-            else{
-                self.coinDelegate?.coinSelected(self.tickers![0])
-            }
-            self.selectDefaultItem = true
-        }
+//        if UIDevice.current.userInterfaceIdiom == .pad,
+//            !self.selectDefaultItem {
+//            guard self.tickers != nil && self.tickers?.isEmpty != true else { return }
+//
+//            let keyStore = NSUbiquitousKeyValueStore()
+//            if let tickerID = keyStore.object(forKey: "selectDefaultItemID") as? String,
+//                let index = self.tickers?.index(where: {$0.id == tickerID})
+//            {
+//                self.coinDelegate?.coinSelected(self.tickers![index])
+//            }
+//            else{
+//                self.coinDelegate?.coinSelected(self.tickers![0])
+//            }
+//            self.selectDefaultItem = true
+//        }
     }
 
     // MARK: - Table view data source
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return tickers?.count ?? 0
+        return coins?.count ?? 0
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "coin", for: indexPath as IndexPath) as! CoinTableViewCell
-        let row = indexPath.row
+        guard let coin = coins?[indexPath.row] else { return cell }
         
-        if let ticker = tickers {
-            
-            cell.coinNameLabel.text = ticker[row].name
-            cell.priceCoinLabel.text = ticker[row].priceCurrency()
-            
-            let percentChange = ticker[row].percentChangeCurrent()
-            cell.percentChangeLabel.text = percentChange + " %"
-            if let percent = Float(percentChange) {
-                if percent >= 0 {
-                    cell.percentChangeView.backgroundColor = UIColor(red:0.30, green:0.85, blue:0.39, alpha:1.0)
-                }
-                else{
-                    cell.percentChangeView.backgroundColor = UIColor(red:1.00, green:0.23, blue:0.18, alpha:1.0)
-                }
-            }
-            else{
-                cell.percentChangeView.backgroundColor = UIColor.orange
-            }
-        }
+        cell.settingCell(coin: coin)
         return cell
     }
     
     override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let headerView = tableView.dequeueReusableCell(withIdentifier: "header") as! HeaderTableViewCell
-        
-        let keyStore = NSUbiquitousKeyValueStore ()
-        
-        switch keyStore.longLong(forKey: "percentChange") {
-        case 0:
-            headerView.dataCurrencyLabel.text = "1h"
-        case 1:
-            headerView.dataCurrencyLabel.text = "24h"
-        case 2:
-            headerView.dataCurrencyLabel.text = "7d"
-        default:
-            headerView.dataCurrencyLabel.text = "-"
-        }
-        
         headerView.priceLabel.text = "Price (\(SettingsUserDefaults.getCurrentCurrency().rawValue))"
-        
-        
+
         let contentView = headerView.contentView
         
         contentView.backgroundColor = UIColor.clear
@@ -266,52 +256,52 @@ class MainVC: UITableViewController  {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath){
-        guard let tickers = tickers else { return }
-        let ticker = tickers[indexPath.row]
-        coinDelegate?.coinSelected(ticker)
+        guard let coins = coins else { return }
+        let coin = coins[indexPath.row]
+       // coinDelegate?.coinSelected(coin)
         
         if let detailViewController = coinDelegate as? CryptocurrencyInfoViewController,
             let detailNavigationController = detailViewController.navigationController {
             splitViewController?.showDetailViewController(detailNavigationController, sender: nil)
         }
-        selectDefaultItemID(ticker.id)
+        selectDefaultItemID(coin.id)
     }
     
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        DispatchQueue.global(qos: .utility).async {
-            if editingStyle == .delete{
-                let keyStore = NSUbiquitousKeyValueStore ()
-                
-                if var idArray = keyStore.array(forKey: "id") as? [String] {
-                    let row = indexPath.row
-                    let ticker = self.tickers![row]
-                    if let index = idArray.index(of: ticker.id){
-                        idArray.remove(at: index)
-                        SearchableIndex.deindexItem(identifier: ticker.id)
-                        self.tickers!.remove(at: row)
-                        
-                        // set UserDefaults
-                        SettingsUserDefaults.setUserDefaults(ticher: self.tickers!, idArray: idArray, lastUpdate: nil)
-                        
-                        // set iCloud key-value
-                        if self.tickers?.count == 0 {
-                            keyStore.removeObject(forKey: "id")
-                        }
-                        else{
-                            keyStore.set(idArray, forKey: "id")
-                        }
-                        keyStore.synchronize()
-                        
-                        // set Interaction
-                        if #available(iOS 12.0, *) {
-                            Interaction.delete(ticker: ticker)
-                        }
-                        
-                        self.updateApplicationContext(id: idArray)
-                    }
-                }
-            }
-        }
+//        DispatchQueue.global(qos: .utility).async {
+//            if editingStyle == .delete{
+//                let keyStore = NSUbiquitousKeyValueStore ()
+//
+//                if var idArray = keyStore.array(forKey: "id") as? [String] {
+//                    let row = indexPath.row
+//                    let ticker = self.tickers![row]
+//                    if let index = idArray.index(of: ticker.id){
+//                        idArray.remove(at: index)
+//                        SearchableIndex.deindexItem(identifier: ticker.id)
+//                        self.tickers!.remove(at: row)
+//
+//                        // set UserDefaults
+//                        SettingsUserDefaults.setUserDefaults(ticher: self.tickers!, idArray: idArray, lastUpdate: nil)
+//
+//                        // set iCloud key-value
+//                        if self.tickers?.count == 0 {
+//                            keyStore.removeObject(forKey: "id")
+//                        }
+//                        else{
+//                            keyStore.set(idArray, forKey: "id")
+//                        }
+//                        keyStore.synchronize()
+//
+//                        // set Interaction
+//                        if #available(iOS 12.0, *) {
+//                            Interaction.delete(ticker: ticker)
+//                        }
+//
+//                        self.updateApplicationContext(id: idArray)
+//                    }
+//                }
+//            }
+//        }
     }
     
     
@@ -324,26 +314,26 @@ class MainVC: UITableViewController  {
     }
     
     override func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
-        DispatchQueue.global(qos: .utility).async {
-            guard self.tickers != nil else { return }
-            
-            let keyStore = NSUbiquitousKeyValueStore()
-            if var idArray = keyStore.array(forKey: "id") as? [String] {
-                if let index = idArray.index(of: self.tickers![sourceIndexPath.row].id){
-                    idArray.remove(at: index)
-                    idArray.insert(self.tickers![sourceIndexPath.row].id, at: destinationIndexPath.row)
-                    self.tickers!.rearrange(from: sourceIndexPath.row, to: destinationIndexPath.row)
-                    
-                    SettingsUserDefaults.setUserDefaults(ticher: self.tickers!, idArray: idArray, lastUpdate: nil)
-                    
-                    // set iCloud key-value
-                    keyStore.set(idArray, forKey: "id")
-                    keyStore.synchronize()
-                    
-                    self.updateApplicationContext(id: idArray)
-                }
-            }
-        }
+//        DispatchQueue.global(qos: .utility).async {
+//            guard self.tickers != nil else { return }
+//
+//            let keyStore = NSUbiquitousKeyValueStore()
+//            if var idArray = keyStore.array(forKey: "id") as? [String] {
+//                if let index = idArray.index(of: self.tickers![sourceIndexPath.row].id){
+//                    idArray.remove(at: index)
+//                    idArray.insert(self.tickers![sourceIndexPath.row].id, at: destinationIndexPath.row)
+//                    self.tickers!.rearrange(from: sourceIndexPath.row, to: destinationIndexPath.row)
+//
+//                    SettingsUserDefaults.setUserDefaults(ticher: self.tickers!, idArray: idArray, lastUpdate: nil)
+//
+//                    // set iCloud key-value
+//                    keyStore.set(idArray, forKey: "id")
+//                    keyStore.synchronize()
+//
+//                    self.updateApplicationContext(id: idArray)
+//                }
+//            }
+//        }
     }
     
     //MARK: - Actions
@@ -396,31 +386,31 @@ class MainVC: UITableViewController  {
     }
     
     //MARK: - Continue userActivity
-    func showTickerID(tickerID : String) {
-        guard let tickers = tickers else { return }
-        guard let ticker = tickers.first(where: {$0.id == tickerID}) else { return }
-        selectDefaultItemID(ticker.id)
-        
-        coinDelegate?.coinSelected(ticker)
-        
-        if let app = UIApplication.shared.delegate as? AppDelegate, let window = app.window {
-            guard let splitViewController = window.rootViewController as? UISplitViewController,
-                let leftNavController = splitViewController.viewControllers.first as? UINavigationController,
-                ((leftNavController.topViewController as? MainVC) != nil) else { return }
-        }
-        if let detailViewController = coinDelegate as? CryptocurrencyInfoViewController,
-            let detailNavigationController = detailViewController.navigationController {
-            splitViewController?.showDetailViewController(detailNavigationController, sender: nil)
-        }
-    }
+//    func showTickerID(tickerID : String) {
+//        guard let tickers = tickers else { return }
+//        guard let ticker = tickers.first(where: {$0.id == tickerID}) else { return }
+//        selectDefaultItemID(ticker.id)
+//
+//        coinDelegate?.coinSelected(ticker)
+//
+//        if let app = UIApplication.shared.delegate as? AppDelegate, let window = app.window {
+//            guard let splitViewController = window.rootViewController as? UISplitViewController,
+//                let leftNavController = splitViewController.viewControllers.first as? UINavigationController,
+//                ((leftNavController.topViewController as? MainVC) != nil) else { return }
+//        }
+//        if let detailViewController = coinDelegate as? CryptocurrencyInfoViewController,
+//            let detailNavigationController = detailViewController.navigationController {
+//            splitViewController?.showDetailViewController(detailNavigationController, sender: nil)
+//        }
+//    }
 
 }
 
-extension MainVC: CoinsDelegate {
-    func coins(_ tickers: [Ticker]) {
-        self.tickers = tickers
-    }
-}
+//extension MainVC: CoinsDelegate {
+//    func coins(_ tickers: [Ticker]) {
+//        self.tickers = tickers
+//    }
+//}
 
 extension MainVC: UISplitViewControllerDelegate {
     func splitViewController(_ splitViewController: UISplitViewController, collapseSecondary secondaryViewController: UIViewController, onto primaryViewController: UIViewController) -> Bool {

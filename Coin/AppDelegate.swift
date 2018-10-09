@@ -31,7 +31,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         self.masterViewController = leftNavController.topViewController as? MainVC
         self.masterViewController?.coinDelegate = detailViewController
-        detailViewController.coinsDelegate = masterViewController
+       // detailViewController.coinsDelegate = masterViewController
         
         detailViewController.navigationItem.leftItemsSupplementBackButton = true
         detailViewController.navigationItem.leftBarButtonItem = splitViewController.displayModeButtonItem
@@ -84,7 +84,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let keyStore = NSUbiquitousKeyValueStore()
         keyStore.set(tickerID, forKey: "selectDefaultItemID")
         keyStore.synchronize()
-        self.masterViewController?.showTickerID(tickerID: tickerID)
+       // self.masterViewController?.showTickerID(tickerID: tickerID)
     }
     
 
@@ -103,7 +103,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                             keyStore.set(tickerID, forKey: "selectDefaultItemID")
                             keyStore.synchronize()
                             
-                            self.masterViewController?.showTickerID(tickerID: tickerID)
+                         //   self.masterViewController?.showTickerID(tickerID: tickerID)
                         }
                     case "add":
                         self.masterViewController?.emptyTicker()

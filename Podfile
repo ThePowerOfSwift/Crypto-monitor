@@ -3,6 +3,7 @@ use_frameworks!
 
 target 'Coin' do
    	pod 'Alamofire'
+    pod 'AlamofireImage'
 	pod 'AlamofireNetworkActivityIndicator'
    	pod 'Charts'
    	pod 'SwiftyJSON'
