@@ -142,12 +142,12 @@ class MainVC: UITableViewController  {
                 
                 self?.coins = coins
                 self?.updateApplicationContext(id: idArray)
-//                SearchableIndex.indexItem(tickers: tickers)
-//                if #available(iOS 12.0, *) {
-//                    DispatchQueue.main.async {
-//                        Interaction.donate(tickers: tickers)
-//                    }
-//                }
+                //                SearchableIndex.indexItem(tickers: tickers)
+                //                if #available(iOS 12.0, *) {
+                //                    DispatchQueue.main.async {
+                //                        Interaction.donate(tickers: tickers)
+                //                    }
+            //                }
             case .failure(let error ):
                 DispatchQueue.main.async {
                     UIView.animate(withDuration: 0.25) {
@@ -258,7 +258,7 @@ class MainVC: UITableViewController  {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath){
         guard let coins = coins else { return }
         let coin = coins[indexPath.row]
-       // coinDelegate?.coinSelected(coin)
+        coinDelegate?.coinSelected(coin)
         
         if let detailViewController = coinDelegate as? CryptocurrencyInfoViewController,
             let detailNavigationController = detailViewController.navigationController {

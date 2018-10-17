@@ -5,7 +5,7 @@ target 'Coin' do
    	pod 'Alamofire'
     pod 'AlamofireImage'
 	pod 'AlamofireNetworkActivityIndicator'
-   	pod 'Charts'
+   	pod 'SwiftChart'
    	pod 'SwiftyJSON'
 	pod 'DZNEmptyDataSet'
 end

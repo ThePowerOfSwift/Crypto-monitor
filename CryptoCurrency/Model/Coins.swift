@@ -82,22 +82,6 @@ public struct Coin: Codable {
     }
 }
 
-func newJSONDecoder() -> JSONDecoder {
-    let decoder = JSONDecoder()
-    if #available(iOS 10.0, OSX 10.12, tvOS 10.0, watchOS 3.0, *) {
-        decoder.dateDecodingStrategy = .iso8601
-    }
-    return decoder
-}
-
-func newJSONEncoder() -> JSONEncoder {
-    let encoder = JSONEncoder()
-    if #available(iOS 10.0, OSX 10.12, tvOS 10.0, watchOS 3.0, *) {
-        encoder.dateEncodingStrategy = .iso8601
-    }
-    return encoder
-}
-
 // MARK: - Alamofire response handlers
 
 public extension DataRequest {
@@ -125,16 +109,6 @@ public extension DataRequest {
 }
 
 extension Coin {
-    private func formatterCurrency(for money: Money, maximumFractionDigits: Int) -> NumberFormatter {
-        let formatterCurrency = NumberFormatter()
-        formatterCurrency.numberStyle = .currency
-        formatterCurrency.currencyCode = money.rawValue
-        formatterCurrency.locale  = Locale.current
-        formatterCurrency.maximumFractionDigits = maximumFractionDigits
-        formatterCurrency.nilSymbol = "-"
-        return formatterCurrency
-    }
-    
     public func priceToString() -> String {
         guard let price = currentPrice else { return "-" }
         let money = SettingsUserDefaults.getCurrentCurrency()

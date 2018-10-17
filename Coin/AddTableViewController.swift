@@ -34,7 +34,7 @@ class AddTableViewController: UITableViewController {
         searchController.searchBar.keyboardType = .asciiCapable
         
         // Setting refresh control
-        self.refreshControl?.addTarget(self, action: #selector(loadTicker), for: UIControl.Event.valueChanged)
+       // self.refreshControl?.addTarget(self, action: #selector(loadCoinDetails), for: UIControl.Event.valueChanged)
         
         if let idArrayUserDefaults = SettingsUserDefaults.getIdArray(){
             self.idArray = idArrayUserDefaults
