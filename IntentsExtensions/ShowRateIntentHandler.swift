@@ -31,9 +31,9 @@ public class ShowRateIntentHandler: NSObject, ShowPriceIntentHandling {
                 DispatchQueue.main.async {
                     let response = ShowPriceIntentResponse(code: .success, userActivity: nil)
                     response.name = ticker.name
-                    response.priceUSD = ticker.priceToString(for: .usd)
-                    response.priceBTC = ticker.priceBtcToString()
-                    response.priceConvert = ticker.priceCurrency()
+//                    response.priceUSD = ticker.priceToString(for: .usd)
+//                    response.priceBTC = ticker.priceBtcToString()
+//                    response.priceConvert = ticker.priceCurrency()
                     response.percentChange1h = NSNumber(value: ticker.percentChange1h ?? 0)
                     response.percentChange24h = NSNumber(value: ticker.percentChange24h ?? 0)
                     response.percentChange7d = NSNumber(value: ticker.percentChange7d ?? 0)

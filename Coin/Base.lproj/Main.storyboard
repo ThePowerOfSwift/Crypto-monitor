@@ -190,24 +190,40 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" accessoryType="checkmark" indentationWidth="10" reuseIdentifier="currentSymbol" textLabel="bMz-0m-a7k" style="IBUITableViewCellStyleDefault" id="h8F-gm-S9X" customClass="CurrentCurrencyTableViewCell" customModule="Coin" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="28" width="375" height="44"/>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" accessoryType="checkmark" indentationWidth="10" reuseIdentifier="currentSymbol" rowHeight="65" id="h8F-gm-S9X" customClass="CurrentCurrencyTableViewCell" customModule="Coin" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="28" width="375" height="65"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="h8F-gm-S9X" id="ubu-zu-fkR">
-                                    <rect key="frame" x="0.0" y="0.0" width="335" height="43.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="335" height="64.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="bMz-0m-a7k">
-                                            <rect key="frame" x="16" y="0.0" width="319" height="43.5"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lsT-Ig-aVq">
+                                            <rect key="frame" x="45" y="22.5" width="282" height="19.5"/>
+                                            <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7Bi-QQ-b67">
+                                            <rect key="frame" x="16" y="22.5" width="25" height="19.5"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="25" id="Z3y-XQ-75c"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                     </subviews>
+                                    <constraints>
+                                        <constraint firstAttribute="trailingMargin" secondItem="lsT-Ig-aVq" secondAttribute="trailing" id="1TH-Tp-lqc"/>
+                                        <constraint firstItem="7Bi-QQ-b67" firstAttribute="leading" secondItem="ubu-zu-fkR" secondAttribute="leadingMargin" id="CqG-Wk-she"/>
+                                        <constraint firstItem="7Bi-QQ-b67" firstAttribute="centerY" secondItem="ubu-zu-fkR" secondAttribute="centerY" id="GdE-0H-h6g"/>
+                                        <constraint firstItem="lsT-Ig-aVq" firstAttribute="leading" secondItem="7Bi-QQ-b67" secondAttribute="trailing" constant="4" id="rFU-b8-OId"/>
+                                        <constraint firstItem="lsT-Ig-aVq" firstAttribute="centerY" secondItem="ubu-zu-fkR" secondAttribute="centerY" id="yPv-MW-HwW"/>
+                                    </constraints>
                                 </tableViewCellContentView>
                                 <connections>
-                                    <outlet property="symbol" destination="bMz-0m-a7k" id="IBv-GC-yzH"/>
+                                    <outlet property="flag" destination="7Bi-QQ-b67" id="eS6-S4-tsH"/>
+                                    <outlet property="symbol" destination="lsT-Ig-aVq" id="Er0-pv-CFA"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -220,7 +236,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="EEC-ml-qaK" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5147" y="-596"/>
+            <point key="canvasLocation" x="5146.3999999999996" y="-596.85157421289364"/>
         </scene>
         <!--Crypto monitor-->
         <scene sceneID="5la-10-aik">
@@ -447,7 +463,7 @@
                                                     <view contentMode="center" translatesAutoresizingMaskIntoConstraints="NO" id="Obg-oR-F8H" userLabel="1h">
                                                         <rect key="frame" x="4" y="0.0" width="114.5" height="30"/>
                                                         <subviews>
-                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="24h" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hqn-dg-kiF">
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1h" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hqn-dg-kiF">
                                                                 <rect key="frame" x="4" y="7" width="25" height="16"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="25" id="xNi-7s-5Y3"/>
@@ -489,7 +505,7 @@
                                                     <view contentMode="center" translatesAutoresizingMaskIntoConstraints="NO" id="add-bG-Mit" userLabel="24h">
                                                         <rect key="frame" x="4" y="0.0" width="114" height="30"/>
                                                         <subviews>
-                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="7d" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="FBj-3W-hNJ">
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="24h" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="FBj-3W-hNJ">
                                                                 <rect key="frame" x="4" y="7" width="28" height="16"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="28" id="zwJ-OF-sEg"/>
@@ -531,7 +547,7 @@
                                                     <view contentMode="center" translatesAutoresizingMaskIntoConstraints="NO" id="bHp-ib-qgg" userLabel="7d">
                                                         <rect key="frame" x="4" y="0.0" width="114.5" height="30"/>
                                                         <subviews>
-                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="14d" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Fm0-dh-sZO">
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="7d" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Fm0-dh-sZO">
                                                                 <rect key="frame" x="4" y="7" width="28" height="16"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="28" id="NcH-1b-45l"/>
@@ -706,10 +722,10 @@
                                 <segments>
                                     <segment title="1d"/>
                                     <segment title="7d"/>
-                                    <segment title="14d"/>
-                                    <segment title="30d"/>
-                                    <segment title="60d"/>
-                                    <segment title="90d"/>
+                                    <segment title="1m"/>
+                                    <segment title="3m"/>
+                                    <segment title="1y"/>
+                                    <segment title="YTD"/>
                                     <segment title="ALL"/>
                                 </segments>
                                 <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -717,15 +733,16 @@
                                     <action selector="indexChanged:" destination="2Ah-xt-ZDa" eventType="valueChanged" id="EBP-Yf-Ueq"/>
                                 </connections>
                             </segmentedControl>
-                            <segmentedControl opaque="NO" contentMode="center" contentHorizontalAlignment="fill" contentVerticalAlignment="fill" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="Y3q-Wh-tVv">
+                            <segmentedControl opaque="NO" contentMode="center" contentHorizontalAlignment="fill" contentVerticalAlignment="fill" apportionsSegmentWidthsByContent="YES" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="Y3q-Wh-tVv">
                                 <rect key="frame" x="16" y="264" width="343" height="29"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="28" id="g1U-ru-mxX"/>
                                 </constraints>
                                 <segments>
                                     <segment title="Market Cap"/>
-                                    <segment title="Price "/>
-                                    <segment title="Total Volumes"/>
+                                    <segment title="Price (USD)"/>
+                                    <segment title="Price (BTC)"/>
+                                    <segment title="24h Vol"/>
                                 </segments>
                                 <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <connections>
@@ -796,22 +813,28 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="addCryptocurrency" rowHeight="36" id="mUA-iL-q66" customClass="AddTableViewCell" customModule="Coin" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="28" width="375" height="36"/>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="addCryptocurrency" rowHeight="65" id="mUA-iL-q66" customClass="AddTableViewCell" customModule="Coin" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="28" width="375" height="65"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="mUA-iL-q66" id="rI5-mf-JKt">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="35.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="64.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
+                                        <imageView opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="AmO-8A-dvr">
+                                            <rect key="frame" x="4" y="8" width="48.5" height="48.5"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" secondItem="AmO-8A-dvr" secondAttribute="height" multiplier="1:1" id="ooi-eZ-nI4"/>
+                                            </constraints>
+                                        </imageView>
                                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="6ND-cA-2mb">
-                                            <rect key="frame" x="4" y="8" width="327" height="19.5"/>
+                                            <rect key="frame" x="56.5" y="22.5" width="274.5" height="19.5"/>
                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Check" translatesAutoresizingMaskIntoConstraints="NO" id="gck-rh-QxR">
-                                            <rect key="frame" x="335" y="2" width="32" height="32"/>
+                                            <rect key="frame" x="335" y="16.5" width="32" height="32"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="32" id="0iW-77-qiM"/>
                                                 <constraint firstAttribute="height" constant="32" id="EDV-EP-ldJ"/>
@@ -819,16 +842,21 @@
                                         </imageView>
                                     </subviews>
                                     <constraints>
-                                        <constraint firstItem="6ND-cA-2mb" firstAttribute="leading" secondItem="rI5-mf-JKt" secondAttribute="leading" constant="4" id="26O-wS-wsv"/>
                                         <constraint firstItem="gck-rh-QxR" firstAttribute="centerY" secondItem="rI5-mf-JKt" secondAttribute="centerY" id="5bf-Ob-YHl"/>
+                                        <constraint firstItem="AmO-8A-dvr" firstAttribute="width" secondItem="AmO-8A-dvr" secondAttribute="height" multiplier="1:1" id="64W-AB-krQ"/>
+                                        <constraint firstItem="AmO-8A-dvr" firstAttribute="leading" secondItem="rI5-mf-JKt" secondAttribute="leading" constant="4" id="98Z-37-Vgb"/>
+                                        <constraint firstItem="6ND-cA-2mb" firstAttribute="leading" secondItem="AmO-8A-dvr" secondAttribute="trailing" constant="4" id="9qq-Kb-IVb"/>
+                                        <constraint firstItem="AmO-8A-dvr" firstAttribute="centerY" secondItem="rI5-mf-JKt" secondAttribute="centerY" id="AGu-9Z-c2i"/>
                                         <constraint firstItem="gck-rh-QxR" firstAttribute="leading" secondItem="6ND-cA-2mb" secondAttribute="trailing" constant="4" id="aLd-YX-mOx"/>
+                                        <constraint firstItem="AmO-8A-dvr" firstAttribute="top" secondItem="rI5-mf-JKt" secondAttribute="top" constant="8" id="icS-nP-MOT"/>
                                         <constraint firstItem="6ND-cA-2mb" firstAttribute="centerY" secondItem="rI5-mf-JKt" secondAttribute="centerY" id="oLv-ep-7Xa"/>
                                         <constraint firstAttribute="trailing" secondItem="gck-rh-QxR" secondAttribute="trailing" constant="8" id="s09-Ur-ENv"/>
                                     </constraints>
                                 </tableViewCellContentView>
                                 <connections>
                                     <outlet property="checkImageView" destination="gck-rh-QxR" id="yia-MK-FQM"/>
-                                    <outlet property="cryptocurrencyNameLabel" destination="6ND-cA-2mb" id="q9i-HG-4vt"/>
+                                    <outlet property="coinImageView" destination="AmO-8A-dvr" id="QDC-YS-ESf"/>
+                                    <outlet property="coinNameLabel" destination="6ND-cA-2mb" id="q9i-HG-4vt"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>

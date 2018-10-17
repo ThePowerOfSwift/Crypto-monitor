@@ -31,8 +31,8 @@ class CurrentCurrencyTableVC: UITableViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: "currentSymbol", for: indexPath) as! CurrentCurrencyTableViewCell
         let row = indexPath.row
         
-        
-        cell.symbol.text = money![row].flag + " " + money![row].rawValue
+        cell.flag.text = money![row].flag
+        cell.symbol.text = money![row].rawValue
         
         let currentCurrency = SettingsUserDefaults.getCurrentCurrency()
         

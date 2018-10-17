@@ -10,6 +10,7 @@ import UIKit
 
 class AddTableViewCell: UITableViewCell {
 
-    @IBOutlet weak var cryptocurrencyNameLabel: UILabel!
+    @IBOutlet weak var coinImageView: UIImageView!
+    @IBOutlet weak var coinNameLabel: UILabel!
     @IBOutlet weak var checkImageView: UIImageView!
 }

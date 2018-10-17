@@ -24,18 +24,63 @@ public struct Coingecko {
         case success(T)
     }
     
-    public static func getCoinsMarkets(ids: [String], vsCurrency: Money, response: ((_ r: ResponseA<Coin>) -> Void)?) {
+//    public static func getCoinsList(response: ((_ r: ResponseB<CoinsList>) -> Void)?) {
+//        var urlComponents = URLComponents()
+//        urlComponents.scheme = scheme
+//        urlComponents.host = host
+//        urlComponents.path = "/api/v3/coins/list"
+//        
+//        guard let url = urlComponents.url else { return }
+//        
+//        Alamofire.request(url).responseCoinsList { r in
+//            switch r.result {
+//            case .success(let coinsList):
+//                response?(ResponseB.success(coinsList))
+//            case .failure(let error):
+//                response?(ResponseB.failure(error: error))
+//            }
+//        }
+//    }
+    
+    public static func getCoinsMarkets(ids: [String], response: ((_ r: ResponseA<Coin>) -> Void)?) {
         
         var urlComponents = URLComponents()
         urlComponents.scheme = scheme
         urlComponents.host = host
         urlComponents.path = "/api/v3/coins/markets"
         
-         let convert = SettingsUserDefaults.getCurrentCurrency()
+        let convert = SettingsUserDefaults.getCurrentCurrency()
         let queryCurrency = URLQueryItem(name: "vs_currency", value: convert.rawValue.lowercased())
         let queryIds = URLQueryItem(name: "ids", value: ids.joined(separator: ","))
         
         urlComponents.queryItems = [queryCurrency, queryIds]
+        
+        guard let url = urlComponents.url else { return }
+        
+        Alamofire.request(url).responseCoins { r in
+            switch r.result {
+            case .success(var coins):
+                coins = coins.map { ($0, ids.index(of: $0.id) ?? Int.max) }
+                    .sorted(by: { $0.1 < $1.1 })
+                    .map { $0.0 }
+                response?(ResponseA.success(coins))
+            case .failure(let error):
+                response?(ResponseA.failure(error: error))
+            }
+        }
+    }
+    
+    public static func getCoinsMarkets(response: ((_ r: ResponseA<Coin>) -> Void)?) {
+        
+        var urlComponents = URLComponents()
+        urlComponents.scheme = scheme
+        urlComponents.host = host
+        urlComponents.path = "/api/v3/coins/markets"
+        
+        let convert = SettingsUserDefaults.getCurrentCurrency()
+        let queryCurrency = URLQueryItem(name: "vs_currency", value: convert.rawValue.lowercased())
+        
+        urlComponents.queryItems = [queryCurrency]
         
         guard let url = urlComponents.url else { return }
         
@@ -48,6 +93,7 @@ public struct Coingecko {
             }
         }
     }
+    
     
     public static func getCoinDetails(id: String, response: ((_ r: ResponseB<CoinDetails>) -> Void)?) {
 
@@ -92,7 +138,7 @@ public struct Coingecko {
         }
     }
     
-    //get_coins_list
+    
     
     public enum Period: String {
         case period24h = "1"

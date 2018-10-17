@@ -9,5 +9,6 @@
 import UIKit
 
 class CurrentCurrencyTableViewCell: UITableViewCell {
+    @IBOutlet weak var flag: UILabel!
     @IBOutlet weak var symbol: UILabel!
 }

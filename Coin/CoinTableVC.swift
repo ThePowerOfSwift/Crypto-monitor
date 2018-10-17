@@ -135,8 +135,8 @@ class MainVC: UITableViewController  {
                // SettingsUserDefaults.setUserDefaults(ticher: [Ticker](), lastUpdate: nil)
                 return
         }
-        
-        Coingecko.getCoinsMarkets(ids: ["bitcoin","litecoin","ethereum"], vsCurrency: .usd) { [weak self] (response) in
+        print(idArray)
+        Coingecko.getCoinsMarkets(ids: idArray) { [weak self] (response) in
             switch response {
             case .success(let coins):
                 
@@ -268,40 +268,40 @@ class MainVC: UITableViewController  {
     }
     
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-//        DispatchQueue.global(qos: .utility).async {
-//            if editingStyle == .delete{
-//                let keyStore = NSUbiquitousKeyValueStore ()
-//
-//                if var idArray = keyStore.array(forKey: "id") as? [String] {
-//                    let row = indexPath.row
-//                    let ticker = self.tickers![row]
-//                    if let index = idArray.index(of: ticker.id){
-//                        idArray.remove(at: index)
-//                        SearchableIndex.deindexItem(identifier: ticker.id)
-//                        self.tickers!.remove(at: row)
-//
-//                        // set UserDefaults
-//                        SettingsUserDefaults.setUserDefaults(ticher: self.tickers!, idArray: idArray, lastUpdate: nil)
-//
-//                        // set iCloud key-value
-//                        if self.tickers?.count == 0 {
-//                            keyStore.removeObject(forKey: "id")
-//                        }
-//                        else{
-//                            keyStore.set(idArray, forKey: "id")
-//                        }
-//                        keyStore.synchronize()
-//
-//                        // set Interaction
+        DispatchQueue.global(qos: .utility).async {
+            if editingStyle == .delete{
+                let keyStore = NSUbiquitousKeyValueStore ()
+
+                if var idArray = keyStore.array(forKey: "id") as? [String] {
+                    let row = indexPath.row
+                    let ticker = self.coins![row]
+                    if let index = idArray.index(of: ticker.id){
+                        idArray.remove(at: index)
+                        SearchableIndex.deindexItem(identifier: ticker.id)
+                        self.coins!.remove(at: row)
+
+                        // set UserDefaults
+                     //   SettingsUserDefaults.setUserDefaults(ticher: self.tickers!, idArray: idArray, lastUpdate: nil)
+
+                        // set iCloud key-value
+                        if self.coins?.count == 0 {
+                            keyStore.removeObject(forKey: "id")
+                        }
+                        else{
+                            keyStore.set(idArray, forKey: "id")
+                        }
+                        keyStore.synchronize()
+
+                        // set Interaction
 //                        if #available(iOS 12.0, *) {
 //                            Interaction.delete(ticker: ticker)
 //                        }
-//
-//                        self.updateApplicationContext(id: idArray)
-//                    }
-//                }
-//            }
-//        }
+
+                        self.updateApplicationContext(id: idArray)
+                    }
+                }
+            }
+        }
     }
     
     
@@ -314,26 +314,26 @@ class MainVC: UITableViewController  {
     }
     
     override func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
-//        DispatchQueue.global(qos: .utility).async {
-//            guard self.tickers != nil else { return }
-//
-//            let keyStore = NSUbiquitousKeyValueStore()
-//            if var idArray = keyStore.array(forKey: "id") as? [String] {
-//                if let index = idArray.index(of: self.tickers![sourceIndexPath.row].id){
-//                    idArray.remove(at: index)
-//                    idArray.insert(self.tickers![sourceIndexPath.row].id, at: destinationIndexPath.row)
-//                    self.tickers!.rearrange(from: sourceIndexPath.row, to: destinationIndexPath.row)
-//
-//                    SettingsUserDefaults.setUserDefaults(ticher: self.tickers!, idArray: idArray, lastUpdate: nil)
-//
-//                    // set iCloud key-value
-//                    keyStore.set(idArray, forKey: "id")
-//                    keyStore.synchronize()
-//
-//                    self.updateApplicationContext(id: idArray)
-//                }
-//            }
-//        }
+        DispatchQueue.global(qos: .utility).async {
+            guard self.coins != nil else { return }
+
+            let keyStore = NSUbiquitousKeyValueStore()
+            if var idArray = keyStore.array(forKey: "id") as? [String] {
+                if let index = idArray.index(of: self.coins![sourceIndexPath.row].id){
+                    idArray.remove(at: index)
+                    idArray.insert(self.coins![sourceIndexPath.row].id, at: destinationIndexPath.row)
+                    self.coins!.rearrange(from: sourceIndexPath.row, to: destinationIndexPath.row)
+
+                 //   SettingsUserDefaults.setUserDefaults(ticher: self.coins!, idArray: idArray, lastUpdate: nil)
+
+                    // set iCloud key-value
+                    keyStore.set(idArray, forKey: "id")
+                    keyStore.synchronize()
+
+                    self.updateApplicationContext(id: idArray)
+                }
+            }
+        }
     }
     
     //MARK: - Actions

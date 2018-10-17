@@ -136,23 +136,23 @@ class TodayViewController: UIViewController, UITableViewDataSource, UITableViewD
         let row = indexPath.row
 
         cell.coinNameLabel.text = cryptocurrencyShow[row].name
-        cell.priceCoinLabel.text = cryptocurrencyShow[row].priceCurrency()
-        
-        
-        let percentChange = cryptocurrencyShow[row].percentChangeCurrent()
-        if let percent = Float(percentChange) {
-            if percent >= 0 {
-                cell.percentChangeView.backgroundColor = UIColor(red:0.30, green:0.85, blue:0.39, alpha:1.0)
-            }
-            else{
-                cell.percentChangeView.backgroundColor = UIColor(red:1.00, green:0.23, blue:0.18, alpha:1.0)
-            }
-            cell.percentChangeLabel.text = percentChange + " %"
-        }
-        else{
-            cell.percentChangeView.backgroundColor = UIColor.orange
-            cell.percentChangeLabel.text = "-"
-        }
+//        cell.priceCoinLabel.text = cryptocurrencyShow[row].priceCurrency()
+//        
+//        
+//        let percentChange = cryptocurrencyShow[row].percentChangeCurrent()
+//        if let percent = Float(percentChange) {
+//            if percent >= 0 {
+//                cell.percentChangeView.backgroundColor = UIColor(red:0.30, green:0.85, blue:0.39, alpha:1.0)
+//            }
+//            else{
+//                cell.percentChangeView.backgroundColor = UIColor(red:1.00, green:0.23, blue:0.18, alpha:1.0)
+//            }
+//            cell.percentChangeLabel.text = percentChange + " %"
+//        }
+//        else{
+//            cell.percentChangeView.backgroundColor = UIColor.orange
+//            cell.percentChangeLabel.text = "-"
+//        }
         return cell
     }
     

@@ -150,6 +150,9 @@ class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
             switch response {
             case .success(let сoinDetails):
                 DispatchQueue.main.async() {
+                    
+                  //  self?.nameLabel.text = сoinDetails.localizationToString()
+                    
                     self?.priceUsdLabel.text = сoinDetails.marketData.currentPriceToString(money: .usd)
                     self?.priceBtcLabel.text = сoinDetails.marketData.currentPriceToString(money: .btc)
                    
