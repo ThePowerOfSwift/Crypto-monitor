@@ -733,16 +733,15 @@
                                     <action selector="indexChanged:" destination="2Ah-xt-ZDa" eventType="valueChanged" id="EBP-Yf-Ueq"/>
                                 </connections>
                             </segmentedControl>
-                            <segmentedControl opaque="NO" contentMode="center" contentHorizontalAlignment="fill" contentVerticalAlignment="fill" apportionsSegmentWidthsByContent="YES" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="Y3q-Wh-tVv">
+                            <segmentedControl opaque="NO" contentMode="center" contentHorizontalAlignment="fill" contentVerticalAlignment="fill" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="Y3q-Wh-tVv">
                                 <rect key="frame" x="16" y="264" width="343" height="29"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="28" id="g1U-ru-mxX"/>
                                 </constraints>
                                 <segments>
                                     <segment title="Market Cap"/>
-                                    <segment title="Price (USD)"/>
-                                    <segment title="Price (BTC)"/>
-                                    <segment title="24h Vol"/>
+                                    <segment title="Price"/>
+                                    <segment title="Total Volumes"/>
                                 </segments>
                                 <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <connections>

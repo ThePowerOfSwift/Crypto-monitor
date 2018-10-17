@@ -65,25 +65,6 @@ public enum Money: String, CaseIterable {
     
     public var flag: String {
         switch self {
-//        case .usd:
-//            return "🇺🇸"
-//        case .eur:
-//            return "🇪🇺"
-//        case .btc:
-//            return "🌍"
-//        case .gbp:
-//            return "🇬🇧"
-//        case .jpy:
-//            return "🇯🇵"
-//        case .cny:
-//            return "🇨🇳"
-//        case .hkd:
-//            return "🇭🇰"
-//        case .rub:
-//            return "🇷🇺"
-//        case .cad:
-//            return "🇨🇦"
-            
         case .aed:
             return "🇦🇪"
         case .ars:

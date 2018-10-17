@@ -92,6 +92,9 @@ class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
         self.volumeLabel.text = ""
 //        loadCoinDetails()
 //        getMarketChart()
+        
+        self.selectSegmentedControl.setTitle("Price (\(SettingsUserDefaults.getCurrentCurrency().rawValue))", forSegmentAt: 1)
+        
     }
     
     
