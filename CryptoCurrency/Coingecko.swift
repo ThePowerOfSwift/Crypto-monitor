@@ -92,11 +92,30 @@ public struct Coingecko {
         }
     }
     
+    //get_coins_list
+    
     public enum Period: String {
-        case oneDay = "1"
-        case sevenDays = "7"
-        case month = "30"
-        case max = "max"
+        case period24h = "1"
+        case period7d  = "7"
+        case period14d = "14"
+        case period30d = "30"
+        case period60d = "60"
+        case period90d = "90"
+        case periodMax = "max"
+        
+        public init(index: Int) {
+            switch index {
+            case 0: self = .period24h
+            case 1: self = .period7d
+            case 2: self = .period14d
+            case 3: self = .period30d
+            case 4: self = .period60d
+            case 5: self = .period90d
+            case 6: self = .periodMax
+            default:
+                self = .period7d
+            }
+        }
     }
 
 }

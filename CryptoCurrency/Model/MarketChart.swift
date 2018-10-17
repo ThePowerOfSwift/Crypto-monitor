@@ -22,7 +22,7 @@ import Foundation
 import Alamofire
 
 public struct MarketChart: Codable {
-    let prices, marketCaps, totalVolumes: [[Double]]
+    public let prices, marketCaps, totalVolumes: [[Double]]
     
     enum CodingKeys: String, CodingKey {
         case prices

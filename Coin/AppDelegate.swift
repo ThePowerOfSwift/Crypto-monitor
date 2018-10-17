@@ -46,6 +46,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             keyStore.set(true, forKey: "launchedBefore")
             keyStore.synchronize()
         }
+         if !keyStore.bool(forKey: "ver2"){
+            let typeChart = SettingsUserDefaults.getTypeChart()
+            
+            if typeChart == 3 {
+                SettingsUserDefaults.setTypeChart(segmentIndex: 2)
+            } else if typeChart == 2 {
+                SettingsUserDefaults.setTypeChart(segmentIndex: 1)
+            }
+            
+            keyStore.set(true, forKey: "ver2")
+            keyStore.synchronize()
+        }
         
         // Load IAP
         IAPHandler.shared.requestProducts()

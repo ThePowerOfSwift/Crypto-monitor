@@ -116,12 +116,12 @@ extension Coin {
         return formatter.string(from: NSNumber(value: price))!
     }
     
-    public func priceChange24HToString() -> String {
-        guard var priceChange24H = priceChange24H else { return "-" }
-        priceChange24H = priceChange24H / 100
+    public func priceChangePercentage24hToString() -> String {
+        guard var priceChangePercentage24H = priceChangePercentage24H else { return "-" }
+        priceChangePercentage24H = priceChangePercentage24H / 100
         let numberFormatter = NumberFormatter()
         numberFormatter.numberStyle = .percent
         numberFormatter.maximumFractionDigits = 2
-        return numberFormatter.string(for: priceChange24H) ?? "-"
+        return numberFormatter.string(for: priceChangePercentage24H) ?? "-"
     }
 }

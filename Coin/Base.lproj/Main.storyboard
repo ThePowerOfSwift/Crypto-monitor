@@ -447,7 +447,7 @@
                                                     <view contentMode="center" translatesAutoresizingMaskIntoConstraints="NO" id="Obg-oR-F8H" userLabel="1h">
                                                         <rect key="frame" x="4" y="0.0" width="114.5" height="30"/>
                                                         <subviews>
-                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1h" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hqn-dg-kiF">
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="24h" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hqn-dg-kiF">
                                                                 <rect key="frame" x="4" y="7" width="25" height="16"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="25" id="xNi-7s-5Y3"/>
@@ -489,7 +489,7 @@
                                                     <view contentMode="center" translatesAutoresizingMaskIntoConstraints="NO" id="add-bG-Mit" userLabel="24h">
                                                         <rect key="frame" x="4" y="0.0" width="114" height="30"/>
                                                         <subviews>
-                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="24h" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="FBj-3W-hNJ">
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="7d" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="FBj-3W-hNJ">
                                                                 <rect key="frame" x="4" y="7" width="28" height="16"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="28" id="zwJ-OF-sEg"/>
@@ -531,7 +531,7 @@
                                                     <view contentMode="center" translatesAutoresizingMaskIntoConstraints="NO" id="bHp-ib-qgg" userLabel="7d">
                                                         <rect key="frame" x="4" y="0.0" width="114.5" height="30"/>
                                                         <subviews>
-                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="7d" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Fm0-dh-sZO">
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="14d" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Fm0-dh-sZO">
                                                                 <rect key="frame" x="4" y="7" width="28" height="16"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="28" id="NcH-1b-45l"/>
@@ -668,7 +668,7 @@
                                     <constraint firstItem="HzE-Tk-7no" firstAttribute="top" secondItem="xUV-qV-bOc" secondAttribute="top" id="z3W-1I-HDI"/>
                                 </constraints>
                             </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fo5-Jm-Lf6" customClass="Chart" customModule="SwiftChart">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fo5-Jm-Lf6" customClass="LineChartView" customModule="Charts">
                                 <rect key="frame" x="0.0" y="292" width="375" height="335"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
@@ -706,10 +706,10 @@
                                 <segments>
                                     <segment title="1d"/>
                                     <segment title="7d"/>
-                                    <segment title="1m"/>
-                                    <segment title="3m"/>
-                                    <segment title="1y"/>
-                                    <segment title="YTD"/>
+                                    <segment title="14d"/>
+                                    <segment title="30d"/>
+                                    <segment title="60d"/>
+                                    <segment title="90d"/>
                                     <segment title="ALL"/>
                                 </segments>
                                 <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -717,16 +717,15 @@
                                     <action selector="indexChanged:" destination="2Ah-xt-ZDa" eventType="valueChanged" id="EBP-Yf-Ueq"/>
                                 </connections>
                             </segmentedControl>
-                            <segmentedControl opaque="NO" contentMode="center" contentHorizontalAlignment="fill" contentVerticalAlignment="fill" apportionsSegmentWidthsByContent="YES" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="Y3q-Wh-tVv">
+                            <segmentedControl opaque="NO" contentMode="center" contentHorizontalAlignment="fill" contentVerticalAlignment="fill" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="Y3q-Wh-tVv">
                                 <rect key="frame" x="16" y="264" width="343" height="29"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="28" id="g1U-ru-mxX"/>
                                 </constraints>
                                 <segments>
                                     <segment title="Market Cap"/>
-                                    <segment title="Price (USD)"/>
-                                    <segment title="Price (BTC)"/>
-                                    <segment title="24h Vol"/>
+                                    <segment title="Price "/>
+                                    <segment title="Total Volumes"/>
                                 </segments>
                                 <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <connections>
@@ -764,10 +763,10 @@
                     <connections>
                         <outlet property="LineChartErrorLabel" destination="085-95-SRE" id="9U6-fp-rjJ"/>
                         <outlet property="LineChartErrorView" destination="3vW-K3-Vo9" id="diu-g0-F6s"/>
-                        <outlet property="chart" destination="fo5-Jm-Lf6" id="qh9-mK-DOp"/>
                         <outlet property="dayChangeLabel" destination="ero-gf-MrV" id="Z4P-sl-Na6"/>
                         <outlet property="dayChangeView" destination="add-bG-Mit" id="8Kf-K3-eue"/>
                         <outlet property="lineChartActivityIndicator" destination="h9j-rX-z27" id="TKK-HY-Zrj"/>
+                        <outlet property="lineChartView" destination="fo5-Jm-Lf6" id="g9u-s5-9KE"/>
                         <outlet property="marketcapLabel" destination="4z8-zK-QWk" id="dk4-QM-pyb"/>
                         <outlet property="nameLabel" destination="HzE-Tk-7no" id="zhH-9n-mpK"/>
                         <outlet property="oneHourChangeLabel" destination="qvM-fr-xLG" id="yzj-yc-4jV"/>

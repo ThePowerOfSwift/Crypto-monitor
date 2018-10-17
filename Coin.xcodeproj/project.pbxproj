@@ -21,7 +21,6 @@
 		B123CE32215AD7DF001F8247 /* CryptoCurrency.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FBBE490C2008F5A200277014 /* CryptoCurrency.framework */; };
 		B131058D2177289200A47DD4 /* MarketChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = B131058B2177284E00A47DD4 /* MarketChart.swift */; };
 		B131058E2177289200A47DD4 /* MarketChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = B131058B2177284E00A47DD4 /* MarketChart.swift */; };
-		B1310590217730DA00A47DD4 /* SwiftChart.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B131058F217730DA00A47DD4 /* SwiftChart.framework */; };
 		B1397B9820C41DD100A93FD2 /* UISplitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1397B9720C41DD100A93FD2 /* UISplitViewController.swift */; };
 		B16FBA0521594E130056AA2A /* backgroundColorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B16FBA0221594DEB0056AA2A /* backgroundColorView.swift */; };
 		B1798B0D20CC51F1004A2309 /* Protocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1798B0C20CC51F1004A2309 /* Protocol.swift */; };
@@ -46,8 +45,6 @@
 		D7025B6537039D2C8FE292AC /* Pods_CryptoCurrency_iOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6958851BF09A132E3E9D9894 /* Pods_CryptoCurrency_iOS.framework */; };
 		FB18375A200D028A001C6358 /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FB18375B200D028A001C6358 /* Alamofire.framework */; };
 		FB18375C200D0298001C6358 /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FB18375D200D0298001C6358 /* Alamofire.framework */; };
-		FB183760200D0328001C6358 /* SwiftyJSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FB183761200D0328001C6358 /* SwiftyJSON.framework */; };
-		FB183764200D035D001C6358 /* AlamofireNetworkActivityIndicator.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FB183765200D035D001C6358 /* AlamofireNetworkActivityIndicator.framework */; };
 		FB20D0DE2008FECD0007305C /* CryptoCurrency.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FBBE490C2008F5A200277014 /* CryptoCurrency.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		FB20D0E220090DD70007305C /* SettingsUserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB20D0E120090DD70007305C /* SettingsUserDefaults.swift */; };
 		FB20D0E320090DD70007305C /* SettingsUserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB20D0E120090DD70007305C /* SettingsUserDefaults.swift */; };
@@ -267,6 +264,7 @@
 		B1C016F2216E1853005E75E0 /* CoinDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinDetails.swift; sourceTree = "<group>"; };
 		B1D5D0BC216CCE9E009E54C2 /* Coins.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coins.swift; sourceTree = "<group>"; };
 		B1D5D0C0216D3D05009E54C2 /* Coingecko.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coingecko.swift; sourceTree = "<group>"; };
+		B1E5BC0321773D63004E29A9 /* AlamofireNetworkActivityIndicator.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = AlamofireNetworkActivityIndicator.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B1ED5B9D215C0E4C00184C37 /* VoiceShortcut.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoiceShortcut.swift; sourceTree = "<group>"; };
 		B1ED5B9F215C15D000184C37 /* ChartXAxisFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartXAxisFormatter.swift; sourceTree = "<group>"; };
 		B1FECBAD216F7BD8006AC572 /* FormatterCoin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormatterCoin.swift; sourceTree = "<group>"; };
@@ -444,10 +442,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B1310590217730DA00A47DD4 /* SwiftChart.framework in Frameworks */,
 				FB3EF7F220246AA700EB1C31 /* DZNEmptyDataSet.framework in Frameworks */,
-				FB183764200D035D001C6358 /* AlamofireNetworkActivityIndicator.framework in Frameworks */,
-				FB183760200D0328001C6358 /* SwiftyJSON.framework in Frameworks */,
 				FBC054B8201F67FA00458F8D /* StoreKit.framework in Frameworks */,
 				243CE4380C79FE662D02B686 /* Pods_Coin.framework in Frameworks */,
 			);
@@ -477,6 +472,7 @@
 		731467F8FA5309E32222B93E /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				B1E5BC0321773D63004E29A9 /* AlamofireNetworkActivityIndicator.framework */,
 				B131058F217730DA00A47DD4 /* SwiftChart.framework */,
 				FB3EF7F320246AA700EB1C31 /* DZNEmptyDataSet.framework */,
 				FB91BB5D202377B20007B573 /* DZNEmptyDataSet.framework */,
@@ -1234,18 +1230,16 @@
 				"${BUILT_PRODUCTS_DIR}/Alamofire-iOS/Alamofire.framework",
 				"${BUILT_PRODUCTS_DIR}/AlamofireImage/AlamofireImage.framework",
 				"${BUILT_PRODUCTS_DIR}/AlamofireNetworkActivityIndicator/AlamofireNetworkActivityIndicator.framework",
+				"${BUILT_PRODUCTS_DIR}/Charts/Charts.framework",
 				"${BUILT_PRODUCTS_DIR}/DZNEmptyDataSet/DZNEmptyDataSet.framework",
-				"${BUILT_PRODUCTS_DIR}/SwiftChart/SwiftChart.framework",
-				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AlamofireImage.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AlamofireNetworkActivityIndicator.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Charts.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DZNEmptyDataSet.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftChart.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -1987,15 +1981,7 @@
 				INFOPLIST_FILE = Coin/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				OTHER_LDFLAGS = (
-					"$(inherited)",
-					"-framework",
-					"\"Alamofire\"",
-					"-framework",
-					"\"SwiftyJSON\"",
-					"-framework",
-					"\"AlamofireNetworkActivityIndicator\"",
-				);
+				OTHER_LDFLAGS = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = mialin.Coin;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
@@ -2018,15 +2004,7 @@
 				INFOPLIST_FILE = Coin/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				OTHER_LDFLAGS = (
-					"$(inherited)",
-					"-framework",
-					"\"Alamofire\"",
-					"-framework",
-					"\"SwiftyJSON\"",
-					"-framework",
-					"\"AlamofireNetworkActivityIndicator\"",
-				);
+				OTHER_LDFLAGS = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = mialin.Coin;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";

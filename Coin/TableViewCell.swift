@@ -34,7 +34,7 @@ class CoinTableViewCell: UITableViewCell {
         priceCoinLabel.text = coin.priceToString()
         
         
-        percentChangeLabel.text = coin.priceChange24HToString()
+        percentChangeLabel.text = coin.priceChangePercentage24hToString()
         if let percent = coin.priceChange24H {
             if percent >= 0 {
                 percentChangeView.backgroundColor = UIColor(red:0.30, green:0.85, blue:0.39, alpha:1.0)

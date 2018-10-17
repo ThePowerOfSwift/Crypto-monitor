@@ -10,7 +10,7 @@ import Foundation
 import CryptoCurrency
 
 protocol CoinDelegate: class {
-    func coinSelected(_ ticker: Ticker)
+    func coinSelected(_ coin: Coin)
 }
 
 protocol CoinsDelegate: class {

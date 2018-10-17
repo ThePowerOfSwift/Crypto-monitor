@@ -198,21 +198,21 @@ class MainVC: UITableViewController  {
         
         self.tableView.reloadData()
         
-//        if UIDevice.current.userInterfaceIdiom == .pad,
-//            !self.selectDefaultItem {
-//            guard self.tickers != nil && self.tickers?.isEmpty != true else { return }
-//
-//            let keyStore = NSUbiquitousKeyValueStore()
-//            if let tickerID = keyStore.object(forKey: "selectDefaultItemID") as? String,
-//                let index = self.tickers?.index(where: {$0.id == tickerID})
-//            {
-//                self.coinDelegate?.coinSelected(self.tickers![index])
-//            }
-//            else{
-//                self.coinDelegate?.coinSelected(self.tickers![0])
-//            }
-//            self.selectDefaultItem = true
-//        }
+        if UIDevice.current.userInterfaceIdiom == .pad,
+            !self.selectDefaultItem {
+            guard self.coins != nil && self.coins?.isEmpty != true else { return }
+
+            let keyStore = NSUbiquitousKeyValueStore()
+            if let tickerID = keyStore.object(forKey: "selectDefaultItemID") as? String,
+                let index = self.coins?.index(where: {$0.id == tickerID})
+            {
+                self.coinDelegate?.coinSelected(self.coins![index])
+            }
+            else{
+                self.coinDelegate?.coinSelected(self.coins![0])
+            }
+            self.selectDefaultItem = true
+        }
     }
 
     // MARK: - Table view data source

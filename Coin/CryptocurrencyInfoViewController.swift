@@ -7,17 +7,17 @@
 //
 
 import UIKit
+import Charts
 import CryptoCurrency
 import Alamofire
-import SwiftChart
 import CoreSpotlight
 import Intents
 import IntentsUI
 import os.log
 
-class CryptocurrencyInfoViewController: UIViewController {
+class CryptocurrencyInfoViewController: UIViewController, ChartViewDelegate {
     
-    @IBOutlet weak var chart: Chart!
+    @IBOutlet weak var lineChartView: LineChartView!
     @IBOutlet weak var lineChartActivityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var LineChartErrorView: UIView!
     @IBOutlet weak var LineChartErrorLabel: UILabel!
@@ -47,6 +47,15 @@ class CryptocurrencyInfoViewController: UIViewController {
     var coin : Coin? {
         didSet {
             viewCoin()
+            loadCoinDetails()
+            getMarketChart()
+        }
+    }
+    
+    var marketChart: MarketChart? {
+        didSet {
+            lineViewSettingFormatter()
+            lineView()
         }
     }
 
@@ -61,7 +70,9 @@ class CryptocurrencyInfoViewController: UIViewController {
         
         //Notification
         NotificationCenter.default.addObserver(self, selector: #selector(newCurrentCurrency), name: .newCurrentCurrency, object: nil)
-                NotificationCenter.default.addObserver(self, selector: #selector(willEnterForeground(_:)), name: UIApplication.willEnterForegroundNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(willEnterForeground(_:)), name: UIApplication.willEnterForegroundNotification, object: nil)
+        
+        
         
         percentChangeView()
         
@@ -79,9 +90,11 @@ class CryptocurrencyInfoViewController: UIViewController {
         self.rankLabel.text = ""
         self.marketcapLabel.text = ""
         self.volumeLabel.text = ""
-        loadCoinDetails()
-        getMarketChart()
+//        loadCoinDetails()
+//        getMarketChart()
     }
+    
+    
     
     //MARK: - Notification
     @objc func willEnterForeground(_ notification: NSNotification!) {
@@ -102,9 +115,20 @@ class CryptocurrencyInfoViewController: UIViewController {
         dayChangeView?.layer.masksToBounds = true
         weekChangeView?.layer.cornerRadius = 3
         weekChangeView?.layer.masksToBounds = true
+        
+        // Chart
+        lineChartView?.isHidden = true
+        lineChartView?.delegate = self
+        lineChartView?.chartDescription?.enabled = false
+        lineChartView?.gridBackgroundColor = UIColor.darkGray
+        lineChartView?.noDataText = NSLocalizedString("No data load", comment: "lineChartView noDataText")
+        
+        lineChartView?.leftAxis.enabled = false
+        lineChartView?.legend.enabled = false
+        lineChartView?.scaleYEnabled = false
+        
     }
-    
-    
+        
     private func zoomSelectedSegment(index: Int){
         var index = index
         
@@ -163,64 +187,141 @@ class CryptocurrencyInfoViewController: UIViewController {
     
     private func getMarketChart() {
         guard let coin = coin else { return }
+        guard let indexZoom = self.zoomSegmentedControl?.selectedSegmentIndex else { return }
         
-        Coingecko.getMarketChart(id: coin.id, period: .oneDay) { [weak self] (response) in
+        self.lineChartView?.isHidden = true
+        self.lineChartActivityIndicator?.isHidden = false
+        self.LineChartErrorView?.isHidden = true
+        
+        let period = Coingecko.Period(index: indexZoom)
+        print(period)
+        Coingecko.getMarketChart(id: coin.id, period: period) { [weak self] response in
             switch response {
             case .success(let marketChart):
-                DispatchQueue.main.async() {
-                   // print(marketChart)
-                }
+                self?.marketChart = marketChart
             case .failure(let error):
-                self?.errorAlert(error: error)
+                self?.lineChartErrorView(error: error)
             }
         }
     }
+    
+    private func lineView() {
+        guard let marketChart = self.marketChart else { return }
+        let selectedSegmentIndex = self.selectSegmentedControl.selectedSegmentIndex
+        
+        DispatchQueue .global (qos: .userInitiated) .async {
+            // Creating an array of data entries
+            var yVals1 = [ChartDataEntry]()
+            switch selectedSegmentIndex  {
+            case 0:
+               yVals1 = marketChart.marketCaps.map({ChartDataEntry(x: $0.first! / 1000, y: $0.last!)})
+            case 1:
+                yVals1 = marketChart.prices.map({ChartDataEntry(x: $0.first! / 1000, y: $0.last!)})
+            case 2:
+                yVals1 = marketChart.totalVolumes.map({ChartDataEntry(x: $0.first! / 1000, y: $0.last!)})
+            default:
+                break
+            }
+            
+            // Create a data set with our array
+            let set1 = LineChartDataSet(values: yVals1, label: nil)
+            set1.drawValuesEnabled = false // Убрать надписи
+            set1.drawCirclesEnabled = false
+            set1.setColor(UIColor.black) // color line
+            set1.highlightEnabled = false
+            
+            if selectedSegmentIndex == 3 || selectedSegmentIndex == 0 {
+                set1.fill = Fill.fillWithColor(.black)
+                set1.fillAlpha = 1.0
+                set1.drawFilledEnabled = true // Draw the Gradient
+                
+                self.lineChartView?.animate(yAxisDuration: 2.0)
+            }
+            else{
+                self.lineChartView?.animate(xAxisDuration: 2.0)
+            }
+            
+            //3 - create an array to store our LineChartDataSets
+            var dataSets : [LineChartDataSet] = [LineChartDataSet]()
+            dataSets.append(set1)
+            
+            //4 - pass our months in for our x-axis label value along with our dataSets
+            let data: LineChartData = LineChartData(dataSets: dataSets)
+            //  data.setValueTextColor(UIColor.white)
+            
+            //5 - finally set our data
+            DispatchQueue.main.async() {
+                self.lineChartView?.isHidden = false
+                self.lineChartActivityIndicator.isHidden = true
+                self.LineChartErrorView.isHidden = true
+                
+                self.lineChartView?.data = data
+            }
+        }
+        
+    }
+    
+    private func lineViewSettingFormatter() {
+//
+//        self.lineChartView?.isHidden = true
+//        self.lineChartActivityIndicator?.isHidden = false
+//        self.LineChartErrorView?.isHidden = true
+//
+        let xAxis = self.lineChartView?.xAxis
+        xAxis?.labelPosition = .bottom
+        
+        // xAxis.labelCount = 3
+        xAxis?.drawLabelsEnabled = true
+        xAxis?.drawLimitLinesBehindDataEnabled = true
+        xAxis?.avoidFirstLastClippingEnabled = true
+        
+        
+        let dateFormatter = DateFormatter()
+        dateFormatter.locale = Locale.current
+        
+        switch self.zoomSegmentedControl.selectedSegmentIndex {
+        case 0:
+            xAxis?.labelCount = 5
+            dateFormatter.setLocalizedDateFormatFromTemplate("HH:mm")
+            self.lineChartView?.viewPortHandler.setMaximumScaleX(4.0)
+        case 1:
+            xAxis?.labelCount = 7
+            dateFormatter.setLocalizedDateFormatFromTemplate("dd.MM")
+            self.lineChartView?.viewPortHandler.setMaximumScaleX(1.5)
+        case 2:
+            xAxis?.labelCount = 5
+            dateFormatter.setLocalizedDateFormatFromTemplate("dd.MM")
+            self.lineChartView?.viewPortHandler.setMaximumScaleX(1.5)
+        case 3:
+            xAxis?.labelCount = 5
+            dateFormatter.setLocalizedDateFormatFromTemplate("dd.MM")
+            self.lineChartView?.viewPortHandler.setMaximumScaleX(1.5)
+        case 4:
+            xAxis?.labelCount = 6
+            dateFormatter.setLocalizedDateFormatFromTemplate("MMM")
+            self.lineChartView?.viewPortHandler.setMaximumScaleX(1.75)
+        case 5:
+            xAxis?.labelCount = 6
+            dateFormatter.setLocalizedDateFormatFromTemplate("MMM")
+            self.lineChartView?.viewPortHandler.setMaximumScaleX(1.0)
+        case 6:
+            xAxis?.labelCount = 5
+            dateFormatter.setLocalizedDateFormatFromTemplate("MM.yy")
+            self.lineChartView?.viewPortHandler.setMaximumScaleX(3.0)
+        default:
+            break
+        }
+        // Set the x values date formatter
+        xAxis?.valueFormatter = ChartXAxisFormatter(dateFormatter: dateFormatter)
+    }
+    
+    
     private func viewCoin() {
         guard let coin = coin else { return }
         
         self.title = coin.symbol.uppercased()
         self.nameLabel?.text  = coin.name
     }
-
-//    private func viewCryptocurrencyInfo() {
-//        DispatchQueue.main.async() {
-//            self.refreshBarButtonItem()
-//
-//            guard let ticker = self.ticker else { return }
-//
-//            // title
-//            self.navigationItem.title = ticker.symbol
-//
-//            let money = SettingsUserDefaults.getCurrentCurrency()
-//
-//            self.nameLabel?.text = ticker.name
-//
-//            self.priceUsdLabel?.text = ticker.priceToString(for: .usd)
-//            self.priceBtcLabel?.text = ticker.priceBtcToString()
-//
-//            if money == .usd || money == .btc {
-//                self.priceConvertLabel?.text = ""
-//            }
-//            else{
-//                self.priceConvertLabel?.text = ticker.priceToString(for: money)
-//            }
-//
-//            // 1h
-//            self.oneHourChangeLabel?.text = ticker.percentChange1h != nil ? "\(ticker.percentChange1h!)%" : "-"
-//            PercentChangeView.backgroundColor(view:  self.oneHourChangeView, percentChange: ticker.percentChange1h)
-//            // 24h
-//            self.dayChangeLabel?.text = ticker.percentChange24h != nil ? "\(ticker.percentChange24h!)%" : "-"
-//            PercentChangeView.backgroundColor(view:  self.dayChangeView, percentChange: ticker.percentChange24h)
-//            // 7d
-//            self.weekChangeLabel?.text = ticker.percentChange7d != nil ? "\(ticker.percentChange7d!)%" : "-"
-//            PercentChangeView.backgroundColor(view:  self.weekChangeView, percentChange: ticker.percentChange7d)
-//
-//            self.rankLabel?.text = String(ticker.rank)
-//
-//            self.marketcapLabel?.text = ticker.marketCapToString(for: money, maximumFractionDigits: 10)
-//            self.volumeLabel?.text = ticker.volumeToString(for: money, maximumFractionDigits: 10)
-//        }
-//    }
     
     private func refreshBarButtonItem(){
         let refreshBarButton = UIBarButtonItem.init(barButtonSystemItem: .refresh, target: self, action: #selector(refresh))
@@ -245,13 +346,13 @@ class CryptocurrencyInfoViewController: UIViewController {
     @IBAction func selectIindexChanged(_ sender: UISegmentedControl) {
         guard let index = self.selectSegmentedControl?.selectedSegmentIndex else { return }
         SettingsUserDefaults.setTypeChart(segmentIndex: index)
-       // lineView()
+        lineView()
     }
     
     @IBAction func indexChanged(_ sender: UISegmentedControl) {
         guard let index = self.zoomSegmentedControl?.selectedSegmentIndex else { return }
         SettingsUserDefaults.setZoomChart(segmentIndex: index)
-      //  loadlineView()
+        getMarketChart()
     }
     
     //MARK: - Siri Shortcut
@@ -303,9 +404,6 @@ extension CryptocurrencyInfoViewController: CoinDelegate {
         
         self.coin = coin
 
-        
-        
-        
 //        self.ticker = ticker
 //        self.lineChartView?.clear()
 //        if #available(iOS 12.0, *) {
