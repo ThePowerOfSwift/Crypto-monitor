@@ -737,7 +737,6 @@
 				B1108D3521637F9B006A7CA8 /* Resources */,
 				B1108D3421637EB5006A7CA8 /* Shared */,
 				B1817F59213DE5B80073CDC7 /* Services */,
-				B1798B0C20CC51F1004A2309 /* Protocol.swift */,
 				FBFA2A8220AC395A00B11B17 /* Extensions */,
 			);
 			path = Coin;
@@ -766,6 +765,7 @@
 				FBFA2A8320AC397D00B11B17 /* Notification.swift */,
 				B1397B9720C41DD100A93FD2 /* UISplitViewController.swift */,
 				FBFA2A8520ACD94000B11B17 /* Array.swift */,
+				B1798B0C20CC51F1004A2309 /* Protocol.swift */,
 			);
 			name = Extensions;
 			sourceTree = "<group>";
